@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "dexie": "^2.0.4",
     "firebase": "^5.9.2",
     "moment": "^2.24.0",
     "react": "^16.8.6",
