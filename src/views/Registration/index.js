@@ -188,7 +188,7 @@ class Registration extends Component {
           <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container">
             <div className="col-12 sign-in--text">
               <span className="text-style-1">-</span>
-              <span className="sign-in-text--padding">Sign In</span>
+              <span className="sign-in-text--padding">Register Here</span>
             </div>
 
             <form name="form">
@@ -250,21 +250,13 @@ class Registration extends Component {
                   <div className="help-block">Password is required</div>
                 )}
               </div>
-              <div>
-                <label>
-                  <u>FORGOT PASSWORD</u>
-                </label>
-                <label className="register-align">
-                  <u>or REGISTER HERE</u>
-                </label>
-              </div>
               <div className="form-group padding-top-25">
                 <button
                   onClick={this.login}
                   type="button"
                   className="btn-login"
                 >
-                  LOGIN
+                  REGISTER
                 </button>
               </div>
             </form>

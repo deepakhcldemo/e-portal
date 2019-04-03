@@ -55,7 +55,8 @@ class Login extends Component {
     submitted: false,
     loggedInStatus: false,
     errorMessage: '',
-    redirectToReferrer: false
+    redirectToReferrer: false,
+    redirectToRegistration: false
   };
   // componentWillMount() {
   //   const user = JSON.parse(localStorage.getItem('user'));
@@ -161,12 +162,22 @@ class Login extends Component {
       return;
     }
   };
+
+  openRegistration = () => {
+    this.setState(() => ({
+      redirectToRegistration: true
+    }));
+  };
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
+    const { redirectToRegistration } = this.state;
 
     if (redirectToReferrer === true) {
       return <Redirect to={from} />;
+    }
+    if (redirectToRegistration === true) {
+      return <Redirect to="/register" />;
     }
     const appliedPolicy = JSON.parse(localStorage.getItem('applied-policy'));
     if (appliedPolicy && appliedPolicy.policyId) {
@@ -254,7 +265,10 @@ class Login extends Component {
                 <label>
                   <u>FORGOT PASSWORD</u>
                 </label>
-                <label className="register-align">
+                <label
+                  className="register-align"
+                  onClick={this.openRegistration}
+                >
                   <u>or REGISTER HERE</u>
                 </label>
               </div>
