@@ -8,6 +8,7 @@ import GLOBAL_VARIABLES from "../../config/config";
 import AuthGuard from "../../authguard/AuthGuard";
 import * as actionTypes from "../../spinnerStore/actions";
 import PDFViewer from "../../components/pdfViewer";
+
 let userIcon = {
   width: '20px',
   height: '20px',

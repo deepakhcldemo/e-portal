@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import Header from "../../components/layout/header/Header";
-
+import Classes from '../Classes/index'
+import { connect } from 'react-redux';
 class Dashboard extends Component {
- 
+  createClass = () => {
+    this.props.createClassDispatch()
+  }
 
   render() {
     return (
@@ -14,6 +17,8 @@ class Dashboard extends Component {
         </div>
         <div className="row">
           <div className="col-12 content-container">
+          <button onClick ={this.createClass}>Create Class</button>
+          <Classes></Classes>
           </div>
         </div>
       </div>
@@ -22,4 +27,13 @@ class Dashboard extends Component {
 }
 
 
-export default Dashboard;
+const mapDispatchToProps = dispatch => {
+  return {
+    createClassDispatch: () => dispatch({ type: 'open' })
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+) (Dashboard);
