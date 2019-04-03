@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as loginAction from './actions';
 import './styles.css';
-import GLOBAL_VARIABLES from '../../config/Config';
+import GLOBAL_VARIABLES from '../../config/config';
 import AuthGuard from '../../authguard/AuthGuard';
 import * as actionTypes from '../../spinnerStore/actions';
 

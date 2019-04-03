@@ -4,7 +4,7 @@ import axios from "axios";
 import "./styles.css";
 import { toastr } from "react-redux-toastr";
 import { connect } from "react-redux";
-import GLOBAL_VARIABLES from "../../config/Config";
+import GLOBAL_VARIABLES from "../../config/config";
 import * as actionTypes from "../../spinnerStore/actions";
 class Curriculum extends Component {
   
