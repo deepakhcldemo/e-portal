@@ -52,6 +52,7 @@ class Registration extends Component {
   state = {
     username: '',
     password: '',
+    email: '',
     submitted: false,
     loggedInStatus: false,
     errorMessage: '',
@@ -174,7 +175,7 @@ class Registration extends Component {
     }
 
     const { loggingIn } = this.props;
-    const { username, password, submitted } = this.state;
+    const { username, email, password, submitted } = this.state;
     return (
       <div
         style={{
@@ -219,6 +220,32 @@ class Registration extends Component {
                 </div>
                 {submitted && !username && (
                   <div className="help-block">Username is required</div>
+                )}
+              </div>
+              <div
+                className={
+                  'form-group' + (submitted && !username ? ' has-error' : '')
+                }
+              >
+                <label htmlFor="email">Email</label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control input-field--style form-input-icon--padding"
+                    name="email"
+                    value={email}
+                    onFocus={this.userIconStyle}
+                    onBlur={this.userIconDisableStyle}
+                    onChange={this.handleChange}
+                  />
+                  <span
+                    id="userIcon"
+                    className="input-group-addon"
+                    style={userIcon}
+                  />
+                </div>
+                {submitted && !email && (
+                  <div className="help-block">Email is required</div>
                 )}
               </div>
               <div
