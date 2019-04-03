@@ -48,7 +48,7 @@ const failureResponse = {
   }
 };
 
-class Login extends Component {
+class Registration extends Component {
   state = {
     username: '',
     password: '',
@@ -184,7 +184,7 @@ class Login extends Component {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="row row-without--margin">
+        <div className="row">
           <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container">
             <div className="col-12 sign-in--text">
               <span className="text-style-1">-</span>
@@ -301,4 +301,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(Registration);
