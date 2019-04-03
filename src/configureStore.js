@@ -11,7 +11,7 @@ import thunk from "redux-thunk";
 import createHistory from "history/createBrowserHistory";
 import { routerMiddleware } from "react-router-redux";
 
-import config from "./config/Config";
+import config from "./config/config";
 import classReducer from "./views/Classes/reducer";
 import pdfViewerReducer from "./components/pdfViewer/reducer";
 import loginReducer from "./views/Login/reducer";
