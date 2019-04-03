@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import ReduxToastr from "react-redux-toastr";
-import {connect} from 'react-redux';
-import PropTypes from "prop-types";
-import { Route, Switch, Redirect } from "react-router-dom";
-import AuthGuard from "./authguard/AuthGuard";
-import { withRouter } from "react-router";
-import GLOBAL_VARIABLES from "./config/config";
+import ReduxToastr from 'react-redux-toastr';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import AuthGuard from './authguard/AuthGuard';
+import { withRouter } from 'react-router';
+import GLOBAL_VARIABLES from './config/config';
 import './App.css';
 import Classes from './views/Classes';
-import Login from "./views/Login";
-import Dashboard from "./views/Dashboard";
-import Curriculum from "./views/Curriculum";
-import Profile from "./views/Profile";
+import Login from './views/Login';
+import Dashboard from './views/Dashboard';
+import Curriculum from './views/Curriculum';
+import Registration from './views/Registration';
+import Profile from './views/Profile';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -20,19 +21,18 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       AuthGuard.isAuthenticated === true ? (
         <Component {...props} />
       ) : (
-          <Redirect to="/login" />
-        )
+        <Redirect to="/login" />
+      )
     }
   />
 );
 class App extends Component {
-
   render() {
     return (
       // <div className="App">
-      
+
       // <button onClick = {this.props.openModal}> open Class</button>
-      
+
       // <ClassComponent></ClassComponent>
       // </div>
       <div>
@@ -53,6 +53,7 @@ class App extends Component {
         />
         <Switch>
           <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Registration} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/classes" component={Classes} />
@@ -65,13 +66,16 @@ class App extends Component {
 }
 const mapStateToProps = state => {
   return {
-      modalState : state.openModal
+    modalState: state.openModal
   };
-}
+};
 
 const mapDispatchToProps = dispatch => {
   return {
-    openModal : () => dispatch({type : 'open'})
-  }
-}
-export default connect(mapStateToProps,mapDispatchToProps )(App);
+    openModal: () => dispatch({ type: 'open' })
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
