@@ -124,6 +124,7 @@ form input[type="password"] {
 
 .register-align {
   float: right;
+  cursor: pointer;
 }
 
 .row-without--margin {
