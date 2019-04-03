@@ -13,18 +13,20 @@ import { routerMiddleware } from "react-router-redux";
 
 import config from "./config/config";
 import classReducer from "./views/Classes/reducer";
+import pdfViewerReducer from "./components/pdfViewer/reducer";
 import loginReducer from "./views/Login/reducer";
 import spinnerStatusReducer from "./spinnerStore/reducer";
 
 const rootPersistConfig = {
   key: "root",
   storage,
-  blacklist: ["toastr", "classes", "login"]
+  blacklist: ["toastr", "classes", "login","pdfViewer"]
   // debug: true,
 };
 
 const rootReducer = persistCombineReducers(rootPersistConfig, {
   classes: classReducer,
+  pdfViewer: pdfViewerReducer,
   login: loginReducer,
   toastr,
   spinnerStatus: spinnerStatusReducer

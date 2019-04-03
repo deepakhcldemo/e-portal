@@ -7,6 +7,7 @@ import "./styles.css";
 import GLOBAL_VARIABLES from "../../config/config";
 import AuthGuard from "../../authguard/AuthGuard";
 import * as actionTypes from "../../spinnerStore/actions";
+import PDFViewer from "../../components/pdfViewer";
 let userIcon = {
   width: "20px",
   height: "20px",
@@ -216,6 +217,9 @@ class Login extends Component {
                 <label>
                   <u>FORGOT PASSWORD</u>
                 </label>
+                <a onClick={this.props.openPDFModal}> open pdf</a>
+
+                <PDFViewer></PDFViewer>
               </div>
               <div className="form-group padding-top-25">
                 <button
@@ -252,6 +256,9 @@ const mapDispatchToProps = dispatch => {
         })
       );
     },
+    
+    openPDFModal: () => dispatch({ type: 'open' }),
+    
     setSpinnerStatus: val => {
       dispatch({ type: actionTypes.SPINNER_STATUS, payload: val });
     }
