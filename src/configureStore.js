@@ -11,8 +11,9 @@ import thunk from "redux-thunk";
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from "react-router-redux";
 
-// import config from "./config/Config";
+import config from "./config/Config";
 import classReducer from "./views/Classes/reducer";
+import pdfViewerReducer from "./components/pdfViewer/reducer";
 import loginReducer from "./views/Login/reducer";
 import spinnerStatusReducer from "./spinnerStore/reducer";
 import curriculumReducer from "./views/Curriculum/reducer";
@@ -20,13 +21,14 @@ import curriculumReducer from "./views/Curriculum/reducer";
 const rootPersistConfig = {
   key: "root",
   storage,
-  blacklist: ["toastr", "classes", "login"]
+  blacklist: ["toastr", "classes", "login","pdfViewer"]
   // debug: true,
 };
 
 const rootReducer = persistCombineReducers(rootPersistConfig, {
   curriculum: curriculumReducer,
   classes: classReducer,
+  pdfViewer: pdfViewerReducer,
   login: loginReducer,
   toastr,
   spinnerStatus: spinnerStatusReducer

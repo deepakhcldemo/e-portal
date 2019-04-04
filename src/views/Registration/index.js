@@ -1,13 +1,11 @@
-import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import * as loginAction from "./actions";
-import axios from "axios";
-import "./styles.css";
-import GLOBAL_VARIABLES from "../../config/Config";
-import AuthGuard from "../../authguard/AuthGuard";
-import * as actionTypes from "../../spinnerStore/actions";
-import PDFViewer from "../../components/pdfViewer";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as loginAction from './actions';
+import './styles.css';
+import GLOBAL_VARIABLES from '../../config/Config';
+import AuthGuard from '../../authguard/AuthGuard';
+import * as actionTypes from '../../spinnerStore/actions';
 
 let userIcon = {
   width: '20px',
@@ -50,15 +48,15 @@ const failureResponse = {
   }
 };
 
-class Login extends Component {
+class Registration extends Component {
   state = {
     username: '',
     password: '',
+    email: '',
     submitted: false,
     loggedInStatus: false,
     errorMessage: '',
-    redirectToReferrer: false,
-    redirectToRegistration: false
+    redirectToReferrer: false
   };
   // componentWillMount() {
   //   const user = JSON.parse(localStorage.getItem('user'));
@@ -164,22 +162,12 @@ class Login extends Component {
       return;
     }
   };
-
-  openRegistration = () => {
-    this.setState(() => ({
-      redirectToRegistration: true
-    }));
-  };
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
-    const { redirectToRegistration } = this.state;
 
     if (redirectToReferrer === true) {
       return <Redirect to={from} />;
-    }
-    if (redirectToRegistration === true) {
-      return <Redirect to="/register" />;
     }
     const appliedPolicy = JSON.parse(localStorage.getItem('applied-policy'));
     if (appliedPolicy && appliedPolicy.policyId) {
@@ -187,7 +175,7 @@ class Login extends Component {
     }
 
     const { loggingIn } = this.props;
-    const { username, password, submitted } = this.state;
+    const { username, email, password, submitted } = this.state;
     return (
       <div
         style={{
@@ -197,11 +185,11 @@ class Login extends Component {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="row row-without--margin">
+        <div className="row">
           <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container">
             <div className="col-12 sign-in--text">
               <span className="text-style-1">-</span>
-              <span className="sign-in-text--padding">Sign In</span>
+              <span className="sign-in-text--padding">Register Here</span>
             </div>
 
             <form name="form">
@@ -236,6 +224,32 @@ class Login extends Component {
               </div>
               <div
                 className={
+                  'form-group' + (submitted && !username ? ' has-error' : '')
+                }
+              >
+                <label htmlFor="email">Email</label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control input-field--style form-input-icon--padding"
+                    name="email"
+                    value={email}
+                    onFocus={this.userIconStyle}
+                    onBlur={this.userIconDisableStyle}
+                    onChange={this.handleChange}
+                  />
+                  <span
+                    id="userIcon"
+                    className="input-group-addon"
+                    style={userIcon}
+                  />
+                </div>
+                {submitted && !email && (
+                  <div className="help-block">Email is required</div>
+                )}
+              </div>
+              <div
+                className={
                   'form-group' + (submitted && !password ? ' has-error' : '')
                 }
               >
@@ -263,27 +277,13 @@ class Login extends Component {
                   <div className="help-block">Password is required</div>
                 )}
               </div>
-              <div>
-                <label>
-                  <u>FORGOT PASSWORD</u>
-                </label>
-                <a onClick={this.props.openPDFModal}> open pdf</a>
-
-                <PDFViewer></PDFViewer>
-                <label
-                  className="register-align"
-                  onClick={this.openRegistration}
-                >
-                  <u>or REGISTER HERE</u>
-                </label>
-              </div>
               <div className="form-group padding-top-25">
                 <button
                   onClick={this.login}
                   type="button"
                   className="btn-login"
                 >
-                  LOGIN
+                  REGISTER
                 </button>
               </div>
             </form>
@@ -312,9 +312,6 @@ const mapDispatchToProps = dispatch => {
         })
       );
     },
-    
-    openPDFModal: () => dispatch({ type: 'open' }),
-    
     setSpinnerStatus: val => {
       dispatch({ type: actionTypes.SPINNER_STATUS, payload: val });
     }
@@ -323,4 +320,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(Registration);

@@ -2,13 +2,71 @@ import React, { Component } from 'react';
 import Modal from 'react-responsive-modal';
 import Header from "../../components/layout/header/Header";
 import { connect } from 'react-redux';
+import classess from './styles.module.css';
+
+import firebase from '../../database/firebasedb';
+
 
 class Classes extends Component {
-  openModal = this.props.modalState;
+  state = {
+    student: [],
+    classess : []
+  };
+
+
+  componentDidMount() {
+    let tempData = [];
+    const ePortalDatabase = firebase.firestore();
+    ePortalDatabase.collection('users').get().then((snapshot) => {
+      snapshot.docs.forEach(doc => {
+
+        // this.setState({
+        //   Student: tempData
+        // })
+        tempData.push(doc.data());
+      })
+    
+      this.setState({
+        student: tempData
+      })
+    });
+
+  }
+  getClassName = (event) => {
+    const ePortalDatabase = firebase.firestore();
+    const classCollection = ePortalDatabase.collection("class");
+    classCollection.get()
+    
+  }
+  selectUnselectStudent = (event, student) => {
+    if (event.target.checked) {
+      student.tagged = true;
+    }
+    else {
+      student.tagged = false;
+    }
+
+
+  }
+  saveClass = (event) => {
+    const taggedStudent = [];
+    event.preventDefault();
+    this.state.student.forEach((student) => {
+      if(student.tagged){
+        taggedStudent.push(student);
+      }
+    })
+
+    // console.log('taggedStudent',taggedStudent);
+    // const ePortalDatabase = firebase.firestore();
+    // ePortalDatabase.collection('class').doc("").set({
+    //   students : taggedStudent
+    // });
+
+  }
 
 
   onOpenModal = () => {
-    console.log(this.props.openModal, 'openModal');
     this.setState({ open: true });
   };
 
@@ -17,19 +75,44 @@ class Classes extends Component {
   };
 
   render() {
+    let studentList = [];
+    studentList = this.state.student.map((student) => {
+      return (
+        <tr key={student.id}>
+          <td>{student.fname}</td>
+          <td>{student.lname}</td>
+          <td><input type="checkbox" onChange={(event) => this.selectUnselectStudent(event, student)} /></td>
+        </tr>
+      );
+    });
     const { modalState } = this.props;
-    console.log('this.openModal in class', modalState)
     return (
       <div className="container-fluid">
-        <div className="row">
-          <div className="col-12">
-            <Header headeTitle="Classes" />
-          </div>
-        </div>
+
         <Modal open={modalState} onClose={this.props.closeModal} center>
-          <h2>Create Class</h2>
-          <label for="classTxt">Class Name:</label>
-          <input type="text" id="classTxt" />
+
+          {studentList !== null ? <form>
+            <h2 className={classess.color} >Create Class</h2>
+
+            <div>
+              <label htmlFor="classTxt" >Class Name:</label>
+              <input type="text" id="classTxt" className={classess.classTextBox} onChange = {this.getClassName}/>
+              <table>
+                <thead>
+                  <tr><td>First Name</td>
+                    <td>Last Name</td>
+                  </tr>
+
+                </thead>
+                <tbody>
+                  {studentList}
+                </tbody>
+              </table>
+
+            </div>
+            <input type="submit" value="Save Class" onClick={this.saveClass} />
+            <input type="button" value="Cancel" onClick={this.props.closeModal} />
+          </form> : null}
         </Modal>
       </div>
     );
@@ -37,7 +120,7 @@ class Classes extends Component {
 }
 const mapStateToProps = state => {
   return {
-    modalState: state.openModal
+    modalState: state.classes.openModal
   };
 }
 
