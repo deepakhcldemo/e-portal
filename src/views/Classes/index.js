@@ -10,7 +10,7 @@ import firebase from '../../database/firebasedb';
 class Classes extends Component {
   state = {
     student: [],
-    classess : []
+    classess: []
   };
 
 
@@ -25,7 +25,7 @@ class Classes extends Component {
         // })
         tempData.push(doc.data());
       })
-    
+
       this.setState({
         student: tempData
       })
@@ -36,7 +36,7 @@ class Classes extends Component {
     const ePortalDatabase = firebase.firestore();
     const classCollection = ePortalDatabase.collection("class");
     classCollection.get()
-    
+
   }
   selectUnselectStudent = (event, student) => {
     if (event.target.checked) {
@@ -52,7 +52,7 @@ class Classes extends Component {
     const taggedStudent = [];
     event.preventDefault();
     this.state.student.forEach((student) => {
-      if(student.tagged){
+      if (student.tagged) {
         taggedStudent.push(student);
       }
     })
@@ -81,7 +81,7 @@ class Classes extends Component {
         <tr key={student.id}>
           <td>{student.fname}</td>
           <td>{student.lname}</td>
-          <td><input type="checkbox" onChange={(event) => this.selectUnselectStudent(event, student)} /></td>
+          <td><input type="checkbox" onChange={(event) => this.selectUnselectStudent(event, student)} className="form-check-input" /></td>
         </tr>
       );
     });
@@ -92,26 +92,27 @@ class Classes extends Component {
         <Modal open={modalState} onClose={this.props.closeModal} center>
 
           {studentList !== null ? <form>
-            <h2 className={classess.color} >Create Class</h2>
+            <h2 className={classess.changeColor} >Create Class</h2>
 
-            <div>
-              <label htmlFor="classTxt" >Class Name:</label>
-              <input type="text" id="classTxt" className={classess.classTextBox} onChange = {this.getClassName}/>
-              <table>
-                <thead>
-                  <tr><td>First Name</td>
-                    <td>Last Name</td>
-                  </tr>
-
-                </thead>
-                <tbody>
-                  {studentList}
-                </tbody>
-              </table>
-
+            <div className ={classess.classTextBox}>
+              <label htmlFor="classTxt"  className = {classess.classText}>Class Name:</label>
+              <input type="text" id="classTxt"className="form-control" className={classess.classTextBox} onChange={this.getClassName} autoComplete="off"/>
             </div>
-            <input type="submit" value="Save Class" onClick={this.saveClass} />
-            <input type="button" value="Cancel" onClick={this.props.closeModal} />
+            <table  className="table table-striped">
+              <thead>
+                <tr><td>First Name</td>
+                  <td>Last Name</td>
+                </tr>
+
+              </thead>
+              <tbody>
+                {studentList}
+              </tbody>
+            </table>
+
+
+            <input type="submit" value="Save Class" onClick={this.saveClass} className={"btn btn-primary" + ' '+ classess.btnMargin} />
+            <input type="button" value="Cancel" onClick={this.props.closeModal} className="btn btn-danger" />
           </form> : null}
         </Modal>
       </div>
