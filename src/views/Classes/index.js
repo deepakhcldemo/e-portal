@@ -40,7 +40,8 @@ class Classes extends Component {
   };
 
   render() {
-    const studentList = this.state.student.map((student) => {
+    let studentList = [];
+     studentList = this.state.student.map((student) => {
       return (
         <tr>
           <td>{student.fname}</td>
@@ -55,7 +56,7 @@ class Classes extends Component {
 
         <Modal open={modalState} onClose={this.props.closeModal} center>
 
-          <form>
+         { studentList ?  <form>
             <h2 className={classess.color} >Create Class</h2>
 
             <div>
@@ -74,7 +75,9 @@ class Classes extends Component {
               </table>
 
             </div>
-          </form>
+            <input type ="submit" value ="Save Class"/>
+            <input type ="cancel" value ="Cancel"/>
+          </form> : null}
         </Modal>
       </div>
     );
