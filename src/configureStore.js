@@ -8,13 +8,14 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import { reducer as toastr } from "react-redux-toastr";
 import thunk from "redux-thunk";
 // import logger from 'redux-logger';
-import createHistory from "history/createBrowserHistory";
+import { createBrowserHistory } from 'history';
 import { routerMiddleware } from "react-router-redux";
 
-import config from "./config/config";
+// import config from "./config/Config";
 import classReducer from "./views/Classes/reducer";
 import loginReducer from "./views/Login/reducer";
 import spinnerStatusReducer from "./spinnerStore/reducer";
+import curriculumReducer from "./views/Curriculum/reducer";
 
 const rootPersistConfig = {
   key: "root",
@@ -24,13 +25,14 @@ const rootPersistConfig = {
 };
 
 const rootReducer = persistCombineReducers(rootPersistConfig, {
+  curriculum: curriculumReducer,
   classes: classReducer,
   login: loginReducer,
   toastr,
   spinnerStatus: spinnerStatusReducer
 });
 
-const history = createHistory();
+const history = createBrowserHistory();
 
 const store = createStore(
   rootReducer,

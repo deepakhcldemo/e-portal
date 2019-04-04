@@ -1,0 +1,11 @@
+.adjust-top {
+    top: 56px;
+    min-height: 100vh;
+    background-color: #fff;
+    color: #000;
+}
+.extend {
+    padding-top: 20px;
+    max-height: 500px;
+    overflow: hidden;
+}
