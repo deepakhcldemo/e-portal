@@ -9,7 +9,8 @@ import firebase from '../../database/firebasedb';
 
 class Classes extends Component {
   state = {
-    student: []
+    student: [],
+    classess : []
   };
 
 
@@ -24,12 +25,46 @@ class Classes extends Component {
         // })
         tempData.push(doc.data());
       })
+    
       this.setState({
         student: tempData
       })
     });
+
+  }
+  getClassName = (event) => {
+    const ePortalDatabase = firebase.firestore();
+    const classCollection = ePortalDatabase.collection("class");
+    classCollection.get()
     
   }
+  selectUnselectStudent = (event, student) => {
+    if (event.target.checked) {
+      student.tagged = true;
+    }
+    else {
+      student.tagged = false;
+    }
+
+
+  }
+  saveClass = (event) => {
+    const taggedStudent = [];
+    event.preventDefault();
+    this.state.student.forEach((student) => {
+      if(student.tagged){
+        taggedStudent.push(student);
+      }
+    })
+
+    // console.log('taggedStudent',taggedStudent);
+    // const ePortalDatabase = firebase.firestore();
+    // ePortalDatabase.collection('class').doc("").set({
+    //   students : taggedStudent
+    // });
+
+  }
+
 
   onOpenModal = () => {
     this.setState({ open: true });
@@ -41,12 +76,12 @@ class Classes extends Component {
 
   render() {
     let studentList = [];
-     studentList = this.state.student.map((student) => {
+    studentList = this.state.student.map((student) => {
       return (
-        <tr>
+        <tr key={student.id}>
           <td>{student.fname}</td>
           <td>{student.lname}</td>
-          <td><input type ="checkbox"/></td>
+          <td><input type="checkbox" onChange={(event) => this.selectUnselectStudent(event, student)} /></td>
         </tr>
       );
     });
@@ -56,27 +91,27 @@ class Classes extends Component {
 
         <Modal open={modalState} onClose={this.props.closeModal} center>
 
-         { studentList ?  <form>
+          {studentList !== null ? <form>
             <h2 className={classess.color} >Create Class</h2>
 
             <div>
               <label htmlFor="classTxt" >Class Name:</label>
-              <input type="text" id="classTxt" className={classess.classTextBox} />
+              <input type="text" id="classTxt" className={classess.classTextBox} onChange = {this.getClassName}/>
               <table>
                 <thead>
                   <tr><td>First Name</td>
-                  <td>Last Name</td>
+                    <td>Last Name</td>
                   </tr>
-                  
+
                 </thead>
                 <tbody>
-                {studentList}
+                  {studentList}
                 </tbody>
               </table>
 
             </div>
-            <input type ="submit" value ="Save Class"/>
-            <input type ="cancel" value ="Cancel"/>
+            <input type="submit" value="Save Class" onClick={this.saveClass} />
+            <input type="button" value="Cancel" onClick={this.props.closeModal} />
           </form> : null}
         </Modal>
       </div>
