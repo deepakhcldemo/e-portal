@@ -17,7 +17,7 @@ class Dashboard extends Component {
         </div>
         <div className="row">
           <div className="col-12 content-container">
-          <button onClick ={this.createClass}>Create Class</button>
+          <button className ="btn btn-primary" onClick ={this.createClass}>Create Class</button>
           <Classes></Classes>
           </div>
         </div>
