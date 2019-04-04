@@ -75,19 +75,27 @@ class Classes extends Component {
   };
 
   render() {
+    const checkBoxStyle = {
+      borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor: '#c3c4c6',
+        borderRadius: '4px',
+        checkColor: '#60cd18',
+        height: '30px'
+    }
     let studentList = [];
     studentList = this.state.student.map((student) => {
       return (
         <tr key={student.id}>
           <td>{student.fname}</td>
           <td>{student.lname}</td>
-          <td><input type="checkbox" onChange={(event) => this.selectUnselectStudent(event, student)} className="form-check-input" /></td>
+          <td><input type="checkbox" onChange={(event) => this.selectUnselectStudent(event, student)} style = {checkBoxStyle}/></td>
         </tr>
       );
     });
     const { modalState } = this.props;
     return (
-      <div className="container-fluid">
+      <div className="container">
 
         <Modal open={modalState} onClose={this.props.closeModal} center>
 
@@ -96,7 +104,7 @@ class Classes extends Component {
 
             <div className ={classess.classTextBox}>
               <label htmlFor="classTxt"  className = {classess.classText}>Class Name:</label>
-              <input type="text" id="classTxt"className="form-control" className={classess.classTextBox} onChange={this.getClassName} autoComplete="off"/>
+              <input type="text" id="classTxt" className="form-control" className={classess.classTextBox} onChange={this.getClassName} autoComplete="off"/>
             </div>
             <table  className="table table-striped">
               <thead>
