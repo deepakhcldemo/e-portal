@@ -1,3 +1,6 @@
 export const SelectedNode = {
-    selectedNode: ''
+    selectedNode: '',
+    selectedCategory: '',
+    selectedContent: '',
+    category: ''
 }
