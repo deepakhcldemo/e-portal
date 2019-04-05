@@ -8,10 +8,23 @@ import firebase from '../../database/firebasedb';
 
 
 class Classes extends Component {
-  state = {
-    student: [],
-    classess: []
-  };
+
+  constructor(props) {
+    super(props);
+    this.setClassName = '';
+    this.state = {
+      student: [],
+      classess: [],
+      classValidationMsg: '',
+
+    };
+
+    this.getClassName = this.getClassName.bind(this);
+    this.saveClass = this.saveClass.bind(this);
+  }
+
+
+
 
 
   componentDidMount() {
@@ -19,10 +32,6 @@ class Classes extends Component {
     const ePortalDatabase = firebase.firestore();
     ePortalDatabase.collection('users').get().then((snapshot) => {
       snapshot.docs.forEach(doc => {
-
-        // this.setState({
-        //   Student: tempData
-        // })
         tempData.push(doc.data());
       })
 
@@ -33,10 +42,7 @@ class Classes extends Component {
 
   }
   getClassName = (event) => {
-    const ePortalDatabase = firebase.firestore();
-    const classCollection = ePortalDatabase.collection("class");
-    classCollection.get()
-
+    this.setClassName = event.target.value;
   }
   selectUnselectStudent = (event, student) => {
     if (event.target.checked) {
@@ -49,20 +55,32 @@ class Classes extends Component {
 
   }
   saveClass = (event) => {
-    const taggedStudent = [];
     event.preventDefault();
+    const taggedStudent = [];
+    if (this.setClassName === '') {
+      this.setState({
+        classValidationMsg: "Please enter class Name"
+      })
+    }
+    else {
+      this.setState({
+        classValidationMsg: ""
+      })
+
+    }
+    console.log(this.state.classValidationMsg)
     this.state.student.forEach((student) => {
       if (student.tagged) {
         taggedStudent.push(student);
       }
     })
 
-    // console.log('taggedStudent',taggedStudent);
-    // const ePortalDatabase = firebase.firestore();
-    // ePortalDatabase.collection('class').doc("").set({
-    //   students : taggedStudent
-    // });
-
+    if (this.setClassName !== '' &&  taggedStudent.length > 0) {
+      const ePortalDatabase = firebase.firestore();
+      ePortalDatabase.collection('class').doc(this.setClassName).set({
+        students: taggedStudent
+      });
+    }
   }
 
 
@@ -77,11 +95,11 @@ class Classes extends Component {
   render() {
     const checkBoxStyle = {
       borderWidth: '1px',
-        borderStyle: 'solid',
-        borderColor: '#c3c4c6',
-        borderRadius: '4px',
-        checkColor: '#60cd18',
-        height: '30px'
+      borderStyle: 'solid',
+      borderColor: '#c3c4c6',
+      borderRadius: '4px',
+      checkColor: '#60cd18',
+      height: '30px'
     }
     let studentList = [];
     studentList = this.state.student.map((student) => {
@@ -89,7 +107,7 @@ class Classes extends Component {
         <tr key={student.id}>
           <td>{student.fname}</td>
           <td>{student.lname}</td>
-          <td><input type="checkbox" onChange={(event) => this.selectUnselectStudent(event, student)} style = {checkBoxStyle}/></td>
+          <td><input type="checkbox" onChange={(event) => this.selectUnselectStudent(event, student)} style={checkBoxStyle} /></td>
         </tr>
       );
     });
@@ -102,11 +120,13 @@ class Classes extends Component {
           {studentList !== null ? <form>
             <h2 className={classess.changeColor} >Create Class</h2>
 
-            <div className ={classess.classTextBox}>
-              <label htmlFor="classTxt"  className = {classess.classText}>Class Name:</label>
-              <input type="text" id="classTxt" className="form-control" className={classess.classTextBox} onChange={this.getClassName} autoComplete="off"/>
+            <div className={classess.classTextBox}>
+              <label htmlFor="classTxt" className={classess.classText}>Class Name:</label>
+              <input type="text" id="classTxt" className="form-control" className={classess.classTextBox} onChange={this.getClassName} autoComplete="off" />
+
             </div>
-            <table  className="table table-striped">
+            <p className={"help-block" + " " + classess.validationClass}>{this.state.classValidationMsg}</p>
+            <table className="table table-striped">
               <thead>
                 <tr><td>First Name</td>
                   <td>Last Name</td>
@@ -119,7 +139,7 @@ class Classes extends Component {
             </table>
 
 
-            <input type="submit" value="Save Class" onClick={this.saveClass} className={"btn btn-primary" + ' '+ classess.btnMargin} />
+            <input type="button" value="Save Class" onClick={this.saveClass} className={"btn btn-primary" + ' ' + classess.btnMargin} />
             <input type="button" value="Cancel" onClick={this.props.closeModal} className="btn btn-danger" />
           </form> : null}
         </Modal>
