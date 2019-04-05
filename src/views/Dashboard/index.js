@@ -32,14 +32,16 @@ class Dashboard extends Component {
     });
   }
   render() {
-
-    const classesNamesList = this.state.classessName.map((classesNameItem, index) => {
+    const sortedNameList = this.state.classessName.reverse()
+    const classesNamesList = sortedNameList.map((classesNameItem, index) => {
       console.log('classesNameItem', classesNameItem);
       if (index <= 2) {
         return (
 
-          <div className={"col-md-4" + " " + classes.classCard}>
+          <div className="col-md-4">
+          <div className={classes.card}>
             {classesNameItem}
+            </div>
           </div>
 
         )
@@ -58,7 +60,7 @@ class Dashboard extends Component {
             <Classes></Classes>
           </div>
           <div className="col-9 content-container">
-            <div className ="row">
+            <div className ={"row" + " " + classes.cardContainer}>
             {classesNamesList}
             </div>
           </div>
