@@ -767,15 +767,20 @@ body.toastr-confirm-active {
   padding-right: 45px !important;
 }
 
+/* .container-fluid {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  overflow: hidden;
+  background: #232838 !important;
+  background-color: #232838 !important;
+} */
 .container-fluid {
   padding-left: 0px !important;
   padding-right: 0px !important;
   overflow: hidden;
   /* max-width: 360px; */
-  background: #232838 !important;
-  background-color: #232838 !important;
+  
 }
-
 .header-container {
   height: 56px;
   position: fixed;

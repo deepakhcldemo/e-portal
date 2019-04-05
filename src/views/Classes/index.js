@@ -16,6 +16,7 @@ class Classes extends Component {
       student: [],
       classess: [],
       classValidationMsg: '',
+      noStudentMessage : ''
 
     };
 
@@ -57,6 +58,12 @@ class Classes extends Component {
   saveClass = (event) => {
     event.preventDefault();
     const taggedStudent = [];
+    console.log(this.state.classValidationMsg)
+    this.state.student.forEach((student) => {
+      if (student.tagged) {
+        taggedStudent.push(student);
+      }
+    })
     if (this.setClassName === '') {
       this.setState({
         classValidationMsg: "Please enter class Name"
@@ -68,14 +75,19 @@ class Classes extends Component {
       })
 
     }
-    console.log(this.state.classValidationMsg)
-    this.state.student.forEach((student) => {
-      if (student.tagged) {
-        taggedStudent.push(student);
-      }
-    })
 
-    if (this.setClassName !== '' &&  taggedStudent.length > 0) {
+    if ( taggedStudent.length === 0) {
+      this.setState({
+        noStudentMessage: "Please Select atleast one student for class"
+      })
+    }
+    else {
+      this.setState({
+        noStudentMessage: ""
+      })
+
+    }
+    if (this.setClassName !== '' && taggedStudent.length > 0) {
       const ePortalDatabase = firebase.firestore();
       ePortalDatabase.collection('class').doc(this.setClassName).set({
         students: taggedStudent
@@ -116,10 +128,10 @@ class Classes extends Component {
       <div className="container">
 
         <Modal open={modalState} onClose={this.props.closeModal} center>
-
+          
           {studentList !== null ? <form>
             <h2 className={classess.changeColor} >Create Class</h2>
-
+            <p className={"help-block" + " " + classess.noStudentClass}>{this.state.noStudentMessage}</p>
             <div className={classess.classTextBox}>
               <label htmlFor="classTxt" className={classess.classText}>Class Name:</label>
               <input type="text" id="classTxt" className="form-control" className={classess.classTextBox} onChange={this.getClassName} autoComplete="off" />

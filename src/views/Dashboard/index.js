@@ -2,12 +2,49 @@ import React, { Component } from "react";
 import Header from "../../components/layout/header/Header";
 import Classes from '../Classes/index'
 import { connect } from 'react-redux';
+import firebase from '../../database/firebasedb';
+import classes from './index.module.css';
+import { resolve } from "q";
 class Dashboard extends Component {
+  state = {
+    classessName: []
+  }
   createClass = () => {
     this.props.createClassDispatch()
   }
 
+  componentDidMount() {
+    const tempData = [];
+    const ePortalDatabase = firebase.firestore();
+    ePortalDatabase.collection('class').get().then((snapshot) => {
+      snapshot.docs.forEach(doc => {
+        tempData.push(doc.id);
+      })
+      const promiseData = new Promise((resolve, reject) => {
+        resolve(tempData)
+      })
+      promiseData.then((className) => {
+        this.setState({
+          classessName: className
+        })
+        console.log(this.state.classessName, 'this');
+      })
+    });
+  }
   render() {
+
+    const classesNamesList = this.state.classessName.map((classesNameItem, index) => {
+      console.log('classesNameItem', classesNameItem);
+      if (index <= 2) {
+        return (
+
+          <div className={"col-md-4" + " " + classes.classCard}>
+            {classesNameItem}
+          </div>
+
+        )
+      }
+    })
     return (
       <div className="container-fluid">
         <div className="row">
@@ -16,9 +53,14 @@ class Dashboard extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-12 content-container">
-          <button className ="btn btn-primary" onClick ={this.createClass}>Create Class</button>
-          <Classes></Classes>
+          <div className="col-3 content-container">
+            <button className="btn btn-primary" onClick={this.createClass}>Create Class</button>
+            <Classes></Classes>
+          </div>
+          <div className="col-9 content-container">
+            <div className ="row">
+            {classesNamesList}
+            </div>
           </div>
         </div>
       </div>
@@ -36,4 +78,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   null,
   mapDispatchToProps
-) (Dashboard);
+)(Dashboard);

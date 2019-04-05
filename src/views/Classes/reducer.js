@@ -1,5 +1,5 @@
 const classReducerState = {
-  openModal: true
+  openModal: false
 }
 
 const classReducer = (state = classReducerState, action) => {

@@ -29,12 +29,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 class App extends Component {
   render() {
     return (
-      // <div className="App">
-
-      // <button onClick = {this.props.openModal}> open Class</button>
-
-      // <ClassComponent></ClassComponent>
-      // </div>
+      
       <div>
         {this.props.spinnerStatus ? (
           <div className="spinner-overlay-container">
@@ -43,14 +38,16 @@ class App extends Component {
             </div>
           </div>
         ) : null}
-        <ReduxToastr
+        {/* <ReduxToastr
           timeOut={4000}
           newestOnTop
           preventDuplicates
           position="bottom-center"
           transitionIn="fadeIn"
           transitionOut="fadeOut"
-        />
+        /> */}
+
+        
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Registration} />
