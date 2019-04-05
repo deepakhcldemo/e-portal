@@ -783,7 +783,7 @@ body.toastr-confirm-active {
 }
 .header-container {
   height: 56px;
-  position: fixed;
+  /* position: fixed; */
   background-color: #232838;
   width: 100%;
   color: #fff;
