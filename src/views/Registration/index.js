@@ -3,8 +3,11 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as loginAction from './actions';
 import './styles.css';
-import GLOBAL_VARIABLES from '../../config/Config';
+import GLOBAL_VARIABLES from '../../config/config';
 import AuthGuard from '../../authguard/AuthGuard';
+import { toastr } from 'react-redux-toastr';
+import { DropdownButton, Dropdown } from 'react-bootstrap';
+import { createUser } from '../../database/dal/registrationDal';
 import * as actionTypes from '../../spinnerStore/actions';
 
 let userIcon = {
@@ -31,52 +34,25 @@ let passwordIcon = {
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
 };
-const _userName = 'madan@hcl.com';
-const _password = 'india@2018';
-const successResponse = {
-  success: {
-    status: 'Success',
-    message: 'Resource Retrieved Successfully',
-    data: 'Login Successful'
-  }
-};
-const failureResponse = {
-  failure: {
-    status: 'Failure',
-    message: 'RESOURCE_ALREADY_EXISTS',
-    data: 'Invalid Username or Password'
-  }
-};
 
 class Registration extends Component {
   state = {
-    username: '',
+    fname: '',
+    lname: '',
     password: '',
     email: '',
+    role: 'Select Role',
     submitted: false,
     loggedInStatus: false,
     errorMessage: '',
     redirectToReferrer: false
   };
-  // componentWillMount() {
-  //   const user = JSON.parse(localStorage.getItem('user'));
-  //   if (user && user.status === 'Success') {
-  //     const appliedPolicy = JSON.parse(localStorage.getItem('applied-policy'));
-  //     if (
-  //       appliedPolicy &&
-  //       appliedPolicy.updateItemResult &&
-  //       appliedPolicy.updateItemResult.attributes
-  //     ) {
-  //       this.props.history.push('/car-details/confirm');
-  //     } else {
-  //       this.props.history.push('/car-details');
-  //     }
-  //   }
-  // }
+
   userIconStyle() {
     document.getElementById('userIcon').style.backgroundImage =
       'url(' + '../../Assets/hdpi/login_oragnge.png' + ')';
   }
+
   userIconDisableStyle() {
     document.getElementById('userIcon').style.backgroundImage =
       'url(' + '../../Assets/hdpi/login_disable.png' + ')';
@@ -86,10 +62,12 @@ class Registration extends Component {
     document.getElementById('passwordIcon').style.backgroundImage =
       'url(' + '../../Assets/hdpi/password_orange.png' + ')';
   }
+
   passwordIconDisableStyle() {
     document.getElementById('passwordIcon').style.backgroundImage =
       'url(' + '../../Assets/hdpi/password_disable.png' + ')';
   }
+
   togglePassword = () => {
     var x = document.getElementById('password');
     if (x.type === 'password') {
@@ -100,68 +78,34 @@ class Registration extends Component {
     x.focus();
     this.passwordIconStyle();
   };
+
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
-  authenticateUser(username, password) {
-    let status = '';
-    if (username === _userName && password === _password) {
-      status = true;
-    } else {
-      status = false;
-    }
-    return new Promise((resolve, reject) => {
-      status ? resolve(successResponse) : reject(failureResponse);
-    });
-  }
+  handleDropdownSelection = e => {
+    this.setState({ role: e });
+  };
 
-  login = () => {
-    const { username, password } = this.state;
+  register = () => {
+    const { fname, lname, email, password, role } = this.state;
     this.setState({ submitted: true });
     this.props.setSpinnerStatus(true);
-    if (username && password) {
-      // axios
-      //   .post(
-      //     'http://ec2-54-221-159-167.compute-1.amazonaws.com:9001/user-management/usermgmt/users/login',
-      //     {
-      //       userName: username,
-      //       password: password
-      //     }
-      //   )
+    const userDetails = { fname, lname, email, password, role };
 
-      this.authenticateUser(username, password).then(
-        postResponse => {
-          this.props.setSpinnerStatus(false);
-          localStorage.setItem('user', JSON.stringify(postResponse));
-          AuthGuard.authenticate(() => {
-            this.setState(() => ({
-              redirectToReferrer: true
-            }));
-            console.log(
-              'GLOBAL_VARIABLES.BASEROUTE',
-              GLOBAL_VARIABLES.BASEROUTE
-            );
-            if (GLOBAL_VARIABLES.BASEROUTE !== '/login') {
-              this.props.history.push(GLOBAL_VARIABLES.BASEROUTE);
-            } else {
-              this.props.history.push('/car-details');
-            }
-          });
-        },
-        error => {
-          this.props.setSpinnerStatus(false);
-          this.setState({
-            errorMessage: 'Username or password is not correct.'
-          });
-        }
-      );
-    } else {
-      this.props.setSpinnerStatus(false);
-      return;
-    }
+    createUser(userDetails);
+    // .then(
+    //   response => {
+    //     toastr.success(response);
+    //     // this.props.history.push('/login');
+    //   }
+    //   // error => {
+    //   //   toastr.error(error);
+    //   // }
+    // );
   };
+
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
@@ -175,7 +119,7 @@ class Registration extends Component {
     }
 
     const { loggingIn } = this.props;
-    const { username, email, password, submitted } = this.state;
+    const { fname, lname, email, password, submitted } = this.state;
     return (
       <div
         style={{
@@ -185,7 +129,7 @@ class Registration extends Component {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="row">
+        <div className="row row-without--margin">
           <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container">
             <div className="col-12 sign-in--text">
               <span className="text-style-1">-</span>
@@ -198,33 +142,49 @@ class Registration extends Component {
               </span>
               <div
                 className={
-                  'form-group' + (submitted && !username ? ' has-error' : '')
+                  'form-group' + (submitted && !fname ? ' has-error' : '')
                 }
               >
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username">First Name</label>
                 <div className="input-group">
                   <input
                     type="text"
                     className="form-control input-field--style form-input-icon--padding"
-                    name="username"
-                    value={username}
+                    name="fname"
+                    value={fname}
                     onFocus={this.userIconStyle}
                     onBlur={this.userIconDisableStyle}
                     onChange={this.handleChange}
                   />
-                  <span
-                    id="userIcon"
-                    className="input-group-addon"
-                    style={userIcon}
-                  />
                 </div>
-                {submitted && !username && (
-                  <div className="help-block">Username is required</div>
+                {submitted && !fname && (
+                  <div className="help-block">First name is required</div>
                 )}
               </div>
               <div
                 className={
-                  'form-group' + (submitted && !username ? ' has-error' : '')
+                  'form-group' + (submitted && !lname ? ' has-error' : '')
+                }
+              >
+                <label htmlFor="username">Last Name</label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control input-field--style form-input-icon--padding"
+                    name="lname"
+                    value={lname}
+                    onFocus={this.userIconStyle}
+                    onBlur={this.userIconDisableStyle}
+                    onChange={this.handleChange}
+                  />
+                </div>
+                {submitted && !lname && (
+                  <div className="help-block">Last name is required</div>
+                )}
+              </div>
+              <div
+                className={
+                  'form-group' + (submitted && !email ? ' has-error' : '')
                 }
               >
                 <label htmlFor="email">Email</label>
@@ -277,9 +237,18 @@ class Registration extends Component {
                   <div className="help-block">Password is required</div>
                 )}
               </div>
+              <DropdownButton
+                id="dropdown-basic-button"
+                title={this.state.role}
+                onSelect={this.handleDropdownSelection}
+              >
+                <Dropdown.Item eventKey="Teacher">Teacher</Dropdown.Item>
+                <Dropdown.Item eventKey="Student">Student</Dropdown.Item>
+              </DropdownButton>
+
               <div className="form-group padding-top-25">
                 <button
-                  onClick={this.login}
+                  onClick={this.register}
                   type="button"
                   className="btn-login"
                 >

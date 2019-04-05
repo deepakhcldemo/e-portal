@@ -1,27 +1,27 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware } from 'redux';
 import {
   persistCombineReducers,
   persistReducer,
   persistStore
-} from "redux-persist";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-import { reducer as toastr } from "react-redux-toastr";
-import thunk from "redux-thunk";
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import { reducer as toastr } from 'react-redux-toastr';
+import thunk from 'redux-thunk';
 // import logger from 'redux-logger';
 import { createBrowserHistory } from 'history';
-import { routerMiddleware } from "react-router-redux";
+import { routerMiddleware } from 'react-router-redux';
 
-import config from "./config/Config";
-import classReducer from "./views/Classes/reducer";
-import pdfViewerReducer from "./components/pdfViewer/reducer";
-import loginReducer from "./views/Login/reducer";
-import spinnerStatusReducer from "./spinnerStore/reducer";
-import curriculumReducer from "./views/Curriculum/reducer";
+import config from './config/config';
+import classReducer from './views/Classes/reducer';
+import pdfViewerReducer from './components/pdfViewer/reducer';
+import loginReducer from './views/Login/reducer';
+import spinnerStatusReducer from './spinnerStore/reducer';
+import curriculumReducer from './views/Curriculum/reducer';
 
 const rootPersistConfig = {
-  key: "root",
+  key: 'root',
   storage,
-  blacklist: ["toastr", "classes", "login","pdfViewer"]
+  blacklist: ['toastr', 'classes', 'login', 'pdfViewer']
   // debug: true,
 };
 

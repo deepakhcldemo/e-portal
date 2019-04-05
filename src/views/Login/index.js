@@ -1,13 +1,14 @@
-import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import * as loginAction from "./actions";
-import axios from "axios";
-import "./styles.css";
-import GLOBAL_VARIABLES from "../../config/Config";
-import AuthGuard from "../../authguard/AuthGuard";
-import * as actionTypes from "../../spinnerStore/actions";
-import PDFViewer from "../../components/pdfViewer";
+import React, { Component } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as loginAction from './actions';
+import axios from 'axios';
+import './styles.css';
+import GLOBAL_VARIABLES from '../../config/config';
+import AuthGuard from '../../authguard/AuthGuard';
+import * as actionTypes from '../../spinnerStore/actions';
+import { createUser } from '../../database/dal/registrationDal';
+import PDFViewer from '../../components/pdfViewer';
 
 let userIcon = {
   width: '20px',
@@ -33,22 +34,6 @@ let passwordIcon = {
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
 };
-const _userName = 'madan@hcl.com';
-const _password = 'india@2018';
-const successResponse = {
-  success: {
-    status: 'Success',
-    message: 'Resource Retrieved Successfully',
-    data: 'Login Successful'
-  }
-};
-const failureResponse = {
-  failure: {
-    status: 'Failure',
-    message: 'RESOURCE_ALREADY_EXISTS',
-    data: 'Invalid Username or Password'
-  }
-};
 
 class Login extends Component {
   state = {
@@ -60,21 +45,7 @@ class Login extends Component {
     redirectToReferrer: false,
     redirectToRegistration: false
   };
-  // componentWillMount() {
-  //   const user = JSON.parse(localStorage.getItem('user'));
-  //   if (user && user.status === 'Success') {
-  //     const appliedPolicy = JSON.parse(localStorage.getItem('applied-policy'));
-  //     if (
-  //       appliedPolicy &&
-  //       appliedPolicy.updateItemResult &&
-  //       appliedPolicy.updateItemResult.attributes
-  //     ) {
-  //       this.props.history.push('/car-details/confirm');
-  //     } else {
-  //       this.props.history.push('/car-details');
-  //     }
-  //   }
-  // }
+
   userIconStyle() {
     document.getElementById('userIcon').style.backgroundImage =
       'url(' + '../../Assets/hdpi/login_oragnge.png' + ')';
@@ -107,69 +78,13 @@ class Login extends Component {
     this.setState({ [name]: value });
   };
 
-  authenticateUser(username, password) {
-    let status = '';
-    if (username === _userName && password === _password) {
-      status = true;
-    } else {
-      status = false;
-    }
-    return new Promise((resolve, reject) => {
-      status ? resolve(successResponse) : reject(failureResponse);
-    });
-  }
-
   login = () => {
     const { username, password } = this.state;
     this.setState({ submitted: true });
-    this.props.setSpinnerStatus(true);
-    if (username && password) {
-      // axios
-      //   .post(
-      //     'http://ec2-54-221-159-167.compute-1.amazonaws.com:9001/user-management/usermgmt/users/login',
-      //     {
-      //       userName: username,
-      //       password: password
-      //     }
-      //   )
-
-      this.authenticateUser(username, password).then(
-        postResponse => {
-          this.props.setSpinnerStatus(false);
-          localStorage.setItem('user', JSON.stringify(postResponse));
-          AuthGuard.authenticate(() => {
-            this.setState(() => ({
-              redirectToReferrer: true
-            }));
-            console.log(
-              'GLOBAL_VARIABLES.BASEROUTE',
-              GLOBAL_VARIABLES.BASEROUTE
-            );
-            if (GLOBAL_VARIABLES.BASEROUTE !== '/login') {
-              this.props.history.push(GLOBAL_VARIABLES.BASEROUTE);
-            } else {
-              this.props.history.push('/car-details');
-            }
-          });
-        },
-        error => {
-          this.props.setSpinnerStatus(false);
-          this.setState({
-            errorMessage: 'Username or password is not correct.'
-          });
-        }
-      );
-    } else {
-      this.props.setSpinnerStatus(false);
-      return;
-    }
+    const userDetails = { username, password };
+    createUser(userDetails);
   };
 
-  openRegistration = () => {
-    this.setState(() => ({
-      redirectToRegistration: true
-    }));
-  };
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
@@ -216,7 +131,7 @@ class Login extends Component {
                 <label htmlFor="username">Username</label>
                 <div className="input-group">
                   <input
-                    type="text"
+                    type="email"
                     className="form-control input-field--style form-input-icon--padding"
                     name="username"
                     value={username}
@@ -269,13 +184,7 @@ class Login extends Component {
                 </label>
                 <a onClick={this.props.openPDFModal}> open pdf</a>
 
-                <PDFViewer></PDFViewer>
-                <label
-                  className="register-align"
-                  onClick={this.openRegistration}
-                >
-                  <u>or REGISTER HERE</u>
-                </label>
+                <PDFViewer />
               </div>
               <div className="form-group padding-top-25">
                 <button
@@ -312,9 +221,9 @@ const mapDispatchToProps = dispatch => {
         })
       );
     },
-    
+
     openPDFModal: () => dispatch({ type: 'open' }),
-    
+
     setSpinnerStatus: val => {
       dispatch({ type: actionTypes.SPINNER_STATUS, payload: val });
     }

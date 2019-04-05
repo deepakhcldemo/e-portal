@@ -1009,3 +1009,23 @@ li .fa {
   -webkit-transform: none;
   transform: none;
 }
+
+.dropdown {
+  padding-top: 28px;
+}
+
+.dropdown-toggle {
+  width: 100% !important;
+  background-color: #363636 !important;
+  border-color: grey !important;
+}
+
+.dropdown-toggle:focus {
+  color: #f2c419 !important;
+  border-color: #f2c419 !important;
+  outline: 0;
+  box-shadow: none !important;
+}
+.dropdown-menu {
+  width: 100% !important;
+}
