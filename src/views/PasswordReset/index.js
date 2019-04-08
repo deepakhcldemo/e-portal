@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as loginAction from './actions';
+
 import './styles.css';
+import AuthGuard from '../../authguard/AuthGuard';
+import { toastr } from 'react-redux-toastr';
 import * as actionTypes from '../../spinnerStore/actions';
-import { createUser } from '../../database/dal/firebase/registrationDal';
-import PDFViewer from '../../components/pdfViewer';
+import { recoverPassword } from '../../database/dal/firebase/registrationDal';
 
 let userIcon = {
   width: '20px',
@@ -19,23 +21,10 @@ let userIcon = {
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
 };
-let passwordIcon = {
-  width: '20px',
-  height: '15px',
-  position: 'absolute',
-  right: '10px',
-  top: '15px',
-  zIndex: '10',
-  backgroundImage: 'url(' + '../../Assets/hdpi/password_disable.png' + ')',
-  backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat'
-};
 
-class Login extends Component {
+class PasswordReset extends Component {
   state = {
     username: '',
-    password: '',
     submitted: false,
     loggedInStatus: false,
     errorMessage: '',
@@ -74,15 +63,17 @@ class Login extends Component {
     this.setState({ [name]: value });
   };
 
-  login = () => {
-    const { username, password } = this.state;
+  resetPassword = () => {
     this.setState({ submitted: true });
-    const userDetails = { username, password };
-    createUser(userDetails);
-  };
-
-  handlePasswordReset = () => {
-    this.props.history.push('/resetPassword');
+    recoverPassword(this.state.username)
+      .then(() => {
+        toastr.success('Password Reset Link Successfully Sent');
+        this.props.history.push('/login');
+      })
+      .catch(error => {
+        this.setState({ username: '' });
+        toastr.error('User Not Found. Please Enter Registered Email ID');
+      });
   };
 
   render() {
@@ -98,8 +89,7 @@ class Login extends Component {
       this.props.history.push('/car-details/confirm');
     }
 
-    const { loggingIn } = this.props;
-    const { username, password, submitted } = this.state;
+    const { username, submitted } = this.state;
     return (
       <div
         style={{
@@ -113,14 +103,10 @@ class Login extends Component {
           <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container">
             <div className="col-12 sign-in--text">
               <span className="text-style-1">-</span>
-              <span className="sign-in-text--padding">Sign In</span>
+              <span className="sign-in-text--padding">Reset Password</span>
             </div>
 
             <form name="form">
-              <div className="alert alert-info" role="alert">
-                Note: If you do not have an account, one will be created for
-                you!
-              </div>
               <span className="help-block">
                 {this.state.errorMessage ? this.state.errorMessage : ''}
               </span>
@@ -129,7 +115,7 @@ class Login extends Component {
                   'form-group' + (submitted && !username ? ' has-error' : '')
                 }
               >
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username">Enter Registered Email ID</label>
                 <div className="input-group">
                   <input
                     type="email"
@@ -147,56 +133,17 @@ class Login extends Component {
                   />
                 </div>
                 {submitted && !username && (
-                  <div className="help-block">Username is required</div>
+                  <div className="help-block">Email ID is required</div>
                 )}
               </div>
-              <div
-                className={
-                  'form-group' + (submitted && !password ? ' has-error' : '')
-                }
-              >
-                <label htmlFor="password">Password</label>
-                <div className="input-group">
-                  <input
-                    id="password"
-                    type="password"
-                    className="form-control input-field--style"
-                    name="password"
-                    value={password}
-                    onFocus={this.passwordIconStyle}
-                    onBlur={this.passwordIconDisableStyle}
-                    onChange={this.handleChange}
-                  />
-                  <span
-                    id="passwordIcon"
-                    className="input-group-addon"
-                    style={passwordIcon}
-                    onClick={this.togglePassword}
-                  />
-                </div>
 
-                {submitted && !password && (
-                  <div className="help-block">Password is required</div>
-                )}
-              </div>
-              <div>
-                <label
-                  style={{ cursor: 'pointer' }}
-                  onClick={this.handlePasswordReset}
-                >
-                  <u>FORGOT PASSWORD</u>
-                </label>
-                {/* <a onClick={this.props.openPDFModal}> open pdf</a>
-
-                <PDFViewer /> */}
-              </div>
               <div className="form-group padding-top-25">
                 <button
-                  onClick={this.login}
+                  onClick={this.resetPassword}
                   type="button"
                   className="btn-login"
                 >
-                  LOGIN
+                  RESET PASSWORD
                 </button>
               </div>
             </form>
@@ -236,4 +183,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(PasswordReset);
