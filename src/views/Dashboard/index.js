@@ -7,7 +7,9 @@ class Dashboard extends Component {
     classessName: []
   }
   
-
+ createEvent = () => {
+    this.props.history.push('/createevent');
+ }
 
 
 

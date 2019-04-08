@@ -2,3 +2,22 @@
     max-width: 60rem;
     margin: 0 auto;
 }
+
+.calender-label {
+    margin-right: 20px;
+}
+
+.calender-icon{
+    cursor: pointer;
+}
+.complete-calender{
+    position: relative;
+}
+
+.margin-both{
+    margin: 0 20px;
+}
+
+.margin-top-bottom {
+    margin: 20px 0;
+}
