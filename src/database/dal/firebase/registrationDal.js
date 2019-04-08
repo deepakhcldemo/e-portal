@@ -1,4 +1,4 @@
-import dbFactory from '../dbFactory';
+import dbFactory from '../../dbFactory';
 
 const getDbRef = user => {
   const db = dbFactory.create('firebase');
@@ -35,19 +35,15 @@ export const createUser = user => {
     });
 };
 
-export const recoverPassword = () => {
+export const recoverPassword = email => {
   const db = dbFactory.create('firebase');
+  let continueUrl = 'http://localhost:3000/?email=';
+  if (process.env.NODE_ENV === 'production') {
+    continueUrl = 'https://e-project-4e023.firebaseapp.com/?email=';
+  }
   var actionCodeSettings = {
-    url: 'http://localhost:3000/?email=EMAIL',
-
+    url: continueUrl + email,
     handleCodeInApp: false
   };
-  db.auth()
-    .sendPasswordResetEmail('EMAIL', actionCodeSettings)
-    .then(function() {
-      // Password reset email sent.
-    })
-    .catch(function(error) {
-      // Error occurred. Inspect error.code.
-    });
+  return db.auth().sendPasswordResetEmail(email, actionCodeSettings);
 };

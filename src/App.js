@@ -5,12 +5,12 @@ import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthGuard from './authguard/AuthGuard';
 import { withRouter } from 'react-router';
-import GLOBAL_VARIABLES from './config/Config';
-import Event from './views/Events/events';
+import GLOBAL_VARIABLES from './config/config';
 import './App.css';
 import Login from './views/Login';
 import Dashboard from './views/Dashboard';
 import Curriculum from './views/Curriculum';
+import PasswordReset from './views/PasswordReset';
 import Profile from './views/Profile';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -47,6 +47,7 @@ class App extends Component {
 
         <Switch>
           <Route exact path="/login" component={Login} />
+          <Route exact path="/resetPassword" component={PasswordReset} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/curriculum" component={Curriculum} />
