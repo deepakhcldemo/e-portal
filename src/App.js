@@ -6,6 +6,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthGuard from './authguard/AuthGuard';
 import { withRouter } from 'react-router';
 import GLOBAL_VARIABLES from './config/Config';
+import Event from './views/Events/events';
 import './App.css';
 import Login from './views/Login';
 import Dashboard from './views/Dashboard';
@@ -49,6 +50,7 @@ class App extends Component {
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/curriculum" component={Curriculum} />
+          <PrivateRoute path="/createevent" component={Event} />
           <Redirect to="/login" />
         </Switch>
       </div>
