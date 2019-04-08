@@ -7,7 +7,10 @@ import './styles.css';
 import GLOBAL_VARIABLES from '../../config/Config';
 import AuthGuard from '../../authguard/AuthGuard';
 import * as actionTypes from '../../spinnerStore/actions';
-import { createUser } from '../../database/dal/registrationDal';
+import {
+  createUser,
+  recoverPassword
+} from '../../database/dal/registrationDal';
 import PDFViewer from '../../components/pdfViewer';
 
 let userIcon = {
@@ -85,6 +88,9 @@ class Login extends Component {
     createUser(userDetails);
   };
 
+  resetPassword = () => {
+    recoverPassword();
+  };
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
@@ -179,7 +185,7 @@ class Login extends Component {
                 )}
               </div>
               <div>
-                <label>
+                <label onClick={this.resetPassword}>
                   <u>FORGOT PASSWORD</u>
                 </label>
                 <a onClick={this.props.openPDFModal}> open pdf</a>

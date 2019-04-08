@@ -24,7 +24,7 @@ export const createUser = user => {
       }
     })
     .then(userDetails => {
-      if (userDetails.additionalUserInfo.isNewUser) {
+      if (userDetails && userDetails.additionalUserInfo.isNewUser) {
         getDbRef()
           .doc(userDetails.user.uid)
           .set({ username: user.username, userId: userDetails.user.uid });
@@ -32,5 +32,22 @@ export const createUser = user => {
     })
     .catch(error => {
       console.log('error', error.message);
+    });
+};
+
+export const recoverPassword = () => {
+  const db = dbFactory.create('firebase');
+  var actionCodeSettings = {
+    url: 'http://localhost:3000/?email=EMAIL',
+
+    handleCodeInApp: false
+  };
+  db.auth()
+    .sendPasswordResetEmail('EMAIL', actionCodeSettings)
+    .then(function() {
+      // Password reset email sent.
+    })
+    .catch(function(error) {
+      // Error occurred. Inspect error.code.
     });
 };
