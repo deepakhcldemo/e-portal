@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Header from "../../components/layout/header/Header";
-import Classes from '../Classes/index'
 import { connect } from 'react-redux';
 import firebase from '../../database/firebasedb';
 import classes from './index.module.css';
@@ -9,11 +8,13 @@ class Dashboard extends Component {
   state = {
     classessName: []
   }
-  createClass = () => {
-    this.props.createClassDispatch()
-  }
+  
 
+
+
+ 
   componentDidMount() {
+    console.log('did mount')
     const tempData = [];
     const ePortalDatabase = firebase.firestore();
     ePortalDatabase.collection('class').get().then((snapshot) => {
@@ -27,26 +28,21 @@ class Dashboard extends Component {
         this.setState({
           classessName: className
         })
-        console.log(this.state.classessName, 'this');
       })
     });
-  }
-  render() {
-    const sortedNameList = this.state.classessName.reverse()
-    const classesNamesList = sortedNameList.map((classesNameItem, index) => {
-      console.log('classesNameItem', classesNameItem);
-      if (index <= 2) {
-        return (
-
-          <div className={"col-md-4" + " " + classes.cardContainer}>
-          <div className={classes.card}>
-            {classesNameItem}
-            </div>
-          </div>
-
-        )
-      }
+    const promiseData = new Promise((resolve, reject) => {
+      resolve(tempData)
     })
+    promiseData.then((className) => {
+      this.setState({
+        classessName: className
+      })
+    })
+  }
+
+  
+  render() {
+    
     return (
       <div className="container-fluid">
         <div className="row">
@@ -54,32 +50,32 @@ class Dashboard extends Component {
             <Header headeTitle="Dashboard" />
           </div>
         </div>
-        
+
         <div className="row">
           <div className="col-3">
-          <button className="btn btn-primary" onClick={this.createClass}>Create Class</button>
-            <Classes></Classes>
+            <button className="btn btn-primary" onClick={this.createClass}>Create Class</button>
           </div>
           <div className="col-9">
-          
-            <div className ={"row" + " " + classes.cardContainer}>
-            {classesNamesList}
-            </div>
           </div>
         </div>
       </div>
     );
   }
 }
-
+const mapStateToProps = state => {
+  return {
+    modalSata: state.classes
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
-    createClassDispatch: () => dispatch({ type: 'open' })
+    createClassDispatch: () => dispatch({ type: 'open' }),
+    createDeleteDispatch : () => dispatch({type : 'delete', value : 'abcd'})
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Dashboard);

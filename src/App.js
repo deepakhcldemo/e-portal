@@ -7,7 +7,6 @@ import AuthGuard from './authguard/AuthGuard';
 import { withRouter } from 'react-router';
 import GLOBAL_VARIABLES from './config/Config';
 import './App.css';
-import Classes from './views/Classes';
 import Login from './views/Login';
 import Dashboard from './views/Dashboard';
 import Curriculum from './views/Curriculum';
@@ -53,7 +52,6 @@ class App extends Component {
           <Route exact path="/register" component={Registration} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/profile" component={Profile} />
-          <PrivateRoute path="/classes" component={Classes} />
           <PrivateRoute path="/curriculum" component={Curriculum} />
           <Redirect to="/login" />
         </Switch>
