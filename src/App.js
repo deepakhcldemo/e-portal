@@ -10,7 +10,6 @@ import './App.css';
 import Login from './views/Login';
 import Dashboard from './views/Dashboard';
 import Curriculum from './views/Curriculum';
-import Registration from './views/Registration';
 import Profile from './views/Profile';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
