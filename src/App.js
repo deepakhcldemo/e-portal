@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthGuard from './authguard/AuthGuard';
 import { withRouter } from 'react-router';
-import GLOBAL_VARIABLES from './config/config';
+import GLOBAL_VARIABLES from './config/Config';
 import './App.css';
+import CreateEvent from './views/Events/events';
 import Login from './views/Login';
 import Dashboard from './views/Dashboard';
 import Curriculum from './views/Curriculum';
@@ -51,7 +52,7 @@ class App extends Component {
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/curriculum" component={Curriculum} />
-          <PrivateRoute path="/createevent" component={Event} />
+          <PrivateRoute path="/createevent" component={CreateEvent} />
           <Redirect to="/login" />
         </Switch>
       </div>

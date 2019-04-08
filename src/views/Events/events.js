@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import "./eventstyle.css"
 import { EVENT_CONSTANT } from '../../constant/Event-Constant'
 import Calendar from 'react-calendar';
-class Event extends Component {
+class CreateEvent extends Component {
   state = {
     currentDate: new Date(),
     hideStartCalender: false,
@@ -61,7 +61,7 @@ class Event extends Component {
 
                   <div className="input-container">
                     <label className="calender-label">Start Date :</label>
-                    <input type="text" className="input-field" /> <i class="fa fa-calendar calender-icon" aria-hidden="true" onClick={this.toggleStartCalender}></i>
+                    <input type="text" className="input-field" /> <i className="fa fa-calendar calender-icon" aria-hidden="true" onClick={this.toggleStartCalender}></i>
                   </div>
                   <div className="complete-calender">
                     {this.state.hideStartCalender ?
@@ -76,7 +76,7 @@ class Event extends Component {
 
                   <div className="input-container">
                     <label className="calender-label">End Date :</label>
-                    <input type="text" className="input-field" /> <i class="fa fa-calendar calender-icon" aria-hidden="true" onClick={this.toggleEndCalender}></i>
+                    <input type="text" className="input-field" /> <i className="fa fa-calendar calender-icon" aria-hidden="true" onClick={this.toggleEndCalender}></i>
                   </div>
                   {this.state.hideEndCalender ?
                     <Calendar
@@ -101,13 +101,14 @@ class Event extends Component {
     );
   }
 }
-const mapStateToProps = state => {
-};
-const mapDispatchToProps = dispatch => {
+// const mapStateToProps = state => {
+// };
+// const mapDispatchToProps = dispatch => {
 
-};
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Event);
+// };
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(CreateEvent);
 
+export default CreateEvent;
