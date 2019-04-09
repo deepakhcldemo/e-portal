@@ -1,7 +1,8 @@
 
 const initialState = {
     
-    openModalForStudent: false
+    openModalForStudent: false,
+    students : []
 };
 const eventReducer = (state = initialState, action) => {
     switch (action.type) {  
@@ -15,6 +16,12 @@ const eventReducer = (state = initialState, action) => {
         return {
             ...state,
             openModalForStudent: false
+        }
+
+        case 'GET_STUDENTS':
+        return {
+            ...state,
+            students: action.student
         }
         default:
             return state

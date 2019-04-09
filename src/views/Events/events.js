@@ -4,12 +4,18 @@ import "./eventstyle.css"
 import { EVENT_CONSTANT } from '../../constant/Event-Constant'
 import ModalPopUp from '../../shared/components/modalpopup/modalpopup'
 import Calendar from 'react-calendar';
-import { openModalPopUp} from './eventAction';
+import { openModalPopUp, getStudentList} from './eventAction';
 class CreateEvent extends Component {
   state = {
     currentDate: new Date(),
     hideStartCalender: false,
     hideEndCalender: false
+  }
+
+
+  componentDidMount() {
+    debugger
+    this.props.getStudentList();
   }
 
   onChangeDate = date => {
@@ -120,7 +126,8 @@ class CreateEvent extends Component {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    openModalPopUp: () => dispatch(openModalPopUp())
+    openModalPopUp: () => dispatch(openModalPopUp()),
+    getStudentList : () => dispatch(getStudentList())
   }
 };
 
