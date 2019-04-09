@@ -21,3 +21,20 @@
 .margin-top-bottom {
     margin: 20px 0;
 }
+
+.search-icon{
+    position: relative;
+    float: right;
+    top: -37px;
+    padding: 10px;
+    background: gray;
+    cursor: pointer;
+}
+
+.left-arrow-icon{
+    margin-right: 10px;
+}
+
+.back-to-dashborad{
+    cursor: pointer;
+}
