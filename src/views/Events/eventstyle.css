@@ -9,6 +9,12 @@
 
 .calender-icon{
     cursor: pointer;
+    position: relative;
+    top: -34px;
+    float: right;
+    right: 4px;
+    background-color: gray;
+    padding: 6px;
 }
 .complete-calender{
     position: relative;
@@ -37,4 +43,8 @@
 
 .back-to-dashborad{
     cursor: pointer;
+}
+
+.start-end-date{
+    margin-top: 30px;
 }

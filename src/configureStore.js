@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 // import logger from 'redux-logger';
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'react-router-redux';
-
+import eventReducer from './views/Events/eventReducer'
 import pdfViewerReducer from './components/pdfViewer/reducer';
 import loginReducer from './views/Login/reducer';
 import spinnerStatusReducer from './spinnerStore/reducer';
@@ -23,6 +23,7 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   curriculum: curriculumReducer,
   pdfViewer: pdfViewerReducer,
   login: loginReducer,
+  event : eventReducer,
   toastr,
   spinnerStatus: spinnerStatusReducer
 });

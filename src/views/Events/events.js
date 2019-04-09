@@ -2,7 +2,9 @@ import React, { Component } from "react"
 import { connect } from 'react-redux';
 import "./eventstyle.css"
 import { EVENT_CONSTANT } from '../../constant/Event-Constant'
+import ModalPopUp from '../../shared/components/modalpopup/modalpopup'
 import Calendar from 'react-calendar';
+import { openModalPopUp} from './eventAction';
 class CreateEvent extends Component {
   state = {
     currentDate: new Date(),
@@ -36,11 +38,22 @@ class CreateEvent extends Component {
       hideEndCalender: !startDateToggle
     })
   }
+
+
+  goBackToDashboard = () => {
+    this.props.history.goBack();
+  }
+
+  openModal = () => {
+    this.props.openModalPopUp();
+  }
   render() {
     return (
+      
       <div className="wrapper">
+      <ModalPopUp></ModalPopUp>
         <div className="row">
-        <div className ="back-to-dashborad"><i class="fa fa-angle-left left-arrow-icon"></i><span>Back To Dashboard</span></div>
+        <div className ="back-to-dashborad" onClick = {this.goBackToDashboard}><i className="fa fa-angle-left left-arrow-icon"></i><span>Back To Dashboard</span></div>
           <div className="col-12 col-sm-12 col-md-12 col-lg-12">
             <h1>Create Event</h1>
             <div className="form-group">
@@ -57,9 +70,9 @@ class CreateEvent extends Component {
             </div>
             <div className="input-container">
               <label className="calender-label">Students :</label>
-              <input type="text" className="form-control" /> <i className="fa fa-search search-icon" aria-hidden="true"></i>
+              <input type="text" className="form-control" /> <i className="fa fa-search search-icon" aria-hidden="true" onClick ={this.openModal}></i>
             </div>
-            <div className="form-group">
+            <div className="form-group start-end-date">
               <div className="row">
                 <div className="col-4 col-sm-12 col-md-4 col-lg-4">
 
@@ -105,14 +118,10 @@ class CreateEvent extends Component {
     );
   }
 }
-// const mapStateToProps = state => {
-// };
-// const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
+  return {
+    openModalPopUp: () => dispatch(openModalPopUp())
+  }
+};
 
-// };
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(CreateEvent);
-
-export default CreateEvent;
+export default connect(null, mapDispatchToProps)(CreateEvent);
