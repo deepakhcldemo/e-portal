@@ -13,6 +13,7 @@ import Dashboard from './views/Dashboard';
 import Curriculum from './views/Curriculum';
 import PasswordReset from './views/PasswordReset';
 import Profile from './views/Profile';
+import Carousel from './components/carousel/Carousel';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -53,6 +54,7 @@ class App extends Component {
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/curriculum" component={Curriculum} />
           <PrivateRoute path="/createevent" component={CreateEvent} />
+          <PrivateRoute path="/carousel" component={Carousel} exact />
           <Redirect to="/login" />
         </Switch>
       </div>
