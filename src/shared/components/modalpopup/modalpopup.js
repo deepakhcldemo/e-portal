@@ -4,6 +4,7 @@ import Modal from 'react-responsive-modal';
 import { connect } from "react-redux"
 import { closeModalPopUp, saveStudent, addStudent } from './modalAction';
 
+
 class ModalPopUp extends Component {
 
   constructor(props) {

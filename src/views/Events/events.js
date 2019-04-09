@@ -4,13 +4,15 @@ import "./eventstyle.css"
 import { EVENT_CONSTANT } from '../../constant/Event-Constant'
 import ModalPopUp from '../../shared/components/modalpopup/modalpopup'
 import Calendar from 'react-calendar';
-import { openModalPopUp, getStudentList} from './eventAction';
+import { openModalPopUp, getStudentList } from './eventAction';
+// import TimePicker from 'react-bootstrap-time-picker';
 class CreateEvent extends Component {
   state = {
     currentDate: new Date(),
     hideStartCalender: false,
     hideEndCalender: false,
-    taggedStudentName : []
+    taggedStudentName: [],
+    endDateCalender: false
   }
 
 
@@ -18,7 +20,7 @@ class CreateEvent extends Component {
     this.props.getStudentList();
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     console.log('this.props', this.props.state);
   }
 
@@ -48,7 +50,20 @@ class CreateEvent extends Component {
       hideEndCalender: !startDateToggle
     })
   }
+  allDayEvent = (event) => {
+    debugger
+    if (event.target.checked) {
+      this.setState({
+        endDateCalender: true
+      })
+    }
+    else {
+      this.setState({
+        endDateCalender: false
+      })
+    }
 
+  }
 
   goBackToDashboard = () => {
     this.props.history.goBack();
@@ -58,12 +73,15 @@ class CreateEvent extends Component {
     this.props.openModalPopUp();
   }
   render() {
+    let style = {}
+
+    this.state.endDateCalender ? style = {'display' : 'none'} : style ={}
     return (
-      
+
       <div className="wrapper">
-      <ModalPopUp></ModalPopUp>
+        <ModalPopUp></ModalPopUp>
         <div className="row">
-        <div className ="back-to-dashborad" onClick = {this.goBackToDashboard}><i className="fa fa-angle-left left-arrow-icon"></i><span>Back To Dashboard</span></div>
+          <div className="back-to-dashborad" onClick={this.goBackToDashboard}><i className="fa fa-angle-left left-arrow-icon"></i><span>Back To Dashboard</span></div>
           <div className="col-12 col-sm-12 col-md-12 col-lg-12">
             <h1>Create Event</h1>
             <div className="form-group">
@@ -80,7 +98,7 @@ class CreateEvent extends Component {
             </div>
             <div className="input-container">
               <label className="calender-label">Students :</label>
-              <input type="text" className="form-control" disabled= {true} value ={this.props.taggedStudentName}/> <i className="fa fa-search search-icon" aria-hidden="true" onClick ={this.openModal}></i>
+              <input type="text" className="form-control" disabled={true} value={this.props.taggedStudentName} /> <i className="fa fa-search search-icon" aria-hidden="true" onClick={this.openModal}></i>
             </div>
             <div className="form-group start-end-date">
               <div className="row">
@@ -99,9 +117,9 @@ class CreateEvent extends Component {
                       /> : null}
                   </div>
                 </div>
-                <div className="col-4 col-sm-12 col-md-4 col-lg-4">
+                 <div className="col-4 col-sm-12 col-md-4 col-lg-4" disabled = {this.state.endDateCalender}>
 
-                  <div className="input-container">
+                  <div className="input-container" style = {style}>
                     <label className="calender-label">End Date :</label>
                     <input type="text" className="input-field" /> <i className="fa fa-calendar calender-icon" aria-hidden="true" onClick={this.toggleEndCalender}></i>
                   </div>
@@ -110,10 +128,11 @@ class CreateEvent extends Component {
                       value={this.state.currentDate}
                       onChange={this.onChangeDate}
                     /> : null}
-                </div>
+                  {/* <TimePicker start="10:00" end="21:00" step={30} /> */}
+                </div> 
                 <div className="form-group">
                   <label className="margin-both">All Day Event </label>
-                  <input type="checkbox" name="checkbox" value="value" />
+                  <input type="checkbox" name="checkbox" value="value" onClick={this.allDayEvent} />
                 </div>
                 <div className="form-group margin-top-bottom">
                   <input type="button" className="btn btn-primary margin-both " value="Create Event" />
@@ -129,14 +148,14 @@ class CreateEvent extends Component {
   }
 }
 const mapStateToProps = state => {
-  return{
-    taggedStudentName : state.event.taggedStudent.join()
+  return {
+    taggedStudentName: state.event.taggedStudent.join()
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     openModalPopUp: () => dispatch(openModalPopUp()),
-    getStudentList : () => dispatch(getStudentList())
+    getStudentList: () => dispatch(getStudentList())
   }
 };
 
