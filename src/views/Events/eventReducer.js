@@ -1,28 +1,36 @@
 
 const initialState = {
-    
+
     openModalForStudent: false,
-    students : []
+    students: [],
+    taggedStudent: []
 };
 const eventReducer = (state = initialState, action) => {
-    switch (action.type) {  
-        
+    debugger
+    switch (action.type) {
+
         case 'OPEN_MODAL':
-        return {
-            ...state,
-            openModalForStudent: true
-        }
+            return {
+                ...state,
+                openModalForStudent: true
+            }
         case 'CLOSE_MODAL':
-        return {
-            ...state,
-            openModalForStudent: false
-        }
+            return {
+                ...state,
+                openModalForStudent: false
+            }
 
         case 'GET_STUDENTS':
-        return {
-            ...state,
-            students: action.student
-        }
+            return {
+                ...state,
+                students: action.student
+            }
+
+        case 'TAGGED_STUDENTS':
+            return {
+                ...state,
+                taggedStudent : action.taggedStudent
+            }
         default:
             return state
     }

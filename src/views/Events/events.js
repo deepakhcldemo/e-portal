@@ -9,13 +9,17 @@ class CreateEvent extends Component {
   state = {
     currentDate: new Date(),
     hideStartCalender: false,
-    hideEndCalender: false
+    hideEndCalender: false,
+    taggedStudentName : []
   }
 
 
   componentDidMount() {
-    debugger
     this.props.getStudentList();
+  }
+
+  componentDidUpdate(){
+    console.log('this.props', this.props.state);
   }
 
   onChangeDate = date => {
@@ -76,7 +80,7 @@ class CreateEvent extends Component {
             </div>
             <div className="input-container">
               <label className="calender-label">Students :</label>
-              <input type="text" className="form-control" /> <i className="fa fa-search search-icon" aria-hidden="true" onClick ={this.openModal}></i>
+              <input type="text" className="form-control" disabled= {true} value ={this.props.taggedStudentName}/> <i className="fa fa-search search-icon" aria-hidden="true" onClick ={this.openModal}></i>
             </div>
             <div className="form-group start-end-date">
               <div className="row">
@@ -112,8 +116,8 @@ class CreateEvent extends Component {
                   <input type="checkbox" name="checkbox" value="value" />
                 </div>
                 <div className="form-group margin-top-bottom">
-                  <input type="button" className="btn btn-success margin-both " value="Create Event" />
-                  <input type="button" className="btn btn-danger" value="Cancel" />
+                  <input type="button" className="btn btn-primary margin-both " value="Create Event" />
+                  <input type="button" className="btn btn-secondary" value="Cancel" />
                 </div>
               </div>
 
@@ -124,6 +128,11 @@ class CreateEvent extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return{
+    taggedStudentName : state.event.taggedStudent.join()
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
     openModalPopUp: () => dispatch(openModalPopUp()),
@@ -131,4 +140,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default connect(null, mapDispatchToProps)(CreateEvent);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);

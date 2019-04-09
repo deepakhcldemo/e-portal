@@ -1,12 +1,16 @@
 
 const initialState = {
     
-    openModalForStudent: false
+    openModalForStudent: false,
+    taggedStudents : []
 };
-const eventReducer = (state = initialState, action) => {
+const modalReducer = (state = initialState, action) => {
+    debugger
     switch (action.type) { 
+        case  'TAGGED_STUDENTS': 
+        return {...state}
         default:
             return state
     }
 }
-export default eventReducer;
+export default modalReducer;
