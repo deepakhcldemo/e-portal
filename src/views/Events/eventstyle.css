@@ -1,0 +1,50 @@
+.wrapper {
+    max-width: 60rem;
+    margin: 0 auto;
+}
+
+.calender-label {
+    margin-right: 20px;
+}
+
+.calender-icon{
+    cursor: pointer;
+    position: relative;
+    top: -34px;
+    float: right;
+    right: 4px;
+    background-color: gray;
+    padding: 6px;
+}
+.complete-calender{
+    position: relative;
+}
+
+.margin-both{
+    margin: 0 20px;
+}
+
+.margin-top-bottom {
+    margin: 20px 0;
+}
+
+.search-icon{
+    position: relative;
+    float: right;
+    top: -37px;
+    padding: 10px;
+    background: gray;
+    cursor: pointer;
+}
+
+.left-arrow-icon{
+    margin-right: 10px;
+}
+
+.back-to-dashborad{
+    cursor: pointer;
+}
+
+.start-end-date{
+    margin-top: 30px;
+}

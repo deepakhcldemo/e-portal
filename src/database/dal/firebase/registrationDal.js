@@ -1,4 +1,4 @@
-import dbFactory from '../dbFactory';
+import dbFactory from '../../dbFactory';
 
 const getDbRef = user => {
   const db = dbFactory.create('firebase');
@@ -24,7 +24,7 @@ export const createUser = user => {
       }
     })
     .then(userDetails => {
-      if (userDetails.additionalUserInfo.isNewUser) {
+      if (userDetails && userDetails.additionalUserInfo.isNewUser) {
         getDbRef()
           .doc(userDetails.user.uid)
           .set({ username: user.username, userId: userDetails.user.uid });
@@ -33,4 +33,17 @@ export const createUser = user => {
     .catch(error => {
       console.log('error', error.message);
     });
+};
+
+export const recoverPassword = email => {
+  const db = dbFactory.create('firebase');
+  let continueUrl = 'http://localhost:3000/?email=';
+  if (process.env.NODE_ENV === 'production') {
+    continueUrl = 'https://e-project-4e023.firebaseapp.com/?email=';
+  }
+  var actionCodeSettings = {
+    url: continueUrl + email,
+    handleCodeInApp: false
+  };
+  return db.auth().sendPasswordResetEmail(email, actionCodeSettings);
 };

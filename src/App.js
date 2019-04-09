@@ -7,12 +7,13 @@ import AuthGuard from './authguard/AuthGuard';
 import { withRouter } from 'react-router';
 import GLOBAL_VARIABLES from './config/Config';
 import './App.css';
-import Classes from './views/Classes';
+import CreateEvent from './views/Events/events';
 import Login from './views/Login';
 import Dashboard from './views/Dashboard';
 import Curriculum from './views/Curriculum';
-import Registration from './views/Registration';
+import PasswordReset from './views/PasswordReset';
 import Profile from './views/Profile';
+import Carousel from './components/carousel/Carousel';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -29,7 +30,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 class App extends Component {
   render() {
     return (
-      
       <div>
         {this.props.spinnerStatus ? (
           <div className="spinner-overlay-container">
@@ -38,23 +38,23 @@ class App extends Component {
             </div>
           </div>
         ) : null}
-        {/* <ReduxToastr
+        <ReduxToastr
           timeOut={4000}
           newestOnTop
           preventDuplicates
           position="bottom-center"
           transitionIn="fadeIn"
           transitionOut="fadeOut"
-        /> */}
+        />
 
-        
         <Switch>
           <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Registration} />
+          <Route exact path="/resetPassword" component={PasswordReset} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/profile" component={Profile} />
-          <PrivateRoute path="/classes" component={Classes} />
           <PrivateRoute path="/curriculum" component={Curriculum} />
+          <PrivateRoute path="/createevent" component={CreateEvent} />
+          <PrivateRoute path="/carousel" component={Carousel} exact />
           <Redirect to="/login" />
         </Switch>
       </div>
