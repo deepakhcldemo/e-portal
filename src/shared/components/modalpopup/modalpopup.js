@@ -2,42 +2,66 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-responsive-modal';
 import { connect } from "react-redux"
-import { closeModalPopUp, saveStudent, addStudent } from './modalAction';
+import { closeModalPopUp, saveStudent, addStudentNames, addStudent } from './modalAction';
+
 
 class ModalPopUp extends Component {
 
   constructor(props) {
+    //this.maintainStudents = [];
     super(props);
-    this.tempStudent = [];
+    this.studentNames = [];
+    this.students = [];
     this.state = {
-      taggedStudent: []
+      taggedStudent: [],
+      updatingUI: false
+
     }
-    this.onCloseModal = this.onCloseModal.bind(this);
+    this.SaveSelectedStudent = this.SaveSelectedStudent.bind(this);
   }
+
+
   onCloseModal = () => {
     this.props.closePopModal();
   }
-  actionOnList = (event, student) => {
-    console.log(event.target.checked, student, 'event');
+
+  componentDidUpdate() {
+    this.studentNames = [];
+    this.props.studentList.forEach((student) => {
+      student.tagged = false;
+    })
+  }
+  actionOnList = (event, getstudent) => {
+    const Index = this.props.studentList.indexOf(getstudent);
+    
     if (event.target.checked) {
-      this.tempStudent.push(student.fname);
+      this.props.studentList[Index].checked = true;
     }
-    else {
-      const index = this.tempStudent.indexOf(student.fname);
-      this.tempStudent.splice(index, 1);
+    else{
+      this.props.studentList[Index].checked = false;
     }
    
   }
   SaveSelectedStudent = () => {
-    this.props.taggedStudent(this.tempStudent);
+    this.props.studentList.forEach((student) => {
+      if (student.checked) {
+        this.studentNames.push(student.fname);
+        this.students.push(student);
+      }
+    })
+    this.props.taggedStudentNames(this.studentNames);
+    this.props.taggedStudent(this.students);
+    this.props.onSaveStudentsList(this.studentNames);
+    this.props.closePopModal();
   }
   render() {
     const studentList = this.props.studentList.map((student) => {
+
       return (
         <tr>
           <td>{student.fname}</td>
           <td>{student.lname}</td>
-          <td><input type="checkbox" onChange={(event) => this.actionOnList(event, student)}></input></td>
+          <td><input type="checkbox" onChange={(event) => this.actionOnList(event, student)} checked={student.checked}></input></td>
         </tr>
       )
     });
@@ -72,7 +96,8 @@ class ModalPopUp extends Component {
 const mapStateToProps = state => {
   return {
     modalState: state.event.openModalForStudent,
-    studentList: state.event.students
+    studentList: state.event.students,
+    taggedStudentFromEvent: state.event.taggedStudent
   };
 };
 
@@ -80,7 +105,8 @@ const mapDispatchToProps = dispatch => {
   return {
     closePopModal: () => dispatch(closeModalPopUp()),
     saveStudent: () => dispatch(saveStudent()),
-    taggedStudent : (students) => dispatch(addStudent(students))
+    taggedStudentNames: (studentsNames) => dispatch(addStudentNames(studentsNames)),
+    taggedStudent: (students) => dispatch(addStudent(students))
   }
 };
 
