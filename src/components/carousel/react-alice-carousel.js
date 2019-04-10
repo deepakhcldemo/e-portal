@@ -637,6 +637,8 @@ export default class AliceCarousel extends React.PureComponent {
     )
   }
 
+  
+
   _renderNextButton() {
     const { isNextSlideDisabled } = Utils.itemInfo(this.state)
     return (
@@ -708,6 +710,20 @@ export default class AliceCarousel extends React.PureComponent {
       </div>
     )
   }
+
+  // toggleModalOnClick() {
+  //   const { isPrevSlideDisabled } = Utils.itemInfo(this.state)
+  //   return (
+  //     <Views.PrevNextButton
+  //       name="prev"
+  //       disabled={isPrevSlideDisabled}
+  //       onClick={this._slidePrev}
+  //       // onClick={this._slideNext}
+  //       onMouseEnter={this._handleOnMouseEnter}
+  //       onMouseLeave={this._handleOnMouseLeave}
+  //     />
+  //   )
+  // }
 }
 
 AliceCarousel.propTypes = propTypes

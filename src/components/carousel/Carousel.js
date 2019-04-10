@@ -1,10 +1,8 @@
 import React from 'react'
 import AliceCarousel from './react-alice-carousel'
-import Modal from 'react-modal';
 import "./css/_fade-animation.css";
 import "./css/alice-carousel.css";
 import "./css/main.css";
-
 
 class Carousel extends React.PureComponent {
   responsive = {
@@ -18,20 +16,17 @@ class Carousel extends React.PureComponent {
     paddingRight: 30,
   }
 
-  constructor() {
-    super();
-
-    this.state = {
-        show: true
-    };
+  constructor(props) {
+    super(props);
+  }
+  
+  carouselModal = (imageType, imageSrc) =>{
+    this.props.toggleModal(imageType, imageSrc)
   }
 
   render() {
     return (
       <div className="app" id="app">
-        <h1 className="h1">Carousel</h1>
-        
-
         <AliceCarousel
           duration={1000}
           showSlideInfo={true}
@@ -42,19 +37,17 @@ class Carousel extends React.PureComponent {
           responsive={this.responsive}
           stagePadding={this.stagePadding}
           autoPlay={false}
-        >
-          
+        > 
           <div className="item">
-          <img src="Assets/hdpi/boardBG.jpg" alt="boardBG" width="300px" height="170px" onClick="window.open('anotherpage.html', '_blank');" /><h1>1</h1></div>
-          <div className="item"><img src="Assets/hdpi/Car.png" alt="Car" width="300px" height="170px" /><h1>2</h1></div>
-          <div className="item"><iframe width="300" height="315" src="https://www.youtube.com/embed/JKCgwL-IfgM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><h1>3</h1></div>
-          <div className="item">          
-          <h1>4</h1></div>
+          <img src="Assets/hdpi/boardBG.jpg" alt="boardBG" className="img-thumbnail" onClick={() => this.carouselModal('image', 'Assets/hdpi/boardBG.jpg')} /></div>
+          <div className="item"><img src="Assets/hdpi/Car.png" alt="Car" className="img-thumbnail" onClick={() => this.carouselModal('image','Assets/hdpi/Car.png')} /></div>
+          <div className="item" onClick={() => this.carouselModal('video', 'https://www.youtube.com/embed/JKCgwL-IfgM')} >
+          <iframe className="img-thumbnail" src="https://www.youtube.com/embed/JKCgwL-IfgM" frameBorder="0"></iframe><h1>3</h1><div className="item-over layer img-thumbnail"></div></div>          
+          <div className="item"><h1>4</h1></div>
           <div className="item">EEEEE<h1>5</h1></div>
           <div className="item">FFFFFF<h1>6</h1></div>
           <div className="item">GGGGGGG<h1>7</h1></div>
-        </AliceCarousel>
-        
+        </AliceCarousel>        
       </div>
     )
   }

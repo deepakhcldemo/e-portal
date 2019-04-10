@@ -819,7 +819,7 @@ body.toastr-confirm-active {
 }
 
 .content-container {
-  position: relative;
+  /* position: relative; */
   padding-top: 56px;
   overflow-y: auto;
   /* min-height: 100vh; */

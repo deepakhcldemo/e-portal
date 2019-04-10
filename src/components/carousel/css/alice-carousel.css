@@ -60,10 +60,12 @@
 }
 .alice-carousel__prev-btn {
   text-align: left;
+  width: 52px;
 }
 .alice-carousel__next-btn {
   text-align: right;
   right: 0px;
+  width: 50px;
 }
 .alice-carousel__prev-btn-item, .alice-carousel__next-btn-item {
   display: inline-block;
