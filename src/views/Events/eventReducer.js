@@ -6,7 +6,6 @@ const initialState = {
     taggedStudent: []
 };
 const eventReducer = (state = initialState, action) => {
-    debugger
     switch (action.type) {
 
         case 'OPEN_MODAL':

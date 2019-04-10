@@ -11,6 +11,7 @@ import pdfViewerReducer from './components/pdfViewer/reducer';
 import loginReducer from './views/Login/reducer';
 import spinnerStatusReducer from './spinnerStore/reducer';
 import curriculumReducer from './views/Curriculum/reducer';
+import categoryReducer from './views/Category/reducer';
 
 const rootPersistConfig = {
   key: 'root',
@@ -20,6 +21,7 @@ const rootPersistConfig = {
 };
 
 const rootReducer = persistCombineReducers(rootPersistConfig, {
+  category: categoryReducer,
   curriculum: curriculumReducer,
   pdfViewer: pdfViewerReducer,
   login: loginReducer,

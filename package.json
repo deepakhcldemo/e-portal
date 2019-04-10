@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@progress/kendo-react-animation": "^2.8.0",
+    "@progress/kendo-react-treeview": "^2.8.0",
+    "@progress/kendo-theme-default": "^3.5.0",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.8.0",
@@ -29,7 +32,6 @@
     "react-router-dom": "^5.0.0",
     "react-router-redux": "^4.0.8",
     "react-scripts": "2.1.8",
-    "react-simple-jstree": "^0.2.2",
     "react-swipeable": "^5.1.0",
     "react-transition-group": "^2.8.0",
     "redux": "^4.0.1",
