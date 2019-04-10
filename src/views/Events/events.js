@@ -2,11 +2,10 @@ import React, { Component } from "react"
 import { connect } from 'react-redux';
 import "./eventstyle.css"
 import { EVENT_CONSTANT } from '../../constant/Event-Constant'
-import ModalPopUp from '../../shared/components/modalpopup/modalpopup'
-import Calendar from 'react-calendar';
+import ModalPopUp from '../../shared/components/modalpopup/modalpopup';
 import DateTimePicker from 'react-datetime-picker';
-import moment from 'moment';
-import { openModalPopUp, getStudentList } from './eventAction';
+
+import { openModalPopUp, getStudentList, addStudent } from './eventAction';
 // import TimePicker from 'react-bootstrap-time-picker';
 class CreateEvent extends Component {
   state = {
@@ -14,22 +13,15 @@ class CreateEvent extends Component {
     customStartDate: new Date(),
     hideStartCalender: false,
     hideEndCalender: false,
-    taggedStudentName: [],
     endDateCalender: false,
-    // startDate: (new Date().getDate() + '/' +  new Date().getMonth() + '/' + new Date().getFullYear()) ,
+    taggedStudentsNames: [],
     startDate: new Date(),
     endDate: (new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear()),
   }
-
-
   componentDidMount() {
     this.props.getStudentList();
-  }
 
-  componentDidUpdate() {
-    console.log('this.props', this.props.state);
   }
-
   onChangeDate = date => {
     console.log('date', date);
   }
@@ -57,7 +49,6 @@ class CreateEvent extends Component {
     })
   }
   allDayEvent = (event) => {
-    debugger
     if (event.target.checked) {
       this.setState({
         endDateCalender: true
@@ -92,30 +83,33 @@ class CreateEvent extends Component {
       hideEndCalender: !startDateToggle
     })
   }
-
+  onSaveStudentsList = (studentList) => {
+    console.log('studentList', studentList);
+  }
 
   onStartDateChange = (startdate) => {
-    console.log('date', startdate);
     this.setState({
       customStartDate: startdate
     })
   }
-
+  getStudentList = (studentList) => {
+    this.setState({
+      taggedStudentsNames: studentList
+    })
+  }
 
   onEndDateChange = (Enddate) => {
-    console.log('date', Enddate);
     this.setState({
       customEndDate: Enddate
     })
   }
   render() {
     let style = {}
-
     this.state.endDateCalender ? style = { 'display': 'none' } : style = {}
     return (
 
       <div className="wrapper">
-        <ModalPopUp></ModalPopUp>
+        <ModalPopUp onSaveStudentsList={this.getStudentList} taggedStudentFromEvent = {this.state.taggedStudentsNames} ></ModalPopUp>
         <div className="row">
           <div className="back-to-dashborad" onClick={this.goBackToDashboard}><i className="fa fa-angle-left left-arrow-icon"></i><span>Back To Dashboard</span></div>
           <div className="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -134,7 +128,7 @@ class CreateEvent extends Component {
             </div>
             <div className="input-container">
               <label className="calender-label">Students :</label>
-              <input type="text" className="form-control" disabled={true} value={this.props.taggedStudentName} /> <i className="fa fa-search search-icon" aria-hidden="true" onClick={this.openModal}></i>
+              <input type="text" className="form-control" disabled={true} value={this.state.taggedStudentsNames} /> <i className="fa fa-search search-icon" aria-hidden="true" onClick={this.openModal}></i>
             </div>
             <div className="form-group start-end-date">
               <div className="row">
@@ -178,13 +172,14 @@ class CreateEvent extends Component {
           </div>
         </div>
       </div>
-     
+
     );
   }
 }
 const mapStateToProps = state => {
   return {
-    taggedStudentName: state.event.taggedStudent.join()
+    taggedStudentName: state.event.taggedStudentNames,
+
   }
 }
 const mapDispatchToProps = dispatch => {

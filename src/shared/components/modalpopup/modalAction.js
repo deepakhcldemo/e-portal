@@ -12,6 +12,13 @@ export const saveStudent = () => {
 }
 
 
+export const addStudentNames = (studentNames) => {    
+    return {
+        type: 'TAGGED_STUDENTS_NAMES', 
+        taggedStudentNames : studentNames
+    }
+}
+
 export const addStudent = (student) => {    
     return {
         type: 'TAGGED_STUDENTS', 
