@@ -4,15 +4,21 @@ import "./eventstyle.css"
 import { EVENT_CONSTANT } from '../../constant/Event-Constant'
 import ModalPopUp from '../../shared/components/modalpopup/modalpopup'
 import Calendar from 'react-calendar';
+import DateTimePicker from 'react-datetime-picker';
+import moment from 'moment';
 import { openModalPopUp, getStudentList } from './eventAction';
 // import TimePicker from 'react-bootstrap-time-picker';
 class CreateEvent extends Component {
   state = {
-    currentDate: new Date(),
+    customEndDate: new Date(),
+    customStartDate: new Date(),
     hideStartCalender: false,
     hideEndCalender: false,
     taggedStudentName: [],
-    endDateCalender: false
+    endDateCalender: false,
+    // startDate: (new Date().getDate() + '/' +  new Date().getMonth() + '/' + new Date().getFullYear()) ,
+    startDate: new Date(),
+    endDate: (new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear()),
   }
 
 
@@ -72,10 +78,40 @@ class CreateEvent extends Component {
   openModal = () => {
     this.props.openModalPopUp();
   }
+
+  onChangeStartDate = (date) => {
+    const startDateToggle = this.state.hideStartCalender;
+    this.setState({
+      hideStartCalender: !startDateToggle
+    })
+  }
+
+  onChangeEndDate = () => {
+    const startDateToggle = this.state.hideEndCalender;
+    this.setState({
+      hideEndCalender: !startDateToggle
+    })
+  }
+
+
+  onStartDateChange = (startdate) => {
+    console.log('date', startdate);
+    this.setState({
+      customStartDate: startdate
+    })
+  }
+
+
+  onEndDateChange = (Enddate) => {
+    console.log('date', Enddate);
+    this.setState({
+      customEndDate: Enddate
+    })
+  }
   render() {
     let style = {}
 
-    this.state.endDateCalender ? style = {'display' : 'none'} : style ={}
+    this.state.endDateCalender ? style = { 'display': 'none' } : style = {}
     return (
 
       <div className="wrapper">
@@ -102,48 +138,47 @@ class CreateEvent extends Component {
             </div>
             <div className="form-group start-end-date">
               <div className="row">
-                <div className="col-4 col-sm-12 col-md-4 col-lg-4">
+                <div className="col-6 col-sm-12 col-md-6 col-lg-6">
 
                   <div className="input-container">
                     <label className="calender-label">Start Date :</label>
-                    <input type="text" className="input-field" /> <i className="fa fa-calendar calender-icon" aria-hidden="true" onClick={this.toggleStartCalender}></i>
+                    <DateTimePicker
+                      value={this.state.customStartDate}
+                      onChange={this.onStartDateChange}
+                    />
                   </div>
                   <div className="complete-calender">
-                    {this.state.hideStartCalender ?
-                      <Calendar
-                        value={this.state.currentDate}
-                        onChange={this.onChangeDate}
 
-                      /> : null}
                   </div>
                 </div>
-                 <div className="col-4 col-sm-12 col-md-4 col-lg-4" disabled = {this.state.endDateCalender}>
+                <div className="col-6 col-sm-12 col-md-6 col-lg-6" disabled={this.state.endDateCalender}>
 
-                  <div className="input-container" style = {style}>
+                  <div className="input-container" style={style}>
                     <label className="calender-label">End Date :</label>
-                    <input type="text" className="input-field" /> <i className="fa fa-calendar calender-icon" aria-hidden="true" onClick={this.toggleEndCalender}></i>
+                    <DateTimePicker
+                      value={this.state.customEndDate}
+                      onChange={this.onEndDateChange}
+                    />
                   </div>
-                  {this.state.hideEndCalender ?
-                    <Calendar
-                      value={this.state.currentDate}
-                      onChange={this.onChangeDate}
-                    /> : null}
-                  {/* <TimePicker start="10:00" end="21:00" step={30} /> */}
-                </div> 
-                <div className="form-group">
+
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 col-sm-12 col-md-12 col-lg-12 check-box-all-day-event">
                   <label className="margin-both">All Day Event </label>
                   <input type="checkbox" name="checkbox" value="value" onClick={this.allDayEvent} />
                 </div>
-                <div className="form-group margin-top-bottom">
-                  <input type="button" className="btn btn-primary margin-both " value="Create Event" />
-                  <input type="button" className="btn btn-secondary" value="Cancel" />
-                </div>
               </div>
-
+              <div className="form-group margin-top-bottom">
+                <input type="button" className="btn btn-primary margin-both " value="Create Event" />
+                <input type="button" className="btn btn-secondary" value="Cancel" />
+              </div>
             </div>
+
           </div>
         </div>
       </div>
+     
     );
   }
 }
