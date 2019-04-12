@@ -1,8 +1,11 @@
 import React from 'react'
 import AliceCarousel from './react-alice-carousel'
+import { connect } from 'react-redux';
 import "./css/_fade-animation.css";
 import "./css/alice-carousel.css";
 import "./css/main.css";
+// import { getCurriculum } from './action';
+
 
 class Carousel extends React.PureComponent {
   responsive = {
@@ -36,7 +39,7 @@ class Carousel extends React.PureComponent {
           infinite={true}
           responsive={this.responsive}
           stagePadding={this.stagePadding}
-          autoPlay={false}
+          autoPlay={true}
         > 
           <div className="item">
           <img src="Assets/hdpi/boardBG.jpg" alt="boardBG" className="img-thumbnail" onClick={() => this.carouselModal('image', 'Assets/hdpi/boardBG.jpg')} /></div>
@@ -53,4 +56,17 @@ class Carousel extends React.PureComponent {
   }
 }
 
-export default Carousel
+// const mapStateToProps = state => {
+//   return {
+//       tree: state.category.tree,
+//       modalState: state.curriculum.openModal
+//   }
+// }
+// const mapDispatchToProps = dispatch => {
+//   return {
+//       getCurriculum: () => dispatch(getCurriculum()),        
+//   }
+// }
+
+export default Carousel;
+// export default connect(mapStateToProps, mapDispatchToProps)(Carousel);

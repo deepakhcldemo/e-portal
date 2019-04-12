@@ -12,6 +12,7 @@ import loginReducer from './views/Login/reducer';
 import spinnerStatusReducer from './spinnerStore/reducer';
 import curriculumReducer from './views/Curriculum/reducer';
 import categoryReducer from './views/Category/reducer';
+import carouselReducer from './components/carousel/reducer';
 
 const rootPersistConfig = {
   key: 'root',
@@ -27,7 +28,8 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   login: loginReducer,
   event : eventReducer,
   toastr,
-  spinnerStatus: spinnerStatusReducer
+  spinnerStatus: spinnerStatusReducer,
+  carousel: carouselReducer
 });
 
 const history = createBrowserHistory();

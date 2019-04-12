@@ -27,7 +27,6 @@ class Dashboard extends Component {
   };
 
   toggleModalClose = () => {
-    console.log("Close");
     this.setState({
       isOpen: !this.state.isOpen
     });
