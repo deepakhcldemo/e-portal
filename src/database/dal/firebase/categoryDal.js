@@ -1,62 +1,63 @@
-import dbFactory from '../../dbFactory';
+import dbFactory from '../../dbFactory'
+import { CATEGORY } from './../../../constant/Constant'
 
 export const getCategoryFromDB = (dispatch) => {
-    const db = dbFactory.create('firebase');
+    const db = dbFactory.create('firebase')
     db.firestore().collection("category").doc('0').get()
-        .then(function(doc) {
-            if (doc.exists) {                
-                dispatch({type:'GET_CATEGORY', category: [doc.data()]})
-            } 
+    .then(function(doc) {
+        if (doc.exists)                 
+        dispatch({type: CATEGORY.ACTIONS.GET, category: [doc.data()]})
+            
     }).catch(err => {
-        dispatch({type: 'ERROR', err})
+        dispatch({type: CATEGORY.ACTIONS.ERROR, err})
     })              
 }
 
-export const manageCategoryFromDB = async (dispatch, tree, state, type) => {
-    const db = dbFactory.create('firebase');    
-    const treeData = await manageTree(tree, state, type);
+export const manageCategoryFromDB = async (dispatch, tree, state) => {
+    const db = dbFactory.create('firebase')    
+    const treeData = await manageTree(tree, state);
+    console.log(state);
     console.log(treeData);
     db.firestore().collection('category').doc('0').set(treeData[0])
-    .then((res)=>{
-        console.log(res)
-        dispatch({type: 'ADD_CATEGORY', category: treeData})          
+    .then(()=>{
+        dispatch({type: CATEGORY.ACTIONS.MANAGE, category: treeData})          
     }).catch(err => {
-        dispatch({type: 'ERROR', err})
+        dispatch({type: CATEGORY.ACTIONS.ERROR, err})
     })
 }
 
-const manageTree = (tree, state, type) => {    
+const manageTree = async (tree, state) => {    
     if (state.selectedNodeIndex.length === 1){
-        tree[0].items.push({text: state.selectedNode, items: []})
+        tree[0].items.push({text: state[state.categoryType.toLowerCase()], items: []})
         return tree
     }
-    manageNestedTree(tree,state,type);   
+    await manageNestedTree(tree,state);   
     return tree;
 }
 
-const manageNestedTree = (tree, state, type) => {
+const manageNestedTree = (tree, state) => {
     let clonedTree = tree;
-    const itemHierarchicalIndex = splitItemHierarchicalIndex(state.selectedNodeIndex),
+    const itemHierarchicalIndex = splitItem(state.selectedNodeIndex, '_'),
     len = itemHierarchicalIndex.length;
-    for(let i = 0;i<len;i++){
-        if(i === len-1 && (type == 'edit' || type == 'delete')) {
-            if(type == 'edit') {
-                clonedTree = clonedTree[itemHierarchicalIndex[i]]
-            } else if(type == 'delete'){
-                delete clonedTree[itemHierarchicalIndex[i]]
+    itemHierarchicalIndex.forEach((item, index) => {
+        if(index === len-1 && 
+            (state.categoryType === CATEGORY.TYPE.EDIT || state.categoryType === CATEGORY.TYPE.DELETE)) {
+            if(state.categoryType === CATEGORY.TYPE.EDIT){
+                clonedTree = clonedTree[item];
+                clonedTree.text = state[state.categoryType.toLowerCase()]
+            } else if(state.categoryType === CATEGORY.TYPE.DELETE){
+                clonedTree.splice(item, 1);
             }
-        }else {
-            clonedTree = clonedTree[itemHierarchicalIndex[i]].items
+        }else{
+            clonedTree = clonedTree[item].items
         }
-    }
-    if(type.toUpperCase() === 'ADD') {
-        clonedTree.push({text: state.selectedNode, items: []})            
-    }else if(type.toUpperCase() === 'EDIT') {
-        clonedTree.text = state.selectedNode
+    })   
+    if(state.categoryType === CATEGORY.TYPE.ADD){
+        clonedTree.push({text: state[state.categoryType.toLowerCase()], items: []})            
     }
     return tree;
 }
 
-const splitItemHierarchicalIndex = (itemHierarchicalIndex) => {
-    return itemHierarchicalIndex.split('_');
+const splitItem = (item, seprator) => {
+    return item.split(seprator);
 }

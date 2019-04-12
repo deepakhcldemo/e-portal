@@ -1,14 +1,8 @@
-import { getCategoryIntoDB, addCategoryIntoDB/* , deleteCategory,editCategory */ } from './../../database/dal/firebase/categoryDal'
+import { getCategoryFromDB } from './../../database/dal/firebase/categoryDal'
 
 export const getCategory = () => {
     return (dispatch) => {
-        getCategoryIntoDB(dispatch);
-    }
-}
-
-export const addCategory = (pId, categoryName) => {    
-    return (dispatch) => {
-        addCategoryIntoDB(dispatch)        
+        getCategoryFromDB(dispatch);
     }
 }
 

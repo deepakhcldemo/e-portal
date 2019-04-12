@@ -1,18 +1,27 @@
+import { CATEGORY } from './../../constant/Constant'
+
 const initialState = {
     tree: [],
-    openModal: false
+    openModal: false,
+    error: ''
 }
-const categoryReducer = (state = initialState, action) => {
+
+const categoryReducer = (state = initialState, action) => {    
     switch (action.type) {  
-        case 'GET_CATEGORY':
+        case CATEGORY.ACTIONS.GET:
             return {                
                 ...state,                               
                 tree: action.category
             } 
-        case 'MANAGE_CATEGORY':
+        case CATEGORY.ACTIONS.MANAGE:
             return {
                 ...state,
                 tree: action.category
+            }
+        case CATEGORY.ACTIONS.ERROR: 
+            return {
+                ...state,
+                error: action.err
             }
         case 'CLOSE':
             return {

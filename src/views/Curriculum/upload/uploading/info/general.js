@@ -18,7 +18,19 @@ class General extends Component {
             <div className="form-group">
                 <label htmlFor="tags">Tags</label>
                 <input value={generalInfo.tags ? generalInfo.tags : ''} type="text" className="form-control" id="tags" aria-describedby="tags" placeholder="Tags" />
-            </div>            
+            </div>  
+            <div className="form-check">
+                <input className="form-check-input" type="checkbox" value="" id="rating" />
+                <label className="form-check-label" for="rating">
+                
+                </label>
+            </div>
+            <div className="form-check">
+                <input className="form-check-input" type="checkbox" value="" id="like" />
+                <label className="form-check-label" for="like">
+                Default checkbox
+                </label>
+            </div>             
             </>
         )
     }

@@ -1,5 +1,8 @@
-export const SelectedNode = {
+export const SelectedNode = {    
+    add: '',
+    edit: '',
     selectedNode: '',
-    selectedNodeIndex: '',
-    categoryType: ''
+    categoryType: '',
+    selectedItem: '',
+    selectedNodeIndex: ''
 }

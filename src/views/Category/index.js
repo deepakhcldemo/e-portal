@@ -1,25 +1,49 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { TreeView } from "@progress/kendo-react-treeview";
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import { TreeView } from "@progress/kendo-react-treeview"
 import Modal from 'react-responsive-modal'
 import Header from "../../components/layout/header/Header"
-import "@progress/kendo-theme-default/dist/all.css";
-import "./styles.css";
+import { toastr } from 'react-redux-toastr'
 
-import { openModal, closeModal, getCategory, manageCategory } from './action';
-import { SelectedNode } from './model';
+import "@progress/kendo-theme-default/dist/all.css"
+import "./styles.css"
+
+import { openModal, closeModal, getCategory, manageCategory } from './action'
+import { SelectedNode } from './model'
+import { CATEGORY } from './../../constant/Constant'
 
 class Category extends Component {
 
     state = SelectedNode;
+    selectedItem = null;
 
-    onItemClick = event => {               
+    componentWillMount(){
+        this.props.closeModal();
+    }
+    
+    componentDidMount(){
+        this.props.getCategory();
+    }
+  
+    componentWillUnmount(){
+        this.props.closeModal();
+    }
+
+    onItemClick = async (event) => {               
+        await this.selectCurrentNode(event);
         this.setState({
             selectedNode: (event.item.text) ? event.item.text : '',
             selectedNodeIndex: (event.itemHierarchicalIndex) ? event.itemHierarchicalIndex : '' 
         })
-        // event.item.selected = !event.item.selected;
         this.forceUpdate();
+    }
+
+    selectCurrentNode(e){
+        if (this.selectedItem)
+        this.selectedItem.selected = false;
+
+        e.item.selected = true;
+        this.selectedItem = e.item;   
     }
 
     onExpandChange = event => {
@@ -29,30 +53,36 @@ class Category extends Component {
 
     handleCategory = type => {
         this.setState({
-            categoryType: type
+            categoryType: type,
+            [type.toLowerCase()]: (type === CATEGORY.TYPE.EDIT) ? this.state.selectedNode : ''
         })
         this.props.openModal()
     }
-
-    manageCategory = type => {
-        this.props.manageCategory(this.props.tree, this.state,type)
-        this.props.closeModal();
-    }
-
-    componentDidMount(){
-        this.props.getCategory();
-    }
-
+    
     handleInputChange(e) {
-        console.log(e.id)
         this.setState({
           [e.id]: e.value
         })
     }
+    
+    manageCategory = () => {
+        if (this.checkStateIsEmpty()) {
+            this.props.manageCategory(this.props.tree, this.state)
+            this.props.closeModal();
+        }
+    }
+    
+    checkStateIsEmpty(){
+        if (!this.state[this.state.categoryType.toLowerCase()]) {
+            toastr.warning(this.state.categoryType, CATEGORY.EMPTY_MSG);
+            return false;
+        }
+        return true;
+    }
 
-    render() {
+    render() {  
         const { tree, modalState } = this.props
-        const checkBoth = this.state.categoryType === 'add' || this.state.categoryType === 'edit'
+        const checkBoth = this.state.categoryType === 'ADD' || this.state.categoryType === 'EDIT'        
         return (
             <div className="container-fluid">
                 <div className="row">
@@ -62,7 +92,7 @@ class Category extends Component {
                 </div>          
                 <div className="row justify-content-md-center">
                     <div className="col-sm-6 col-md-6 col-lg-6 adjust-top">
-                        <h5>Category Management</h5>
+                        <h5>{CATEGORY.HEADING}</h5>
                         <div className="card">
                             <div className="card-body">
                                 <div className="col-lg-6 pull-left">
@@ -81,27 +111,27 @@ class Category extends Component {
                                         <div className="pull-right">
                                             <button 
                                                 type="button" 
-                                                /* title={CURRICULUM_CONSTANT.BUTTON.CATEGORY.ADD} */ 
+                                                title={CATEGORY.TYPE.ADD} 
                                                 className="btn btn-outline-primary btn-sm space" 
-                                                onClick={() => this.handleCategory('add')}>
+                                                onClick={() => this.handleCategory('ADD')}>
                                                 <i className="fa fa-plus" aria-hidden="true"></i>
                                             </button>
                                             { this.state.selectedNodeIndex !== '0' && (
                                                 <>
                                                 <button 
                                                 type="button" 
-                                                /* title={CURRICULUM_CONSTANT.BUTTON.CATEGORY.EDIT} */ 
+                                                title={CATEGORY.TYPE.EDIT}
                                                 className="btn btn-outline-primary btn-sm space" 
-                                                onClick={() => this.handleCategory('edit')}>
+                                                onClick={() => this.handleCategory('EDIT')}>
                                                 <i className="fa fa-pencil" aria-hidden="true"></i>
                                                 </button>
-                                                {/* <button 
+                                                <button 
                                                 type="button" 
-                                                
+                                                title={CATEGORY.TYPE.DELETE}
                                                 className="btn btn-outline-primary btn-sm space" 
-                                                onClick={() => this.manageCategory('delete')}>
+                                                onClick={() => this.handleCategory('DELETE')}>
                                                 <i className="fa fa-trash" aria-hidden="true"></i>
-                                                </button> */}
+                                                </button>
                                                 </>
                                             )}
                                         </div>
@@ -112,17 +142,28 @@ class Category extends Component {
                     </div>
                     <Modal open={modalState} onClose={this.props.closeModal} center>
                         { checkBoth && (
-                        <>
-                        <div className="form-group">
-                        <label htmlFor="category">Category</label>
-                        <input id="selectedNode" type="text" 
-                            className="form-control" placeholder="Enter Category" 
-                            value={this.state.selectedNode} 
-                            onChange={(e) => this.handleInputChange(e.target)} />
-                        </div>
-                        <button className="btn btn-outline-primary btn-sm" onClick={() => this.manageCategory(this.state.categoryType)}>{this.state.categoryType.toUpperCase()}</button>
-                        </>
-                        ) }
+                            <>
+                                <div className="form-group">
+                                    <label htmlFor={this.state.categoryType.toLowerCase()}>{this.state.categoryType } {CATEGORY.SUBHEADING.toUpperCase()}</label>
+                                    <input id={this.state.categoryType.toLowerCase()} type="text" 
+                                        className="form-control" placeholder={this.state.categoryType} 
+                                        value={this.state[this.state.categoryType.toLowerCase()]} 
+                                        onChange={(e) => this.handleInputChange(e.target)} />
+                                </div>
+                                <button className="btn btn-outline-primary btn-sm space" onClick={() => this.manageCategory()}>{this.state.categoryType}</button>
+                            </>
+                        )}
+                        {this.state.categoryType === 'DELETE' && (
+                            <>
+                                <div className="col-12">
+                                    <br/>
+                                    <h6>Are You Sure You Want to Delete this Category?</h6>
+                                    <br/>
+                                </div>                            
+                                <button className="btn btn-outline-primary btn-sm space" onClick={() => this.manageCategory()}>{this.state.categoryType}</button>                        
+                            </>
+                        )}
+                        <button className="btn btn-outline-primary btn-sm space" onClick={this.props.closeModal}>Cancel</button>                        
                     </Modal>
                 </div>
             </div>
@@ -132,7 +173,8 @@ class Category extends Component {
 const mapStateToProps = state => {
     return {
         tree: state.category.tree,
-        modalState: state.curriculum.openModal
+        modalState: state.category.openModal,
+        error: state.category.error
     }
 }
 const mapDispatchToProps = dispatch => {
@@ -140,7 +182,7 @@ const mapDispatchToProps = dispatch => {
         openModal: () => dispatch(openModal()),
         closeModal: () => dispatch(closeModal()),
         getCategory: () => dispatch(getCategory()),
-        manageCategory: (tree, state, type) => dispatch(manageCategory(tree, state, type)),        
+        manageCategory: (tree, state) => dispatch(manageCategory(tree, state)),        
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Category);

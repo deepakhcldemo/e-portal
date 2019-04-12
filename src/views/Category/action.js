@@ -5,9 +5,9 @@ export const getCategory = () => {
         getCategoryFromDB(dispatch);
     }
 }
-export const manageCategory = (tree, state, type) => {
+export const manageCategory = (tree, state) => {
     return (dispatch) => {
-        manageCategoryFromDB(dispatch, tree, state, type);
+        manageCategoryFromDB(dispatch, tree, state);
     }
 }
 export const openModal = () => {
