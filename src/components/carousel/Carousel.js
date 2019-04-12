@@ -28,13 +28,31 @@ class Carousel extends React.Component {
   componentDidMount(){
     this.props.getCurriculum();
   }
-  render() {
+ 
+  render() {    
+    const numbers = [1, 2, 3, 4, 5];
+    const listNumberItems = numbers.map((number) =>
+      <div className="item" key={number.toString()} onClick={() => this.carouselModal('video', 'https://www.youtube.com/embed/JKCgwL-IfgM')}>
+          <iframe className="img-thumbnail" src="https://www.youtube.com/embed/JKCgwL-IfgM" frameBorder="0"></iframe><div key="layer{CurriculumRowsIndex}" className="item-over layer img-thumbnail"></div>
+      </div>
+    );
+
     const { carouselAwaitingRows } = this.props;
-    // console.log(carouselAwaitingRows);  
+    
+    console.log(carouselAwaitingRows); 
+    const listAwaitingItems = carouselAwaitingRows.map((awaitingRows, index) =>
+      <div className="item" key={index} onClick={() => this.carouselModal('video', awaitingRows.src)}>
+          <iframe className="img-thumbnail" src={awaitingRows.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer img-thumbnail"></div>
+      </div>
+    );
+
+    const newlyAddedVideos = listAwaitingItems;
+    const trendingVideos = listAwaitingItems;
+    
     return (
       <React.Fragment>
       <div className="app-carousel">
-
+      <h1>Top 10 ></h1>
         <AliceCarousel
           duration={1000}
           showSlideInfo={true}
@@ -46,45 +64,45 @@ class Carousel extends React.Component {
           stagePadding={this.stagePadding}
           autoPlay={false}
         > 
-        {/* console.log('--- ----', carouselAwaitingRows); */}
-          <div className="item">
-          <img src="Assets/hdpi/boardBG.jpg" alt="boardBG" className="img-thumbnail" onClick={() => this.carouselModal('image', 'Assets/hdpi/boardBG.jpg')} /></div>
-          <div className="item"><img src="Assets/hdpi/Car.png" alt="Car" className="img-thumbnail" onClick={() => this.carouselModal('image','Assets/hdpi/Car.png')} /></div>
-          <div className="item" onClick={() => this.carouselModal('video', 'https://www.youtube.com/embed/JKCgwL-IfgM')} >
-          <iframe className="img-thumbnail" src="https://www.youtube.com/embed/JKCgwL-IfgM" frameBorder="0"></iframe><h1>3</h1><div className="item-over layer img-thumbnail"></div></div>          
-          <div className="item"><h1>4</h1></div>
+          {listAwaitingItems}          
         </AliceCarousel>        
       </div>
 
       <div className="app-carousel">
-       <AliceCarousel
-         duration={1000}
-         showSlideInfo={true}
-         fadeOutAnimation={true}
-         mouseDragEnabled={true}
-         onSlideChanged={console.debug}
-         infinite={true}
-         responsive={this.responsive}
-         stagePadding={this.stagePadding}
-         autoPlay={false}
-       > 
-        carouselAwaitingRows.map((curriculumRows, CurriculumRowsIndex) => {          
-            // if (curriculumRows.type === 'image') {
-            //   <div className="item"><img src={curriculumRows.src} alt="boardBG" className="img-thumbnail" onClick={() => this.carouselModal(curriculumRows.type, curriculumRows.src)} /></div>
-            // } else {
-            //   <div className="item" onClick={() => this.carouselModal(curriculumRows.type, curriculumRows.src)} ><iframe className="img-thumbnail" src={curriculumRows.src} frameBorder="0"></iframe><h1>3</h1><div className="item-over layer img-thumbnail"></div></div>
-            // }
-            // console.log('teststst');
-            // <div className="item" onClick={() => this.carouselModal(curriculumRows.type, curriculumRows.src)} ><iframe className="img-thumbnail" src={curriculumRows.src} frameBorder="0"></iframe><h1>3</h1><div className="item-over layer img-thumbnail"></div></div>
-        });
-         <div className="item">
-         <img src="Assets/hdpi/boardBG.jpg" alt="boardBG" className="img-thumbnail" onClick={() => this.carouselModal('image', 'Assets/hdpi/boardBG.jpg')} /></div>
-         <div className="item"><img src="Assets/hdpi/Car.png" alt="Car" className="img-thumbnail" onClick={() => this.carouselModal('image','Assets/hdpi/Car.png')} /></div>
-         <div className="item" onClick={() => this.carouselModal('video', 'https://www.youtube.com/embed/JKCgwL-IfgM')} >
-         <iframe className="img-thumbnail" src="https://www.youtube.com/embed/JKCgwL-IfgM" frameBorder="0"></iframe><h1>3</h1><div className="item-over layer img-thumbnail"></div></div>          
-         <div className="item"><h1>4</h1></div>
-       </AliceCarousel>        
-     </div>
+      <h1>NEWLY ADDED VIDEOS ></h1>
+        <AliceCarousel
+          duration={1000}
+          showSlideInfo={true}
+          fadeOutAnimation={true}
+          mouseDragEnabled={true}
+          onSlideChanged={console.debug}
+          infinite={true}
+          responsive={this.responsive}
+          stagePadding={this.stagePadding}
+          autoPlay={false}
+        > 
+          {newlyAddedVideos}          
+        </AliceCarousel>        
+      </div>
+
+      <div className="app-carousel">
+      <h1>TRENDING VIDEOS  ></h1>
+        <AliceCarousel
+          duration={1000}
+          showSlideInfo={true}
+          fadeOutAnimation={true}
+          mouseDragEnabled={true}
+          onSlideChanged={console.debug}
+          infinite={true}
+          responsive={this.responsive}
+          stagePadding={this.stagePadding}
+          autoPlay={false}
+        > 
+          {trendingVideos}          
+        </AliceCarousel>        
+      </div>
+
+      
      </React.Fragment>
     )
   }
