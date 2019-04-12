@@ -44,7 +44,7 @@ form label {
   font-stretch: normal;
   line-height: normal;
   letter-spacing: 0.4px;
-  color: #e6e4e4;
+  color: #e6e4e4 !important;
 }
 
 input:-internal-autofill-previewed,
@@ -158,7 +158,11 @@ form input[type="password"] {
   background-size: cover;
   margin: 15px 0px 0px 0px !important;
 }
-
+.content-align--middle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 @media screen and (max-width: 1024px) and (min-width: 768px) {
   .social-login--size {
     background-size: contain;
