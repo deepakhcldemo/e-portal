@@ -1,5 +1,5 @@
 const initialState = {
-    tree: [],
+    carouselData: [],
     openModal: false
 }
 const carouselReducer = (state = initialState, action) => {
@@ -7,7 +7,7 @@ const carouselReducer = (state = initialState, action) => {
         case 'GET_CURRICULUM':
             return {                
                 ...state,                               
-                tree: action.category
+                carouselData: action.curriculumData
             } 
         case 'MANAGE_CATEGORY':
             return {

@@ -29,7 +29,7 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   event : eventReducer,
   toastr,
   spinnerStatus: spinnerStatusReducer,
-  carousel: carouselReducer
+  carouselStore: carouselReducer
 });
 
 const history = createBrowserHistory();
