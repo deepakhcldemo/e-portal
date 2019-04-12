@@ -14,7 +14,8 @@ class ModalPopUp extends Component {
     this.students = [];
     this.state = {
       taggedStudent: [],
-      updatingUI: false
+      updatingUI: false,
+      checkBoxMessage : ''
 
     }
     this.SaveSelectedStudent = this.SaveSelectedStudent.bind(this);
@@ -40,6 +41,10 @@ class ModalPopUp extends Component {
     else{
       this.props.studentList[Index].checked = false;
     }
+
+    this.setState({
+      updatingUI : true
+    })
    
   }
   SaveSelectedStudent = () => {
@@ -49,10 +54,20 @@ class ModalPopUp extends Component {
         this.students.push(student);
       }
     })
+    if(this.studentNames.length !=0 && this.students.length !=0){
+      this.setState({
+        checkBoxMessage : ''
+      })
     this.props.taggedStudentNames(this.studentNames);
     this.props.taggedStudent(this.students);
     this.props.onSaveStudentsList(this.studentNames);
     this.props.closePopModal();
+    }
+    else{
+      this.setState({
+        checkBoxMessage : 'please select at least one student'
+      })
+    }
   }
   render() {
     const studentList = this.props.studentList.map((student) => {
@@ -70,6 +85,7 @@ class ModalPopUp extends Component {
       <div>
 
         <Modal open={openModal} onClose={this.onCloseModal} center>
+          
           <h2>Student List</h2>
           <table className="table">
             <thead>
@@ -83,6 +99,7 @@ class ModalPopUp extends Component {
               {studentList}
             </tbody>
           </table>
+          <p>{this.state.checkBoxMessage}</p>
           <div>
             <input type="button" className="btn btn-primary" value="Save Selected Student" onClick={this.SaveSelectedStudent}></input>
 

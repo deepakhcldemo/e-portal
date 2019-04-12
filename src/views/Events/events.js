@@ -103,6 +103,12 @@ class CreateEvent extends Component {
       customEndDate: Enddate
     })
   }
+
+  createEvent = () => {
+    if(this.state.customEndDate < this.state.customStartDate ){
+      alert('equal');
+    }
+  }
   render() {
     let style = {}
     this.state.endDateCalender ? style = { 'display': 'none' } : style = {}
@@ -164,7 +170,7 @@ class CreateEvent extends Component {
                 </div>
               </div>
               <div className="form-group margin-top-bottom">
-                <input type="button" className="btn btn-primary margin-both " value="Create Event" />
+                <input type="button" className="btn btn-primary margin-both" value="Create Event"  onClick ={this.createEvent}/>
                 <input type="button" className="btn btn-secondary" value="Cancel" />
               </div>
             </div>

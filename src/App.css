@@ -779,7 +779,6 @@ body.toastr-confirm-active {
   padding-right: 0px !important;
   overflow: hidden;
   /* max-width: 360px; */
-  
 }
 .header-container {
   height: 56px;
@@ -822,7 +821,7 @@ body.toastr-confirm-active {
   position: relative;
   padding-top: 56px;
   overflow-y: auto;
-  /* min-height: 100vh; */
+  min-height: 100vh;
   top: 0px;
   bottom: 0px;
   margin: auto;

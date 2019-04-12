@@ -32,3 +32,37 @@
   display: inline-block;
   vertical-align: middle;
 }
+
+.img-thumbnail{
+  width: 300px;
+  height: 170px;
+  cursor: pointer;
+}
+/* Start CSS for Modal*/
+.layer {
+  z-index: 1;
+  position: absolute;
+  width: 300px;
+  top: 0;
+  height: 170px;
+  margin: 5px;
+}
+
+.modalStyle {
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 15px;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+.backdropStyle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: 'rgba(0,0,0,0.3)';
+  padding: 5;
+};
+/* End CSS for Modal*/

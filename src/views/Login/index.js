@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as loginAction from './actions';
+// import * as loginAction from './actions';
 import './styles.css';
+import { toastr } from 'react-redux-toastr';
 import * as actionTypes from '../../spinnerStore/actions';
-import { createUser } from '../../database/dal/firebase/registrationDal';
-import PDFViewer from '../../components/pdfViewer';
+import {
+  fetchProviders,
+  createUserWithEmail,
+  signInUserWithEmail,
+  loginWithGoogle,
+  loginWithFacebook,
+  loginWithTwitter,
+  saveRecord
+} from '../../database/dal/firebase/registrationDal';
 
 let userIcon = {
   width: '20px',
@@ -78,7 +86,106 @@ class Login extends Component {
     const { username, password } = this.state;
     this.setState({ submitted: true });
     const userDetails = { username, password };
-    createUser(userDetails);
+    if (username !== '' && password !== '') {
+      fetchProviders(userDetails).then(providers => {
+        if (providers.length === 0) {
+          // create user
+          createUserWithEmail(userDetails).then(
+            loginResponse => {
+              localStorage.setItem('user', JSON.stringify(loginResponse));
+              console.log('-----------', loginResponse);
+              if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
+                saveRecord({
+                  username: username,
+                  userId: loginResponse.user.uid
+                });
+              }
+              this.props.history.push('/profile');
+            },
+            error => {
+              toastr.error(error.message);
+            }
+          );
+        } else {
+          signInUserWithEmail(userDetails).then(
+            loginResponse => {
+              localStorage.setItem('user', JSON.stringify(loginResponse));
+              this.props.history.push('/dashboard');
+              console.log('-----------', loginResponse);
+            },
+            error => {
+              toastr.error(error.message);
+            }
+          );
+        }
+      });
+    }
+  };
+
+  loginWithGoogle = e => {
+    e.preventDefault();
+    loginWithGoogle()
+      .then(loginResponse => {
+        console.log('loginResponse', loginResponse);
+        localStorage.setItem('user', JSON.stringify(loginResponse));
+        if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
+          saveRecord({
+            username: loginResponse.additionalUserInfo.profile.email,
+            userId: loginResponse.user.uid
+          }).then(() => {
+            this.props.history.push('/profile');
+          });
+        } else {
+          this.props.history.push('/dashboard');
+        }
+      })
+      .catch(error => {
+        toastr.error(error.message);
+      });
+  };
+
+  loginWithFacebook = e => {
+    e.preventDefault();
+    loginWithFacebook()
+      .then(loginResponse => {
+        console.log('loginResponse', loginResponse);
+        localStorage.setItem('user', JSON.stringify(loginResponse));
+        if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
+          saveRecord({
+            username: loginResponse.additionalUserInfo.profile.email,
+            userId: loginResponse.user.uid
+          }).then(() => {
+            this.props.history.push('/profile');
+          });
+        } else {
+          this.props.history.push('/dashboard');
+        }
+      })
+      .catch(error => {
+        toastr.error(error.message);
+      });
+  };
+
+  loginWithTwitter = e => {
+    e.preventDefault();
+    loginWithTwitter()
+      .then(loginResponse => {
+        console.log('loginResponse', loginResponse);
+        localStorage.setItem('user', JSON.stringify(loginResponse));
+        if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
+          saveRecord({
+            username: loginResponse.additionalUserInfo.username,
+            userId: loginResponse.user.uid
+          }).then(() => {
+            this.props.history.push('/profile');
+          });
+        } else {
+          this.props.history.push('/dashboard');
+        }
+      })
+      .catch(error => {
+        toastr.error(error.message);
+      });
   };
 
   handlePasswordReset = () => {
@@ -93,12 +200,6 @@ class Login extends Component {
       return <Redirect to={from} />;
     }
 
-    const appliedPolicy = JSON.parse(localStorage.getItem('applied-policy'));
-    if (appliedPolicy && appliedPolicy.policyId) {
-      this.props.history.push('/car-details/confirm');
-    }
-
-    const { loggingIn } = this.props;
     const { username, password, submitted } = this.state;
     return (
       <div
@@ -190,7 +291,7 @@ class Login extends Component {
 
                 <PDFViewer /> */}
               </div>
-              <div className="form-group padding-top-25">
+              <div className="form-group padding-top-15">
                 <button
                   onClick={this.login}
                   type="button"
@@ -198,6 +299,38 @@ class Login extends Component {
                 >
                   LOGIN
                 </button>
+              </div>
+              <div className="form-group social-login--align">
+                <button
+                  className="btn social-login--size"
+                  style={{
+                    backgroundPosition: 'center center',
+                    backgroundImage:
+                      'url(' + '../../Assets/hdpi/google_logo.ico ' + ')',
+                    backgroundRepeat: 'no-repeat'
+                  }}
+                  onClick={e => this.loginWithGoogle(e)}
+                />
+                <button
+                  className="btn social-login--size"
+                  style={{
+                    backgroundPosition: 'center center',
+                    backgroundImage:
+                      'url(' + '../../Assets/hdpi/fb_logo.ico ' + ')',
+                    backgroundRepeat: 'no-repeat'
+                  }}
+                  onClick={e => this.loginWithFacebook(e)}
+                />
+                <button
+                  className="btn social-login--size"
+                  style={{
+                    backgroundPosition: 'center center',
+                    backgroundImage:
+                      'url(' + '../../Assets/hdpi/twitter_logo.ico ' + ')',
+                    backgroundRepeat: 'no-repeat'
+                  }}
+                  onClick={e => this.loginWithTwitter(e)}
+                />
               </div>
             </form>
           </div>
@@ -213,27 +346,24 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onSubmit: componentState => {
-      console.log('call', componentState);
-
-      dispatch(
-        loginAction.loginRequestDispatch({
-          userName: componentState.username,
-          password: componentState.password
-        })
-      );
-    },
-
-    openPDFModal: () => dispatch({ type: 'open' }),
-
-    setSpinnerStatus: val => {
-      dispatch({ type: actionTypes.SPINNER_STATUS, payload: val });
-    }
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     onSubmit: componentState => {
+//       console.log('call', componentState);
+//       dispatch(
+//         loginAction.loginRequestDispatch({
+//           userName: componentState.username,
+//           password: componentState.password
+//         })
+//       );
+//     },
+//     openPDFModal: () => dispatch({ type: 'open' }),
+//     setSpinnerStatus: val => {
+//       dispatch({ type: actionTypes.SPINNER_STATUS, payload: val });
+//     }
+//   };
+// };
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Login);

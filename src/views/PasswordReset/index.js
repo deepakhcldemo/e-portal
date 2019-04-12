@@ -67,7 +67,7 @@ class PasswordReset extends Component {
     this.setState({ submitted: true });
     recoverPassword(this.state.username)
       .then(() => {
-        toastr.success('Password Reset Link Successfully Sent');
+        toastr.success('Password Reset Link Sent Successfully');
         this.props.history.push('/login');
       })
       .catch(error => {
