@@ -1,3 +1,5 @@
+@import './views/Dashboard/dashboard.css';
+
 #app {
   height: 100vh;
 }
@@ -775,9 +777,9 @@ body.toastr-confirm-active {
   background-color: #232838 !important;
 } */
 .container-fluid {
-  padding-left: 0px !important;
+  /* padding-left: 0px !important;
   padding-right: 0px !important;
-  overflow: hidden;
+  overflow: hidden; */
   /* max-width: 360px; */
 }
 .header-container {
@@ -792,6 +794,7 @@ body.toastr-confirm-active {
   -moz-box-shadow: 0px 1px 1px #4c4f58db;
   box-shadow: 0px 1px 1px #4c4f58db;
   /* max-width: 360px; */
+  left: 0;
 }
 
 .navbar {
