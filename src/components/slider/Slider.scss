@@ -80,8 +80,46 @@
   .jmcbAD > div:first-child {
     // margin-left: 0 !important;
   }
-  .vd-wrapper img {
-    width: 100%;
+  .vd-wrapper {
+    box-shadow: 0 0 4px #9a9a9a;
+    img {
+      width: 100%;
+      transition: all 0.3s;
+    }
+    a {
+      color: #000000;
+      display: block;
+      transition: all 0.3s;
+      > div {
+        overflow: hidden;
+      }
+      &:hover {
+        text-decoration: none;
+        color: inherit;
+        > div {
+          img {
+            transform: scale(1.2);
+          }
+        }
+      }
+    }
+    .vd-content {
+      padding: 5px 10px 10px;
+      border: 1px solid #d5d5d5;
+      h5 {
+        margin-bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .fas {
+        font-size: 13px;
+      }
+      p {
+        font-size: 14px;
+        margin-bottom: 0;
+      }
+    }
   }
   .kFgaDu {
     background-image: linear-gradient(to right, rgba(0,0,0,0.1), rgb(103, 103, 103));
@@ -92,7 +130,16 @@
     background-image: linear-gradient(to right, rgb(103, 103, 103), rgba(0,0,0,0.1));
     color: #fff;
   }
+  
+.dark-bg {
+  h3 {
+    > .fas {
+      font-size: 18px;
+    }
+  }
+}
 
+  
 
 
   .carousel-item {

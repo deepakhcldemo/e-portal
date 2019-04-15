@@ -124,12 +124,12 @@ class Dashboard extends Component {
           <div className="row dark-bg">
             <div className="col-12">
              
-              <Slider carouselRecords={listTop10Items}>
-                <h3 className="mt-30">Top 10<span> &gt;</span></h3>
+              <Slider>
+                <h3 className="mt-30">Top <i className="fas fa-chevron-right"></i></h3>
               </Slider>
 
-              <Slider carouselRecords={listNewlyItems}>
-                <h3 className="mt-30">Newly added videos <span> &gt;</span></h3>
+              <Slider>
+                <h3 className="mt-30">Newly added videos <i className="fas fa-chevron-right"></i></h3>
               </Slider>
 
               <Slider carouselRecords={trendingItems}>
