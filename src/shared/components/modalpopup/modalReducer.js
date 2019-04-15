@@ -3,7 +3,6 @@ const initialState = {
   taggedStudents: []
 };
 const modalReducer = (state = initialState, action) => {
-  debugger
   switch (action.type) {
     case 'TAGGED_STUDENTS':
       return { ...state };

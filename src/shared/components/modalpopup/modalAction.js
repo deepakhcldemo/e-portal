@@ -1,28 +1,25 @@
 export const closeModalPopUp = () => {
-    debugger
-    return {
-        type: 'CLOSE_MODAL'
-    }
-}
-
+  return {
+    type: 'CLOSE_MODAL'
+  };
+};
 
 export const saveStudent = () => {
-    return {
-        type: 'SAVE_STUDENTS'
-    }
-}
+  return {
+    type: 'SAVE_STUDENTS'
+  };
+};
 
+export const addStudentNames = studentNames => {
+  return {
+    type: 'TAGGED_STUDENTS_NAMES',
+    taggedStudentNames: studentNames
+  };
+};
 
-export const addStudentNames = (studentNames) => {    
-    return {
-        type: 'TAGGED_STUDENTS_NAMES', 
-        taggedStudentNames : studentNames
-    }
-}
-
-export const addStudent = (student) => {    
-    return {
-        type: 'TAGGED_STUDENTS', 
-        taggedStudent : student
-    }
-}
+export const addStudent = student => {
+  return {
+    type: 'TAGGED_STUDENTS',
+    taggedStudent: student
+  };
+};

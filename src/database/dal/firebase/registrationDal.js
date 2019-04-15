@@ -12,33 +12,15 @@ export const saveRecord = userDetails => {
     .set(userDetails);
 };
 
+export const getProfileStatus = userId => {
+  return getDbRef()
+    .where('userId', '==', userId)
+    .get();
+};
+
 export const fetchProviders = user => {
   const db = dbFactory.create('firebase');
   return db.auth().fetchSignInMethodsForEmail(user.username);
-  // .then(providers => {
-  //   console.log('providers', providers);
-  //   if (providers.length === 0) {
-  //     // create user
-  //     return db
-  //       .auth()
-  //       .createUserWithEmailAndPassword(user.username, user.password);
-  //   } else {
-  //     //sign in user
-  //     return db
-  //       .auth()
-  //       .signInWithEmailAndPassword(user.username, user.password);
-  //   }
-  // })
-  // .then(userDetails => {
-  //   console.log('user details password', userDetails);
-  //   localStorage.setItem('user', JSON.stringify(userDetails));
-  //   if (userDetails && userDetails.additionalUserInfo.isNewUser) {
-  //     saveRecord({ username: user.username, userId: userDetails.user.uid });
-  //   }
-  // })
-  // .catch(error => {
-  //   console.log('error', error.message);
-  // });
 };
 
 export const createUserWithEmail = user => {

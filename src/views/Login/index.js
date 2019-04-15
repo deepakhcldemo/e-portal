@@ -8,6 +8,7 @@ import * as actionTypes from '../../spinnerStore/actions';
 import {
   fetchProviders,
   createUserWithEmail,
+  getProfileStatus,
   signInUserWithEmail,
   loginWithGoogle,
   loginWithFacebook,
@@ -82,6 +83,19 @@ class Login extends Component {
     this.setState({ [name]: value });
   };
 
+  redirectBasedOnProfileStatus(userDetails) {
+    getProfileStatus(userDetails.user.uid).then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const user = doc.data();
+        if (user.profileSaved === true) {
+          this.props.history.push('/dashboard');
+        } else {
+          this.props.history.push('/profile');
+        }
+      });
+    });
+  }
+
   login = () => {
     const { username, password } = this.state;
     this.setState({ submitted: true });
@@ -97,7 +111,8 @@ class Login extends Component {
               if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
                 saveRecord({
                   username: username,
-                  userId: loginResponse.user.uid
+                  userId: loginResponse.user.uid,
+                  profileSaved: false
                 });
               }
               this.props.history.push('/profile');
@@ -110,8 +125,7 @@ class Login extends Component {
           signInUserWithEmail(userDetails).then(
             loginResponse => {
               localStorage.setItem('user', JSON.stringify(loginResponse));
-              this.props.history.push('/dashboard');
-              console.log('-----------', loginResponse);
+              this.redirectBasedOnProfileStatus(loginResponse);
             },
             error => {
               toastr.error(error.message);
@@ -126,17 +140,17 @@ class Login extends Component {
     e.preventDefault();
     loginWithGoogle()
       .then(loginResponse => {
-        console.log('loginResponse', loginResponse);
         localStorage.setItem('user', JSON.stringify(loginResponse));
         if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
           saveRecord({
             username: loginResponse.additionalUserInfo.profile.email,
-            userId: loginResponse.user.uid
+            userId: loginResponse.user.uid,
+            profileSaved: false
           }).then(() => {
             this.props.history.push('/profile');
           });
         } else {
-          this.props.history.push('/dashboard');
+          this.redirectBasedOnProfileStatus(loginResponse);
         }
       })
       .catch(error => {
@@ -148,17 +162,17 @@ class Login extends Component {
     e.preventDefault();
     loginWithFacebook()
       .then(loginResponse => {
-        console.log('loginResponse', loginResponse);
         localStorage.setItem('user', JSON.stringify(loginResponse));
         if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
           saveRecord({
             username: loginResponse.additionalUserInfo.profile.email,
-            userId: loginResponse.user.uid
+            userId: loginResponse.user.uid,
+            profileSaved: false
           }).then(() => {
             this.props.history.push('/profile');
           });
         } else {
-          this.props.history.push('/dashboard');
+          this.redirectBasedOnProfileStatus(loginResponse);
         }
       })
       .catch(error => {
@@ -170,17 +184,17 @@ class Login extends Component {
     e.preventDefault();
     loginWithTwitter()
       .then(loginResponse => {
-        console.log('loginResponse', loginResponse);
         localStorage.setItem('user', JSON.stringify(loginResponse));
         if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
           saveRecord({
             username: loginResponse.additionalUserInfo.username,
-            userId: loginResponse.user.uid
+            userId: loginResponse.user.uid,
+            profileSaved: false
           }).then(() => {
             this.props.history.push('/profile');
           });
         } else {
-          this.props.history.push('/dashboard');
+          this.redirectBasedOnProfileStatus(loginResponse);
         }
       })
       .catch(error => {
