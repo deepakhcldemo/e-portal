@@ -20,7 +20,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      AuthGuard.isAuthenticated === false ? (
+      AuthGuard.isAuthenticated === true ? (
         <Component {...props} />
       ) : (
         <Redirect to="/login" />
@@ -29,6 +29,17 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 class App extends Component {
+  state = {
+    auth: true
+  };
+  componentWillMount() {
+    // console.log("-----------------------------------------------------------");
+    // const user = JSON.parse(localStorage.getItem("user"));
+    // if (!user) {
+    //   GLOBAL_VARIABLES.BASEROUTE = this.props.location.pathname;
+    //   this.props.history.push("/login");
+    // }
+  }
   render() {
     return (
       <div>
@@ -63,10 +74,21 @@ class App extends Component {
     );
   }
 }
+App.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
+};
+App.defaultProps = {
+  children: null
+};
 const mapStateToProps = state => {
-  return {
-    modalState: state.openModal
-  };
+  console.log("app state", state);
+  const loginResponse = JSON.parse(localStorage.getItem("user"));
+  console.log(loginResponse);
+  return { auth: true, spinnerStatus: state.spinnerStatus.spinnerStatus,
+    modalState: state.openModal };
 };
 
 const mapDispatchToProps = dispatch => {

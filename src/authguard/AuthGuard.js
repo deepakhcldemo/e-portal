@@ -4,11 +4,11 @@ const AuthGuard = {
   isAuthenticated: false,
   authenticate(cb) {
     const userDetails = JSON.parse(localStorage.getItem('user'));
-    // if (userDetails && userDetails.user.uid !== '') {
-    //   this.isAuthenticated = true;
-    // } else {
-    //   this.isAuthenticated = false;
-    // }
+    if (userDetails && userDetails.user.uid !== '') {
+      this.isAuthenticated = true;
+    } else {
+      this.isAuthenticated = false;
+    }
     setTimeout(cb, 100); // fake async
   },
   signout(cb) {
