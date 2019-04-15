@@ -4,13 +4,18 @@ import './Slider.scss';
 import ItemsCarousel from 'react-items-carousel';
 
 class Slider extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
   componentWillMount() {
+    const carouselRows = this.props.carouselRecords;
     this.setState({
       children: [],
       activeItemIndex: 0,
+      carouselRows: carouselRows
     });
-
+  
     setTimeout(() => {
       this.setState({
         children: this.createChildren(20),
@@ -18,18 +23,35 @@ class Slider extends React.Component {
     }, 100);
   }
 
-  createChildren = n => ['aa','bb','cc', 'ddd', 'ee','ff','gg','hh'].map(i => {
-    let imgPath = "https://i.pinimg.com/originals/66/24/96/6624960f0062bd8b8845037c6776277c.jpg";
+  // componentDidUpdate(){
+  //   const carouselRows = this.props.carouselRecords;
+  //   this.setState({
+  //     carouselRows: carouselRows
+  //   });
+  // }
+  
+  // createChildren = n => ['aa','bb','cc', 'ddd', 'ee','ff','gg','hh'].map(i => {
+  //   let imgPath = "https://i.pinimg.com/originals/66/24/96/6624960f0062bd8b8845037c6776277c.jpg";
+  //   return (
+  //     <div key={i} style={{ height: 150, background: '#000' }} className="vd-wrapper">
+  //       <img src={imgPath}/>
+  //     </div>
+  //   )
+  // });
+
+  createChildren = n => this.props.carouselRecords.map((carouselRecord, index) => {
     return (
-      <div key={i} style={{ height: 150, background: '#000' }} className="vd-wrapper">
-        <img src={imgPath}/>
-      </div>
+      <div key={index} style={{ height: 150, background: '#000' }} className="vd-wrapper">
+        <iframe key={index} className="d-block w-100" src={carouselRecord.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div>
+      </div>      
     )
   });
 
   changeActiveItem = (activeItemIndex) => this.setState({ activeItemIndex });
-
+  
   render() {
+    console.log('--carouselRows ---111--', this.props.carouselRecords);
+
     const {
       activeItemIndex,
       children,
