@@ -1,19 +1,19 @@
 import dbFactory from '../../dbFactory';
 
-const getDbRef = () => {
+const getDbRef = collectionName => {
   const db = dbFactory.create('firebase');
-  const ref = db.firestore().collection('users');
+  const ref = db.firestore().collection(collectionName);
   return ref;
 };
 
 export const saveRecord = userDetails => {
-  return getDbRef()
+  return getDbRef('users')
     .doc(userDetails.userId)
     .set(userDetails);
 };
 
 export const getProfileStatus = userId => {
-  return getDbRef()
+  return getDbRef('users')
     .where('userId', '==', userId)
     .get();
 };
@@ -62,4 +62,20 @@ export const recoverPassword = email => {
     handleCodeInApp: false
   };
   return db.auth().sendPasswordResetEmail(email, actionCodeSettings);
+};
+
+export const saveUserProfile = userDetails => {
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  // getProfileStatus(userDetails.userId).then(querySnapshot => {
+  //   querySnapshot.forEach(doc => {
+  //     if (doc.exists) {
+  //       user.profileSaved = true;
+  //       doc.update({ user.user.email });
+  //     }
+  //   });
+  // });
+  return getDbRef('userProfiles')
+    .doc(userDetails.userId)
+    .set(userDetails);
 };

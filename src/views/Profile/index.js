@@ -6,6 +6,7 @@ import { toastr } from 'react-redux-toastr';
 import { connect } from 'react-redux';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 import * as actionTypes from '../../spinnerStore/actions';
+import { saveUserProfile } from '../../database/dal/firebase/registrationDal';
 
 const subjects = [
   'Math',
@@ -56,11 +57,65 @@ class Profile extends Component {
       field,
       subject
     } = this.state;
-
+    const userId = JSON.parse(localStorage.getItem('user')).user.uid;
     this.setState({ submitted: true });
     if (role === 'Teacher') {
+      const teacherDetails = {
+        firstName,
+        lastName,
+        dob,
+        gender,
+        address,
+        city,
+        country,
+        email,
+        mobile,
+        role,
+        field,
+        subject,
+        userId
+      };
+      saveUserProfile(teacherDetails).then(() => {
+        toastr.success('Details Saved Successfully');
+        this.props.history.push('/dashboard');
+      });
     } else if (role === 'Student') {
+      const studentDetails = {
+        firstName,
+        lastName,
+        dob,
+        gender,
+        address,
+        city,
+        country,
+        email,
+        mobile,
+        role,
+        subject,
+        userId
+      };
+      saveUserProfile(studentDetails).then(() => {
+        toastr.success('Details Saved Successfully');
+        this.props.history.push('/dashboard');
+      });
     } else {
+      const adminDetails = {
+        firstName,
+        lastName,
+        dob,
+        gender,
+        address,
+        city,
+        country,
+        email,
+        mobile,
+        role,
+        userId
+      };
+      saveUserProfile(adminDetails).then(() => {
+        toastr.success('Details Saved Successfully');
+        this.props.history.push('/dashboard');
+      });
     }
   };
 
@@ -82,7 +137,11 @@ class Profile extends Component {
     } = this.state;
 
     const selectSubject = subjects.map(data => {
-      return <Dropdown.Item eventKey={data}>{data}</Dropdown.Item>;
+      return (
+        <Dropdown.Item key={data} eventKey={data}>
+          {data}
+        </Dropdown.Item>
+      );
     });
 
     return (
@@ -868,7 +927,7 @@ class Profile extends Component {
                 <div className="form-group padding-top-15">
                   <button
                     type="button"
-                    onClick={this.saveDetails}
+                    onClick={e => this.saveDetails(e)}
                     className="btn btn-dark btn-block"
                   >
                     SAVE DETAILS

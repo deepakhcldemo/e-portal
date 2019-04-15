@@ -15,7 +15,7 @@ import {
   loginWithTwitter,
   saveRecord
 } from '../../database/dal/firebase/registrationDal';
-import GLOBAL_VARIABLES from '../../config/Config';
+import GLOBAL_VARIABLES from '../../config/config';
 import AuthGuard from '../../authguard/AuthGuard';
 
 let userIcon = {
