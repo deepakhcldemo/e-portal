@@ -40,8 +40,9 @@ class Slider extends React.Component {
   // });
 
   createChildren = n => this.props.carouselRecords.map((carouselRecord, index) => {
+    let imgPath = "https://i.pinimg.com/originals/66/24/96/6624960f0062bd8b8845037c6776277c.jpg";
     return (
-      <div key={i} className="vd-wrapper">
+      <div key={index} className="vd-wrapper">
         <a href="#">
           <div style={{ height: 150, background: '#000' }}>
             <img src={imgPath} />
