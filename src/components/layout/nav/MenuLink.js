@@ -21,6 +21,11 @@ class MenuLinks extends Component {
           text: 'Curriculum',
           link: '/curriculum',
           icon: 'fa-info-circle'
+        },
+        {
+          text: 'CreateEvent',
+          link: '/createevent',
+          icon: 'fa fa-calendar'
         }
       ]
     };

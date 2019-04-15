@@ -1,8 +1,9 @@
 export const closeModalPopUp = () => {
-  return {
-    type: 'CLOSE_MODAL'
-  };
-};
+    return {
+        type: 'CLOSE_MODAL'
+    }
+}
+
 
 export const saveStudent = () => {
   return {
