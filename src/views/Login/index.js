@@ -15,7 +15,7 @@ import {
   loginWithTwitter,
   saveRecord
 } from '../../database/dal/firebase/registrationDal';
-import GLOBAL_VARIABLES from '../../config/Config';
+import GLOBAL_VARIABLES from '../../config/config';
 import AuthGuard from '../../authguard/AuthGuard';
 
 let userIcon = {
@@ -98,6 +98,24 @@ class Login extends Component {
     });
   }
 
+  setLoginStatus(userDetails, isNewUser) {
+    AuthGuard.authenticate(() => {
+      this.setState(() => ({
+        redirectToReferrer: true
+      }));
+      console.log('GLOBAL_VARIABLES.BASEROUTE', GLOBAL_VARIABLES.BASEROUTE);
+      if (GLOBAL_VARIABLES.BASEROUTE !== '/login') {
+        this.props.history.push(GLOBAL_VARIABLES.BASEROUTE);
+      } else {
+        if (isNewUser) {
+          this.props.history.push('/profile');
+        } else {
+          this.redirectBasedOnProfileStatus(userDetails);
+        }
+      }
+    });
+  }
+
   login = () => {
     const { username, password } = this.state;
     this.setState({ submitted: true });
@@ -117,7 +135,7 @@ class Login extends Component {
                   profileSaved: false
                 });
               }
-              this.props.history.push('/profile');
+              this.setLoginStatus(loginResponse, true);
             },
             error => {
               toastr.error(error.message);
@@ -127,21 +145,7 @@ class Login extends Component {
           signInUserWithEmail(userDetails).then(
             loginResponse => {
               localStorage.setItem('user', JSON.stringify(loginResponse));
-              AuthGuard.authenticate(() => {
-                this.setState(() => ({
-                  redirectToReferrer: true
-                }));
-                console.log(
-                  "GLOBAL_VARIABLES.BASEROUTE",
-                  GLOBAL_VARIABLES.BASEROUTE
-                );
-                if (GLOBAL_VARIABLES.BASEROUTE !== "/login") {
-                  this.props.history.push(GLOBAL_VARIABLES.BASEROUTE);
-                } else {
-                  this.redirectBasedOnProfileStatus(loginResponse);
-                }
-              });
-              
+              this.setLoginStatus(loginResponse, false);
             },
             error => {
               toastr.error(error.message);
@@ -163,10 +167,10 @@ class Login extends Component {
             userId: loginResponse.user.uid,
             profileSaved: false
           }).then(() => {
-            this.props.history.push('/profile');
+            this.setLoginStatus(loginResponse, true);
           });
         } else {
-          this.redirectBasedOnProfileStatus(loginResponse);
+          this.setLoginStatus(loginResponse, false);
         }
       })
       .catch(error => {
@@ -185,10 +189,10 @@ class Login extends Component {
             userId: loginResponse.user.uid,
             profileSaved: false
           }).then(() => {
-            this.props.history.push('/profile');
+            this.setLoginStatus(loginResponse, true);
           });
         } else {
-          this.redirectBasedOnProfileStatus(loginResponse);
+          this.setLoginStatus(loginResponse, false);
         }
       })
       .catch(error => {
@@ -207,10 +211,10 @@ class Login extends Component {
             userId: loginResponse.user.uid,
             profileSaved: false
           }).then(() => {
-            this.props.history.push('/profile');
+            this.setLoginStatus(loginResponse, true);
           });
         } else {
-          this.redirectBasedOnProfileStatus(loginResponse);
+          this.setLoginStatus(loginResponse, false);
         }
       })
       .catch(error => {
@@ -257,7 +261,7 @@ class Login extends Component {
               </span>
               <div
                 className={
-                  'form-group' + (submitted && !username ? ' has-error' : '')
+                  'form-group' + (submitted && !username ? 'has-error' : '')
                 }
               >
                 <label htmlFor="username">Username</label>

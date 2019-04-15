@@ -10,16 +10,20 @@
 .content-container {
   padding-top: 0px;
 }
+
 .panel-heading {
   text-align: center;
 }
 
 .panel-default {
   padding-top: 56px;
-  overflow-y: auto;
   height: 100%;
-  position: fixed;
   width: 100%;
+}
+
+.center-form {
+  height: 100vh;
+  margin: 0 auto;
 }
 
 form input[type="email"] {
@@ -127,4 +131,10 @@ form label {
 
 .dropdown-toggle {
   height: 45px;
+  text-align: initial !important;
+}
+
+.dropdown-toggle::after {
+  position: absolute !important;
+  right: 10px !important;
 }
