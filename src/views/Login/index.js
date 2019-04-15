@@ -15,6 +15,8 @@ import {
   loginWithTwitter,
   saveRecord
 } from '../../database/dal/firebase/registrationDal';
+import GLOBAL_VARIABLES from '../../config/config';
+import AuthGuard from '../../authguard/AuthGuard';
 
 let userIcon = {
   width: '20px',
@@ -125,7 +127,21 @@ class Login extends Component {
           signInUserWithEmail(userDetails).then(
             loginResponse => {
               localStorage.setItem('user', JSON.stringify(loginResponse));
-              this.redirectBasedOnProfileStatus(loginResponse);
+              AuthGuard.authenticate(() => {
+                this.setState(() => ({
+                  redirectToReferrer: true
+                }));
+                console.log(
+                  "GLOBAL_VARIABLES.BASEROUTE",
+                  GLOBAL_VARIABLES.BASEROUTE
+                );
+                if (GLOBAL_VARIABLES.BASEROUTE !== "/login") {
+                  this.props.history.push(GLOBAL_VARIABLES.BASEROUTE);
+                } else {
+                  this.redirectBasedOnProfileStatus(loginResponse);
+                }
+              });
+              
             },
             error => {
               toastr.error(error.message);

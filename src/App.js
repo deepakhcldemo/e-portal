@@ -33,12 +33,13 @@ class App extends Component {
     auth: true
   };
   componentWillMount() {
-    // console.log("-----------------------------------------------------------");
-    // const user = JSON.parse(localStorage.getItem("user"));
-    // if (!user) {
-    //   GLOBAL_VARIABLES.BASEROUTE = this.props.location.pathname;
-    //   this.props.history.push("/login");
-    // }
+    console.log("-----------------------------------------------------------");
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user && this.props.location) {
+
+      GLOBAL_VARIABLES.BASEROUTE = this.props.location.pathname;
+      this.props.history.push("/login");
+    }
   }
   render() {
     return (
