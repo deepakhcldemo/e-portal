@@ -27,6 +27,16 @@ const eventReducer = (state = initialState, action) => {
         ...state,
         taggedStudent: action.taggedStudent
       };
+      case 'OPEN_MODAL':
+      return {
+        ...state,
+        openModalForStudent: ! state.openModalForStudent
+      };
+      case 'CLOSE_MODAL':
+      return {
+        ...state,
+        openModalForStudent: ! state.openModalForStudent
+      };
     default:
       return state;
   }
