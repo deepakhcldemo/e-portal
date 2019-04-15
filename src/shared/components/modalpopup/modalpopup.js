@@ -23,6 +23,7 @@ class ModalPopUp extends Component {
 
 
   onCloseModal = () => {
+    debugger
     this.props.closePopModal();
   }
 

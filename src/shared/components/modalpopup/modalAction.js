@@ -1,4 +1,5 @@
 export const closeModalPopUp = () => {
+    debugger
     return {
         type: 'CLOSE_MODAL'
     }
