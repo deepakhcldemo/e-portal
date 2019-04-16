@@ -1,0 +1,40 @@
+.student-navigation{
+    background-color : #3C5A99;
+}
+
+.navbar-row{
+    margin: 0 !important;
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+}
+
+.filter-drop-down{
+    display: inline-block;
+}
+
+.brand-logo{
+    color: #ffffff;
+}
+
+.dropdown-toggle::after {
+    position: absolute !important;
+    right: 22px !important;
+    top: 22px;
+}
+
+
+.list-item-drop-down{
+    cursor: pointer;
+}
+.search-box-filter{
+    max-width: 60rem;
+    margin: 0 auto;
+}
+
+@media only screen and (max-width: 600px) {
+    .nav-bar-wrapper{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+  }

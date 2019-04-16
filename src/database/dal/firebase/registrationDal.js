@@ -1,44 +1,31 @@
 import dbFactory from '../../dbFactory';
 
-const getDbRef = () => {
+const getDbRef = collectionName => {
   const db = dbFactory.create('firebase');
-  const ref = db.firestore().collection('users');
+  const ref = db.firestore().collection(collectionName);
   return ref;
 };
 
 export const saveRecord = userDetails => {
-  return getDbRef()
+  return getDbRef('users')
     .doc(userDetails.userId)
     .set(userDetails);
 };
 
+export const getProfileStatus = userId => {
+  return getDbRef('users')
+    .where('userId', '==', userId)
+    .get();
+};
+
+export const getUserProfile = userId => {
+  return getDbRef('userProfiles')
+    .where('userId', '==', userId)
+    .get();
+};
 export const fetchProviders = user => {
   const db = dbFactory.create('firebase');
   return db.auth().fetchSignInMethodsForEmail(user.username);
-  // .then(providers => {
-  //   console.log('providers', providers);
-  //   if (providers.length === 0) {
-  //     // create user
-  //     return db
-  //       .auth()
-  //       .createUserWithEmailAndPassword(user.username, user.password);
-  //   } else {
-  //     //sign in user
-  //     return db
-  //       .auth()
-  //       .signInWithEmailAndPassword(user.username, user.password);
-  //   }
-  // })
-  // .then(userDetails => {
-  //   console.log('user details password', userDetails);
-  //   localStorage.setItem('user', JSON.stringify(userDetails));
-  //   if (userDetails && userDetails.additionalUserInfo.isNewUser) {
-  //     saveRecord({ username: user.username, userId: userDetails.user.uid });
-  //   }
-  // })
-  // .catch(error => {
-  //   console.log('error', error.message);
-  // });
 };
 
 export const createUserWithEmail = user => {
@@ -80,4 +67,18 @@ export const recoverPassword = email => {
     handleCodeInApp: false
   };
   return db.auth().sendPasswordResetEmail(email, actionCodeSettings);
+};
+
+export const saveUserProfile = userDetails => {
+  getProfileStatus(userDetails.userId).then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+      let user = doc.data();
+      user.profileSaved = true;
+      saveRecord(user);
+    });
+  });
+
+  return getDbRef('userProfiles')
+    .doc(userDetails.userId)
+    .set(userDetails);
 };

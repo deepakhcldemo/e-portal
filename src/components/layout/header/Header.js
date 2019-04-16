@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Menu from "../nav/Menu";
+import Avatar from "../avatar/Avatar";
 class Header extends Component {
   state = {
     headeTitle: this.props.headeTitle ? this.props.headeTitle : "Default"
@@ -23,6 +24,7 @@ class Header extends Component {
           </nav> */}
           <Menu title={this.state.headeTitle} />
         </div>
+        {/* <Avatar></Avatar> */}
         {/* <div className="header-title">{this.state.headeTitle}</div> */}
       </header>
     );

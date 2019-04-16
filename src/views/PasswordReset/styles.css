@@ -43,7 +43,6 @@ form label {
   font-stretch: normal;
   line-height: normal;
   letter-spacing: 0.4px;
-  color: #e6e4e4 !important;
 }
 
 input:-internal-autofill-previewed,

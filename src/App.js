@@ -5,9 +5,10 @@ import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthGuard from './authguard/AuthGuard';
 import { withRouter } from 'react-router';
-import GLOBAL_VARIABLES from './config/config';
+import GLOBAL_VARIABLES from './config/Config';
 import './App.css';
 import CreateEvent from './views/Events/events';
+import Home from './views/Home';
 import Login from './views/Login';
 import Dashboard from './views/Dashboard';
 import Curriculum from './views/Curriculum';
@@ -18,20 +19,34 @@ import Category from './views/Category';
 import Teacher from './views/Teacher';
 import Video from './views/Teacher/Video';
 import Notification from './views/Teacher/Notification';
+import Student from './views/Student/index';
+
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      AuthGuard.isAuthenticated === false ? (
+      AuthGuard.isAuthenticated === true ? (
         <Component {...props} />
       ) : (
-        <Redirect to="/login" />
+        <Redirect to="/home" />
       )
     }
   />
 );
 class App extends Component {
+  state = {
+    auth: true
+  };
+  componentWillMount() {
+    console.log("-----------------------------------------------------------");
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user && this.props.location) {
+
+      GLOBAL_VARIABLES.BASEROUTE = this.props.location.pathname;
+      this.props.history.push("/home");
+    }
+  }
   render() {
     return (
       <div>
@@ -53,6 +68,7 @@ class App extends Component {
 
         <Switch>
           <Route exact path="/login" component={Login} />
+          <Route exact path="/home" component={Home} />
           <Route exact path="/resetPassword" component={PasswordReset} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/profile" component={Profile} />
@@ -64,15 +80,28 @@ class App extends Component {
           <PrivateRoute path="/teacher/videos" component={Video} exact />
           <PrivateRoute path="/teacher/notifications" component={Notification} exact />
           <Redirect to="/login" />
+          <PrivateRoute path="/student" component={Student} exact />
+          <Redirect to="/home" />
         </Switch>
       </div>
     );
   }
 }
+App.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
+};
+App.defaultProps = {
+  children: null
+};
 const mapStateToProps = state => {
-  return {
-    modalState: state.openModal
-  };
+  console.log("app state", state);
+  const loginResponse = JSON.parse(localStorage.getItem("user"));
+  console.log(loginResponse);
+  return { auth: true, spinnerStatus: state.spinnerStatus.spinnerStatus,
+    modalState: state.openModal };
 };
 
 const mapDispatchToProps = dispatch => {

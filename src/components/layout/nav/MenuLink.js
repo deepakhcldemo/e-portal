@@ -21,6 +21,17 @@ class MenuLinks extends Component {
           text: 'Curriculum',
           link: '/curriculum',
           icon: 'fa-info-circle'
+        },
+        {
+          text: 'CreateEvent',
+          link: '/createevent',
+          icon: 'fa fa-calendar'
+        }
+        ,
+        {
+          text: 'Student',
+          link: '/Student',
+          icon: 'fa-graduation-cap'
         }
       ]
     };
@@ -29,7 +40,6 @@ class MenuLinks extends Component {
     this.props.history.push(link);
   };
   signout = () => {
-    debugger;
     AuthGuard.signout(() => {
       this.props.history.push('/login');
     });
@@ -49,7 +59,8 @@ class MenuLinks extends Component {
     ));
     links.push(
       <li ref="logout" key="logout" onClick={this.signout}>
-        <i aria-hidden="true" className="fa fa-sign-out" />Logout
+        <i aria-hidden="true" className="fa fa-sign-out" />
+        Logout
       </li>
     );
 
