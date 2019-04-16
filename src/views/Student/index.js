@@ -20,16 +20,18 @@ class Student extends Component {
     render() {
         return (
             <div>
-                <nav className="student-navigation">
-                    <div className="row navbar-row">
-                        <div className="navbar-header col-md-2">
-                            <a className="navbar-brand brand-logo" href="#">WebSiteName</a>
+                <div className="nav-bar-wrapper">
+                    <nav className="student-navigation">
+                        <div className="row navbar-row">
+                            <div className="navbar-header col-4 col-md-2 col-xs-2">
+                                <a className="navbar-brand brand-logo" href="#">WebSiteName</a>
+                            </div>
                         </div>
-                        <div className="filter-search-box col-md-6 navbar-row">
-                            <input type="text" className="col-md-6 student-search-box" placeholder="Search.." />
-                        </div>
-                    </div>
-                </nav>
+                    </nav>
+                </div>
+                <div className ="search-box-filter">
+                    <input type="text" placeholder="Search.."/>
+                </div>
             </div>
         )
     }

@@ -18,6 +18,11 @@ export const getProfileStatus = userId => {
     .get();
 };
 
+export const getUserProfile = userId => {
+  return getDbRef('userProfiles')
+    .where('userId', '==', userId)
+    .get();
+};
 export const fetchProviders = user => {
   const db = dbFactory.create('firebase');
   return db.auth().fetchSignInMethodsForEmail(user.username);
@@ -65,16 +70,14 @@ export const recoverPassword = email => {
 };
 
 export const saveUserProfile = userDetails => {
-  const user = JSON.parse(localStorage.getItem('user'));
+  getProfileStatus(userDetails.userId).then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+      let user = doc.data();
+      user.profileSaved = true;
+      saveRecord(user);
+    });
+  });
 
-  // getProfileStatus(userDetails.userId).then(querySnapshot => {
-  //   querySnapshot.forEach(doc => {
-  //     if (doc.exists) {
-  //       user.profileSaved = true;
-  //       doc.update({ user.user.email });
-  //     }
-  //   });
-  // });
   return getDbRef('userProfiles')
     .doc(userDetails.userId)
     .set(userDetails);

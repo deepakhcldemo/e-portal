@@ -1,14 +1,12 @@
 import React, { Component } from "react";
-import Header from "../../components/layout/header/Header";
+import HeaderHome from "../../components/layout/header/HeaderHome";
 import { connect } from "react-redux";
 import Carousel from 'react-bootstrap/Carousel';
 import Slider from '../../components/slider/Slider';
 import { getCurriculum } from '../../components/carousel/action';
 
-// import Carousel from "../../components/carousel/Carousel";
-import Modal from "../../components/carousel/Modal";
 
-class Dashboard extends Component {
+class Home extends Component {
  
   constructor(props) {
     super(props);
@@ -114,7 +112,7 @@ class Dashboard extends Component {
         <div className="container-fluid">
           <div className="row">
             <div className="col-12">
-              <Header headeTitle="Dashboard" />
+              <HeaderHome headeTitle="Dashboard" />
             </div>
           </div>
           <div className="row">
@@ -183,8 +181,7 @@ const mapDispatchToProps = dispatch => {
     getCurriculum: () => dispatch(getCurriculum()),
   };
 };
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Dashboard);
+)(Home);

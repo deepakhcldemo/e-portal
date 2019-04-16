@@ -22,10 +22,19 @@
     top: 22px;
 }
 
-.student-search-box{
-    padding: 8.5px
-}
 
 .list-item-drop-down{
     cursor: pointer;
 }
+.search-box-filter{
+    max-width: 60rem;
+    margin: 0 auto;
+}
+
+@media only screen and (max-width: 600px) {
+    .nav-bar-wrapper{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+  }
