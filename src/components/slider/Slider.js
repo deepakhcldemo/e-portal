@@ -23,6 +23,12 @@ class Slider extends React.Component {
     }, 100);
   }
 
+  daysBetween(date1_seconds, date2_seconds) {
+    const one_day = 60 * 60 * 24;
+    var difference_ms = Math.abs(date1_seconds - date2_seconds);
+    return Math.round(difference_ms/one_day);
+  }
+              
   // componentDidUpdate(){
   //   const carouselRows = this.props.carouselRecords;
   //   this.setState({
@@ -41,6 +47,9 @@ class Slider extends React.Component {
 
   createChildren = n => this.props.carouselRecords.map((carouselRecord, index) => {
     const moreSymbol = '...';
+    const today = Date.now()/1000; // convert into second
+    var noOfDays = this.daysBetween(carouselRecord.created_date.seconds, today);
+
     return (
       <div key={index} className="vd-wrapper">
         <a href="#" title={carouselRecord.title}>
@@ -50,8 +59,8 @@ class Slider extends React.Component {
           
           <div className="vd-content">
             <h5>{
-              (carouselRecord.title.length > 50 ) ? carouselRecord.title.substring(1, 50)+(moreSymbol): (carouselRecord.title)} <i className="fas fa-ellipsis-v"></i></h5>
-            <p>Speaker. {carouselRecord.views} views. 4 days ago</p>
+              (carouselRecord.title.length > 50 ) ? carouselRecord.title.substring(0, 50)+(moreSymbol): (carouselRecord.title)} <i className="fas fa-ellipsis-v"></i></h5>
+            <p>Speaker. {carouselRecord.views} views. {noOfDays} days ago</p>
           </div>
         </a>
       </div>
@@ -65,7 +74,6 @@ class Slider extends React.Component {
       activeItemIndex,
       children,
     } = this.state;
-
     return (
       <div>
         {this.props.children}

@@ -5,8 +5,9 @@ import Carousel from 'react-bootstrap/Carousel';
 import Slider from '../../components/slider/Slider';
 import { getCurriculum } from '../../components/carousel/action';
 
-class Home extends Component {
 
+class Home extends Component {
+ 
   constructor(props) {
     super(props);
 
@@ -26,7 +27,7 @@ class Home extends Component {
     });
   };
 
-  componentDidMount() {
+  componentDidMount(){
     this.props.getCurriculum();
   }
 
@@ -40,45 +41,72 @@ class Home extends Component {
     this.props.history.push("/createevent");
   };
 
-  render() {
-    // let displayModalstring = "";
-    // if (this.state.carouselImageType == "image") {
-    //   // <video width="640" height="480" src={this.state.carouselImage} controls></video>
-    //   displayModalstring = <img src={this.state.carouselImage} alt="boardBG" />;
-    // } else {
-    //   displayModalstring = (
-    //     <iframe
-    //       width="100%"
-    //       src={this.state.carouselImage}
-    //       frameBorder="0"
-    //       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    //       allowFullScreen
-    //     />
-    //   );
-    // }
+  /**
+     * customSort is used for sorting an array
+     * @param arrayList : array which we need to sort
+     * @param sortBy : element by which we want to sort
+     * @param orderBy : this parameter should be ASC or DESC
+     * @param sortByAnotherValue : another element by which we want to sort
+     */
+    customSort(arrayList, sortBy, orderBy, sortByAnotherValue = '') {
+      arrayList.sort(function (valueList1, valueList2) {
+          let value1 = '';
+          let value2 = '';
 
+          if (sortByAnotherValue) {
+              if (typeof (valueList1[sortBy][sortByAnotherValue]) === 'string') {
+                  value1 = valueList1[sortBy][sortByAnotherValue].toLowerCase;
+                  value2 = valueList2[sortBy][sortByAnotherValue].toLowerCase;
+              } else {
+                  value1 = valueList1[sortBy][sortByAnotherValue];
+                  value2 = valueList2[sortBy][sortByAnotherValue];
+              }
+          } else {
+              // value1 = valueList1[sortBy].toLowerCase;
+              // value2 = valueList2[sortBy].toLowerCase;
+
+              value1 = valueList1[sortBy];
+              value2 = valueList2[sortBy];
+          }
+          if (orderBy.toLowerCase === 'asc') {
+              if (value1 < value2) { return -1;}
+              if (value1 > value2) { return 1;}
+          } else {
+              if (value2 < value1) { return -1;}
+              if (value2 > value1) { return 1;}
+          }
+          return 0;
+      });
+      return arrayList;
+  }
+
+  render() {
     const { carouselRows } = this.props;
     const carouselAwaitingRows = carouselRows;
     var awaitingRows = carouselAwaitingRows.filter(function (carouselAwaitingRow) {
       return !carouselAwaitingRow.awaiting;
     });
-    // console.log('--carouselAwaitingRows--', awaitingRows);
+    // console.log('--carouselAwaitingRows--', carouselRows);
 
-    const listTop10Items = carouselRows;
-    listTop10Items.sort((a, b) => b.rating_count - a.rating_count);
+    let listTop10Items = carouselRows;
+    var listTop10Items_1 = this.customSort(listTop10Items, 'rating_count', 'desc');
+    // console.log('listTop10Items', listTop10Items_1);
+    
+    let listNewlyItems = carouselRows;
+    var listNewlyItems_1 = listNewlyItems.sort((a,b) => a.created_date.seconds - b.created_date.seconds);
+    // console.log('listNewlyItems',listNewlyItems)
 
-    const listNewlyItems = carouselRows;
-    listNewlyItems.sort((a, b) => b.created_date - a.created_date);
-
-    const trendingItems = carouselRows;
-    trendingItems.sort((a, b) => b.views - a.views);
+    let trendingItems = carouselRows;
+    trendingItems = trendingItems.sort((a,b) => b.views - a.views);
+    // console.log('trendingItems',trendingItems)
 
     const listAwaitingItems = awaitingRows.map((awaitingRows, index) =>
       <Carousel.Item key={index}>
-        <iframe key={index} className="d-block w-100 h-100" src={awaitingRows.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div>
+          <iframe key={index} className="d-block w-100 h-100" src={awaitingRows.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div>
       </Carousel.Item>
     );
 
+    
     return (
       <React.Fragment>
         <div className="container-fluid">
@@ -90,53 +118,52 @@ class Home extends Component {
           <div className="row">
             <div className="col-12 main-wrapper">
               <Carousel>
-                {/* {listAwaitingItems} */}
-
-                <Carousel.Item>
-                  <img
-                    className="d-block w-100"
-                    src="https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg"
-                    alt="First slide"
-                  />
-                </Carousel.Item>
-                <Carousel.Item>
-                  <img
-                    className="d-block w-100"
-                    src="https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg"
-                    alt="Third slide"
-                  />
-                </Carousel.Item>
-                <Carousel.Item>
-                  <img
-                    className="d-block w-100"
-                    src="https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg"
-                    alt="Third slide"
-                  />
-                </Carousel.Item>
-              </Carousel>
+               {/* <Carousel.Item>                
+                <img
+                  className="d-block w-100"
+                  src="https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg"
+                  alt="First slide"
+                />                
+              </Carousel.Item>
+              <Carousel.Item>
+                <img
+                  className="d-block w-100"
+                  src="https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg"
+                  alt="Third slide"
+                />                
+              </Carousel.Item>
+              <Carousel.Item>
+                <img
+                  className="d-block w-100"
+                  src="https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg"
+                  alt="Third slide"
+                />
+              </Carousel.Item> */}
+              {listAwaitingItems}
+            </Carousel>
             </div>
           </div>
 
           <div className="row dark-bg">
             <div className="col-12">
-
-              <Slider carouselRecords={['aa', 'bb', 'cc', 'ddd', 'ee', 'ff', 'gg', 'hh']}>
-                <h3 className="mt-30">Top <i className="fas fa-chevron-right"></i></h3>
+             
+              <Slider carouselRecords={listTop10Items}>
+                <h3 className="mt-30">Top 10 <i className="fas fa-chevron-right"></i></h3>
               </Slider>
 
-              <Slider carouselRecords={['aa', 'bb', 'cc', 'ddd', 'ee', 'ff', 'gg', 'hh']}>
+              <Slider  carouselRecords={listNewlyItems}>
                 <h3 className="mt-30">Newly added videos <i className="fas fa-chevron-right"></i></h3>
               </Slider>
 
-              {/* <Slider carouselRecords={trendingItems}>
+              <Slider carouselRecords={trendingItems}>
                 <h3 className="mt-30">Trending videos <span>&gt;</span></h3>
-              </Slider>                */}
+              </Slider>               
             </div>
           </div>
           <div>&nbsp;</div>
           <div>&nbsp;</div>
 
-
+          
         </div>
       </React.Fragment>
     );
@@ -154,7 +181,6 @@ const mapDispatchToProps = dispatch => {
     getCurriculum: () => dispatch(getCurriculum()),
   };
 };
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
