@@ -27,14 +27,29 @@
     cursor: pointer;
 }
 .search-box-filter{
-    max-width: 60rem;
-    margin: 0 auto;
+    max-width: 40rem;
+    margin: 60px auto;
+}
+.subject-dropdown{
+    width: 15rem;
+    display: inline-block;
+}
+.student-drop-down{
+    display: inline-block;
 }
 
-@media only screen and (max-width: 600px) {
+.student-search-box{
+    display: inline-block !important;
+    margin-left: 20px;
+}
+@media only screen and (max-width: 620px) {
     .nav-bar-wrapper{
         position: absolute;
         bottom: 0;
         width: 100%;
+    }
+    .student-drop-down{
+        margin-bottom: 20px;
+        margin-left: 20px;
     }
   }

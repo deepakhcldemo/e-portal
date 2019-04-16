@@ -1,23 +1,26 @@
 import React, { Component } from "react"
-import { DropdownButton, MenuItem } from 'react-bootstrap';
-
-
+import Select from 'react-select';
 import "./Student.css"
 // import TimePicker from 'react-bootstrap-time-picker';
 class Student extends Component {
     constructor(props) {
         super(props);
+        this.handleChange = this.handleChange.bind(this);
         this.state = {
-            toggleDropDown: false
-        }
+            selectedOption: null,
+        };
     }
-    toggleDropDown = () => {
-        const toggleConst = this.state.toggleDropDown;
-        this.setState({
-            toggleDropDown: !toggleConst
-        })
+    handleChange = (selectedOption) => {
+        this.setState({ selectedOption });
     }
     render() {
+        const options = [
+            { value: 'Maths', label: 'Maths' },
+            { value: 'Sports', label: 'Sports' },
+            { value: 'Music', label: 'Music' }
+        ];
+        const { selectedOption } = this.state;
+
         return (
             <div>
                 <div className="nav-bar-wrapper">
@@ -29,8 +32,17 @@ class Student extends Component {
                         </div>
                     </nav>
                 </div>
-                <div className ="search-box-filter">
-                    <input type="text" placeholder="Search.."/>
+                <div className="search-box-filter">
+                    <div className="student-drop-down">
+                        <Select className="subject-dropdown"
+                            value={selectedOption}
+                            onChange={this.handleChange}
+                            options={options}
+                        />
+                    </div>
+                    <div className="student-search-box">
+                        <input type="text" placeholder="Search.." />
+                    </div>
                 </div>
             </div>
         )
