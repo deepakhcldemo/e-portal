@@ -1,4 +1,4 @@
-@import './views/Dashboard/dashboard.css';
+@import "./views/Dashboard/dashboard.css";
 
 #app {
   height: 100vh;
@@ -7,7 +7,6 @@
 /* body {
   color: #fff !important;
 } */
-
 
 .spinner-overlay-container {
   position: fixed;
@@ -821,7 +820,6 @@ body.toastr-confirm-active {
   color: #ffffff;
 }
 
-
 .policy-content--container {
   position: relative;
   padding-top: 23px;
@@ -1019,4 +1017,8 @@ li .fa {
   width: 100% !important;
   max-height: calc(100vh - 0px) !important;
   overflow-y: auto !important;
+}
+
+.dropdown-item {
+  color: #212529 !important;
 }

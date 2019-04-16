@@ -118,7 +118,6 @@ class Login extends Component {
   }
 
   setLoginStatus(userDetails, isNewUser) {
-    debugger;
     AuthGuard.authenticate(() => {
       this.setState(() => ({
         redirectToReferrer: true

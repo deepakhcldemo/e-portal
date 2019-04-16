@@ -136,7 +136,7 @@ class Profile extends Component {
     });
 
     return (
-      <div className="content-container">
+      <div className="content-container container-padding">
         <div className="row">
           <div className="col-12">
             <Header headeTitle="Registration" />
