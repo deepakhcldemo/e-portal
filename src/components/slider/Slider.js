@@ -40,6 +40,7 @@ class Slider extends React.Component {
   // });
 
   createChildren = n => this.props.carouselRecords.map((carouselRecord, index) => {
+    const moreSymbol = '...';
     return (
       <div key={index} className="vd-wrapper">
         <a href="#" title={carouselRecord.title}>
@@ -48,7 +49,8 @@ class Slider extends React.Component {
           </div>   
           
           <div className="vd-content">
-            <h5>{carouselRecord.title.substring(1, 50)} <i className="fas fa-ellipsis-v"></i></h5>
+            <h5>{
+              (carouselRecord.title.length > 50 ) ? carouselRecord.title.substring(1, 50)+(moreSymbol): (carouselRecord.title)} <i className="fas fa-ellipsis-v"></i></h5>
             <p>Speaker. {carouselRecord.views} views. 4 days ago</p>
           </div>
         </a>
