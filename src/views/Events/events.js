@@ -1,10 +1,11 @@
 import React, { Component } from "react"
 import { connect } from 'react-redux';
 import "./eventstyle.css"
+
 import { EVENT_CONSTANT } from '../../constant/Event-Constant'
 import ModalPopUp from '../../shared/components/modalpopup/modalpopup';
 import DateTimePicker from 'react-datetime-picker';
-
+import { saveEventDetails } from '../../database/dal/firebase/eventDal'
 import { openModalPopUp, getStudentList, addStudent } from './eventAction';
 // import TimePicker from 'react-bootstrap-time-picker';
 class CreateEvent extends Component {
@@ -21,11 +22,13 @@ class CreateEvent extends Component {
       endDate: (new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear()),
       fields: {},
       errors: {},
-      errorDate: ''
+      errorDate: '',
+      emptydate: ''
 
     }
-     this.onEndDateChange = this.onEndDateChange.bind(this);
+    this.onEndDateChange = this.onEndDateChange.bind(this);
     this.onStartDateChange = this.onStartDateChange.bind(this);
+    this.clearEventForm = this.clearEventForm.bind(this);
   }
 
   componentDidMount() {
@@ -102,7 +105,7 @@ class CreateEvent extends Component {
     this.setState({
       customStartDate: startdate
     })
-  console.log('this.state', this.state.customStartDate);
+    console.log('this.state', this.state.customStartDate);
   }
   getStudentList = (studentList) => {
     this.setState({
@@ -111,31 +114,11 @@ class CreateEvent extends Component {
   }
 
   onEndDateChange = (event) => {
-    
+
     this.setState({
       customEndDate: event
     })
-    // if (this.state.customStartDate < this.state.customEndDate) {
-    //   console.log('inside if statement')
-    //   this.setState({
-    //     errorDate: "End Date can not be less than start date"
-    //   })
-    // }
-    // else{
-    //   this.setState({
-    //     errorDate: " "
-    //   })
-    // }
-    // console.log('this.state', this.state.errorDate);
   }
-
-  // createEvent = () => {
-  //   if (this.state.customEndDate < this.state.customStartDate) {
-  //     alert('equal');
-  //   }
-  // }
-
-
 
   /// form validation 
   handleValidation() {
@@ -161,7 +144,6 @@ class CreateEvent extends Component {
     }
 
     if (this.state.taggedStudentsNames && this.state.taggedStudentsNames.length === 0) {
-      debugger
       errors["studentTagged"] = "Please Tagged atleast one student for event";
       formIsValid = false
     }
@@ -184,25 +166,57 @@ class CreateEvent extends Component {
 
   contactSubmit(e) {
     e.preventDefault();
-    console.log('this.state.customStartDate', this.state.customStartDate);
-    console.log('this.state.customEndDate', this.state.customEndDate);
-
-    if(this.state.customEndDate < this.state.customStartDate){
-        this.setState({
+    let validationMessage = true
+    if (this.state.customEndDate === null || this.state.customStartDate === null) {
+      this.setState({
+        emptydate: "End Date or Start date can not be empty"
+      })
+      validationMessage = false;
+    }
+    if (this.state.customEndDate < this.state.customStartDate) {
+      this.setState({
         errorDate: "End Date can not be less than start date"
       })
+      validationMessage = false;
     }
-    else{
-         this.setState({
+    else {
+      this.setState({
         errorDate: ""
       })
     }
-    if (this.handleValidation()) {
-      alert("Form submitted");
+    if (this.handleValidation() && validationMessage) {
+      const eventCreatedDate = new Date();
+      const loggedInUSer = JSON.parse(localStorage.getItem('user'));
+      if (loggedInUSer) {
+        const eventDetails = {
+          userId : loggedInUSer.user.uid,
+          eventCreatedDate,
+          eventName: this.state.fields.eventName,
+          eventLocation: this.state.fields.location,
+          eventDescription: this.state.fields.EventDescription,
+          eventStartDate: this.state.customStartDate,
+          eventEndDate: this.state.customEndDate,
+          AllDayEvent: false,
+          Students: this.state.taggedStudentsNames
+        }
+        saveEventDetails({
+          ...eventDetails
+        })
+        this.props.history.push('/dashboard');
+      }
     } else {
       alert("Form has errors.")
     }
+  }
 
+  clearEventForm = () => {
+    this.setState({
+      taggedStudentsNames: [],
+      customEndDate: '',
+      customStartDate: ''
+    })
+
+    document.getElementById("create-event-form").reset();
   }
   render() {
     let style = {}
@@ -215,7 +229,7 @@ class CreateEvent extends Component {
           <div className="back-to-dashborad" onClick={this.goBackToDashboard}><i className="fa fa-angle-left left-arrow-icon"></i><span>Back To Dashboard</span></div>
           <div className="col-12 col-sm-12 col-md-12 col-lg-12">
             <h1>Create Event</h1>
-            <form onSubmit={this.contactSubmit.bind(this)} className="form-group event-form">
+            <form onSubmit={this.contactSubmit.bind(this)} className="form-group event-form" id="create-event-form">
               <div className="form-group">
                 <label className="event-form-label">Event Name:</label>
                 <input type="text" className="form-control" onChange={this.handleChange.bind(this, "eventName")} />
@@ -244,7 +258,7 @@ class CreateEvent extends Component {
                       <label className="calender-label event-form-label">Start Date :</label>
                       <DateTimePicker
                         value={this.state.customStartDate}
-                        onChange={ this.onStartDateChange}
+                        onChange={this.onStartDateChange}
                       />
                     </div>
                     <div className="complete-calender">
@@ -264,6 +278,7 @@ class CreateEvent extends Component {
                   </div>
                 </div>
                 <p style={{ color: "red" }}>{this.state.errorDate}</p>
+                <p style={{ color: "red" }}>{this.state.emptydate}</p>
                 <div className="row">
                   <div className="col-12 col-sm-12 col-md-12 col-lg-12 check-box-all-day-event">
                     <label className="margin-both event-form-label">All Day Event </label>
@@ -271,8 +286,8 @@ class CreateEvent extends Component {
                   </div>
                 </div>
                 <div className="form-group margin-top-bottom">
-                  <input type="submit" className="btn btn-primary margin-both btn-event-save" value="Create Event"/>
-                  <input type="button" className="btn btn-secondary btn-event-cancel" value="Cancel" />
+                  <input type="submit" className="btn btn-primary margin-both btn-event-save" value="Create Event" />
+                  <input type="button" className="btn btn-secondary btn-event-cancel" value="Cancel" onClick={this.clearEventForm} />
                 </div>
               </div>
 

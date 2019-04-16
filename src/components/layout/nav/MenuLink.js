@@ -27,6 +27,12 @@ class MenuLinks extends Component {
           link: '/createevent',
           icon: 'fa fa-calendar'
         }
+        ,
+        {
+          text: 'Student',
+          link: '/Student',
+          icon: 'fa-graduation-cap'
+        }
       ]
     };
   }

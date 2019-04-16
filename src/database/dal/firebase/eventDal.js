@@ -1,5 +1,11 @@
 import dbFactory from '../../dbFactory';
 import firebase from 'firebase';
+import { toastr } from 'react-redux-toastr';
+const getDbRef = collectionName => {
+    const db = dbFactory.create('firebase');
+    const ref = db.firestore().collection(collectionName);
+    return ref;
+  };
 export const  getStudentFromDB = (dispatch) => {
     const student = [];
     const db = dbFactory.create('firebase');
@@ -15,13 +21,11 @@ export const  getStudentFromDB = (dispatch) => {
     
 }
 
-// export const addCategoryIntoDB = (dispatch) => {
-//     const db = dbFactory.create('firebase');
-//     const user = db.auth().currentUser;
-//     db.firestore().collection('categories').doc(user.uid).get()
-//         .then((res)=>{
-//             dispatch({type: 'ADD_CATEGORY', category: res.data()})          
-//         }).catch(err => {
-//             dispatch({type: 'ERROR', err})
-//         })
-// }
+export const saveEventDetails = eventDetails => {
+    const db = dbFactory.create('firebase');
+    db.firestore().collection('events').doc(eventDetails.userId).set(eventDetails).then(() => {
+        toastr.success('Event Details Saved Successfully');
+        
+      })
+  };
+  

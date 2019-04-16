@@ -15,6 +15,8 @@ import PasswordReset from './views/PasswordReset';
 import Profile from './views/Profile';
 import Carousel from './components/carousel/Carousel';
 import Category from './views/Category';
+import Student from './views/Student/index';
+
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -69,6 +71,7 @@ class App extends Component {
           <PrivateRoute path="/createevent" component={CreateEvent} />
           <PrivateRoute path="/carousel" component={Carousel} exact />
           <PrivateRoute path="/category" component={Category} exact />
+          <PrivateRoute path="/student" component={Student} exact />
           <Redirect to="/login" />
         </Switch>
       </div>
