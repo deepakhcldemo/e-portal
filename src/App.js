@@ -41,12 +41,12 @@ class App extends Component {
     auth: true
   };
   componentWillMount() {
-    console.log("-----------------------------------------------------------");
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user && this.props.location) {
+    console.log('-----------------------------------------------------------');
+    const user = JSON.parse(localStorage.getItem('user'));
 
+    if (!user && this.props.location) {
       GLOBAL_VARIABLES.BASEROUTE = this.props.location.pathname;
-      this.props.history.push("/home");
+      this.props.history.push('/home');
     }
   }
   render() {
@@ -83,9 +83,13 @@ class App extends Component {
           <PrivateRoute path="/category" component={Category} exact />
           <PrivateRoute path="/teacher" component={Teacher} exact />
           <PrivateRoute path="/teacher/videos" component={Video} exact />
-          <PrivateRoute path="/teacher/notifications" component={Notification} exact />
+          <PrivateRoute
+            path="/teacher/notifications"
+            component={Notification}
+            exact
+          />
           <Redirect to="/login" />
-          
+
           <Redirect to="/home" />
         </Switch>
       </div>
@@ -102,11 +106,14 @@ App.defaultProps = {
   children: null
 };
 const mapStateToProps = state => {
-  console.log("app state", state);
-  const loginResponse = JSON.parse(localStorage.getItem("user"));
+  console.log('app state', state);
+  const loginResponse = JSON.parse(localStorage.getItem('user'));
   console.log(loginResponse);
-  return { auth: true, spinnerStatus: state.spinnerStatus.spinnerStatus,
-    modalState: state.openModal };
+  return {
+    auth: true,
+    spinnerStatus: state.spinnerStatus.spinnerStatus,
+    modalState: state.openModal
+  };
 };
 
 const mapDispatchToProps = dispatch => {

@@ -102,7 +102,11 @@ class Profile extends Component {
     };
     saveUserProfile(userDetails).then(() => {
       toastr.success('Details Saved Successfully');
-      this.props.history.push('/dashboard');
+      if (role === 'Teacher') {
+        this.props.history.push('/teacher');
+      } else {
+        this.props.history.push('/student');
+      }
     });
   };
 
@@ -839,7 +843,6 @@ class Profile extends Component {
                     >
                       <Dropdown.Item eventKey="Teacher">Teacher</Dropdown.Item>
                       <Dropdown.Item eventKey="Student">Student</Dropdown.Item>
-                      <Dropdown.Item eventKey="Admin">Admin</Dropdown.Item>
                     </DropdownButton>
                     {submitted && !role && (
                       <div className="help-block">Role is required</div>

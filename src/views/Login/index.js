@@ -13,7 +13,8 @@ import {
   loginWithGoogle,
   loginWithFacebook,
   loginWithTwitter,
-  saveRecord
+  saveRecord,
+  getUserProfile
 } from '../../database/dal/firebase/registrationDal';
 import GLOBAL_VARIABLES from '../../config/config';
 import AuthGuard from '../../authguard/AuthGuard';
@@ -53,12 +54,12 @@ class Login extends Component {
     redirectToReferrer: false
   };
 
-  componentDidMount = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (user) {
-      this.props.history.push('/dashboard');
-    }
-  };
+  // componentDidMount = () => {
+  //   const user = JSON.parse(localStorage.getItem('user'));
+  //   if (user) {
+  //     this.props.history.push('/dashboard');
+  //   }
+  // };
 
   userIconStyle() {
     document.getElementById('userIcon').style.backgroundImage =
@@ -97,7 +98,18 @@ class Login extends Component {
       querySnapshot.forEach(doc => {
         const user = doc.data();
         if (user.profileSaved === true) {
-          this.props.history.push('/dashboard');
+          getUserProfile(userDetails.user.uid).then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              const user = doc.data();
+              if (doc.exists) {
+                if (user.role === 'Teacher') {
+                  this.props.history.push('/teacher');
+                } else {
+                  this.props.history.push('/student');
+                }
+              }
+            });
+          });
         } else {
           this.props.history.push('/profile');
         }
@@ -106,12 +118,13 @@ class Login extends Component {
   }
 
   setLoginStatus(userDetails, isNewUser) {
+    debugger;
     AuthGuard.authenticate(() => {
       this.setState(() => ({
         redirectToReferrer: true
       }));
       console.log('GLOBAL_VARIABLES.BASEROUTE', GLOBAL_VARIABLES.BASEROUTE);
-      if (GLOBAL_VARIABLES.BASEROUTE !== '/login') {
+      if (GLOBAL_VARIABLES.BASEROUTE !== '/home') {
         this.props.history.push(GLOBAL_VARIABLES.BASEROUTE);
       } else {
         if (isNewUser) {
