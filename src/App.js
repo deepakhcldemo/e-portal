@@ -73,6 +73,7 @@ class App extends Component {
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/curriculum" component={Curriculum} />
+          <PrivateRoute path="/student" component={Student} exact />
           <PrivateRoute path="/createevent" component={CreateEvent} />
           <PrivateRoute path="/carousel" component={Carousel} exact />
           <PrivateRoute path="/category" component={Category} exact />
@@ -80,7 +81,7 @@ class App extends Component {
           <PrivateRoute path="/teacher/videos" component={Video} exact />
           <PrivateRoute path="/teacher/notifications" component={Notification} exact />
           <Redirect to="/login" />
-          <PrivateRoute path="/student" component={Student} exact />
+          
           <Redirect to="/home" />
         </Switch>
       </div>

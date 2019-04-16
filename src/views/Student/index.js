@@ -40,9 +40,13 @@ class Student extends Component {
                             options={options}
                         />
                     </div>
-                    <div className="student-search-box">
-                        <input type="text" placeholder="Search.." />
+                    <div class="inner-addon left-addon student-search-box">
+                        <i class="fa fa-search"></i>
+                        <input type="text" class="form-control" />
                     </div>
+                    {/* <div className="student-search-box">
+                        <input type="text" placeholder="Search.." />
+                    </div> */}
                 </div>
             </div>
         )

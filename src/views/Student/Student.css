@@ -41,7 +41,26 @@
 .student-search-box{
     display: inline-block !important;
     margin-left: 20px;
+    width: 58%;
 }
+
+.inner-addon { 
+    position: relative; 
+}
+
+/* style icon */
+.inner-addon .fa-search {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .fa-search  { right: 0px}
+.right-addon .fa-search { right: 0px;}
+
+/* add padding  */
+.right-addon input { padding-right: 30px; }
 @media only screen and (max-width: 620px) {
     .nav-bar-wrapper{
         position: absolute;
@@ -51,5 +70,10 @@
     .student-drop-down{
         margin-bottom: 20px;
         margin-left: 20px;
+    }
+
+    .student-search-box{
+        
+        width: 68%;
     }
   }
