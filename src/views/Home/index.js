@@ -3,8 +3,8 @@ import HeaderHome from "../../components/layout/header/HeaderHome";
 import { connect } from "react-redux";
 import Carousel from 'react-bootstrap/Carousel';
 import Slider from '../../components/slider/Slider';
-import { getCurriculum } from '../../components/carousel/action';
-
+import { getCurriculum, getTeacher } from './actions';
+import GLOBAL_VARIABLES from '../../config/config';
 
 class Home extends Component {
  
@@ -29,6 +29,7 @@ class Home extends Component {
 
   componentDidMount(){
     this.props.getCurriculum();
+    this.props.getTeacher();
   }
 
   toggleModalClose = () => {
@@ -41,55 +42,19 @@ class Home extends Component {
     this.props.history.push("/createevent");
   };
 
-  /**
-     * customSort is used for sorting an array
-     * @param arrayList : array which we need to sort
-     * @param sortBy : element by which we want to sort
-     * @param orderBy : this parameter should be ASC or DESC
-     * @param sortByAnotherValue : another element by which we want to sort
-     */
-    customSort(arrayList, sortBy, orderBy, sortByAnotherValue = '') {
-      arrayList.sort(function (valueList1, valueList2) {
-          let value1 = '';
-          let value2 = '';
-
-          if (sortByAnotherValue) {
-              if (typeof (valueList1[sortBy][sortByAnotherValue]) === 'string') {
-                  value1 = valueList1[sortBy][sortByAnotherValue].toLowerCase;
-                  value2 = valueList2[sortBy][sortByAnotherValue].toLowerCase;
-              } else {
-                  value1 = valueList1[sortBy][sortByAnotherValue];
-                  value2 = valueList2[sortBy][sortByAnotherValue];
-              }
-          } else {
-              // value1 = valueList1[sortBy].toLowerCase;
-              // value2 = valueList2[sortBy].toLowerCase;
-
-              value1 = valueList1[sortBy];
-              value2 = valueList2[sortBy];
-          }
-          if (orderBy.toLowerCase === 'asc') {
-              if (value1 < value2) { return -1;}
-              if (value1 > value2) { return 1;}
-          } else {
-              if (value2 < value1) { return -1;}
-              if (value2 > value1) { return 1;}
-          }
-          return 0;
-      });
-      return arrayList;
-  }
-
+  
   render() {
-    const { carouselRows } = this.props;
+    const { carouselRows, teacherCarouselRows } = this.props;
+
+    // console.log('--teacherCarouselRows--', teacherCarouselRows);
+
     const carouselAwaitingRows = carouselRows;
     var awaitingRows = carouselAwaitingRows.filter(function (carouselAwaitingRow) {
       return !carouselAwaitingRow.awaiting;
     });
-    // console.log('--carouselAwaitingRows--', carouselRows);
-
-    let listTop10Items = carouselRows;
-    var listTop10Items_1 = this.customSort(listTop10Items, 'rating_count', 'desc');
+    
+    const listTop10Items = teacherCarouselRows;
+    // var listTop10Items_1 = listTop10Items.sort((a,b) => a.rating_count - b.rating_count);
     // console.log('listTop10Items', listTop10Items_1);
     
     let listNewlyItems = carouselRows;
@@ -102,12 +67,13 @@ class Home extends Component {
 
     const listAwaitingItems = awaitingRows.map((awaitingRows, index) =>
       <Carousel.Item key={index}>
-          <iframe key={index} className="d-block w-100 h-100" src={awaitingRows.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div>
+          {/* <iframe key={index} className="d-block w-100 h-100" src={awaitingRows.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
+          <img src="https://images.pexels.com/photos/1020315/pexels-photo-1020315.jpeg" className="d-block w-100"/>
       </Carousel.Item>
     );
-
     
     return (
+      // {yourvairable && (<h1></h1>)}
       <React.Fragment>
         <div className="container-fluid">
           <div className="row">
@@ -147,17 +113,17 @@ class Home extends Component {
           <div className="row dark-bg">
             <div className="col-12 content-container--background">
              
-              <Slider carouselRecords={listTop10Items}>
-                <h3 className="mt-30">Top 10 <i className="fas fa-chevron-right"></i></h3>
+              <Slider listTop10Items={listTop10Items}>
+                <h3 className="mt-30">{GLOBAL_VARIABLES.TOP10_TUTOR} <i className="fas fa-chevron-right"></i></h3>
               </Slider>
 
-              <Slider  carouselRecords={listNewlyItems}>
-                <h3 className="mt-30">Newly added videos <i className="fas fa-chevron-right"></i></h3>
+              <Slider listNewlyItems={listNewlyItems}>
+                <h3 className="mt-30">{GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS} <i className="fas fa-chevron-right"></i></h3>
               </Slider>
 
-              <Slider carouselRecords={trendingItems}>
-                <h3 className="mt-30">Trending videos <span>&gt;</span></h3>
-              </Slider>               
+              {/* <Slider trendingItems={trendingItems}>
+                <h3 className="mt-30">{GLOBAL_VARIABLES.TRENDING_VIDEOS} <span>&gt;</span></h3>
+              </Slider>                */}
             </div>
           </div>
           <div className="row">
@@ -175,14 +141,15 @@ class Home extends Component {
 }
 const mapStateToProps = state => {
   return {
-    modalSata: state.classes,
-    carouselRows: state.carouselStore.carouselData,
+    carouselRows: state.homeReducerStore.carouselData,
+    teacherCarouselRows: state.homeReducerStore.teacherCarouselData,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getCurriculum: () => dispatch(getCurriculum()),
+    getTeacher: () => dispatch(getTeacher()),
   };
 };
 export default connect(
