@@ -14,6 +14,7 @@ export const CATEGORY = {
         EDIT: 'EDIT',
         DELETE: 'DELETE'
     },
-    EMPTY_MSG: 'Please Enter Category Name'
+    EMPTY_MSG: 'Please Enter Category Name',
+    DELETE_MSG: 'Are You Sure You Want to Delete this Category?'
 }
 export default ElearningConst;

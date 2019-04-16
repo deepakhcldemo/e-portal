@@ -1,0 +1,41 @@
+$backgroundColor: #1976d2;
+$color: #fff;
+$boxShadow: 0 2px 5px 0 rgba(0,0,0,.3);
+
+.box-shadow{
+    background: $backgroundColor;
+    color: $color !important;
+    box-shadow: $boxShadow;
+    min-height: 40px;   
+}
+a{
+    color: $color !important
+}
+.active{
+    background-color: #fff;
+    box-shadow: $boxShadow;
+    a {
+        color: $backgroundColor!important;
+    }
+}
+.hide{
+    display: none!important;
+    @media (min-width: 576px) {        
+        display: unset!important;
+    }
+}
+ul{
+    @media (max-width: 576px){
+        display: flex !important;
+        flex-direction: row!important;
+        left: 0;
+        position: absolute;
+    }
+    li {
+        @media (max-width: 576px){
+            padding: 5px
+        }   
+    }
+}
+
+

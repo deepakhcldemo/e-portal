@@ -2,7 +2,8 @@ import { CATEGORY } from './../../constant/Constant';
 const initialState = {
     tree: [],
     openModal: false,
-    error: ''
+    error: '',
+    dbWithUser: ''
 };
 const curriculumReducer = (state = initialState, action) => {
     switch (action.type) {  
@@ -10,8 +11,13 @@ const curriculumReducer = (state = initialState, action) => {
             return {                
                 ...state,   
                 tree: action.category                            
-            }      
-        case 'CLOSE':
+            }
+        case 'GET_CURRENT_USER': 
+            return {
+                ...state,
+                uid: action.uid
+            }             
+        /* case 'CLOSE':
             return {
                 ...state,
                 openModal: !state.openModal
@@ -21,7 +27,7 @@ const curriculumReducer = (state = initialState, action) => {
                 ...state,
                 openModal: !state.openModal
             }        
-        default:
+         */default:
             return state
     }
 }

@@ -16,8 +16,6 @@ export const getCategoryFromDB = (dispatch) => {
 export const manageCategoryFromDB = async (dispatch, tree, state) => {
     const db = dbFactory.create('firebase')    
     const treeData = await manageTree(tree, state);
-    console.log(state);
-    console.log(treeData);
     db.firestore().collection('category').doc('0').set(treeData[0])
     .then(()=>{
         dispatch({type: CATEGORY.ACTIONS.MANAGE, category: treeData})          

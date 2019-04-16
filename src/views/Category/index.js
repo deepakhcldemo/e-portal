@@ -17,16 +17,17 @@ class Category extends Component {
     state = SelectedNode;
     selectedItem = null;
 
-    componentWillMount(){
+    componentWillMount = () => {
         this.props.closeModal();
     }
     
-    componentDidMount(){
+    componentDidMount = () => {
         this.props.getCategory();
     }
   
-    componentWillUnmount(){
+    componentWillUnmount = () => {
         this.props.closeModal();
+        this.props = null;
     }
 
     onItemClick = async (event) => {               
@@ -38,7 +39,7 @@ class Category extends Component {
         this.forceUpdate();
     }
 
-    selectCurrentNode(e){
+    selectCurrentNode = (e) => {
         if (this.selectedItem)
         this.selectedItem.selected = false;
 
@@ -59,20 +60,23 @@ class Category extends Component {
         this.props.openModal()
     }
     
-    handleInputChange(e) {
+    handleInputChange = (e) => {
         this.setState({
           [e.id]: e.value
         })
     }
     
     manageCategory = () => {
-        if (this.checkStateIsEmpty()) {
-            this.props.manageCategory(this.props.tree, this.state)
-            this.props.closeModal();
+        if (this.state.categoryType !== CATEGORY.TYPE.DELETE && !this.checkStateIsEmpty()) {
+            return false;
         }
+        if (this.selectedItem)
+        this.selectedItem.selected = false;
+        this.props.manageCategory(this.props.tree, this.state)
+        this.props.closeModal();
     }
     
-    checkStateIsEmpty(){
+    checkStateIsEmpty = () => {
         if (!this.state[this.state.categoryType.toLowerCase()]) {
             toastr.warning(this.state.categoryType, CATEGORY.EMPTY_MSG);
             return false;
@@ -80,9 +84,10 @@ class Category extends Component {
         return true;
     }
 
-    render() {  
+    render = () => {  
         const { tree, modalState } = this.props
-        const checkBoth = this.state.categoryType === 'ADD' || this.state.categoryType === 'EDIT'        
+        const checkBoth = this.state.categoryType === CATEGORY.TYPE.ADD 
+                        || this.state.categoryType === CATEGORY.TYPE.EDIT       
         return (
             <div className="container-fluid">
                 <div className="row">
@@ -153,11 +158,11 @@ class Category extends Component {
                                 <button className="btn btn-outline-primary btn-sm space" onClick={() => this.manageCategory()}>{this.state.categoryType}</button>
                             </>
                         )}
-                        {this.state.categoryType === 'DELETE' && (
+                        {this.state.categoryType === CATEGORY.TYPE.DELETE && (
                             <>
                                 <div className="col-12">
                                     <br/>
-                                    <h6>Are You Sure You Want to Delete this Category?</h6>
+                                    <h6>{CATEGORY.DELETE_MSG}</h6>
                                     <br/>
                                 </div>                            
                                 <button className="btn btn-outline-primary btn-sm space" onClick={() => this.manageCategory()}>{this.state.categoryType}</button>                        
