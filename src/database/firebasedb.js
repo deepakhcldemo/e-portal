@@ -8,7 +8,7 @@ const config = {
   authDomain: 'e-project-4e023.firebaseapp.com',
   databaseURL: 'https://e-project-4e023.firebaseio.com',
   projectId: 'e-project-4e023',
-  storageBucket: 'e-project-4e023',
+  storageBucket: 'gs://e-project-4e023.appspot.com/',
   messagingSenderId: '994953111174'
 };
 firebase.initializeApp(config);
