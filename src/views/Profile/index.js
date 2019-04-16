@@ -6,7 +6,10 @@ import { toastr } from 'react-redux-toastr';
 import { connect } from 'react-redux';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 import * as actionTypes from '../../spinnerStore/actions';
-import { saveUserProfile } from '../../database/dal/firebase/registrationDal';
+import {
+  saveUserProfile,
+  getUserProfile
+} from '../../database/dal/firebase/registrationDal';
 
 const subjects = [
   'Math',
@@ -27,7 +30,6 @@ class Profile extends Component {
     mobile: '',
     email: '',
     role: '',
-    field: '',
     subject: '',
     submitted: false
   };
@@ -39,6 +41,30 @@ class Profile extends Component {
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
+  };
+
+  componentDidMount = () => {
+    const userId = JSON.parse(localStorage.getItem('user')).user.uid;
+    getUserProfile(userId).then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const user = doc.data();
+        if (doc.exists) {
+          this.setState({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            dob: user.dob,
+            gender: user.gender,
+            address: user.address,
+            city: user.city,
+            country: user.country,
+            email: user.email,
+            mobile: user.mobile,
+            role: user.role,
+            subject: user.subject
+          });
+        }
+      });
+    });
   };
 
   saveDetails = e => {
@@ -54,69 +80,30 @@ class Profile extends Component {
       email,
       mobile,
       role,
-      field,
       subject
     } = this.state;
+
     const userId = JSON.parse(localStorage.getItem('user')).user.uid;
     this.setState({ submitted: true });
-    if (role === 'Teacher') {
-      const teacherDetails = {
-        firstName,
-        lastName,
-        dob,
-        gender,
-        address,
-        city,
-        country,
-        email,
-        mobile,
-        role,
-        field,
-        subject,
-        userId
-      };
-      saveUserProfile(teacherDetails).then(() => {
-        toastr.success('Details Saved Successfully');
-        this.props.history.push('/dashboard');
-      });
-    } else if (role === 'Student') {
-      const studentDetails = {
-        firstName,
-        lastName,
-        dob,
-        gender,
-        address,
-        city,
-        country,
-        email,
-        mobile,
-        role,
-        subject,
-        userId
-      };
-      saveUserProfile(studentDetails).then(() => {
-        toastr.success('Details Saved Successfully');
-        this.props.history.push('/dashboard');
-      });
-    } else {
-      const adminDetails = {
-        firstName,
-        lastName,
-        dob,
-        gender,
-        address,
-        city,
-        country,
-        email,
-        mobile,
-        role,
-        userId
-      };
-      saveUserProfile(adminDetails).then(() => {
-        toastr.success('Details Saved Successfully');
-        this.props.history.push('/dashboard');
-      });
-    }
+
+    const userDetails = {
+      firstName,
+      lastName,
+      dob,
+      gender,
+      address,
+      city,
+      country,
+      email,
+      mobile,
+      role,
+      subject,
+      userId
+    };
+    saveUserProfile(userDetails).then(() => {
+      toastr.success('Details Saved Successfully');
+      this.props.history.push('/dashboard');
+    });
   };
 
   render() {
