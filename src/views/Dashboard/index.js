@@ -94,9 +94,7 @@ class Dashboard extends Component {
           <div className="row">
             <div className="col-12 main-wrapper">
               <Carousel>
-              {/* {listAwaitingItems} */}
-
-              <Carousel.Item>                
+               {/* <Carousel.Item>                
                 <img
                   className="d-block w-100"
                   src="https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg"
@@ -116,7 +114,8 @@ class Dashboard extends Component {
                   src="https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg"
                   alt="Third slide"
                 />
-              </Carousel.Item>
+              </Carousel.Item> */}
+              {listAwaitingItems}
             </Carousel>
             </div>
           </div>
@@ -124,17 +123,17 @@ class Dashboard extends Component {
           <div className="row dark-bg">
             <div className="col-12">
              
-              <Slider carouselRecords={['aa','bb','cc', 'ddd', 'ee','ff','gg','hh']}>
-                <h3 className="mt-30">Top <i className="fas fa-chevron-right"></i></h3>
+              <Slider carouselRecords={listTop10Items}>
+                <h3 className="mt-30">Top 10 <i className="fas fa-chevron-right"></i></h3>
               </Slider>
 
-              <Slider  carouselRecords={['aa','bb','cc', 'ddd', 'ee','ff','gg','hh']}>
+              <Slider  carouselRecords={listNewlyItems}>
                 <h3 className="mt-30">Newly added videos <i className="fas fa-chevron-right"></i></h3>
               </Slider>
 
-              {/* <Slider carouselRecords={trendingItems}>
+              <Slider carouselRecords={trendingItems}>
                 <h3 className="mt-30">Trending videos <span>&gt;</span></h3>
-              </Slider>                */}
+              </Slider>               
             </div>
           </div>
           <div>&nbsp;</div>
