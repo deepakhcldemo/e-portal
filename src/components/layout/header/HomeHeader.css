@@ -1,6 +1,38 @@
-.home-header-nav-item{
-    color: #FFF;
-    height: 42px;
+.home-header-logo {
+    width: 50px;
     float: left;
-    padding: 0px 20px;
+}
+
+.home-header-nav-item {
+    color: #FFF;
+    height: 54px;
+    padding: 0px 10px;
+
+}
+
+.home-header-nav-item--position {
+    position: relative;
+    float: right;
+
+}
+
+.home-header-link  {
+    color: #FFF !important;
+    cursor: pointer;
+}
+
+.home-header-link:hover {
+    color: #FFF;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.home-header-link:visited {
+    color: #FFF;
+    cursor: pointer;
+}
+
+.home-header-link:focus {
+    color: #FFF;
+    cursor: pointer;
 }

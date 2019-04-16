@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthGuard from './authguard/AuthGuard';
 import { withRouter } from 'react-router';
-import GLOBAL_VARIABLES from './config/Config';
+import GLOBAL_VARIABLES from './config/config';
 import './App.css';
 import CreateEvent from './views/Events/events';
 import Home from './views/Home';
@@ -21,6 +21,8 @@ import Video from './views/Teacher/Video';
 import Notification from './views/Teacher/Notification';
 import Student from './views/Student/index';
 
+import ContactUs from './views/ContactUs';
+import AboutUs from './views/AboutUs';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -69,6 +71,8 @@ class App extends Component {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/home" component={Home} />
+          <Route exact path="/contactus" component={ContactUs} />
+          <Route exact path="/aboutus" component={AboutUs} />
           <Route exact path="/resetPassword" component={PasswordReset} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/profile" component={Profile} />

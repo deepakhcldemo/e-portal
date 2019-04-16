@@ -8,6 +8,7 @@
   color: #fff !important;
 } */
 
+
 .spinner-overlay-container {
   position: fixed;
   width: 100%;
@@ -820,15 +821,6 @@ body.toastr-confirm-active {
   color: #ffffff;
 }
 
-.content-container {
-  position: relative;
-  padding-top: 56px;
-  overflow-y: auto;
-  min-height: 100vh;
-  top: 0px;
-  bottom: 0px;
-  margin: auto;
-}
 
 .policy-content--container {
   position: relative;

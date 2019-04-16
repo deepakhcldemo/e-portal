@@ -15,7 +15,7 @@ import {
   loginWithTwitter,
   saveRecord
 } from '../../database/dal/firebase/registrationDal';
-import GLOBAL_VARIABLES from '../../config/Config';
+import GLOBAL_VARIABLES from '../../config/config';
 import AuthGuard from '../../authguard/AuthGuard';
 
 let userIcon = {
@@ -252,7 +252,7 @@ class Login extends Component {
                 <span className="sign-in-text--padding">Sign In</span>
               </div>
 
-              <form name="form">
+              <form name="form" className="login-form--padding">
                 <div className="alert alert-dark" role="alert">
                   Note: If you do not have an account, one will be created for
                   you!
@@ -330,7 +330,7 @@ class Login extends Component {
                   <button
                     onClick={this.login}
                     type="button"
-                    className="btn-login"
+                    className="btn btn-success btn-block"
                   >
                     LOGIN
                   </button>

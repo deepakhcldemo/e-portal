@@ -91,22 +91,16 @@ class PasswordReset extends Component {
 
     const { username, submitted } = this.state;
     return (
-      <div
-        style={{
-          backgroundImage: 'url(' + '../../Assets/hdpi/boardBG.jpg ' + ')',
-          backgroundPosition: 'top center',
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
+      <div className="container-background">
         <div className="row row-without--margin">
-          <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container">
+          <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container content-align--middle">
+            <div className="card card-border-radius">
             <div className="col-12 sign-in--text">
               <span className="text-style-1">-</span>
               <span className="sign-in-text--padding">Reset Password</span>
             </div>
 
-            <form name="form">
+              <form name="form" className="login-form--padding">
               <span className="help-block">
                 {this.state.errorMessage ? this.state.errorMessage : ''}
               </span>
@@ -141,12 +135,22 @@ class PasswordReset extends Component {
                 <button
                   onClick={this.resetPassword}
                   type="button"
-                  className="btn-login"
+                  className="btn btn-success btn-block"
                 >
                   RESET PASSWORD
                 </button>
               </div>
+              <div className="form-group padding-top-25">
+                <button
+                  onClick={()=>this.props.history.push('/login')}
+                  type="button"
+                  className="btn btn-warning btn-block"
+                >
+                  CANCEL
+                </button>
+              </div>
             </form>
+            </div>
           </div>
         </div>
       </div>

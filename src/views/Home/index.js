@@ -116,7 +116,7 @@ class Home extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-12 main-wrapper">
+            <div className="col-12 main-wrapper content-container--background">
               <Carousel>
                {/* <Carousel.Item>                
                 <img
@@ -145,7 +145,7 @@ class Home extends Component {
           </div>
 
           <div className="row dark-bg">
-            <div className="col-12">
+            <div className="col-12 content-container--background">
              
               <Slider carouselRecords={listTop10Items}>
                 <h3 className="mt-30">Top 10 <i className="fas fa-chevron-right"></i></h3>
@@ -160,8 +160,12 @@ class Home extends Component {
               </Slider>               
             </div>
           </div>
-          <div>&nbsp;</div>
-          <div>&nbsp;</div>
+          <div className="row">
+            <div className="col-12 content-container--background">&nbsp;</div>
+          </div>
+          <div className="row">
+            <div className="col-12 content-container--background">&nbsp;</div>
+          </div>
 
           
         </div>
