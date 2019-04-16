@@ -15,9 +15,7 @@ class Slider extends React.Component {
       activeItemIndex: 0,
       // carouselRows: carouselRows
     });
-    if(this.props.carouselRecords){
-      const records = this.props.carouselRecords;
-    } 
+     
     setTimeout(() => {
       if(this.props.listTop10Items){
         this.setState({
@@ -34,9 +32,13 @@ class Slider extends React.Component {
   }
 
   daysBetween(date1_seconds, date2_seconds) {
-    const one_day = 60 * 60 * 24;
-    var difference_ms = Math.abs(date1_seconds - date2_seconds);
-    return Math.round(difference_ms/one_day);
+    if(date1_seconds && date2_seconds){
+      const one_day = 60 * 60 * 24;
+      var difference_ms = Math.abs(date1_seconds - date2_seconds);
+      return Math.round(difference_ms/one_day);
+    } else {
+      return '';
+    }
   }
               
   // componentDidUpdate(){
@@ -58,7 +60,8 @@ class Slider extends React.Component {
   listTop10Children = (records) => records.map((carouselRecord, index) => {
     const moreSymbol = '...';
     const today = Date.now()/1000; // convert into second
-    var noOfDays = this.daysBetween(carouselRecord.created_date.seconds, today);
+    var noOfDays = this.daysBetween(carouselRecord.created_date?carouselRecord.created_date.seconds:'', today);
+    console.log('---carouselRecord--', carouselRecord);
     return (
       <div key={index} className="vd-wrapper">
         <a href="#" title={carouselRecord.name}>
