@@ -8,6 +8,7 @@ import { withRouter } from 'react-router';
 import GLOBAL_VARIABLES from './config/config';
 import './App.css';
 import CreateEvent from './views/Events/events';
+import Home from './views/Home';
 import Login from './views/Login';
 import Dashboard from './views/Dashboard';
 import Curriculum from './views/Curriculum';
@@ -23,7 +24,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       AuthGuard.isAuthenticated === true ? (
         <Component {...props} />
       ) : (
-        <Redirect to="/login" />
+        <Redirect to="/home" />
       )
     }
   />
@@ -38,7 +39,7 @@ class App extends Component {
     if (!user && this.props.location) {
 
       GLOBAL_VARIABLES.BASEROUTE = this.props.location.pathname;
-      this.props.history.push("/login");
+      this.props.history.push("/home");
     }
   }
   render() {
@@ -62,6 +63,7 @@ class App extends Component {
 
         <Switch>
           <Route exact path="/login" component={Login} />
+          <Route exact path="/home" component={Home} />
           <Route exact path="/resetPassword" component={PasswordReset} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/profile" component={Profile} />
@@ -69,7 +71,7 @@ class App extends Component {
           <PrivateRoute path="/createevent" component={CreateEvent} />
           <PrivateRoute path="/carousel" component={Carousel} exact />
           <PrivateRoute path="/category" component={Category} exact />
-          <Redirect to="/login" />
+          <Redirect to="/home" />
         </Switch>
       </div>
     );
