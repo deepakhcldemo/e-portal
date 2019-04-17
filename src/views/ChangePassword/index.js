@@ -36,11 +36,13 @@ class ChangePassword extends Component {
     const user = JSON.parse(localStorage.getItem('userProfile'));
     const provider = JSON.parse(localStorage.getItem('user')).additionalUserInfo
       .providerId;
-    if (provider !== 'password') {
-      if (user.role === 'Teacher') {
-        this.props.history.push('/teacher');
-      } else {
-        this.props.history.push('/student');
+    if (user) {
+      if (provider !== 'password') {
+        if (user.role === 'Teacher') {
+          this.props.history.push('/teacher');
+        } else {
+          this.props.history.push('/student');
+        }
       }
     }
   };
