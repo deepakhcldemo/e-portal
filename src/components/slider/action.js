@@ -1,5 +1,6 @@
-export const openModal = () => {
+export const openModal = (teacherDetailsSlider) => {
     return {
-        type: 'OPEN_MODAL'
+        type: 'OPEN_MODAL',
+         ...teacherDetailsSlider
     }
 }

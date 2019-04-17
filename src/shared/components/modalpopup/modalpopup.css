@@ -1,0 +1,21 @@
+.teacher-details{
+    width : 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.header{
+    min-height: 50px;
+}
+
+.margn-top {
+    margin-top: 20px;
+}
+.teacher-start-rating{
+    top: 10px;
+}
+
+.teacher-details-okay{
+    text-align: center;
+
+}

@@ -44,7 +44,7 @@ class Slider extends React.Component {
   // method for opening modal with teacher details
   teacherDetails = (carouselRecord) => {
     console.log('carouselRecord', carouselRecord);
-    this.props.openModalForTeacher();
+    this.props.openModalForTeacher(carouselRecord);
   }
 
   listTop10Children = (records) => records.map((carouselRecord, index) => {
@@ -136,7 +136,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    openModalForTeacher: () => dispatch(openModal()),
+    openModalForTeacher: (carouselRecord) => dispatch(openModal({'value': carouselRecord})),
     
   };
 };
