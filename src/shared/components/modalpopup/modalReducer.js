@@ -4,8 +4,10 @@ const initialState = {
 };
 const modalReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'TAGGED_STUDENTS':
-      return { ...state };
+    case 'CLOSE_MODAL':
+      return { ...state , 
+        openModalForStudent : false
+      };
     default:
       return state;
   }

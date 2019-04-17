@@ -15,7 +15,14 @@
 .brand-logo{
     color: #ffffff;
 }
+.student-tutor{
+    max-width: 60rem;
+    margin: 0 auto;
+}
 
+.vd-content{
+    background: white !important
+}
 .dropdown-toggle::after {
     position: absolute !important;
     right: 22px !important;

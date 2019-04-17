@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Carousel from 'react-bootstrap/Carousel';
 import Slider from '../../components/slider/Slider';
 import { getCurriculum, getTeacher } from './actions';
-import GLOBAL_VARIABLES from '../../config/config';
+import GLOBAL_VARIABLES from '../../config/Config';
 
 class Home extends Component {
  

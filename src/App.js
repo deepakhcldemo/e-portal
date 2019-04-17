@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthGuard from './authguard/AuthGuard';
 import { withRouter } from 'react-router';
-import GLOBAL_VARIABLES from './config/config';
+import GLOBAL_VARIABLES from './config/Config';
 import './App.css';
 import CreateEvent from './views/Events/events';
 import Home from './views/Home';
