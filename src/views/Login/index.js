@@ -54,12 +54,16 @@ class Login extends Component {
     redirectToReferrer: false
   };
 
-  // componentDidMount = () => {
-  //   const user = JSON.parse(localStorage.getItem('user'));
-  //   if (user) {
-  //     this.props.history.push('/dashboard');
-  //   }
-  // };
+  componentDidMount = () => {
+    const user = JSON.parse(localStorage.getItem('userProfile'));
+    if (user) {
+      if (user.role === 'Teacher') {
+        this.props.history.push('/teacher');
+      } else {
+        this.props.history.push('/student');
+      }
+    }
+  };
 
   userIconStyle() {
     document.getElementById('userIcon').style.backgroundImage =
@@ -101,6 +105,7 @@ class Login extends Component {
           getUserProfile(userDetails.user.uid).then(querySnapshot => {
             querySnapshot.forEach(doc => {
               const user = doc.data();
+              localStorage.setItem('userProfile', JSON.stringify(user));
               if (doc.exists) {
                 if (user.role === 'Teacher') {
                   this.props.history.push('/teacher');

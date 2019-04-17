@@ -101,6 +101,7 @@ class Profile extends Component {
       userId
     };
     saveUserProfile(userDetails).then(() => {
+      localStorage.setItem('userProfile', JSON.stringify(userDetails));
       toastr.success('Details Saved Successfully');
       if (role === 'Teacher') {
         this.props.history.push('/teacher');
@@ -852,24 +853,6 @@ class Profile extends Component {
                 </div>
                 {role === 'Teacher' && (
                   <div className="row">
-                    <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                      <label className="label-color" htmlFor="first_name">
-                        Field
-                      </label>
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          name="field"
-                          id="field"
-                          value={field}
-                          onChange={this.handleChange}
-                          className="form-control input-sm"
-                        />
-                        {submitted && !field && (
-                          <div className="help-block">Field is required</div>
-                        )}
-                      </div>
-                    </div>
                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                       <label className="label-color" htmlFor="subject">
                         Subject

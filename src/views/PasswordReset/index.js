@@ -31,6 +31,17 @@ class PasswordReset extends Component {
     redirectToReferrer: false
   };
 
+  componentDidMount = () => {
+    const user = JSON.parse(localStorage.getItem('userProfile'));
+    if (user) {
+      if (user.role === 'Teacher') {
+        this.props.history.push('/teacher');
+      } else {
+        this.props.history.push('/student');
+      }
+    }
+  };
+
   userIconStyle() {
     document.getElementById('userIcon').style.backgroundImage =
       'url(' + '../../Assets/hdpi/login_oragnge.png' + ')';
@@ -95,61 +106,61 @@ class PasswordReset extends Component {
         <div className="row row-without--margin">
           <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container content-align--middle">
             <div className="card card-border-radius">
-            <div className="col-12 sign-in--text">
-              <span className="text-style-1">-</span>
-              <span className="sign-in-text--padding">Reset Password</span>
-            </div>
+              <div className="col-12 sign-in--text">
+                <span className="text-style-1">-</span>
+                <span className="sign-in-text--padding">Reset Password</span>
+              </div>
 
               <form name="form" className="login-form--padding">
-              <span className="help-block">
-                {this.state.errorMessage ? this.state.errorMessage : ''}
-              </span>
-              <div
-                className={
-                  'form-group' + (submitted && !username ? ' has-error' : '')
-                }
-              >
-                <label htmlFor="username">Enter Registered Email ID</label>
-                <div className="input-group">
-                  <input
-                    type="email"
-                    className="form-control input-field--style form-input-icon--padding"
-                    name="username"
-                    value={username}
-                    onFocus={this.userIconStyle}
-                    onBlur={this.userIconDisableStyle}
-                    onChange={this.handleChange}
-                  />
-                  <span
-                    id="userIcon"
-                    className="input-group-addon"
-                    style={userIcon}
-                  />
+                <span className="help-block">
+                  {this.state.errorMessage ? this.state.errorMessage : ''}
+                </span>
+                <div
+                  className={
+                    'form-group' + (submitted && !username ? ' has-error' : '')
+                  }
+                >
+                  <label htmlFor="username">Enter Registered Email ID</label>
+                  <div className="input-group">
+                    <input
+                      type="email"
+                      className="form-control input-field--style form-input-icon--padding"
+                      name="username"
+                      value={username}
+                      onFocus={this.userIconStyle}
+                      onBlur={this.userIconDisableStyle}
+                      onChange={this.handleChange}
+                    />
+                    <span
+                      id="userIcon"
+                      className="input-group-addon"
+                      style={userIcon}
+                    />
+                  </div>
+                  {submitted && !username && (
+                    <div className="help-block">Email ID is required</div>
+                  )}
                 </div>
-                {submitted && !username && (
-                  <div className="help-block">Email ID is required</div>
-                )}
-              </div>
 
-              <div className="form-group padding-top-25">
-                <button
-                  onClick={this.resetPassword}
-                  type="button"
-                  className="btn btn-success btn-block"
-                >
-                  RESET PASSWORD
-                </button>
-              </div>
-              <div className="form-group padding-top-25">
-                <button
-                  onClick={()=>this.props.history.push('/login')}
-                  type="button"
-                  className="btn btn-warning btn-block"
-                >
-                  CANCEL
-                </button>
-              </div>
-            </form>
+                <div className="form-group padding-top-25">
+                  <button
+                    onClick={this.resetPassword}
+                    type="button"
+                    className="btn btn-success btn-block"
+                  >
+                    RESET PASSWORD
+                  </button>
+                </div>
+                <div className="form-group padding-top-25">
+                  <button
+                    onClick={() => this.props.history.push('/login')}
+                    type="button"
+                    className="btn btn-warning btn-block"
+                  >
+                    CANCEL
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
