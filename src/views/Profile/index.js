@@ -31,6 +31,9 @@ class Profile extends Component {
     email: '',
     role: '',
     subject: '',
+    charge: '',
+    currency: '',
+    summary: '',
     submitted: false
   };
 
@@ -62,6 +65,13 @@ class Profile extends Component {
             role: user.role,
             subject: user.subject
           });
+          if (user.role === 'Teacher') {
+            this.setState({
+              charge: user.charge,
+              currency: user.currency,
+              summary: user.summary
+            });
+          }
         }
       });
     });
@@ -80,35 +90,59 @@ class Profile extends Component {
       email,
       mobile,
       role,
-      subject
+      subject,
+      charge,
+      currency,
+      summary
     } = this.state;
 
     const userId = JSON.parse(localStorage.getItem('user')).user.uid;
     this.setState({ submitted: true });
 
-    const userDetails = {
-      firstName,
-      lastName,
-      dob,
-      gender,
-      address,
-      city,
-      country,
-      email,
-      mobile,
-      role,
-      subject,
-      userId
-    };
-    saveUserProfile(userDetails).then(() => {
-      localStorage.setItem('userProfile', JSON.stringify(userDetails));
-      toastr.success('Details Saved Successfully');
-      if (role === 'Teacher') {
+    if (role === 'Teacher') {
+      const teacherDetails = {
+        firstName,
+        lastName,
+        dob,
+        gender,
+        address,
+        city,
+        country,
+        email,
+        mobile,
+        role,
+        subject,
+        charge,
+        currency,
+        summary,
+        userId
+      };
+      saveUserProfile(teacherDetails).then(() => {
+        localStorage.setItem('userProfile', JSON.stringify(teacherDetails));
+        toastr.success('Details Saved Successfully');
         this.props.history.push('/teacher');
-      } else {
+      });
+    } else {
+      const studentDetails = {
+        firstName,
+        lastName,
+        dob,
+        gender,
+        address,
+        city,
+        country,
+        email,
+        mobile,
+        role,
+        subject,
+        userId
+      };
+      saveUserProfile(studentDetails).then(() => {
+        localStorage.setItem('userProfile', JSON.stringify(studentDetails));
+        toastr.success('Details Saved Successfully');
         this.props.history.push('/student');
-      }
-    });
+      });
+    }
   };
 
   render() {
@@ -123,8 +157,10 @@ class Profile extends Component {
       email,
       mobile,
       role,
-      field,
       subject,
+      charge,
+      currency,
+      summary,
       submitted
     } = this.state;
 
@@ -140,7 +176,7 @@ class Profile extends Component {
       <div className="content-container container-padding">
         <div className="row">
           <div className="col-12">
-            <Header headeTitle="Registration" />
+            <Header headeTitle="User Profile" />
           </div>
         </div>
 
@@ -873,6 +909,72 @@ class Profile extends Component {
                     </div>
                   </div>
                 )}
+                {role === 'Teacher' && (
+                  <div className="form-group">
+                    <label className="label-color" htmlFor="summary">
+                      Summary
+                    </label>
+                    <textarea
+                      className="form-control"
+                      rows="4"
+                      name="summary"
+                      value={summary}
+                      onChange={this.handleChange}
+                      id="summary"
+                    />
+                  </div>
+                )}
+                {role === 'Teacher' && (
+                  <div className="panel-heading">
+                    <h3 className="panel-title">Pricing Details</h3>
+                  </div>
+                )}
+                {role === 'Teacher' && (
+                  <div className="row">
+                    <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                      <label className="label-color" htmlFor="charge">
+                        Charge (per hour)
+                      </label>
+                      <div className="form-group">
+                        <input
+                          type="number"
+                          name="charge"
+                          id="charge"
+                          value={charge}
+                          onChange={this.handleChange}
+                          className="form-control input-sm"
+                        />
+                        {submitted && !charge && (
+                          <div className="help-block">Charge is required</div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                      <label className="label-color" htmlFor="currency">
+                        Currency
+                      </label>
+
+                      <DropdownButton
+                        id="dropdown-basic-button"
+                        name="currency"
+                        title={currency}
+                        variant="default"
+                        onSelect={e =>
+                          this.handleDropdownSelection(e, 'currency')
+                        }
+                      >
+                        <Dropdown.Item eventKey="Dollar">Dollar</Dropdown.Item>
+                        <Dropdown.Item eventKey="Pound">Pound</Dropdown.Item>
+                        <Dropdown.Item eventKey="Euro">Euro</Dropdown.Item>
+                        <Dropdown.Item eventKey="Rupee">Rupee</Dropdown.Item>
+                      </DropdownButton>
+                      {submitted && !currency && (
+                        <div className="help-block">Currency is required</div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 {role === 'Student' && (
                   <div className="row">
                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
