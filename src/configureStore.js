@@ -14,6 +14,7 @@ import curriculumReducer from './views/Curriculum/reducer';
 import categoryReducer from './views/Category/reducer';
 import carouselReducer from './components/carousel/reducer';
 import modalReducer  from './shared/components/modalpopup/modalReducer';
+import  studentReducer from './views/Student/reducer';
 import homeReducer from './views/Home/reducer';
 
 const rootPersistConfig = {
@@ -33,7 +34,8 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   spinnerStatus: spinnerStatusReducer,
   carouselStore: carouselReducer,
   modalReducer : modalReducer,
-  homeReducerStore : homeReducer
+  homeReducerStore : homeReducer,
+  studentReducer : studentReducer
 });
 
 const history = createBrowserHistory();

@@ -7,24 +7,25 @@ import './styles.css';
 import AuthGuard from '../../authguard/AuthGuard';
 import { toastr } from 'react-redux-toastr';
 import * as actionTypes from '../../spinnerStore/actions';
-import { recoverPassword } from '../../database/dal/firebase/registrationDal';
+import { changePassword } from '../../database/dal/firebase/changePasswordDal';
 
-let userIcon = {
+let passwordIcon = {
   width: '20px',
-  height: '20px',
+  height: '15px',
   position: 'absolute',
-  right: '12px',
-  top: '12px',
+  right: '10px',
+  top: '15px',
   zIndex: '10',
-  backgroundImage: 'url(' + '../../Assets/hdpi/login_disable.png' + ')',
+  backgroundImage: 'url(' + '../../Assets/hdpi/password_orange.png' + ')',
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
 };
 
-class PasswordReset extends Component {
+class ChangePassword extends Component {
   state = {
-    username: '',
+    password: '',
+    confirmPassword: '',
     submitted: false,
     loggedInStatus: false,
     errorMessage: '',
@@ -33,58 +34,58 @@ class PasswordReset extends Component {
 
   componentDidMount = () => {
     const user = JSON.parse(localStorage.getItem('userProfile'));
+    const provider = JSON.parse(localStorage.getItem('user')).additionalUserInfo
+      .providerId;
     if (user) {
-      if (user.role === 'Teacher') {
-        this.props.history.push('/teacher');
-      } else {
-        this.props.history.push('/student');
+      if (provider !== 'password') {
+        if (user.role === 'Teacher') {
+          this.props.history.push('/teacher');
+        } else {
+          this.props.history.push('/student');
+        }
       }
     }
   };
 
-  userIconStyle() {
-    document.getElementById('userIcon').style.backgroundImage =
-      'url(' + '../../Assets/hdpi/login_oragnge.png' + ')';
-  }
-  userIconDisableStyle() {
-    document.getElementById('userIcon').style.backgroundImage =
-      'url(' + '../../Assets/hdpi/login_disable.png' + ')';
-  }
-
-  passwordIconStyle() {
-    document.getElementById('passwordIcon').style.backgroundImage =
-      'url(' + '../../Assets/hdpi/password_orange.png' + ')';
-  }
-  passwordIconDisableStyle() {
-    document.getElementById('passwordIcon').style.backgroundImage =
-      'url(' + '../../Assets/hdpi/password_disable.png' + ')';
-  }
-  togglePassword = () => {
-    var x = document.getElementById('password');
+  togglePassword = field => {
+    var x = document.getElementById(field);
     if (x.type === 'password') {
       x.type = 'text';
     } else {
       x.type = 'password';
     }
     x.focus();
-    this.passwordIconStyle();
   };
+
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
-  resetPassword = () => {
+  updatePassword = () => {
     this.setState({ submitted: true });
-    recoverPassword(this.state.username)
-      .then(() => {
-        toastr.success('Password Reset Link Sent Successfully');
-        this.props.history.push('/login');
-      })
-      .catch(error => {
-        this.setState({ username: '' });
-        toastr.error('User Not Found. Please Enter Registered Email ID');
-      });
+    const { password, confirmPassword } = this.state;
+    if (password === confirmPassword) {
+      changePassword(this.state.password)
+        .then(() => {
+          toastr.success('Password Updated Successfully');
+          const user = JSON.parse(localStorage.getItem('userProfile'));
+          if (user) {
+            if (user.role === 'Teacher') {
+              this.props.history.push('/teacher');
+            } else {
+              this.props.history.push('/student');
+            }
+          }
+        })
+        .catch(error => {
+          toastr.error(error.message + ' ' + ' Login Again');
+          AuthGuard.signout();
+          this.props.history.push('/login');
+        });
+    } else {
+      this.setState({ errorMessage: 'Passwords do not match' });
+    }
   };
 
   render() {
@@ -95,7 +96,7 @@ class PasswordReset extends Component {
       return <Redirect to={from} />;
     }
 
-    const { username, submitted } = this.state;
+    const { password, confirmPassword, submitted } = this.state;
     return (
       <div className="container-background">
         <div className="row row-without--margin">
@@ -112,47 +113,67 @@ class PasswordReset extends Component {
                 </span>
                 <div
                   className={
-                    'form-group' + (submitted && !username ? ' has-error' : '')
+                    'form-group' + (submitted && !password ? ' has-error' : '')
                   }
                 >
-                  <label htmlFor="username">Enter Registered Email ID</label>
+                  <label htmlFor="password">Enter New Password</label>
                   <div className="input-group">
                     <input
-                      type="email"
+                      type="password"
+                      id="password"
                       className="form-control input-field--style form-input-icon--padding"
-                      name="username"
-                      value={username}
-                      onFocus={this.userIconStyle}
-                      onBlur={this.userIconDisableStyle}
+                      name="password"
+                      value={password}
                       onChange={this.handleChange}
                     />
                     <span
-                      id="userIcon"
+                      id="passwordIcon"
                       className="input-group-addon"
-                      style={userIcon}
+                      style={passwordIcon}
+                      onClick={() => this.togglePassword('password')}
                     />
                   </div>
-                  {submitted && !username && (
-                    <div className="help-block">Email ID is required</div>
+                  {submitted && !password && (
+                    <div className="help-block">Password is required</div>
+                  )}
+                </div>
+                <div
+                  className={
+                    'form-group' +
+                    (submitted && !confirmPassword ? ' has-error' : '')
+                  }
+                >
+                  <label htmlFor="confirmPassword">Confirm Password</label>
+                  <div className="input-group">
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      className="form-control input-field--style form-input-icon--padding"
+                      name="confirmPassword"
+                      value={confirmPassword}
+                      onChange={this.handleChange}
+                    />
+                    <span
+                      id="passwordIcon"
+                      className="input-group-addon"
+                      style={passwordIcon}
+                      onClick={() => this.togglePassword('confirmPassword')}
+                    />
+                  </div>
+                  {submitted && !confirmPassword && (
+                    <div className="help-block">
+                      Confirm Password is required
+                    </div>
                   )}
                 </div>
 
                 <div className="form-group padding-top-25">
                   <button
-                    onClick={this.resetPassword}
+                    onClick={this.updatePassword}
                     type="button"
                     className="btn btn-success btn-block"
                   >
-                    RESET PASSWORD
-                  </button>
-                </div>
-                <div className="form-group padding-top-25">
-                  <button
-                    onClick={() => this.props.history.push('/login')}
-                    type="button"
-                    className="btn btn-warning btn-block"
-                  >
-                    CANCEL
+                    UPDATE PASSWORD
                   </button>
                 </div>
               </form>
@@ -193,4 +214,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PasswordReset);
+)(ChangePassword);

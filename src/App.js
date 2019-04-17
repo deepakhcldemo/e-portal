@@ -13,6 +13,7 @@ import Login from './views/Login';
 import Dashboard from './views/Dashboard';
 import Curriculum from './views/Curriculum';
 import PasswordReset from './views/PasswordReset';
+import ChangePassword from './views/ChangePassword';
 import Profile from './views/Profile';
 import Carousel from './components/carousel/Carousel';
 import Category from './views/Category';
@@ -20,6 +21,7 @@ import Teacher from './views/Teacher';
 import Video from './views/Teacher/Video';
 import Notification from './views/Teacher/Notification';
 import Student from './views/Student/index';
+import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher'
 
 import ContactUs from './views/ContactUs';
 import AboutUs from './views/AboutUs';
@@ -78,11 +80,13 @@ class App extends Component {
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/curriculum" component={Curriculum} />
           <PrivateRoute path="/student" component={Student} exact />
+          <PrivateRoute path="/changePassword" component={ChangePassword} />
           <PrivateRoute path="/createevent" component={CreateEvent} />
           <PrivateRoute path="/carousel" component={Carousel} exact />
           <PrivateRoute path="/category" component={Category} exact />
           <PrivateRoute path="/teacher" component={Teacher} exact />
           <PrivateRoute path="/teacher/videos" component={Video} exact />
+          <PrivateRoute path="/student/teacher" component={SearchTeacher} exact />
           <PrivateRoute
             path="/teacher/notifications"
             component={Notification}

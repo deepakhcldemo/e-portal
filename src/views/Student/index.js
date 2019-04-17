@@ -1,59 +1,69 @@
 import React, { Component } from 'react';
-import Select from 'react-select';
+import ModalPopUp from '../../shared/components/modalpopup/modalpopup'
+import { connect } from "react-redux";
+import SearchTeacher from './SearchTeacher/SearchTeacher';
+import GLOBAL_VARIABLES from '../../config/config';
+import Navigation from './Navigation/Navigation';
+import Slider from '../../components/slider/Slider';
+import { getTeacher, getCurriculum } from './action';
 import './Student.css';
 // import TimePicker from 'react-bootstrap-time-picker';
 class Student extends Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-    this.state = {
-      selectedOption: null
-    };
-  }
-  handleChange = selectedOption => {
-    this.setState({ selectedOption });
-  };
-  render() {
-    const options = [
-      { value: 'Maths', label: 'Maths' },
-      { value: 'Sports', label: 'Sports' },
-      { value: 'Music', label: 'Music' }
-    ];
-    const { selectedOption } = this.state;
+    constructor(props) {
+        super(props);
+        //this.teacherDetails = this.teacherDetails.bind(this);
+        this.state = {
+            selectedOption: null
+        };
+    }
+    
+    render() {
+       
+        const { carouselRows, teacherCarouselRows } = this.props;
+        const listTop10Items = teacherCarouselRows;
+        console.log('listTop10Items', listTop10Items);
+        let listNewlyItems = carouselRows;
+        return (
+            <div>
+                <ModalPopUp></ModalPopUp>
+                <div>
+                    <Navigation></Navigation>
+                </div>
+                <div className="student-notification">
 
-    return (
-      <div>
-        <div className="nav-bar-wrapper">
-          <nav className="student-navigation">
-            <div className="row navbar-row">
-              <div className="navbar-header col-4 col-md-2 col-xs-2">
-                <a className="navbar-brand brand-logo" href="#">
-                  WebSiteName
-                </a>
-              </div>
+                </div>
+                <div className="student-tutor">
+                    <Slider listTop10Items={listTop10Items}>
+                        <h3 className="mt-30">{GLOBAL_VARIABLES.TOP10_TUTOR} <i className="fas fa-chevron-right"></i></h3>
+                    </Slider>
+                </div>
+
+                <div className="student-tutor">
+                    <Slider listNewlyItems={listNewlyItems}>
+                        <h3 className="mt-30">{GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS} <i className="fas fa-chevron-right"></i></h3>
+                    </Slider>
+                </div>
             </div>
-          </nav>
-        </div>
-        <div className="search-box-filter">
-          <div className="student-drop-down">
-            <Select
-              className="subject-dropdown"
-              value={selectedOption}
-              onChange={this.handleChange}
-              options={options}
-            />
-          </div>
-          <div className="inner-addon left-addon student-search-box">
-            <i className="fa fa-search" />
-            <input type="text" className="form-control" />
-          </div>
-          {/* <div className="student-search-box">
-                        <input type="text" placeholder="Search.." />
-                    </div> */}
-        </div>
-      </div>
-    );
-  }
+        );
+    }
 }
 
-export default Student;
+
+const mapStateToProps = state => {
+    return {
+        carouselRows: state.homeReducerStore.carouselData,
+        teacherCarouselRows: state.homeReducerStore.teacherCarouselData,
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        getCurriculum: () => dispatch(getCurriculum()),
+        getTeacher: () => dispatch(getTeacher()),
+    };
+};
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Student);
+

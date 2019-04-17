@@ -1,21 +1,20 @@
-import React, { Component } from "react";
-import HeaderHome from "../../components/layout/header/HeaderHome";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import HeaderHome from '../../components/layout/header/HeaderHome';
+import { connect } from 'react-redux';
 import Carousel from 'react-bootstrap/Carousel';
 import Slider from '../../components/slider/Slider';
 import { getCurriculum, getTeacher } from './actions';
 import GLOBAL_VARIABLES from '../../config/config';
 
 class Home extends Component {
- 
   constructor(props) {
     super(props);
 
     this.state = {
       classessName: [],
       isOpen: false,
-      carouselImageType: "video",
-      carouselImage: ""
+      carouselImageType: 'video',
+      carouselImage: ''
     };
   }
 
@@ -27,7 +26,7 @@ class Home extends Component {
     });
   };
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.getCurriculum();
     this.props.getTeacher();
   }
@@ -39,39 +38,72 @@ class Home extends Component {
   };
 
   createEvent = () => {
-    this.props.history.push("/createevent");
+    this.props.history.push('/createevent');
   };
 
-  
   render() {
     const { carouselRows, teacherCarouselRows } = this.props;
 
-    // console.log('--teacherCarouselRows--', teacherCarouselRows);
-
     const carouselAwaitingRows = carouselRows;
-    var awaitingRows = carouselAwaitingRows.filter(function (carouselAwaitingRow) {
+    var awaitingRows = carouselAwaitingRows.filter(function(
+      carouselAwaitingRow
+    ) {
       return !carouselAwaitingRow.awaiting;
     });
-    
-    const listTop10Items = teacherCarouselRows;
-    // var listTop10Items_1 = listTop10Items.sort((a,b) => a.rating_count - b.rating_count);
+
+    let listTop10Items = teacherCarouselRows;
+    listTop10Items.sort((a,b) => b.rating - a.rating);
     // console.log('listTop10Items', listTop10Items_1);
-    
+
     let listNewlyItems = carouselRows;
-    var listNewlyItems_1 = listNewlyItems.sort((a,b) => a.created_date.seconds - b.created_date.seconds);
+    listNewlyItems.sort((a,b) => b.created_date.seconds - a.created_date.seconds);
+    // console.log('listNewlyItems',listNewlyItems)
     // console.log('listNewlyItems',listNewlyItems)
 
     let trendingItems = carouselRows;
-    trendingItems = trendingItems.sort((a,b) => b.views - a.views);
+    trendingItems = trendingItems.sort((a, b) => b.views - a.views);
     // console.log('trendingItems',trendingItems)
 
-    const listAwaitingItems = awaitingRows.map((awaitingRows, index) =>
+    // const listAwaitingItems = awaitingRows.map((awaitingRows, index) => (
+    
+    const studentsReview = [
+                    {
+                      'name': 'Borivoje', 
+                      'profile_image': 'https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg',
+                      'comment': 'This plateform is a life saver. I dont have the time or money for a college education. My goal is to become a freelance web developer, and thanks to Udemy, I am really close.'
+                    },
+                    {
+                      'name': 'Diana Hayden', 
+                      'profile_image': 'http://nrsinstitute.com/wp-content/uploads/2014/05/edu-oatcert.jpg',
+                      'comment': 'I believe in lifelong learning and it is a great place to learn from experts. I have learned a lot and recommend it to all my friends.'
+                    },
+                    {
+                      'name': 'Ria Hazal', 
+                      'profile_image': 'https://media.gq.com/photos/5c115439a15f8517197598ac/16:9/w_1280%2Cc_limit/america-school-Teacher-guns-GQ.jpg',
+                      'comment': 'The courses are fantastic and the instructors are so fun and knowledgeable. I only wish we found it sooner'
+                    },
+                    {
+                      'name': 'Diana Hayden', 
+                      'profile_image': 'http://nrsinstitute.com/wp-content/uploads/2014/05/edu-oatcert.jpg',
+                      'comment': 'I believe in lifelong learning and it is a great place to learn from experts. I have learned a lot and recommend it to all my friends.'
+                    },
+                    {
+                      'name': 'Ria Hazal', 
+                      'profile_image': 'https://media.gq.com/photos/5c115439a15f8517197598ac/16:9/w_1280%2Cc_limit/america-school-Teacher-guns-GQ.jpg',
+                      'comment': 'The courses are fantastic and the instructors are so fun and knowledgeable. I only wish we found it sooner'
+                    }
+                  ];
+
+    const listAwaitingItems = awaitingRows.map((awaitingRow, index) =>
       <Carousel.Item key={index}>
-          {/* <iframe key={index} className="d-block w-100 h-100" src={awaitingRows.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
-          <img src="https://images.pexels.com/photos/1020315/pexels-photo-1020315.jpeg" className="d-block w-100"/>
+        {/* <iframe key={index} className="d-block w-100 h-100" src={awaitingRow.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
+        <img
+          src="https://images.pexels.com/photos/1020315/pexels-photo-1020315.jpeg"
+          className="d-block w-100"
+        />
       </Carousel.Item>
     );
-    
+
     return (
       // {yourvairable && (<h1></h1>)}
       <React.Fragment>
@@ -84,7 +116,7 @@ class Home extends Component {
           <div className="row">
             <div className="col-12 main-wrapper content-container--background">
               <Carousel>
-               {/* <Carousel.Item>                
+                {/* <Carousel.Item>                
                 <img
                   className="d-block w-100"
                   src="https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg"
@@ -105,21 +137,27 @@ class Home extends Component {
                   alt="Third slide"
                 />
               </Carousel.Item> */}
-              {listAwaitingItems}
-            </Carousel>
+                {listAwaitingItems}
+              </Carousel>
             </div>
           </div>
 
           <div className="row dark-bg">
             <div className="col-12 content-container--background">
-             
               <Slider listTop10Items={listTop10Items}>
-                <h3 className="mt-30">{GLOBAL_VARIABLES.TOP10_TUTOR} <i className="fas fa-chevron-right"></i></h3>
-              </Slider>
+                <h3 className="mt-30">
+                  {GLOBAL_VARIABLES.TOP10_TUTOR}
+                  <i className="fas fa-chevron-right" />
+                </h3>
+              </Slider>              
 
               <Slider listNewlyItems={listNewlyItems}>
-                <h3 className="mt-30">{GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS} <i className="fas fa-chevron-right"></i></h3>
+                <h4 className="mt-30 pad10">{GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS} <i className="fas fa-chevron-right"></i></h4>
               </Slider>
+
+              <Slider studentsReview={studentsReview}>
+                <h4 className="mt-30 pad10">{GLOBAL_VARIABLES.STUDENTS_REVIEW} <span>&gt;</span></h4>
+              </Slider>               
 
               {/* <Slider trendingItems={trendingItems}>
                 <h3 className="mt-30">{GLOBAL_VARIABLES.TRENDING_VIDEOS} <span>&gt;</span></h3>
@@ -132,8 +170,6 @@ class Home extends Component {
           <div className="row">
             <div className="col-12 content-container--background">&nbsp;</div>
           </div>
-
-          
         </div>
       </React.Fragment>
     );
@@ -142,14 +178,14 @@ class Home extends Component {
 const mapStateToProps = state => {
   return {
     carouselRows: state.homeReducerStore.carouselData,
-    teacherCarouselRows: state.homeReducerStore.teacherCarouselData,
+    teacherCarouselRows: state.homeReducerStore.teacherCarouselData
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     getCurriculum: () => dispatch(getCurriculum()),
-    getTeacher: () => dispatch(getTeacher()),
+    getTeacher: () => dispatch(getTeacher())
   };
 };
 export default connect(
