@@ -1,27 +1,44 @@
 import React, { Component } from "react";
-import Dropdown from 'react-bootstrap/Dropdown';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import { ButtonToolbar, OverlayTrigger, Popover, Button } from 'react-bootstrap';
 import './index.css';
+import AuthGuard from "../../../authguard/AuthGuard";
 class Avatar extends Component {
-  state = {
-    loginUser: this.props.user
-  };
+  navigateTo = (linkName) => {
+    this.props.history.push(linkName);
+  }
+
   render() {
     return (
-      <Dropdown>
-        <Dropdown.Toggle >
-        <i className="fa fa-user">
-          
- 
-        </i> </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-          <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
+      <ButtonToolbar>
+        
+          <OverlayTrigger
+            trigger="click"
+          key="bottom"
+            placement="bottom"
+            overlay={
+              <Popover
+                id="popover-positioned-bottom"
+                title={this.props.userProfile.firstName + ' ' + this.props.userProfile.lastName}
+              >
+                
+                <div className="avatar-item" onClick={()=>this.navigateTo('/profile')}>Profile</div>
+                {this.props.currentUser.additionalUserInfo.providerId ==='password' && <div className="avatar-item">Change Password</div>}
+                <div className="avatar-item" onClick={() => AuthGuard.signout(() => { this.navigateTo('/home')})}>Sign Out</div>
+                
+        </Popover>
+            }
+          >
+          <Button variant="default" className="custom-btn"><i className="fa fa-user-circle home-header-nav-item home-header-nav-item--position avatar-icon"></i></Button>
+          </OverlayTrigger>
+        
+      </ButtonToolbar>
     );
   }
 }
 
-export default Avatar;
+export default withRouter(connect(
+  null,
+  null
+)(Avatar));
