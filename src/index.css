@@ -27,3 +27,15 @@ code {
 .content-container--background {
     background: #FFF;
 }
+
+.pad5{
+    padding: 5px;
+}
+   
+.pad_top5{
+    padding: 5px 0px 0px 0px;
+}
+
+.pad10{
+    padding: 10px;
+}
