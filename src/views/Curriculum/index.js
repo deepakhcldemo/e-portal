@@ -14,10 +14,8 @@ import { getCategory, getCurrentUser, saveFileMetaData } from './actions';
 
 class Curriculum extends Component {
     state = CurriculumModel;
-    selectedItem = null;
 
     componentDidMount = () =>  {
-        this.props.getCategory();
         this.props.getCurrentUser();
     }
 
@@ -55,72 +53,39 @@ class Curriculum extends Component {
     };
 
     render() {
-        const { tree, uid } = this.props;
-        return (
-        <div className='container-fluid'>
-            <div className='row'>
-            <div className='col-12 col-sm-12 col-md-12 col-lg-12'>
-                <Header headeTitle='Curriculum' />
-            </div>
-            </div>
-            <div className='row adjust-top'>
-            <div className='col-12 col-sm-12 col-md-12 col-lg-12'>
-                <div className='card'>
-                <div className='card-body'>
-                    <div className='col-3 pull-left border-right'>
-                    <h6>Select Category</h6>
-                    {tree && (
-                        <TreeView
-                        data={tree}
-                        expandIcons={true}
-                        onExpandChange={this.onExpandChange}
-                        onItemClick={this.onItemClick}
-                        aria-multiselectable={false}
-                        />
+        const { uid } = this.props;
+        return (            
+            <div className='col-12'>
+                <h6>Upload File</h6>                        
+                <form>
+                    {(!this.state.isUploading && this.state.progress !== 100) && (
+                        <label
+                            style={{
+                                backgroundColor: 'steelblue',
+                                color: 'white',
+                                padding: 10,
+                                fontSize: '15px',
+                                borderRadius: 1,
+                                pointer: 'cursor'
+                            }}
+                            >
+                            Upload                          
+                            <FileUploader
+                                hidden
+                                accept='video/*'
+                                storageRef={firebase.storage().ref(uid)}
+                                onUploadStart={this.handleUploadStart}
+                                onUploadError={this.handleUploadError}
+                                onUploadSuccess={this.handleUploadSuccess}
+                                onProgress={this.handleProgress}
+                            />
+                        </label>
                     )}
-                    </div>
-                    <div className='col-9 pull-right'>
-                    <h6>Upload File</h6>
-                    {this.state.selectedNode && (
-                        <>
-                            <form>
-                            {(!this.state.isUploading && this.state.progress !== 100) && (
-                                    <label
-                                    style={{
-                                        backgroundColor: 'steelblue',
-                                        color: 'white',
-                                        padding: 10,
-                                        fontSize: '15px',
-                                        borderRadius: 1,
-                                        pointer: 'cursor'
-                                    }}
-                                    >
-                                    Upload File                          
-                                    <FileUploader
-                                        hidden
-                                        accept='video/*'
-                                        storageRef={firebase.storage().ref(uid)}
-                                        onUploadStart={this.handleUploadStart}
-                                        onUploadError={this.handleUploadError}
-                                        onUploadSuccess={this.handleUploadSuccess}
-                                        onProgress={this.handleProgress}
-                                    />
-                                    </label>
-                                )}
-                                {this.state.isUploading && (
-                                    <Progress progress={this.state.progress} />
-                                )}
-                                
-                                                                
-                            </form>
-                        </>
+                    {this.state.isUploading && (
+                        <Progress progress={this.state.progress} />
                     )}
-                    </div>
-                </div>
-                </div>
+                </form>
             </div>
-            </div>
-        </div>
         );
     }
 }

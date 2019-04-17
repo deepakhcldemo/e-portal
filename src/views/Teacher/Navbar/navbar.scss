@@ -1,0 +1,62 @@
+@import '../styles.scss';
+
+.box-shadow{
+    background: $backgroundColor;
+    color: $color ;
+    box-shadow: $boxShadow;
+    min-height: $boxMinHeight;   
+}
+a{
+    color: $color!important ;
+}
+.active{       
+    a {
+        color: #a7a1a1!important;
+    }
+}
+.hide{
+    display: $none;
+    @media (min-width: $mobileWidth) {        
+        display: $unset;
+    }
+}
+.padding-zero {
+    padding-right: $padding !important;
+    padding-left: $padding !important;
+    bottom: 0;
+    position: fixed!important;
+    z-index: 1000;       
+    @media (min-width: $mobileWidth) { 
+        bottom: unset;
+        position: relative!important;
+    }
+}
+.box-shadow {
+    ul {
+        margin: 0px!important;
+        text-align: center;
+        padding: 10px;
+        display: $flex ;
+        flex-direction: $flexDir;
+        list-style: none;
+        margin-bottom: 0px;
+        @media (max-width: $mobileWidth){
+            padding: 0px;
+            justify-content: space-between;
+        }
+    }
+    /* li {
+        @media (max-width: $mobileWidth){
+            border-right: 1px solid #484343;
+        }   
+    } */
+}
+.logo {
+    background-position: $imgPosition;
+    background-image: url($imagePath); 
+    background-repeat: $imgRepeat; 
+    background-size: $imgSize;
+    margin: 5px 5px 5px 5px;
+}
+
+

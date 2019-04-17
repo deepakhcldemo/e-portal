@@ -10,15 +10,30 @@ export const getCurrentUserFromDB = dispatch => {
     });
 }
 export const saveFileMetaDataFromDB = (dispatch, fileName, uid) => {
-    /* db.storage.ref(uid).child(fileName).getDownloadURL().then(url => 
-        dispatch({type: '', uid})
-        ) */
-        /* .storage()
-        .ref(this.props.uid)
-        .child(filename)
-        .getDownloadURL()
-        .then(url => console.log(url)); */
-        
+    const actualFileName = fileName.split(/\.(?=[^\.]+$)/);
+    const metaData = {
+        uid,
+        src:'',    
+        title: actualFileName[0],
+        desc: '',
+        tags: '',
+        videoMetadata: [],
+        thumb: '',
+        status: false,
+        isPending: false,
+        created: db.firestore.FieldValue.serverTimestamp()
+    }
+    db.storage().ref(uid).child(fileName).getDownloadURL().then(url => {
+        metaData.src = url
+        db.firestore().collection('curriculum').add(metaData)
+        .then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+            dispatch({type: 'add'})
+        })
+        .catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+    })       
 }
 
 /* export const getCurrentUserFromDB = dispatch => {
