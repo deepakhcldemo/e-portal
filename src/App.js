@@ -21,7 +21,7 @@ import Teacher from './views/Teacher';
 import Video from './views/Teacher/Video';
 import Notification from './views/Teacher/Notification';
 import Student from './views/Student/index';
-import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher'
+import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
 
 import ContactUs from './views/ContactUs';
 import AboutUs from './views/AboutUs';
@@ -86,13 +86,16 @@ class App extends Component {
           <PrivateRoute path="/category" component={Category} exact />
           <PrivateRoute path="/teacher" component={Teacher} exact />
           <PrivateRoute path="/teacher/videos" component={Video} exact />
-          <PrivateRoute path="/student/teacher" component={SearchTeacher} exact />
+          <PrivateRoute
+            path="/student/teacher"
+            component={SearchTeacher}
+            exact
+          />
           <PrivateRoute
             path="/teacher/notifications"
             component={Notification}
             exact
           />
-          <Redirect to="/login" />
 
           <Redirect to="/home" />
         </Switch>
