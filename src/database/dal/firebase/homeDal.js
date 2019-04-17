@@ -1,5 +1,20 @@
 import dbFactory from '../../dbFactory';
 
+export const getBannerFromDB = (dispatch) => {
+    const db = dbFactory.create('firebase');
+    let data = [];
+    db.firestore().collection("banner").get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            data.push(doc.data());
+        })
+        dispatch({type:'GET_BANNER', bannerCarouselData: data})
+    }) 
+    .catch(err => {
+        dispatch({type: 'ERROR', err})
+    })              
+}
+
 export const getCurriculumFromDB = (dispatch) => {
     const db = dbFactory.create('firebase');
     let data = [];
@@ -22,7 +37,6 @@ export const getTeacherFromDB = (dispatch) => {
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             data.push(doc.data());
-            // console.log('--dbbbbdata--', data);
         })
         dispatch({type:'GET_TEACHER', teacherCurriculumData: data})
     }) 

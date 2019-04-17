@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import HeaderHome from '../../components/layout/header/HeaderHome';
 import { connect } from 'react-redux';
 import Carousel from 'react-bootstrap/Carousel';
-import Slider from '../../components/slider/Slider';
-import { getCurriculum, getTeacher } from './actions';
+import Slider from '../../components/slider/Slider_Santosh';
+import { getBanner, getCurriculum, getTeacher } from './actions';
 import GLOBAL_VARIABLES from '../../config/config';
 
 class Home extends Component {
@@ -27,6 +27,7 @@ class Home extends Component {
   };
 
   componentDidMount() {
+    this.props.getBanner();
     this.props.getCurriculum();
     this.props.getTeacher();
   }
@@ -42,29 +43,32 @@ class Home extends Component {
   };
 
   render() {
-    const { carouselRows, teacherCarouselRows } = this.props;
-
-    const carouselAwaitingRows = carouselRows;
-    var awaitingRows = carouselAwaitingRows.filter(function(
-      carouselAwaitingRow
-    ) {
-      return !carouselAwaitingRow.awaiting;
-    });
+    const { bannerRows, carouselRows, teacherCarouselRows } = this.props;
+    
+    // const carouselAwaitingRows = carouselRows;
+    // var awaitingRows = carouselAwaitingRows.filter(function(
+    //   carouselAwaitingRow
+    // ) {
+    //   return !carouselAwaitingRow.awaiting;
+    // });
 
     let listTop10Items = teacherCarouselRows;
-    listTop10Items.sort((a,b) => b.rating - a.rating);
-    // console.log('listTop10Items', listTop10Items_1);
 
+    if(listTop10Items && listTop10Items.rating){
+      listTop10Items = listTop10Items.sort((a,b) => b.rating - a.rating);
+    }
+    
     let listNewlyItems = carouselRows;
-    listNewlyItems.sort((a,b) => b.created_date.seconds - a.created_date.seconds);
-    // console.log('listNewlyItems',listNewlyItems)
-    // console.log('listNewlyItems',listNewlyItems)
+
+    if(listNewlyItems && listNewlyItems.created_date){
+      listNewlyItems.sort((a,b) => b.created_date.seconds - a.created_date.seconds);
+    }
 
     let trendingItems = carouselRows;
-    trendingItems = trendingItems.sort((a, b) => b.views - a.views);
-    // console.log('trendingItems',trendingItems)
 
-    // const listAwaitingItems = awaitingRows.map((awaitingRows, index) => (
+    if(trendingItems && trendingItems.views){
+      trendingItems = trendingItems.sort((a, b) => b.views - a.views);
+    }
     
     const studentsReview = [
                     {
@@ -93,16 +97,23 @@ class Home extends Component {
                       'comment': 'The courses are fantastic and the instructors are so fun and knowledgeable. I only wish we found it sooner'
                     }
                   ];
-
-    const listAwaitingItems = awaitingRows.map((awaitingRow, index) =>
-      <Carousel.Item key={index}>
-        {/* <iframe key={index} className="d-block w-100 h-100" src={awaitingRow.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
-        <img
-          src="https://images.pexels.com/photos/1020315/pexels-photo-1020315.jpeg"
-          className="d-block w-100"
-        />
-      </Carousel.Item>
-    );
+    
+    let listAwaitingItems = '';
+    
+    if(bannerRows && bannerRows.length > 0){
+      listAwaitingItems = bannerRows.map((bannerRow, index) =>
+        <Carousel.Item key={index}>
+          {/* <iframe key={index} className="d-block w-100 h-100" src={awaitingRow.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
+          
+          { bannerRow.banner_image && 
+            <img
+              src={bannerRow.banner_image}
+              className="d-block w-100"
+            />
+          }
+        </Carousel.Item>
+      );
+    }
 
     return (
       // {yourvairable && (<h1></h1>)}
@@ -177,6 +188,7 @@ class Home extends Component {
 }
 const mapStateToProps = state => {
   return {
+    bannerRows: state.homeReducerStore.bannerData,
     carouselRows: state.homeReducerStore.carouselData,
     teacherCarouselRows: state.homeReducerStore.teacherCarouselData
   };
@@ -184,6 +196,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    getBanner: () => dispatch(getBanner()),
     getCurriculum: () => dispatch(getCurriculum()),
     getTeacher: () => dispatch(getTeacher())
   };
