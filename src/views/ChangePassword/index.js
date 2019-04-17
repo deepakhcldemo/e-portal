@@ -62,15 +62,16 @@ class ChangePassword extends Component {
     this.setState({ submitted: true });
     const { password, confirmPassword } = this.state;
     if (password === confirmPassword) {
-      // changePassword(this.state.password)
-      //   .then(() => {
-      //     toastr.success('Password Reset Link Sent Successfully');
-      //     this.props.history.push('/login');
-      //   })
-      //   .catch(error => {
-      //     this.setState({ username: '' });
-      //     toastr.error('User Not Found. Please Enter Registered Email ID');
-      //   });
+      changePassword(this.state.password)
+        .then(() => {
+          toastr.success('Password Updated Successfully');
+          this.props.history.push('/login');
+        })
+        .catch(error => {
+          toastr.error(error.message + ' ' + ' Login Again');
+          AuthGuard.signout();
+          this.props.history.push('/login');
+        });
     } else {
       this.setState({ errorMessage: 'Passwords do not match' });
     }

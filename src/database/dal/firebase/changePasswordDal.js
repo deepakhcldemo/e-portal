@@ -6,13 +6,5 @@ const getDb = () => {
 
 export const changePassword = newPassword => {
   const user = getDb().auth().currentUser;
-
-  user
-    .updatePassword(newPassword)
-    .then(function() {
-      // Update successful.
-    })
-    .catch(function(error) {
-      // An error happened.
-    });
+  return user.updatePassword(newPassword);
 };
