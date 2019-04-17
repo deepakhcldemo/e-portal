@@ -3,6 +3,7 @@ const initialState = {
     teacherDetails : {}
 }
 const studentReducer = (state = initialState, action) => {
+    debugger
     switch (action.type) {
         case 'OPEN_MODAL':
             return {

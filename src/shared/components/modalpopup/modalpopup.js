@@ -77,11 +77,20 @@ class ModalPopUp extends Component {
 
 const mapStateToProps = state => {
   return {
+    modalState : state.studentReducer.studentModalState,
     teacherDetailsFromSlider: state.studentReducer.teacherDetails
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    closePopModal: () => dispatch(closeModalPopUp()),
+    
+  };
+};
+
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(ModalPopUp);

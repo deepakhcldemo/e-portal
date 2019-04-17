@@ -36,7 +36,7 @@ class SearchTeacher extends Component {
                             options={options}
                         />
                     </div>
-                    <div class="input-group search-teacher" id="fifteenMargin">
+                    <div className="input-group search-teacher" id="fifteenMargin">
                         <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" />
                     </div>
                 </div>
