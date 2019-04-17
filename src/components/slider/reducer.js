@@ -4,7 +4,6 @@ const intialState = {
 }
 
 const sliderReducer = (state = intialState, action) => {
-  debugger
     switch (action.type) {
       case 'OPEN_MODAL':
         return { ...state, 
