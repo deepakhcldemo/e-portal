@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ModalPopUp from '../../shared/components/modalpopup/modalpopup'
 import { connect } from "react-redux";
+import SearchTeacher from './SearchTeacher/SearchTeacher';
 import GLOBAL_VARIABLES from '../../config/config';
 import Navigation from './Navigation/Navigation';
 import Slider from '../../components/slider/Slider';
