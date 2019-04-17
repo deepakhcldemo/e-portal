@@ -3,9 +3,7 @@ import './modalpopup.css';
 import StarRatingComponent from 'react-star-rating-component';
 import Modal from 'react-responsive-modal';
 import { connect } from 'react-redux';
-import {
-  closeModalPopUp
-} from './modalAction';
+import { closeModalPopUp } from './modalAction';
 
 class ModalPopUp extends Component {
   constructor(props) {
@@ -18,17 +16,23 @@ class ModalPopUp extends Component {
 
   closeTeacherDetails = () => {
     this.onCloseModal();
-  }
+  };
 
   render() {
     const openModal = this.props.modalState;
     return (
       <div>
         <Modal open={openModal} onClose={this.onCloseModal} center>
-          <div className="header"></div>
+          <div className="header" />
           <div className="body">
             <div className="row">
-              <div className="col-6"> <img src={this.props.teacherDetailsFromSlider.profile_image} className="img-responsive teacher-details"></img></div>
+              <div className="col-6">
+                {' '}
+                <img
+                  src={this.props.teacherDetailsFromSlider.profile_image}
+                  className="img-responsive teacher-details"
+                />
+              </div>
               <div className="col-6">
                 <div className="margn-top">
                   <span>Name : </span>
@@ -54,7 +58,16 @@ class ModalPopUp extends Component {
                 </div>
               </div>
             </div>
-            <div className = "teacher-details-okay margn-top"> <button className="btn btn-primary" onClick={this.closeTeacherDetails}> Okay</button></div>
+            <div className="teacher-details-okay margn-top">
+              {' '}
+              <button
+                className="btn btn-primary"
+                onClick={this.closeTeacherDetails}
+              >
+                {' '}
+                Okay
+              </button>
+            </div>
           </div>
         </Modal>
       </div>
@@ -64,19 +77,11 @@ class ModalPopUp extends Component {
 
 const mapStateToProps = state => {
   return {
-    modalState: state.studentReducer.studentModalState,
     teacherDetailsFromSlider: state.studentReducer.teacherDetails
-
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    closePopModal: () => dispatch(closeModalPopUp())
   };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(ModalPopUp);
