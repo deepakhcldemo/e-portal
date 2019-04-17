@@ -54,52 +54,6 @@ class Slider extends React.Component {
     this.props.openModalForTeacher(carouselRecord);
   }
 
-  listTop10Children = (records) => records.map((carouselRecord, index) => {
-    const moreSymbol = '...';
-    const today = Date.now() / 1000; // convert into second
-    var noOfDays = this.daysBetween(carouselRecord.created_date ? carouselRecord.created_date.seconds : '', today);
-    console.log('---carouselRecord--', carouselRecord);
-    return (
-      <div key={index} className="vd-wrapper" onClick={() => this.teacherDetails(carouselRecord)}>
-        <a href="#" title={carouselRecord.name}>
-          <div key={index} style={{ height: 150, background: '#000' }} className="vd-wrapper">
-            {/* <iframe key={index} className="d-block w-100" src={carouselRecord.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
-            <img src={carouselRecord.profile_image} />
-          </div>
-
-          <div className="vd-content">
-            <h5>{
-              (carouselRecord.name.length > 50) ? carouselRecord.name.substring(0, 50) + (moreSymbol) : (carouselRecord.name)} <i className="fas fa-ellipsis-v"></i></h5>
-            <p>Rating. {carouselRecord.rating} and registered {noOfDays} days ago</p>
-          </div>
-        </a>
-      </div>
-    )
-  });
-
-  listNewlyChildren = (n, records) => records.map((carouselRecord, index) => {
-    const moreSymbol = '...';
-    const today = Date.now() / 1000; // convert into second
-    var noOfDays = this.daysBetween(carouselRecord.created_date.seconds, today);
-
-    return (
-      <div key={index} className="vd-wrapper">
-        <a href="#" title={carouselRecord.title}>
-          <div key={index} style={{ height: 150, background: '#000' }} className="vd-wrapper">
-            {/* <iframe key={index} className="d-block w-100" src={carouselRecord.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
-            <img src="https://images.pexels.com/photos/901236/pexels-photo-901236.jpeg" />
-          </div>
-
-          <div className="vd-content">
-            <h5>{
-              (carouselRecord.title.length > 50) ? carouselRecord.title.substring(0, 50) + (moreSymbol) : (carouselRecord.title)} <i className="fas fa-ellipsis-v"></i></h5>
-            <p>Speaker. {carouselRecord.views} views. {noOfDays} days ago</p>
-          </div>
-        </a>
-      </div>
-    )
-  });
-
   changeActiveItem = (activeItemIndex) => this.setState({ activeItemIndex });
 
 
@@ -147,7 +101,7 @@ class Slider extends React.Component {
       }
 
       return (
-        <div key={index} className="vd-wrapper">
+        <div key={index} className="vd-wrapper"  onClick={() => this.teacherDetails(carouselRecord)}>
           <a href="#" title={title}>
             <div
               key={index}
@@ -205,8 +159,6 @@ class Slider extends React.Component {
         </div>
       );
     });
-
-  changeActiveItem = activeItemIndex => this.setState({ activeItemIndex });
 
   render() {
     const { activeItemIndex, children } = this.state;

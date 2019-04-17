@@ -21,9 +21,7 @@ class ModalPopUp extends Component {
   }
 
   render() {
-    console.log('teacherDetailsFromSlider', this.props.teacherDetailsFromSlider);
     const openModal = this.props.modalState;
-    debugger
     return (
       <div>
         <Modal open={openModal} onClose={this.onCloseModal} center>
@@ -65,7 +63,6 @@ class ModalPopUp extends Component {
 }
 
 const mapStateToProps = state => {
-  debugger
   return {
     modalState: state.studentReducer.studentModalState,
     teacherDetailsFromSlider: state.studentReducer.teacherDetails
