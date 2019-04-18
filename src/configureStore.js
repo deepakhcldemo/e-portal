@@ -17,6 +17,7 @@ import modalReducer  from './shared/components/modalpopup/modalReducer';
 import  studentReducer from './views/Student/reducer';
 import homeReducer from './views/Home/reducer';
 
+
 const rootPersistConfig = {
   key: 'root',
   storage,

@@ -56,7 +56,7 @@ class Home extends Component {
     const listTop10Items = teacherCarouselRows;
     // var listTop10Items_1 = listTop10Items.sort((a,b) => a.rating_count - b.rating_count);
     // console.log('listTop10Items', listTop10Items_1);
-
+    
     let listNewlyItems = carouselRows;
     var listNewlyItems_1 = listNewlyItems.sort(
       (a, b) => a.created_date.seconds - b.created_date.seconds
@@ -117,7 +117,7 @@ class Home extends Component {
 
           <div className="row dark-bg">
             <div className="col-12 content-container--background">
-              <Slider listTop10Items={listTop10Items}>
+              <Slider listTop10Items={listTop10Items} relativePath="home/teacher">
                 <h3 className="mt-30">
                   {GLOBAL_VARIABLES.TOP10_TUTOR}{' '}
                   <i className="fas fa-chevron-right" />
@@ -134,6 +134,8 @@ class Home extends Component {
               {/* <Slider trendingItems={trendingItems}>
                 <h3 className="mt-30">{GLOBAL_VARIABLES.TRENDING_VIDEOS} <span>&gt;</span></h3>
               </Slider>                */}
+
+              
             </div>
           </div>
           <div className="row">

@@ -15,6 +15,10 @@ export const CATEGORY = {
         DELETE: 'DELETE'
     },
     EMPTY_MSG: 'Please Enter Category Name',
-    DELETE_MSG: 'Are You Sure You Want to Delete this Category?'
+    DELETE_MSG: 'Are You Sure You Want to Delete this Category?',
+    DASHBOARD_TYPE: {
+        STUDENT: 'STUDENT',
+        TEACHER: 'TEACHER'
+    }
 }
 export default ElearningConst;
