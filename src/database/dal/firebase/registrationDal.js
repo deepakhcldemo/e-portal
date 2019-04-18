@@ -71,7 +71,6 @@ export const recoverPassword = email => {
 };
 
 export const saveUserProfile = userDetails => {
-  userDetails.createdOn = new Date();
   getProfileStatus(userDetails.userId).then(querySnapshot => {
     querySnapshot.forEach(doc => {
       let user = doc.data();
@@ -95,13 +94,7 @@ export const uploadUserProfilePic = (profilePic, userId) => {
   const storageRef = getStorageRef();
   const type = profilePic.type.split('/');
   const mainImage = storageRef.child(`profilepic/${userId + '.' + type[1]}`);
-
   return mainImage.put(profilePic);
-  // .then(() => {
-  //   mainImage.getDownloadURL().then(url => {
-  //     console.log(url);
-  //   });
-  // });
 };
 
 export const getProfileDownloadUrl = (profilePic, userId) => {

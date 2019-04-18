@@ -85,16 +85,21 @@ class Profile extends Component {
   };
 
   uploadProfilePic = e => {
-    this.setState({ isUploading: true });
     const fileDetails = e.target.files[0];
     const userId = JSON.parse(localStorage.getItem('user')).user.uid;
-    uploadUserProfilePic(fileDetails, userId).then(() => {
-      getProfileDownloadUrl(fileDetails, userId).then(url => {
-        this.setState({ isUploading: false, profileImage: url });
-        console.log(url);
+    if (fileDetails.type.indexOf('image') > -1) {
+      this.setState({ isUploading: true, errorMessage: '' });
+      uploadUserProfilePic(fileDetails, userId).then(() => {
+        getProfileDownloadUrl(fileDetails, userId).then(url => {
+          this.setState({ isUploading: false, profileImage: url });
+          console.log(url);
+        });
       });
-    });
+    } else {
+      this.setState({ errorMessage: 'Only Images Accepted' });
+    }
   };
+
   saveDetails = e => {
     e.preventDefault();
     const {
@@ -137,11 +142,28 @@ class Profile extends Component {
         summary,
         userId
       };
-      saveUserProfile(teacherDetails).then(() => {
-        localStorage.setItem('userProfile', JSON.stringify(teacherDetails));
-        toastr.success('Details Saved Successfully');
-        this.props.history.push('/teacher');
-      });
+
+      if (
+        firstName !== '' &&
+        lastName !== '' &&
+        dob !== '' &&
+        gender !== '' &&
+        address !== '' &&
+        city !== '' &&
+        country !== '' &&
+        email !== '' &&
+        mobile !== '' &&
+        role !== '' &&
+        subject !== '' &&
+        charge !== '' &&
+        currency !== ''
+      ) {
+        saveUserProfile(teacherDetails).then(() => {
+          localStorage.setItem('userProfile', JSON.stringify(teacherDetails));
+          toastr.success('Details Saved Successfully');
+          this.props.history.push('/teacher');
+        });
+      }
     } else {
       const studentDetails = {
         firstName,
@@ -158,11 +180,26 @@ class Profile extends Component {
         profileImage,
         userId
       };
-      saveUserProfile(studentDetails).then(() => {
-        localStorage.setItem('userProfile', JSON.stringify(studentDetails));
-        toastr.success('Details Saved Successfully');
-        this.props.history.push('/student');
-      });
+
+      if (
+        firstName !== '' &&
+        lastName !== '' &&
+        dob !== '' &&
+        gender !== '' &&
+        address !== '' &&
+        city !== '' &&
+        country !== '' &&
+        email !== '' &&
+        mobile !== '' &&
+        role !== '' &&
+        subject !== ''
+      ) {
+        saveUserProfile(studentDetails).then(() => {
+          localStorage.setItem('userProfile', JSON.stringify(studentDetails));
+          toastr.success('Details Saved Successfully');
+          this.props.history.push('/student');
+        });
+      }
     }
   };
 
@@ -250,7 +287,7 @@ class Profile extends Component {
                   </div>
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <label className="label-color" htmlFor="first_name">
-                      First Name
+                      First Name*
                     </label>
                     <div className="form-group">
                       <input
@@ -266,7 +303,7 @@ class Profile extends Component {
                       )}
                     </div>
                     <label className="label-color" htmlFor="first_name">
-                      Last Name
+                      Last Name*
                     </label>
                     <div className="form-group">
                       <input
@@ -282,7 +319,7 @@ class Profile extends Component {
                       )}
                     </div>
                     <label className="label-color" htmlFor="gender">
-                      Gender
+                      Gender*
                     </label>
 
                     <DropdownButton
@@ -305,7 +342,7 @@ class Profile extends Component {
                 <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <label className="label-color" htmlFor="DOB">
-                      DOB
+                      DOB*
                     </label>
                     <div className="form-group">
                       <input
@@ -324,7 +361,7 @@ class Profile extends Component {
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <div className="form-group">
                       <label className="label-color" htmlFor="email">
-                        Email
+                        Email*
                       </label>
                       <input
                         type="email"
@@ -343,7 +380,7 @@ class Profile extends Component {
 
                 <div className="form-group">
                   <label className="label-color" htmlFor="address">
-                    Address
+                    Address*
                   </label>
                   <input
                     type="text"
@@ -361,7 +398,7 @@ class Profile extends Component {
                 <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <label className="label-color" htmlFor="city">
-                      City
+                      City*
                     </label>
                     <div className="form-group">
                       <input
@@ -379,7 +416,7 @@ class Profile extends Component {
                   </div>
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <label className="label-color" htmlFor="country">
-                      Country
+                      Country*
                     </label>
                     <DropdownButton
                       id="dropdown-basic-button"
@@ -905,7 +942,7 @@ class Profile extends Component {
                 <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-6">
                     <label className="label-color" htmlFor="mobile">
-                      Mobile No.
+                      Mobile No.*
                     </label>
                     <div className="form-group">
                       <input
@@ -930,7 +967,7 @@ class Profile extends Component {
                 <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-6">
                     <label className="label-color" htmlFor="role">
-                      Role
+                      Role*
                     </label>
                     <DropdownButton
                       id="dropdown-basic-button"
@@ -951,7 +988,7 @@ class Profile extends Component {
                   <div className="row">
                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                       <label className="label-color" htmlFor="subject">
-                        Subject
+                        Subject*
                       </label>
                       <DropdownButton
                         id="dropdown-basic-button"
@@ -972,7 +1009,7 @@ class Profile extends Component {
                 {role === 'Teacher' && (
                   <div className="form-group">
                     <label className="label-color" htmlFor="summary">
-                      Summary
+                      Summary (Optional)
                     </label>
                     <textarea
                       className="form-control"
@@ -993,7 +1030,7 @@ class Profile extends Component {
                   <div className="row">
                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                       <label className="label-color" htmlFor="charge">
-                        Charge (per hour)
+                        Charge (per hour)*
                       </label>
                       <div className="form-group">
                         <input
@@ -1011,7 +1048,7 @@ class Profile extends Component {
                     </div>
                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                       <label className="label-color" htmlFor="currency">
-                        Currency
+                        Currency*
                       </label>
 
                       <DropdownButton
