@@ -5,6 +5,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import Slider from '../../components/slider/Slider';
 import { getCurriculum } from '../../components/carousel/action';
 
+
 // import Carousel from "../../components/carousel/Carousel";
 import Modal from "../../components/carousel/Modal";
 
@@ -31,6 +32,7 @@ class Dashboard extends Component {
 
   componentDidMount(){
     this.props.getCurriculum();
+
   }
 
   toggleModalClose = () => {
@@ -172,9 +174,11 @@ class Dashboard extends Component {
   }
 }
 const mapStateToProps = state => {
+  console.log('stateeeeeeee', state)
   return {
     modalSata: state.classes,
     carouselRows: state.carouselStore.carouselData,
+    dashboardReducer: state.dashboardReducer
   };
 };
 
@@ -186,5 +190,5 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {getCurriculum}
 )(Dashboard);

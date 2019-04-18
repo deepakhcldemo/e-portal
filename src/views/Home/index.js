@@ -43,8 +43,7 @@ class Home extends Component {
   };
 
   render() {
-    const { bannerRows, carouselRows, teacherCarouselRows } = this.props;
-    
+    const { bannerRows, carouselRows, teacherCarouselRows } = this.props;    
     // const carouselAwaitingRows = carouselRows;
     // var awaitingRows = carouselAwaitingRows.filter(function(
     //   carouselAwaitingRow
@@ -116,7 +115,6 @@ class Home extends Component {
     }
 
     return (
-      // {yourvairable && (<h1></h1>)}
       <React.Fragment>
         <div className="container-fluid">
           <div className="row">
@@ -127,27 +125,6 @@ class Home extends Component {
           <div className="row">
             <div className="col-12 main-wrapper content-container--background">
               <Carousel>
-                {/* <Carousel.Item>                
-                <img
-                  className="d-block w-100"
-                  src="https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg"
-                  alt="First slide"
-                />                
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg"
-                  alt="Third slide"
-                />                
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100"
-                  src="https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg"
-                  alt="Third slide"
-                />
-              </Carousel.Item> */}
                 {listAwaitingItems}
               </Carousel>
             </div>
@@ -155,7 +132,7 @@ class Home extends Component {
 
           <div className="row dark-bg">
             <div className="col-12 content-container--background">
-              <Slider listTop10Items={listTop10Items}>
+              <Slider listTop10Items={listTop10Items} relativePath="home/teacher">
                 <h3 className="mt-30">
                   {GLOBAL_VARIABLES.TOP10_TUTOR}
                   <i className="fas fa-chevron-right" />
@@ -173,6 +150,7 @@ class Home extends Component {
               {/* <Slider trendingItems={trendingItems}>
                 <h3 className="mt-30">{GLOBAL_VARIABLES.TRENDING_VIDEOS} <span>&gt;</span></h3>
               </Slider>                */}
+              
             </div>
           </div>
           <div className="row">

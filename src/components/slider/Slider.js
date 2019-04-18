@@ -1,7 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Slider.scss';
 import { connect } from "react-redux";
 import { openModal } from './action';
+
+
 import ItemsCarousel from 'react-items-carousel';
 import "./Slider.scss";
 
@@ -54,6 +57,31 @@ class Slider extends React.Component {
     this.props.openModalForTeacher(carouselRecord);
   }
 
+  
+
+  listTop10Children = (records) => records.map((carouselRecord, index) => {
+    const moreSymbol = '...';
+    const today = Date.now() / 1000; // convert into second
+    var noOfDays = this.daysBetween(carouselRecord.created_date ? carouselRecord.created_date.seconds : '', today);
+  
+    return (
+      <div key={index} className="vd-wrapper">
+         {/* onClick={() => this.teacherDetails(carouselRecord)} */}
+        <Link className="nav-link" to={this.props.relativePath+'/1'} title={carouselRecord.name}>
+          <div key={index} style={{ height: 150, background: '#000' }} className="vd-wrapper">
+            {/* <iframe key={index} className="d-block w-100" src={carouselRecord.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
+            <img src={carouselRecord.profile_image} />
+          </div>
+
+          <div className="vd-content">
+            <h5>{
+              (carouselRecord.name.length > 50) ? carouselRecord.name.substring(0, 50) + (moreSymbol) : (carouselRecord.name)} <i className="fas fa-ellipsis-v"></i></h5>
+            <p>Rating. {carouselRecord.rating} and registered {noOfDays} days ago</p>
+          </div>
+        </Link>
+      </div>
+    )
+  });
   changeActiveItem = (activeItemIndex) => this.setState({ activeItemIndex });
 
 
