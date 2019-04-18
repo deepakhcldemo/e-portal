@@ -42,7 +42,7 @@ class Student extends Component {
                     </Slider>
                 </div>
 
-                <div className="student-tutor">
+                <div className="student-tutor rm-mrgn">
                     <Slider listNewlyItems={listNewlyItems}>
                         <h3 className="mt-30">{GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS} <i className="fas fa-chevron-right"></i></h3>
                     </Slider>
