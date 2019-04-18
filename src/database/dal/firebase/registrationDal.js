@@ -1,4 +1,5 @@
 import dbFactory from '../../dbFactory';
+import { snap } from '@popmotion/popcorn';
 
 const getDbRef = collectionName => {
   const db = dbFactory.create('firebase');
@@ -84,9 +85,28 @@ export const saveUserProfile = userDetails => {
     .set(userDetails);
 };
 
-export const uploadUserProfilePic = profilePic => {
+const getStorageRef = () => {
   const db = dbFactory.create('firebase');
   const storageService = db.storage();
-  const storageRef = storageService.ref();
-  return storageRef.child(`images/${profilePic.name}`).put(profilePic);
+  return storageService.ref();
+};
+
+export const uploadUserProfilePic = (profilePic, userId) => {
+  const storageRef = getStorageRef();
+  const type = profilePic.type.split('/');
+  const mainImage = storageRef.child(`profilepic/${userId + '.' + type[1]}`);
+
+  return mainImage.put(profilePic);
+  // .then(() => {
+  //   mainImage.getDownloadURL().then(url => {
+  //     console.log(url);
+  //   });
+  // });
+};
+
+export const getProfileDownloadUrl = (profilePic, userId) => {
+  const storageRef = getStorageRef();
+  const type = profilePic.type.split('/');
+  const mainImage = storageRef.child(`profilepic/${userId + '.' + type[1]}`);
+  return mainImage.getDownloadURL();
 };

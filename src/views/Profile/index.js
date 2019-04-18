@@ -8,7 +8,9 @@ import { DropdownButton, Dropdown } from 'react-bootstrap';
 import * as actionTypes from '../../spinnerStore/actions';
 import {
   saveUserProfile,
-  getUserProfile
+  getUserProfile,
+  uploadUserProfilePic,
+  getProfileDownloadUrl
 } from '../../database/dal/firebase/registrationDal';
 
 const subjects = [
@@ -34,7 +36,9 @@ class Profile extends Component {
     charge: '',
     currency: '',
     summary: '',
-    profilePic: '../../Assets/hdpi/userProfile.png',
+    isUploading: false,
+    profileImage:
+      'https://firebasestorage.googleapis.com/v0/b/e-project-4e023.appspot.com/o/profilepic%2FuserProfile.png?alt=media&token=cfb3e9a8-8508-4acd-8e45-dd97e2ea3dec',
     submitted: false,
     errorMessage: ''
   };
@@ -65,7 +69,7 @@ class Profile extends Component {
             email: user.email,
             mobile: user.mobile,
             role: user.role,
-            profilePic: user.profilePic,
+            profileImage: user.profileImage,
             subject: user.subject
           });
           if (user.role === 'Teacher') {
@@ -81,7 +85,15 @@ class Profile extends Component {
   };
 
   uploadProfilePic = e => {
-    console.log(e.target.files[0]);
+    this.setState({ isUploading: true });
+    const fileDetails = e.target.files[0];
+    const userId = JSON.parse(localStorage.getItem('user')).user.uid;
+    uploadUserProfilePic(fileDetails, userId).then(() => {
+      getProfileDownloadUrl(fileDetails, userId).then(url => {
+        this.setState({ isUploading: false, profileImage: url });
+        console.log(url);
+      });
+    });
   };
   saveDetails = e => {
     e.preventDefault();
@@ -99,13 +111,13 @@ class Profile extends Component {
       subject,
       charge,
       currency,
-      profilePic,
+      profileImage,
       summary
     } = this.state;
 
     const userId = JSON.parse(localStorage.getItem('user')).user.uid;
     this.setState({ submitted: true });
-    debugger;
+
     if (role === 'Teacher') {
       const teacherDetails = {
         firstName,
@@ -121,7 +133,7 @@ class Profile extends Component {
         subject,
         charge,
         currency,
-        profilePic,
+        profileImage,
         summary,
         userId
       };
@@ -143,7 +155,7 @@ class Profile extends Component {
         mobile,
         role,
         subject,
-        profilePic,
+        profileImage,
         userId
       };
       saveUserProfile(studentDetails).then(() => {
@@ -170,7 +182,8 @@ class Profile extends Component {
       charge,
       currency,
       summary,
-      profilePic,
+      profileImage,
+      isUploading,
       submitted
     } = this.state;
 
@@ -201,23 +214,29 @@ class Profile extends Component {
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <div className="form-group">
                       <img
-                        src={profilePic}
-                        className="img-thumbnail thumbnail-width"
+                        src={profileImage}
+                        className="img-thumbnail thumbnail-style"
                         alt="User Profile"
                         width="240"
                         height="200"
                       />
+
+                      {isUploading && (
+                        <div className="text-block ">
+                          <span className="blink-text">Uploading...</span>
+                        </div>
+                      )}
                       <div className="custom-file file-margin">
                         <input
                           type="file"
                           className="custom-file-input"
-                          id="profilePic"
+                          id="profileImage"
                           accept="image/*"
                           onChange={e => this.uploadProfilePic(e)}
                         />
                         <label
                           className="custom-file-label"
-                          htmlFor="profilePic"
+                          htmlFor="profileImage"
                         >
                           Choose a profile pic...
                         </label>
