@@ -7,6 +7,7 @@ import store from './configureStore';
 import serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
+import 'react-datetime/css/react-datetime.css';
 import './index.css';
 
 

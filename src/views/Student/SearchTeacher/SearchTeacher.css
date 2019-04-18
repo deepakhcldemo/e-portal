@@ -47,3 +47,12 @@
         
     }
   }
+
+  .calendar-modal{
+    width:80%;
+    height:90%;
+  }
+
+  .calendar-modal .body{
+    min-height: 70%;
+  }

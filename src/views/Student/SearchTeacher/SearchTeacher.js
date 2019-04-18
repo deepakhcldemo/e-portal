@@ -1,33 +1,44 @@
 import React, { Component } from 'react';
 //import GLOBAL_VARIABLES from '../../config/config';
 
-import {getTeachersBasedOnCateogy} from './searchTeacherAction';
+import { getTeachersBasedOnCateogy } from './searchTeacherAction';
 import Navigation from '../Navigation/Navigation';
 import { connect } from "react-redux";
 import Select from 'react-select';
 import './SearchTeacher.css';
+
+import CalendarModal from '../../../shared/components/calendar-modal/calendarmodal'
 class SearchTeacher extends Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedOption: null,
-            placeHolderValue : ''
+            placeHolderValue: '',
+            calendarModal: false
         };
         this.handleChange = this.handleChange.bind(this);
     }
 
 
     componentDidMount() {
-       // this.props.getTeachersBasedOnCateogy();
+        // this.props.getTeachersBasedOnCateogy();
     }
 
     handleChange = (selectedOption) => {
-        this.setState({ selectedOption, 
-            placeHolderValue : selectedOption.value
+        this.setState({
+            selectedOption,
+            placeHolderValue: selectedOption.value
         });
-        debugger
+        // debugger
         this.props.getTeachersBasedOnCateogy(selectedOption.value);
 
+    }
+
+    openCalendarModal = () => {
+        this.setState({ calendarModal: true });
+    }
+    closeCalendarModal = () => {
+        this.setState({ calendarModal: false });
     }
 
     render() {
@@ -45,9 +56,9 @@ class SearchTeacher extends Component {
                     <Navigation></Navigation>
                 </div>
                 <div className="filter-search">
-                    
+
                     <div className="filter-teacher">
-                    <span>Filter By Category :</span>
+                        <span>Filter By Category :</span>
                         <Select
                             value={selectedOption}
                             onChange={this.handleChange}
@@ -59,8 +70,11 @@ class SearchTeacher extends Component {
                     </div>
 
                     <div className="input-group chat-btn" >
-                        <input type="button" className="btn btn-success" value ="Initiate Chat"/> 
+                        <input onClick={this.openCalendarModal} type="button" className="btn btn-success" value="Initiate Chat" />
                     </div>
+                </div>
+                <div>
+                    <CalendarModal modalState={this.state.calendarModal} closeCalendarModal={this.closeCalendarModal} classes="calendar-modal"></CalendarModal>
                 </div>
             </div>
         );
@@ -70,21 +84,20 @@ class SearchTeacher extends Component {
 
 const mapStateToProps = state => {
     return {
-      modalSata: state.classes,
-      carouselRows: state.carouselStore.carouselData,
+        modalSata: state.classes,
+        carouselRows: state.carouselStore.carouselData,
     };
-  };
-  
-  const mapDispatchToProps = dispatch => {
-      debugger
+};
+
+const mapDispatchToProps = dispatch => {
     return {
         getTeachersBasedOnCateogy: (selectedValue) => dispatch(getTeachersBasedOnCateogy()),
     };
-  };
-  
-  export default connect(
+};
+
+export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(SearchTeacher);
+)(SearchTeacher);
 
 
