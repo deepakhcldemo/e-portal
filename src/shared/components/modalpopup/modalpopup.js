@@ -15,33 +15,29 @@ class ModalPopUp extends Component {
   }
 
   onCloseModal = () => {
-  this.props.closePopModal();
+    this.props.closePopModal();
   };
 
-  
   render() {
     const openModal = this.props.modalState;
-    debugger
+
     return (
       <div>
-        <Modal open={openModal} onClose={this.onCloseModal} center>
-        </Modal>
+        <Modal open={openModal} onClose={this.onCloseModal} center />
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  debugger
   return {
     modalState: state.studentReducer.studentModalState
-   
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-   closePopModal: () => dispatch(closeModalPopUp())
+    closePopModal: () => dispatch(closeModalPopUp())
   };
 };
 

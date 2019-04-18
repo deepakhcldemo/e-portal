@@ -1100,6 +1100,7 @@ class Profile extends Component {
                   <button
                     type="button"
                     onClick={e => this.saveDetails(e)}
+                    // onClick={() => saveFeedback()}
                     className="btn btn-dark btn-block"
                   >
                     SAVE DETAILS
