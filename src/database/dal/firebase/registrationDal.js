@@ -70,6 +70,7 @@ export const recoverPassword = email => {
 };
 
 export const saveUserProfile = userDetails => {
+  userDetails.createdOn = new Date();
   getProfileStatus(userDetails.userId).then(querySnapshot => {
     querySnapshot.forEach(doc => {
       let user = doc.data();
@@ -81,4 +82,11 @@ export const saveUserProfile = userDetails => {
   return getDbRef('userProfiles')
     .doc(userDetails.userId)
     .set(userDetails);
+};
+
+export const uploadUserProfilePic = profilePic => {
+  const db = dbFactory.create('firebase');
+  const storageService = db.storage();
+  const storageRef = storageService.ref();
+  return storageRef.child(`images/${profilePic.name}`).put(profilePic);
 };

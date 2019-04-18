@@ -34,7 +34,9 @@ class Profile extends Component {
     charge: '',
     currency: '',
     summary: '',
-    submitted: false
+    profilePic: '../../Assets/hdpi/userProfile.png',
+    submitted: false,
+    errorMessage: ''
   };
 
   handleDropdownSelection = (option, property) => {
@@ -63,6 +65,7 @@ class Profile extends Component {
             email: user.email,
             mobile: user.mobile,
             role: user.role,
+            profilePic: user.profilePic,
             subject: user.subject
           });
           if (user.role === 'Teacher') {
@@ -77,6 +80,9 @@ class Profile extends Component {
     });
   };
 
+  uploadProfilePic = e => {
+    console.log(e.target.files[0]);
+  };
   saveDetails = e => {
     e.preventDefault();
     const {
@@ -93,12 +99,13 @@ class Profile extends Component {
       subject,
       charge,
       currency,
+      profilePic,
       summary
     } = this.state;
 
     const userId = JSON.parse(localStorage.getItem('user')).user.uid;
     this.setState({ submitted: true });
-
+    debugger;
     if (role === 'Teacher') {
       const teacherDetails = {
         firstName,
@@ -114,6 +121,7 @@ class Profile extends Component {
         subject,
         charge,
         currency,
+        profilePic,
         summary,
         userId
       };
@@ -135,6 +143,7 @@ class Profile extends Component {
         mobile,
         role,
         subject,
+        profilePic,
         userId
       };
       saveUserProfile(studentDetails).then(() => {
@@ -161,6 +170,7 @@ class Profile extends Component {
       charge,
       currency,
       summary,
+      profilePic,
       submitted
     } = this.state;
 
@@ -189,6 +199,37 @@ class Profile extends Component {
               <form>
                 <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div className="form-group">
+                      <img
+                        src={profilePic}
+                        className="img-thumbnail thumbnail-width"
+                        alt="User Profile"
+                        width="240"
+                        height="200"
+                      />
+                      <div className="custom-file file-margin">
+                        <input
+                          type="file"
+                          className="custom-file-input"
+                          id="profilePic"
+                          accept="image/*"
+                          onChange={e => this.uploadProfilePic(e)}
+                        />
+                        <label
+                          className="custom-file-label"
+                          htmlFor="profilePic"
+                        >
+                          Choose a profile pic...
+                        </label>
+                        <span className="help-block">
+                          {this.state.errorMessage
+                            ? this.state.errorMessage
+                            : ''}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <label className="label-color" htmlFor="first_name">
                       First Name
                     </label>
@@ -205,8 +246,6 @@ class Profile extends Component {
                         <div className="help-block">FirstName is required</div>
                       )}
                     </div>
-                  </div>
-                  <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <label className="label-color" htmlFor="first_name">
                       Last Name
                     </label>
@@ -223,8 +262,27 @@ class Profile extends Component {
                         <div className="help-block">LastName is required</div>
                       )}
                     </div>
+                    <label className="label-color" htmlFor="gender">
+                      Gender
+                    </label>
+
+                    <DropdownButton
+                      id="dropdown-basic-button"
+                      name="gender"
+                      title={gender}
+                      variant="default"
+                      onSelect={e => this.handleDropdownSelection(e, 'gender')}
+                    >
+                      <Dropdown.Item eventKey="Male">Male</Dropdown.Item>
+                      <Dropdown.Item eventKey="Female">Female</Dropdown.Item>
+                      <Dropdown.Item eventKey="Other">Other</Dropdown.Item>
+                    </DropdownButton>
+                    {submitted && !gender && (
+                      <div className="help-block">Gender is required</div>
+                    )}
                   </div>
                 </div>
+
                 <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <label className="label-color" htmlFor="DOB">
@@ -245,24 +303,22 @@ class Profile extends Component {
                     </div>
                   </div>
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <label className="label-color" htmlFor="gender">
-                      Gender
-                    </label>
-
-                    <DropdownButton
-                      id="dropdown-basic-button"
-                      name="gender"
-                      title={gender}
-                      variant="default"
-                      onSelect={e => this.handleDropdownSelection(e, 'gender')}
-                    >
-                      <Dropdown.Item eventKey="Male">Male</Dropdown.Item>
-                      <Dropdown.Item eventKey="Female">Female</Dropdown.Item>
-                      <Dropdown.Item eventKey="Other">Other</Dropdown.Item>
-                    </DropdownButton>
-                    {submitted && !gender && (
-                      <div className="help-block">Gender is required</div>
-                    )}
+                    <div className="form-group">
+                      <label className="label-color" htmlFor="email">
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        value={email}
+                        onChange={this.handleChange}
+                        className="form-control input-sm"
+                      />
+                      {submitted && !email && (
+                        <div className="help-block">Email is required</div>
+                      )}
+                    </div>
                   </div>
                 </div>
 
@@ -848,22 +904,7 @@ class Profile extends Component {
                   </div>
                   <div className="col-xs-6 col-sm-6 col-md-6" />
                 </div>
-                <div className="form-group">
-                  <label className="label-color" htmlFor="email">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={email}
-                    onChange={this.handleChange}
-                    className="form-control input-sm"
-                  />
-                  {submitted && !email && (
-                    <div className="help-block">Email is required</div>
-                  )}
-                </div>
+
                 <div className="panel-heading">
                   <h3 className="panel-title">Expertise Details</h3>
                 </div>
