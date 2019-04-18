@@ -13,11 +13,11 @@ class TopVideo extends Component {
 						{videoDetails && videoDetails.map((videoDetail,index) => {
 							return (
 								<li key={index}>
-									<NavLink activeClassName="" exact to={videoDetail.link} title={videoDetail.title}>
-										<img src={videoDetail.img} alt={videoDetail.title} className="img-responsive" height="130px" />
-										<h2>{videoDetail.name}</h2>
+									<NavLink to="" activeClassName="" exact title={videoDetail.title}>
+										<img src={videoDetail.thumb} alt={videoDetail.title} className="img-responsive" height="130px" />
+										<h2>{videoDetail.title}</h2>
 										<i className="fas fa-play-circle"></i>
-										<span className="duration">{videoDetail.duration}</span>
+										<span className="duration"></span>
 									</NavLink>
 								</li>
 							)

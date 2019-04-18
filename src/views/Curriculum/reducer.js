@@ -1,18 +1,18 @@
 const initialState = {
-    openModal: false,
-    docRef: '' 
+    docRef: '',
+    err: ''
 };
-const curriculumReducer = (state = initialState, action) => {    
+const curriculumReducer = (state = initialState, action) => {   
     switch (action.type) {  
         case 'SET_DOC_REF':
             return {
                 ...state,
                 docRef: action.ref
             }
-        case 'SAVE_DOC':
+        case 'ERROR':
             return {
                 ...state,
-                docRef: action.ref
+                err: action.error
             }
         default:
             return state

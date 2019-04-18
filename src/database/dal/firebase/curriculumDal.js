@@ -1,4 +1,6 @@
 import dbFactory from '../../dbFactory'
+import {closeModal} from './../../../views/Category/action'
+
 const db = dbFactory.create('firebase');
 
 /* export const getCurrentUserFromDB = dispatch => {
@@ -25,56 +27,49 @@ export const saveFileMetaDataFromDB = (dispatch, fileName, user, doc, fields, ty
         thumb: '',
         status: true,
         subject: user.subject,
-        isPending: (user.role === 'Teacher') ? true : false,
+        isPending: (user.role === 'Teacher') ? false : true,
         created: db.firestore.FieldValue.serverTimestamp()
     }
     if(type === 'metadata') {
-        console.log(doc,fields)
-        db.firestore().collection('curriculum').doc(doc)
         db.firestore().collection('curriculum').doc(doc).update(fields)
         .then(function(){
+            dispatch(closeModal())            
         })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
+        .catch(function(err) {
+            dispatch({type: 'ERROR', err})
         });
-    }else if(type === 'metadata') {
+    }else if(type !== 'metadata') {
         db.storage().ref(user.userId).child(fileName).getDownloadURL().then(url => {
             if(type === 'video') {
                 metaData.src = url
                 db.firestore().collection('curriculum').add(metaData)
                 .then(function(docRef) {
-                    console.log("Document written with ID: ", docRef.id);
                     dispatch({type: 'SET_DOC_REF', ref: docRef.id})
                 })
-                .catch(function(error) {
-                    console.error("Error adding document: ", error);
+                .catch(function(err) {
+                    dispatch({type: 'ERROR', err})
                 });
             } else if(type === 'thumb') {
                 db.firestore().collection('curriculum').doc(doc).update({
                     thumb: url
                 }).then(function(){
                 })
-                .catch(function(error) {
-                    console.error("Error adding document: ", error);
+                .catch(function(err) {
+                    dispatch({type: 'ERROR', err})
                 });
             }
         })       
     }
 }
 
-/* export const getCurrentUserFromDB = dispatch => {
-    const db = dbFactory.create('firebase')
-    const currentUser = db.auth().currentUser;
-    dispatch({type: 'CURRENT_USER', currentUser})
-}
-export const getStorageRef = (dispatch) => {
-    const db = dbFactory.create('firebase')
-    db.auth().onAuthStateChanged( user => {
-        if (user) {            
-            const uid = user.uid;
-            const storageRef = db.storage().ref(uid)
-            dispatch({type: 'GET_REF',storageRef})
-        }
+
+export const getContentFromDB = (dispatch, uid) => {
+    db.firestore().collection("curriculum").where("userId", "==", uid)
+    .onSnapshot(function(querySnapshot) {
+        let content = [];
+        querySnapshot.forEach(function(doc) {
+            content.push(doc.data());
+        });
+        dispatch({type: 'GET_CONTENT',content})
     });
 }
- */

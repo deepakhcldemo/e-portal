@@ -3,12 +3,14 @@ import { connect } from 'react-redux'
 import firebase from 'firebase'
 import '@progress/kendo-theme-default/dist/all.css';
 import FileUploader from 'react-firebase-file-uploader';
+import { toastr } from 'react-redux-toastr'
 
 import Progress from './progress';
 import {CurriculumModel} from './model';
 import './styles.scss';
 
 import { saveFileMetaData } from './actions';
+import { closeModal } from './../Category/action'
 
 class Curriculum extends Component {
     state = CurriculumModel;
@@ -42,15 +44,20 @@ class Curriculum extends Component {
     }
 
     handleSubmit = (e) => {
-        const fields = {
-            title: this.state.title,
-            tags: this.state.tags,
-            desc: this.state.desc
-        }
-        this.props.saveFileMetaData('', this.state.userDetails, this.props.docRef, fields, 'metadata')
+        const fields = {}
+        let check = true
+        for(const field of this.state.fields){
+            if(!this.state[field]) {
+                toastr.warning(field, 'Please Enter ' + field);
+                check = false
+                break;
+            }
+            fields[field] = this.state[field]
+        }            
+        if(check) this.props.saveFileMetaData('', this.state.userDetails, this.props.docRef, fields, 'metadata')
         e.preventDefault();
     }
-    
+
     render() {
         return (
             <div className='col-12'>
@@ -88,7 +95,7 @@ class Curriculum extends Component {
                         {this.state.video && (
                             <>
                             <div className="form-group">
-                            {this.state.thumbnail && (
+                            {(this.state.thumbnail && !this.state.isUploading) && (
                                 <label
                                 style={{
                                     backgroundColor: 'steelblue',
@@ -128,7 +135,7 @@ class Curriculum extends Component {
                             </div>
                             <button type="submit" disabled={this.state.thumbnail} className="btn  btn-outline-primary mb-2">Publish</button>
                             </>
-                        )}                    
+                        )}                                            
                     </form>
                 )}
             </div>
@@ -136,14 +143,14 @@ class Curriculum extends Component {
     }
 }
 const mapStateToProps = state => {
-    console.log(state);
   return {
-    modalState: state.curriculum.openModal,
-    docRef: state.curriculum.docRef
+    docRef: state.curriculum.docRef,
+    err: state.curriculum.err
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
+    closeModal: () => dispatch(closeModal()),
     saveFileMetaData: (fileName, user, docRef, fields, type) => 
     dispatch(saveFileMetaData(fileName, user, docRef, fields, type))
   };

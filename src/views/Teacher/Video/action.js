@@ -1,3 +1,5 @@
+import { getContentFromDB } from './../../../database/dal/firebase/curriculumDal';
+
 export const openModal = () => {
     return {
         type: 'OPEN'
@@ -5,7 +7,14 @@ export const openModal = () => {
 }
 
 export const closeModal = () => {
-    return {
-        type: 'CLOSE'
+    return (dispatch) => {
+        dispatch(getContentFromDB(dispatch,JSON.parse(localStorage.getItem('userProfile')).userId))
+        dispatch({type: 'CLOSE'})
+    }
+}
+
+export const getContent = (uid) => {
+    return (dispatch) => {
+        getContentFromDB(dispatch, uid);
     }
 }

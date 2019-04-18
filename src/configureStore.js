@@ -17,7 +17,7 @@ import modalReducer  from './shared/components/modalpopup/modalReducer';
 import  studentReducer from './views/Student/reducer';
 import homeReducer from './views/Home/reducer';
 import searchTeacherReducer from './views/Student/SearchTeacher/searchTeacherReducer';
-
+import videoReducer from './views/Teacher/Video/reducer';
 const rootPersistConfig = {
   key: 'root',
   storage,
@@ -37,7 +37,8 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   modalReducer : modalReducer,
   homeReducerStore : homeReducer,
   studentReducer : studentReducer,
-  searchTeacher : searchTeacherReducer
+  searchTeacher : searchTeacherReducer,
+  video: videoReducer
 });
 
 const history = createBrowserHistory();

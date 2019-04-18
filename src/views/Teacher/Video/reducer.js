@@ -1,5 +1,6 @@
 const initialState = {
     openModal: false,
+    content: ''
 }
 
 const videoReducer = (state = initialState, action) => {    
@@ -13,9 +14,14 @@ const videoReducer = (state = initialState, action) => {
             return {
                 ...state,
                 openModal: !state.openModal
-            }                           
+            }  
+        case 'GET_CONTENT':
+            return {
+                ...state,
+                content: action.content
+            }                         
         default:
             return state
     }
 }
-export default categoryReducer
+export default videoReducer

@@ -6,5 +6,6 @@
     desc: '',
     thumbnail: true,
     video: false,
-    userDetails: ''
+    userDetails: '',
+    fields: ['title', 'tags', 'desc']
 }
