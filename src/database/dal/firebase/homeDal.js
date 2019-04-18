@@ -35,7 +35,9 @@ export const getCurriculumFromDB = (dispatch) => {
 export const getTeacherFromDB = (dispatch) => {
     const db = dbFactory.create('firebase');
     let data = [];
-    db.firestore().collection("teacher").get()
+    db.firestore().collection("userProfiles")
+    .where("role", "==", "Teacher")
+    .get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             data.push(doc.data());

@@ -50,25 +50,15 @@ class Slider extends React.Component {
   }
   // method for opening modal with teacher details
   teacherDetails = (carouselRecord) => {
-    console.log('carouselRecord', carouselRecord);
     this.props.openModalForTeacher(carouselRecord);
   }
-
-  // createChildren = n => ['aa','bb','cc', 'ddd', 'ee','ff','gg','hh'].map(i => {
-  //   let imgPath = "https://i.pinimg.com/originals/66/24/96/6624960f0062bd8b8845037c6776277c.jpg";
-  //   return (
-  //     <div key={i} style={{ height: 150, background: '#000' }} className="vd-wrapper">
-  //       <img src={imgPath}/>
-  //     </div>
-  //   )
-  // });
 
   createChildren = records =>
     records.map((carouselRecord, index) => {
       const moreSymbol = "...";
       const today = Date.now() / 1000; // convert into second
       var noOfDays = this.daysBetween(
-        carouselRecord.created_date ? carouselRecord.created_date.seconds : "",
+        carouselRecord.createdOn ? carouselRecord.createdOn.seconds : "",
         today
       );
 
@@ -76,17 +66,24 @@ class Slider extends React.Component {
       let profileImg = "";
       let rating = "";
 
-      if (carouselRecord.name) {
-        title = carouselRecord.name;
+      if (carouselRecord.firstName) {          
+        title = carouselRecord.firstName;
+
+        if (carouselRecord.lastName){
+            title += ' '+ carouselRecord.lastName;
+        }
       } else if (carouselRecord.title) {
         title = carouselRecord.title;
       }
 
-      if (carouselRecord.profile_image) {
-        profileImg = carouselRecord.profile_image;
+      if (carouselRecord.profilePic) {
+        profileImg = carouselRecord.profilePic;
       } else {
-        profileImg =
-          "https://images.pexels.com/photos/901236/pexels-photo-901236.jpeg";
+        if (carouselRecord.gender === 'Female') {
+            profileImg = "https://i0.wp.com/www.antgibbz.com/wp-content/uploads/2016/05/person-placeholder-200x200.jpg?ssl=1";
+        } if (carouselRecord.gender === 'Male') {
+            profileImg = "https://tricityescaperooms.com/wp-content/uploads/2018/01/person-placeholder-male-5.jpg";
+        }
       }
 
       if (carouselRecord.rating) {
@@ -117,7 +114,8 @@ class Slider extends React.Component {
                 <i className="fas fa-ellipsis-v" />
               </h5>
               <p>
-                Rating. {rating} and registered {noOfDays} days ago
+                { rating && 'Rating.' + rating + 'and' }  
+                Registered  {noOfDays} days ago 
               </p>
             </div>
           </a>
@@ -137,7 +135,7 @@ class Slider extends React.Component {
               className="pad5 left"
               style={{ width: 170, height: 80 }}
             >
-              <img src={carouselRecord.profile_image} />
+              <img src={carouselRecord.profilePic} />
             </div>
             <div className="pad5 left label-color">
               <h5>
