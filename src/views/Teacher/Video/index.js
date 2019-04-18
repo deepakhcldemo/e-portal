@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import Modal from 'react-responsive-modal'
-import NavBar from './../Navbar/index'
+//import NavBar from './../../../shared/components/Navbar/index'
 import TopVideo from './../TopVideo/TopVideo'
 import Curriculum from './../../Curriculum/index'
 import { openModal, closeModal } from './action'
@@ -76,7 +76,7 @@ class Video extends Component {
         return (
             <>
             <div className="container-fluid">
-                <NavBar/>
+                {/* <NavBar/> */}
                 <div className="row margin-bottom">                                                        
                     <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
                         <TopVideo heading="My Videos" videoDetails={videoDetails}>

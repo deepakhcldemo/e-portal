@@ -21,4 +21,24 @@ export const CATEGORY = {
         TEACHER: 'TEACHER'
     }
 }
+export const TEACHER_DASHBOARD_LINKS = [
+    {
+        name: 'Video',
+        link: '/teacher/videos',
+        icon: 'fas fa-video home-header-icon--size',
+        title: 'Video',
+        style: {
+            marginLeft: '5px'
+        }
+    },
+    {
+        name: 'Dashboard',
+        link: '/teacher',        
+        icon: 'fa fa-tachometer home-header-icon--size',
+        title: 'Dashboard',
+        style: {
+            marginLeft: '5px'
+        }
+    },
+]
 export default ElearningConst;
