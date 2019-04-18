@@ -1,10 +1,12 @@
 import dbFactory from '../../dbFactory';
 
-export const getTeachersFromDBBasedOnCategory = (dispatch) => {
-    debugger
+export const getTeachersFromDBBasedOnCategory = (dispatch, CategoryValue) => {
+    console.log('CategoryValue', CategoryValue);
     const db = dbFactory.create('firebase');
     let data = [];
-    db.firestore().collection("teacher").get()
+    db.firestore().collection("userProfiles")
+    //.where('firstName', '==', 'Avinash')
+    .get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             console.log(doc.data());
