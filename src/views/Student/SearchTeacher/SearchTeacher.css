@@ -1,6 +1,6 @@
 .filter-search{
     max-width: 50rem;
-    margin: 20px auto;
+    margin: 69px auto;
 }
 
 .input-group-btn > .btn {
@@ -37,7 +37,9 @@
   }
 
  
-  
+  .header-container {
+    top: 0;
+  }
 
   .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);

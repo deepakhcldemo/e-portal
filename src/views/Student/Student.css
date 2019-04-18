@@ -1,20 +1,4 @@
-.student-navigation{
-    background-color : #3C5A99;
-}
 
-.navbar-row{
-    margin: 0 !important;
-    padding-top: .3125rem;
-    padding-bottom: .3125rem;
-}
-
-.filter-drop-down{
-    display: inline-block;
-}
-
-.brand-logo{
-    color: #ffffff;
-}
 .student-tutor{
     max-width: 60rem;
     margin: 0 auto;
