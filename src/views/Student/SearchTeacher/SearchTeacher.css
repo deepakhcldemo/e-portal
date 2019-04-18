@@ -1,6 +1,13 @@
 .filter-search{
     max-width: 50rem;
-    margin: 20px auto;
+    margin: 69px auto;
+    cursor: pointer;
+}
+
+.teacher-search-icon{
+  padding: 10px;
+  background-color: #232838;
+  color: #ffffff;
 }
 
 .input-group-btn > .btn {
@@ -36,11 +43,31 @@
     cursor: pointer;
   }
 
-  form.example button:hover {
-    background: #0b7dda;
+  .rm-mrgn{
+    margin-top: 20px !important;
+  }
+ 
+  .header-container {
+    top: 0;
+  }
+
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    
   }
   
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  .container {
+    padding: 2px 16px;
+  }
 
+  .profile-image{
+    height: 160px;
+  }
 @media only screen and (max-width: 600px) {
     .filter-search{
         max-width: 20rem;

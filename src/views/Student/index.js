@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import ModalPopUp from '../../shared/components/modalpopup/modalpopup'
+import HeaderHome from '../../components/layout/header/HeaderHome';
 import { connect } from "react-redux";
+import Navbar from './../../shared/components/Navbar';
 import SearchTeacher from './SearchTeacher/SearchTeacher';
 import GLOBAL_VARIABLES from '../../config/config';
-import Navigation from './Navigation/Navigation';
+import { STUDENT_DASHBOARD_LINKS } from './../../constant/Constant'
+//import Navigation from './Navigation/Navigation';
 import Slider from '../../components/slider/Slider';
 import { getTeacher, getCurriculum } from './action';
 import './Student.css';
@@ -26,8 +29,9 @@ class Student extends Component {
         return (
             <div>
                 <ModalPopUp></ModalPopUp>
+                <HeaderHome headeTitle="Student Dashboard" dashboardLinks={STUDENT_DASHBOARD_LINKS}/>
                 <div>
-                    <Navigation></Navigation>
+                
                 </div>
                 <div className="student-notification">
 
@@ -38,11 +42,12 @@ class Student extends Component {
                     </Slider>
                 </div>
 
-                <div className="student-tutor">
+                <div className="student-tutor rm-mrgn">
                     <Slider listNewlyItems={listNewlyItems}>
                         <h3 className="mt-30">{GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS} <i className="fas fa-chevron-right"></i></h3>
                     </Slider>
                 </div>
+                <Navbar links={STUDENT_DASHBOARD_LINKS}/>
             </div>
         );
     }

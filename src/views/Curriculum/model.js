@@ -1,6 +1,10 @@
  export const CurriculumModel = {
-    selectedNode: '',
-    selectedNodeIndex: '',
     isUploading: false,
-    progress: 0
+    progress: 0,    
+    title: '',
+    tags: '',
+    desc: '',
+    thumbnail: true,
+    video: false,
+    userDetails: ''
 }

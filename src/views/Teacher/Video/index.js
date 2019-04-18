@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import Modal from 'react-responsive-modal'
+import { TEACHER_DASHBOARD_LINKS } from './../../../constant/Constant'
+import HeaderHome from '../../../components/layout/header/HeaderHome';
+import Navbar from './../../../shared/components/Navbar'
 //import NavBar from './../../../shared/components/Navbar/index'
 import TopVideo from './../TopVideo/TopVideo'
 import Curriculum from './../../Curriculum/index'
@@ -69,20 +72,27 @@ class Video extends Component {
         const styles = {
             modal: {
                 width: '100%',
-                height: '70%'
+                minHeight: '70%'
             }
         }
         const { modalState } = this.props
         return (
             <>
             <div className="container-fluid">
-                {/* <NavBar/> */}
-                <div className="row margin-bottom">                                                        
-                    <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
+                <div className="row">
+                    <div className="col-12">
+                        <HeaderHome headeTitle="Teacher Dashboard" dashboardLinks={TEACHER_DASHBOARD_LINKS}/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-12 main-wrapper"> 
                         <TopVideo heading="My Videos" videoDetails={videoDetails}>
-                            <button onClick={this.props.openModal} className="btn" title="Upload Video"><i className="fas fa-plus"></i> Add Video</button>
+                            <button onClick={this.props.openModal} className="btn home-header-text-link-status" title="Upload Video"><i className="fas fa-plus"></i> Add Video</button>
                         </TopVideo>
                     </div>
+                </div>
+                <div className="row">
+                    <Navbar links={TEACHER_DASHBOARD_LINKS}/>
                 </div>
             </div>
             <Modal open={modalState} onClose={this.props.closeModal} center styles={styles}>                

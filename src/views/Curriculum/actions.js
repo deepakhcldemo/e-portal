@@ -1,19 +1,14 @@
-import { getCategoryFromDB } from './../../database/dal/firebase/categoryDal'
-import { getCurrentUserFromDB, saveFileMetaDataFromDB } from './../../database/dal/firebase/curriculumDal'
+import { saveFileMetaDataFromDB } from './../../database/dal/firebase/curriculumDal'
 
-export const getCurrentUser = () => {
+/* export const getCurrentUser = () => {
     return (dispatch) => {
         getCurrentUserFromDB(dispatch);
     }
-}
-export const getCategory = () => {
+} */
+
+export const saveFileMetaData = (fileName, user, docRef, fields, type) => {
     return (dispatch) => {
-        getCategoryFromDB(dispatch);
-    }
-}
-export const saveFileMetaData = (fileName, uid) => {
-    return (dispatch) => {
-        saveFileMetaDataFromDB(dispatch, fileName, uid);
+        saveFileMetaDataFromDB(dispatch, fileName, user, docRef, fields, type);
     }
 }
 /* export const getCurrentUser = () => {
@@ -31,21 +26,4 @@ export const openModal = () => {
     return {
         type: 'OPEN'
     }
-}
-
-export const closeModal = () => {
-    return {
-        type: 'CLOSE'
-    }
-}
- *//* export const deleteCategory = () => {
-    return {
-        type: 'DELETE_CATEGORY',
-
-    }
-}
-export const viewCategory = () => {
-    return {
-        type: 'VIEW_CATEGORY'
-    }
-} */
+}*/
