@@ -44,14 +44,9 @@ class Home extends Component {
 
   render() {
     const { bannerRows, carouselRows, teacherCarouselRows } = this.props;    
-    // const carouselAwaitingRows = carouselRows;
-    // var awaitingRows = carouselAwaitingRows.filter(function(
-    //   carouselAwaitingRow
-    // ) {
-    //   return !carouselAwaitingRow.awaiting;
-    // });
-
+    
     let listTop10Items = teacherCarouselRows;
+    console.log('--listTop10Items--', listTop10Items);
 
     if(listTop10Items && listTop10Items.rating){
       listTop10Items = listTop10Items.sort((a,b) => b.rating - a.rating);
@@ -132,20 +127,26 @@ class Home extends Component {
 
           <div className="row dark-bg">
             <div className="col-12 content-container--background">
-              <Slider listTop10Items={listTop10Items} relativePath="home/teacher">
-                <h3 className="mt-30">
-                  {GLOBAL_VARIABLES.TOP10_TUTOR}
-                  <i className="fas fa-chevron-right" />
-                </h3>
-              </Slider>              
+              {listTop10Items.length > 0 && 
+                <Slider listTop10Items={listTop10Items} relativePath="home/teacher">
+                  <h3 className="mt-30">
+                    {GLOBAL_VARIABLES.TOP10_TUTOR}
+                    <i className="fas fa-chevron-right" />
+                  </h3>
+                </Slider>              
+              }
 
-              <Slider listNewlyItems={listNewlyItems}>
-                <h4 className="mt-30 pad10">{GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS} <i className="fas fa-chevron-right"></i></h4>
-              </Slider>
+              {listNewlyItems.length > 0 && 
+                <Slider listNewlyItems={listNewlyItems}>
+                  <h4 className="mt-30 pad10">{GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS} <i className="fas fa-chevron-right"></i></h4>
+                </Slider>
+              }
 
-              <Slider studentsReview={studentsReview}>
-                <h4 className="mt-30 pad10">{GLOBAL_VARIABLES.STUDENTS_REVIEW} <span>&gt;</span></h4>
-              </Slider>               
+              {studentsReview.length > 0 && 
+                <Slider studentsReview={studentsReview}>
+                  <h4 className="mt-30 pad10">{GLOBAL_VARIABLES.STUDENTS_REVIEW} <span>&gt;</span></h4>
+                </Slider>   
+              }            
 
               {/* <Slider trendingItems={trendingItems}>
                 <h3 className="mt-30">{GLOBAL_VARIABLES.TRENDING_VIDEOS} <span>&gt;</span></h3>

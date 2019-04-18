@@ -70,7 +70,6 @@ export const recoverPassword = email => {
 };
 
 export const saveUserProfile = userDetails => {
-  userDetails.createdOn = new Date();
   getProfileStatus(userDetails.userId).then(querySnapshot => {
     querySnapshot.forEach(doc => {
       let user = doc.data();
@@ -84,9 +83,36 @@ export const saveUserProfile = userDetails => {
     .set(userDetails);
 };
 
-export const uploadUserProfilePic = profilePic => {
+const getStorageRef = () => {
   const db = dbFactory.create('firebase');
   const storageService = db.storage();
-  const storageRef = storageService.ref();
-  return storageRef.child(`images/${profilePic.name}`).put(profilePic);
+  return storageService.ref();
+};
+
+export const uploadUserProfilePic = (profilePic, userId) => {
+  const storageRef = getStorageRef();
+  const type = profilePic.type.split('/');
+  const mainImage = storageRef.child(`profilepic/${userId + '.' + type[1]}`);
+  return mainImage.put(profilePic);
+};
+
+export const getProfileDownloadUrl = (profilePic, userId) => {
+  const storageRef = getStorageRef();
+  const type = profilePic.type.split('/');
+  const mainImage = storageRef.child(`profilepic/${userId + '.' + type[1]}`);
+  return mainImage.getDownloadURL();
+};
+
+export const saveFeedback = () => {
+  const feedbacks = {
+    user_id: 1,
+    rate: 5,
+    like: 1,
+    comment: 'very good',
+    feedback_to: 'sGeyNegb2cZZcq7C76ndjaGUNSk1',
+    created_date: new Date()
+  };
+  return getDbRef('feedback')
+    .doc('weqwreqwqewq')
+    .set(feedbacks);
 };

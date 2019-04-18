@@ -98,7 +98,11 @@ class App extends Component {
             component={Notification}
             exact
           />
-
+             <PrivateRoute
+            path="/student/notifications"
+            component={Notification}
+            exact
+          />
           <Redirect to="/home" />
         </Switch>
       </div>
