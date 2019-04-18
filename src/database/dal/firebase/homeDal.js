@@ -3,7 +3,9 @@ import dbFactory from '../../dbFactory';
 export const getBannerFromDB = (dispatch) => {
     const db = dbFactory.create('firebase');
     let data = [];
-    db.firestore().collection("banner").get()
+    db.firestore().collection("banner")
+    .where("page", "==", "home")
+    .get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             data.push(doc.data());
