@@ -1,33 +1,20 @@
-import { CATEGORY } from './../../constant/Constant';
 const initialState = {
-    tree: [],
     openModal: false,
-    error: '',
-    dbWithUser: ''
+    docRef: '' 
 };
-const curriculumReducer = (state = initialState, action) => {
+const curriculumReducer = (state = initialState, action) => {    
     switch (action.type) {  
-        case CATEGORY.ACTIONS.GET:
-            return {                
-                ...state,   
-                tree: action.category                            
+        case 'SET_DOC_REF':
+            return {
+                ...state,
+                docRef: action.ref
             }
-        case 'GET_CURRENT_USER': 
+        case 'SAVE_DOC':
             return {
                 ...state,
-                uid: action.uid
-            }             
-        /* case 'CLOSE':
-            return {
-                ...state,
-                openModal: !state.openModal
+                docRef: action.ref
             }
-        case 'OPEN':
-            return {
-                ...state,
-                openModal: !state.openModal
-            }        
-         */default:
+        default:
             return state
     }
 }
