@@ -8,19 +8,23 @@ class SearchTeacher extends Component {
         super(props);
         this.state = {
             selectedOption: null,
+            placeHolderValue : ''
         };
     }
 
     handleChange = (selectedOption) => {
-        this.setState({ selectedOption });
+        this.setState({ selectedOption, 
+            placeHolderValue : selectedOption.value
+        });
         console.log(`Option selected:`, selectedOption);
+
     }
 
     render() {
         const options = [
-            { value: 'Maths', label: 'Maths' },
-            { value: 'Sport', label: 'Sport' },
-            { value: 'Music', label: 'Music' }
+            { value: 'Name', label: 'Name' },
+            { value: 'Category', label: 'Category' },
+            { value: 'Rating', label: 'Rating' }
         ];
         const { selectedOption } = this.state;
         return (
@@ -29,7 +33,9 @@ class SearchTeacher extends Component {
                     <Navigation></Navigation>
                 </div>
                 <div className="filter-search">
+                    
                     <div className="filter-teacher">
+                    <span>Filter By Category :</span>
                         <Select
                             value={selectedOption}
                             onChange={this.handleChange}
@@ -37,7 +43,7 @@ class SearchTeacher extends Component {
                         />
                     </div>
                     <div className="input-group search-teacher" id="fifteenMargin">
-                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" />
+                        <input type="text" className="form-control" placeholder={"Search for.." + this.state.placeHolderValue} name="srch-term" id="srch-term" />
                     </div>
                 </div>
             </div>
