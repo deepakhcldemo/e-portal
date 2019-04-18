@@ -17,3 +17,21 @@ border-radius: 20px;
 border: 0px;
 padding: 0 0;
 } */
+
+.avatar-icon {
+    font-size: 26px !important;
+    padding: 10px 0px;
+}
+
+.bs-popover-auto[x-placement^=bottom],
+.bs-popover-bottom {
+    margin-top: 0px !important;
+}
+.avatar-item {
+    padding: 5px;
+    border-bottom: 1px solid gray;
+    cursor: pointer;
+}
+@media screen and (min-width:768px) {
+
+}

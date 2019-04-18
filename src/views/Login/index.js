@@ -98,28 +98,32 @@ class Login extends Component {
   };
 
   redirectBasedOnProfileStatus(userDetails) {
-    getProfileStatus(userDetails.user.uid).then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        const user = doc.data();
-        if (user.profileSaved === true) {
-          getUserProfile(userDetails.user.uid).then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-              const user = doc.data();
-              localStorage.setItem('userProfile', JSON.stringify(user));
-              if (doc.exists) {
-                if (user.role === 'Teacher') {
-                  this.props.history.push('/teacher');
-                } else {
-                  this.props.history.push('/student');
+    getProfileStatus(userDetails.user.uid)
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const user = doc.data();
+          if (user.profileSaved === true) {
+            getUserProfile(userDetails.user.uid).then(querySnapshot => {
+              querySnapshot.forEach(doc => {
+                const user = doc.data();
+                localStorage.setItem('userProfile', JSON.stringify(user));
+                if (doc.exists) {
+                  if (user.role === 'Teacher') {
+                    this.props.history.push('/teacher');
+                  } else {
+                    this.props.history.push('/student');
+                  }
                 }
-              }
+              });
             });
-          });
-        } else {
-          this.props.history.push('/profile');
-        }
+          } else {
+            this.props.history.push('/profile');
+          }
+        });
+      })
+      .catch(error => {
+        console.log('error.message', error.message);
       });
-    });
   }
 
   setLoginStatus(userDetails, isNewUser) {

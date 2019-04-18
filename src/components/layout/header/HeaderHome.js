@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import {withRouter} from 'react-router';
 import './HomeHeader.css';
+import Avatar from "../avatar/Avatar";
 
 class HeaderHome extends Component {
   state = {
@@ -29,8 +30,9 @@ class HeaderHome extends Component {
   render() {
     let userLink;
     const user = JSON.parse(localStorage.getItem('userProfile'));
+    const currentUser = JSON.parse(localStorage.getItem('user'));
     if (user) {
-      userLink = <div className="home-header-nav-item home-header-nav-item--position"><a onClick={() => this.navigateTo(this.state.dashboardLink)} className="home-header-link"><i className="fa fa-tasks home-header-icon--size"></i> <span className="home-header-text-link-status">Dashboard</span></a></div>;
+      userLink = <div className="home-header-nav-item home-header-nav-item--position"><Avatar userProfile={user} currentUser={currentUser}></Avatar></div>;
     } else {
       userLink = <div className="home-header-nav-item home-header-nav-item--position"><a onClick={() => this.navigateTo(this.state.dashboardLink)} className="home-header-link"><i className="fa fa-sign-in home-header-icon--size"></i> <span className="home-header-text-link-status">SignIn/SignUp</span></a></div>;
     }
@@ -48,6 +50,7 @@ class HeaderHome extends Component {
           <div className="home-header-nav-item home-header-nav-item--position"><a onClick={() => this.navigateTo('/contactus')} className="home-header-link"><i className="fa fa-phone-square home-header-icon--size"></i> <span className="home-header-text-link-status">Contact Us</span></a></div>
           <div className="home-header-nav-item home-header-nav-item--position"><a onClick={() => this.navigateTo('/aboutus')} className="home-header-link"><i className="fa fa-info-circle home-header-icon--size"></i> <span className="home-header-text-link-status">About Us</span></a></div>
         </div>
+        
       </header>
     );
   }

@@ -32,16 +32,20 @@ class ChangePassword extends Component {
     redirectToReferrer: false
   };
 
-  // componentDidMount = () => {
-  //   const user = JSON.parse(localStorage.getItem('userProfile'));
-  //   if (user) {
-  //     if (user.role === 'Teacher') {
-  //       this.props.history.push('/teacher');
-  //     } else {
-  //       this.props.history.push('/student');
-  //     }
-  //   }
-  // };
+  componentDidMount = () => {
+    const user = JSON.parse(localStorage.getItem('userProfile'));
+    const provider = JSON.parse(localStorage.getItem('user')).additionalUserInfo
+      .providerId;
+    if (user) {
+      if (provider !== 'password') {
+        if (user.role === 'Teacher') {
+          this.props.history.push('/teacher');
+        } else {
+          this.props.history.push('/student');
+        }
+      }
+    }
+  };
 
   togglePassword = field => {
     var x = document.getElementById(field);
@@ -65,7 +69,14 @@ class ChangePassword extends Component {
       changePassword(this.state.password)
         .then(() => {
           toastr.success('Password Updated Successfully');
-          this.props.history.push('/login');
+          const user = JSON.parse(localStorage.getItem('userProfile'));
+          if (user) {
+            if (user.role === 'Teacher') {
+              this.props.history.push('/teacher');
+            } else {
+              this.props.history.push('/student');
+            }
+          }
         })
         .catch(error => {
           toastr.error(error.message + ' ' + ' Login Again');

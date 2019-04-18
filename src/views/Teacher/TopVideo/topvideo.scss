@@ -1,10 +1,26 @@
+@import './../styles.scss';
+
+.list-unstyled {    
+        margin: 0px!important;
+        text-align: center;
+        padding: 10px;
+        display: $flex ;
+        flex-direction: $flexDir;
+		list-style: none;
+		flex-wrap: wrap;
+        margin-bottom: 0px;
+        @media (max-width: $mobileWidth){
+            flex-direction: column
+        }
+}
+
 .video-list-thumbs > li{
-    margin-bottom:12px;
+    margin:10px;
 }
 .video-list-thumbs > li > a{
 	display:block;
 	position:relative;
-	background-color: #111;
+	background-color: #696666;
 	color: #fff;
 	padding: 8px;
 	border-radius:3px;
@@ -21,16 +37,16 @@
 	height: 33px;
 	margin: 8px 0 0;
 }
-.video-list-thumbs .glyphicon-play-circle{
+.video-list-thumbs .fa-play-circle{
     font-size: 60px;
     opacity: 0.6;
     position: absolute;
-    right: 39%;
-    top: 31%;
+    right: 35%;
+    top: 25%;
     text-shadow: 0 1px 3px rgba(0,0,0,.5);
     transition:all 500ms ease-in-out;
 }
-.video-list-thumbs > li > a:hover .glyphicon-play-circle{
+.video-list-thumbs > li > a:hover .fa-play-circle{
 	color:#fff;
 	opacity:1;
 	text-shadow:0 1px 3px rgba(0,0,0,.8);
@@ -52,10 +68,10 @@
 	background-color:#000;
 }
 @media (min-width:320px) and (max-width: 480px) { 
-	.video-list-thumbs .glyphicon-play-circle{
+	.video-list-thumbs .fa-play-circle{
     font-size: 35px;
-    right: 36%;
-    top: 27%;
+    right: 45%;
+    top: 30%;
 	}
 	.video-list-thumbs h2{
 		bottom: 0;

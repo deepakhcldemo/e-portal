@@ -1,5 +1,6 @@
 const intialState = {
-    openModalForTeacher : true
+    openModalForTeacher : true,
+    teacherDetails : {}
 }
 
 const sliderReducer = (state = intialState, action) => {
