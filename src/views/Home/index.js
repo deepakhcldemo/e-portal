@@ -5,6 +5,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import Slider from '../../components/slider/Slider_Santosh';
 import { getBanner, getCurriculum, getTeacher } from './actions';
 import GLOBAL_VARIABLES from '../../config/config';
+import CategoryItem from '../CategoryItem';
 
 class Home extends Component {
   constructor(props) {
@@ -43,70 +44,79 @@ class Home extends Component {
   };
 
   render() {
-    const { bannerRows, carouselRows, teacherCarouselRows } = this.props;    
-    
+    const { bannerRows, carouselRows, teacherCarouselRows } = this.props;
+
     let listTop10Items = teacherCarouselRows;
     console.log('--listTop10Items--', listTop10Items);
 
-    if(listTop10Items && listTop10Items.rating){
-      listTop10Items = listTop10Items.sort((a,b) => b.rating - a.rating);
+    if (listTop10Items && listTop10Items.rating) {
+      listTop10Items = listTop10Items.sort((a, b) => b.rating - a.rating);
     }
-    
+
     let listNewlyItems = carouselRows;
 
-    if(listNewlyItems && listNewlyItems.created_date){
-      listNewlyItems.sort((a,b) => b.created_date.seconds - a.created_date.seconds);
+    if (listNewlyItems && listNewlyItems.created_date) {
+      listNewlyItems.sort(
+        (a, b) => b.created_date.seconds - a.created_date.seconds
+      );
     }
 
     let trendingItems = carouselRows;
 
-    if(trendingItems && trendingItems.views){
+    if (trendingItems && trendingItems.views) {
       trendingItems = trendingItems.sort((a, b) => b.views - a.views);
     }
-    
+
     const studentsReview = [
-                    {
-                      'name': 'Borivoje', 
-                      'profile_image': 'https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg',
-                      'comment': 'This plateform is a life saver. I dont have the time or money for a college education. My goal is to become a freelance web developer, and thanks to Udemy, I am really close.'
-                    },
-                    {
-                      'name': 'Diana Hayden', 
-                      'profile_image': 'http://nrsinstitute.com/wp-content/uploads/2014/05/edu-oatcert.jpg',
-                      'comment': 'I believe in lifelong learning and it is a great place to learn from experts. I have learned a lot and recommend it to all my friends.'
-                    },
-                    {
-                      'name': 'Ria Hazal', 
-                      'profile_image': 'https://media.gq.com/photos/5c115439a15f8517197598ac/16:9/w_1280%2Cc_limit/america-school-Teacher-guns-GQ.jpg',
-                      'comment': 'The courses are fantastic and the instructors are so fun and knowledgeable. I only wish we found it sooner'
-                    },
-                    {
-                      'name': 'Diana Hayden', 
-                      'profile_image': 'http://nrsinstitute.com/wp-content/uploads/2014/05/edu-oatcert.jpg',
-                      'comment': 'I believe in lifelong learning and it is a great place to learn from experts. I have learned a lot and recommend it to all my friends.'
-                    },
-                    {
-                      'name': 'Ria Hazal', 
-                      'profile_image': 'https://media.gq.com/photos/5c115439a15f8517197598ac/16:9/w_1280%2Cc_limit/america-school-Teacher-guns-GQ.jpg',
-                      'comment': 'The courses are fantastic and the instructors are so fun and knowledgeable. I only wish we found it sooner'
-                    }
-                  ];
-    
+      {
+        name: 'Borivoje',
+        profile_image:
+          'https://i.pinimg.com/originals/35/5d/65/355d65da2e1dc28b3399951765bc5fb1.jpg',
+        comment:
+          'This plateform is a life saver. I dont have the time or money for a college education. My goal is to become a freelance web developer, and thanks to Udemy, I am really close.'
+      },
+      {
+        name: 'Diana Hayden',
+        profile_image:
+          'http://nrsinstitute.com/wp-content/uploads/2014/05/edu-oatcert.jpg',
+        comment:
+          'I believe in lifelong learning and it is a great place to learn from experts. I have learned a lot and recommend it to all my friends.'
+      },
+      {
+        name: 'Ria Hazal',
+        profile_image:
+          'https://media.gq.com/photos/5c115439a15f8517197598ac/16:9/w_1280%2Cc_limit/america-school-Teacher-guns-GQ.jpg',
+        comment:
+          'The courses are fantastic and the instructors are so fun and knowledgeable. I only wish we found it sooner'
+      },
+      {
+        name: 'Diana Hayden',
+        profile_image:
+          'http://nrsinstitute.com/wp-content/uploads/2014/05/edu-oatcert.jpg',
+        comment:
+          'I believe in lifelong learning and it is a great place to learn from experts. I have learned a lot and recommend it to all my friends.'
+      },
+      {
+        name: 'Ria Hazal',
+        profile_image:
+          'https://media.gq.com/photos/5c115439a15f8517197598ac/16:9/w_1280%2Cc_limit/america-school-Teacher-guns-GQ.jpg',
+        comment:
+          'The courses are fantastic and the instructors are so fun and knowledgeable. I only wish we found it sooner'
+      }
+    ];
+
     let listAwaitingItems = '';
-    
-    if(bannerRows && bannerRows.length > 0){
-      listAwaitingItems = bannerRows.map((bannerRow, index) =>
+
+    if (bannerRows && bannerRows.length > 0) {
+      listAwaitingItems = bannerRows.map((bannerRow, index) => (
         <Carousel.Item key={index}>
           {/* <iframe key={index} className="d-block w-100 h-100" src={awaitingRow.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
-          
-          { bannerRow.banner_image && 
-            <img
-              src={bannerRow.banner_image}
-              className="d-block w-100"
-            />
-          }
+
+          {bannerRow.banner_image && (
+            <img src={bannerRow.banner_image} className="d-block w-100" />
+          )}
         </Carousel.Item>
-      );
+      ));
     }
 
     return (
@@ -119,41 +129,47 @@ class Home extends Component {
           </div>
           <div className="row">
             <div className="col-12 main-wrapper content-container--background">
-              <Carousel>
-                {listAwaitingItems}
-              </Carousel>
+              <Carousel>{listAwaitingItems}</Carousel>
             </div>
           </div>
 
           <div className="row dark-bg">
             <div className="col-12 content-container--background">
-              {listTop10Items.length > 0 && 
-                <Slider listTop10Items={listTop10Items} relativePath="home/teacher">
+              {listTop10Items.length > 0 && (
+                <Slider
+                  listTop10Items={listTop10Items}
+                  relativePath="home/teacher"
+                >
                   <h3 className="mt-30">
                     {GLOBAL_VARIABLES.TOP10_TUTOR}
                     <i className="fas fa-chevron-right" />
                   </h3>
-                </Slider>              
-              }
-
-              {listNewlyItems.length > 0 && 
-                <Slider listNewlyItems={listNewlyItems}>
-                  <h4 className="mt-30 pad10">{GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS} <i className="fas fa-chevron-right"></i></h4>
                 </Slider>
-              }
+              )}
 
-              {studentsReview.length > 0 && 
+              {listNewlyItems.length > 0 && (
+                <Slider listNewlyItems={listNewlyItems}>
+                  <h4 className="mt-30 pad10">
+                    {GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}{' '}
+                    <i className="fas fa-chevron-right" />
+                  </h4>
+                </Slider>
+              )}
+
+              {studentsReview.length > 0 && (
                 <Slider studentsReview={studentsReview}>
-                  <h4 className="mt-30 pad10">{GLOBAL_VARIABLES.STUDENTS_REVIEW} <span>&gt;</span></h4>
-                </Slider>   
-              }            
+                  <h4 className="mt-30 pad10">
+                    {GLOBAL_VARIABLES.STUDENTS_REVIEW} <span>&gt;</span>
+                  </h4>
+                </Slider>
+              )}
 
               {/* <Slider trendingItems={trendingItems}>
                 <h3 className="mt-30">{GLOBAL_VARIABLES.TRENDING_VIDEOS} <span>&gt;</span></h3>
               </Slider>                */}
-              
             </div>
           </div>
+          <CategoryItem />
           <div className="row">
             <div className="col-12 content-container--background">&nbsp;</div>
           </div>
