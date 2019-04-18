@@ -58,7 +58,7 @@ class Slider extends React.Component {
       const moreSymbol = "...";
       const today = Date.now() / 1000; // convert into second
       var noOfDays = this.daysBetween(
-        carouselRecord.createdOn ? carouselRecord.createdOn.seconds : "",
+        carouselRecord.createdOn ? carouselRecord.createdOn.seconds : carouselRecord.created_date?(carouselRecord.created_date.seconds):(""),
         today
       );
 
@@ -114,8 +114,8 @@ class Slider extends React.Component {
                 <i className="fas fa-ellipsis-v" />
               </h5>
               <p>
-                { rating && 'Rating.' + rating + 'and' }  
-                Registered  {noOfDays} days ago 
+                { rating && 'Rating ' + rating + ' and' }  
+                { (noOfDays || noOfDays === 0) && ' Registered ' + noOfDays + ' days ago' }  
               </p>
             </div>
           </a>
@@ -132,10 +132,8 @@ class Slider extends React.Component {
           <a href="#" title={carouselRecord.name}>
             <div
               key={index}
-              className="pad5 left"
-              style={{ width: 170, height: 80 }}
-            >
-              <img src={carouselRecord.profilePic} />
+              className="pad5 left profile_img_review">
+              <img src={carouselRecord.profile_image} />
             </div>
             <div className="pad5 left label-color">
               <h5>
@@ -146,8 +144,8 @@ class Slider extends React.Component {
             </div>
             <div className="clear" />
             <p className="pad5 label-color">
-              {carouselRecord.comment.length > 130
-                ? carouselRecord.comment.substring(0, 130) + moreSymbol
+              {carouselRecord.comment.length > 125
+                ? carouselRecord.comment.substring(0, 125) + moreSymbol
                 : carouselRecord.comment + stopSymbol}
             </p>
           </a>
