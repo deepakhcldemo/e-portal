@@ -14,14 +14,21 @@ class SearchTeacher extends Component {
         this.state = {
             selectedOption: null,
             placeHolderValue: '',
-            calendarModal: false
+            calendarModal: false,
+            searchValue: '',
+            filtredTeacherRecord: []
         };
         this.handleChange = this.handleChange.bind(this);
+        this.getSerachParameter = this.getSerachParameter.bind(this);
+        this.filterBasedOnName = this.filterBasedOnName.bind(this);
+        this.filterBasedOnEmail = this.filterBasedOnEmail.bind(this);
+        this.filterBasedOnLocation = this.filterBasedOnLocation.bind(this);
+        this.setfilteredTeacher = this.setfilteredTeacher.bind(this);
     }
 
 
     componentDidMount() {
-        // this.props.getTeachersBasedOnCateogy();
+        this.props.getTeachersBasedOnCateogy();
     }
 
     handleChange = (selectedOption) => {
@@ -29,9 +36,74 @@ class SearchTeacher extends Component {
             selectedOption,
             placeHolderValue: selectedOption.value
         });
-        // debugger
-        this.props.getTeachersBasedOnCateogy(selectedOption.value);
+    }
 
+
+    setSaerchValue = (event) => {
+
+        this.setState({
+            searchValue: event.target.value
+        })
+    }
+
+
+    getSerachParameter = () => {
+        if (this.state.searchValue && this.state.selectedOption) {
+            switch (this.state.selectedOption.value) {
+                case "Name":
+                    this.filterBasedOnName(this.state.searchValue)
+                    break;
+                case "Mobile Number":
+                    this.filterBasedOnMobile(this.state.searchValue)
+                    break;
+                case "Email":
+                    this.filterBasedOnEmail(this.state.searchValue)
+                    break;
+                case "Location":
+                    this.filterBasedOnLocation(this.state.searchValue)
+                    break;
+                default:
+                // code block
+            }
+
+        }
+    }
+    setfilteredTeacher = (filteredRecords) => {
+        this.setState({
+            filtredTeacherRecord: filteredRecords
+        })
+    }
+
+    filterBasedOnName = (searchName) => {
+        const teacherRecord = [];
+         this.props.TeacherList.map((teacher) => {
+            if (teacher.role === 'Teacher' && (teacher.firstName === searchName || teacher.lastName === searchName)) {
+                teacherRecord.push(teacher)
+            }
+        })
+
+        this.setfilteredTeacher(teacherRecord);
+    }
+
+    filterBasedOnMobile = (searchMobile) => {
+        const teacherRecord = [];
+        this.props.TeacherList.map((teacher) => {
+            if (teacher.role === 'Teacher' && teacher.mobile === searchMobile) {
+                teacherRecord.push(teacher)
+            }
+        })
+        this.setfilteredTeacher(teacherRecord);
+    }
+
+    filterBasedOnEmail = (searchEmail) => {
+        const teacherRecord = [];
+         this.props.TeacherList.map((teacher) => {
+            if (teacher.role === 'Teacher' && teacher.email === searchEmail) {
+                teacherRecord.push(teacher)
+            }
+        })
+
+        this.setfilteredTeacher(teacherRecord);
     }
 
     openCalendarModal = () => {
@@ -41,14 +113,43 @@ class SearchTeacher extends Component {
         this.setState({ calendarModal: false });
     }
 
+
+
+    filterBasedOnLocation = (searchLocation) => {
+        const teacherRecord = [];
+         this.props.TeacherList.map((teacher) => {
+            if (teacher.role === 'Teacher' && ( teacher.address === searchLocation || teacher.city === searchLocation
+            || teacher.country === searchLocation)) {
+                teacherRecord.push(teacher)
+            }
+        })
+
+        this.setfilteredTeacher(teacherRecord);
+    }
     render() {
+        debugger
+        const filetredTeacherData = this.state.filtredTeacherRecord.map(teacher => {
+
+            return (
+                <div className="col-md-3">
+                    <div className="card">
+                        <img src={teacher.profileImage} alt="teacher" className="profile-image" />
+                        <div className="container">
+                            <h4><b>{teacher.firstName} {teacher.lastName}</b></h4>
+                            <p>{teacher.subject}</p>
+                        </div>
+                    </div>
+                </div>
+            )
+        })
         const options = [
             { value: 'Name', label: 'Name' },
-            { value: 'Role', label: 'Role' },
             { value: 'Location', label: 'Location' },
             { value: 'Mobile Number', label: 'Mobile Number' },
             { value: 'Email', label: 'Email' }
         ];
+
+
         const { selectedOption } = this.state;
         return (
             <div>
@@ -66,11 +167,15 @@ class SearchTeacher extends Component {
                         />
                     </div>
                     <div className="input-group search-teacher">
-                        <input type="text" className="form-control" placeholder={"Search for.." + this.state.placeHolderValue} name="srch-term" id="srch-term" />
+                        <input type="text" className="form-control" value={this.state.value} onChange={(value) => this.setSaerchValue(value)} placeholder={"Search for.." + this.state.placeHolderValue} name="srch-term" id="srch-term" />
                     </div>
-
+                    <button onClick={this.getSerachParameter}>Search</button>
+                    <div className="wrapper">
+                        {filetredTeacherData}
+                    </div>
                     <div className="input-group chat-btn" >
                         <input onClick={this.openCalendarModal} type="button" className="btn btn-success" value="Initiate Chat" />
+                        <input type="button" className="btn btn-success" value="Initiate Chat" />
                     </div>
                 </div>
                 <div>
@@ -83,15 +188,18 @@ class SearchTeacher extends Component {
 
 
 const mapStateToProps = state => {
+    console.log('satate', state);
     return {
         modalSata: state.classes,
         carouselRows: state.carouselStore.carouselData,
+        TeacherList: state.searchTeacher.teacherDetails
     };
 };
 
 const mapDispatchToProps = dispatch => {
+    debugger
     return {
-        getTeachersBasedOnCateogy: (selectedValue) => dispatch(getTeachersBasedOnCateogy()),
+        getTeachersBasedOnCateogy: (selectedValue) => dispatch(getTeachersBasedOnCateogy(selectedValue)),
     };
 };
 
