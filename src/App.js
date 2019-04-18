@@ -19,8 +19,16 @@ import Carousel from './components/carousel/Carousel';
 import Category from './views/Category';
 import Teacher from './views/Teacher';
 import Video from './views/Teacher/Video';
+
 import Notification from './views/Teacher/Notification';
+import NotificationsDetails from './views/Teacher/Notification/notificationsDetails';
+import NotificationsDescription from './views/Teacher/Notification/notificationsDescription';
+
 import Student from './views/Student/index';
+import StudentNotificationsDetails from './views/Student/Notification/notificationsDetails';
+import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription';
+
+
 import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
 
 import ContactUs from './views/ContactUs';
@@ -34,8 +42,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       AuthGuard.isAuthenticated === true ? (
         <Component {...props} />
       ) : (
-        <Redirect to="/home" />
-      )
+          <Redirect to="/home" />
+        )
     }
   />
 );
@@ -74,7 +82,7 @@ class App extends Component {
         <Switch>
           <Route exact path="/login" component={Login} />
           <Route exact path="/home" component={Home} />
-          <Route exact path="/home/teacher/:id" component={teacherDetails} /> 
+          <Route exact path="/home/teacher/:id" component={teacherDetails} />
           <Route exact path="/contactus" component={ContactUs} />
           <Route exact path="/aboutus" component={AboutUs} />
           <Route exact path="/resetPassword" component={PasswordReset} />
@@ -88,6 +96,12 @@ class App extends Component {
           <PrivateRoute path="/category" component={Category} exact />
           <PrivateRoute path="/teacher" component={Teacher} exact />
           <PrivateRoute path="/teacher/videos" component={Video} exact />
+
+          <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
+          <Route path="/student/notificationsDetails" component={StudentNotificationsDetails} />
+          <Route path="/teacher/notificationsDescription" component={NotificationsDescription} />
+          <Route path="/student/notificationsDescription" component={StudentNotificationsDescription} />
+
           <PrivateRoute
             path="/student/teacher"
             component={SearchTeacher}

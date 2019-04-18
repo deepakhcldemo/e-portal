@@ -1,6 +1,13 @@
 .filter-search{
     max-width: 50rem;
     margin: 69px auto;
+    cursor: pointer;
+}
+
+.teacher-search-icon{
+  padding: 10px;
+  background-color: #232838;
+  color: #ffffff;
 }
 
 .input-group-btn > .btn {
@@ -36,6 +43,9 @@
     cursor: pointer;
   }
 
+  .rm-mrgn{
+    margin-top: 20px !important;
+  }
  
   .header-container {
     top: 0;
