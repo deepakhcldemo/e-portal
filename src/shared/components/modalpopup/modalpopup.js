@@ -14,7 +14,7 @@ class ModalPopUp extends Component {
     super(props);
 
     this.state = {
-      studentName : ''
+      studentName: ''
     }
   }
 
@@ -24,30 +24,40 @@ class ModalPopUp extends Component {
   componentDidMount() {
     const studentDetails = JSON.parse(localStorage.getItem('userProfile'));
     this.setState({
-      studentName : studentDetails.firstName + ' ' + studentDetails.lastName
+      studentName: studentDetails.firstName + ' ' + studentDetails.lastName
     })
   }
   render() {
     const openModal = this.props.modalState;
-    
+
     return (
       <div>
 
         <Modal open={openModal} onClose={this.onCloseModal} center>
-        <div className="header">
-          <h2>Create Notification</h2>
-        </div>
-        <div className="body">
-          <form>
-            <div className="form-group">
-            <div className ="teacher-student">
-            Student Name : {this.state.studentName}
-            </div>
-              <label htmlFor="email">Email address:</label>
-              <input type="email" className="form-control" id="email" />
-            </div>
-            <button type="submit" className="btn btn-default">Submit</button>
-          </form>
+          <div className="header">
+            <h2>Create Notification</h2>
+          </div>
+          <div className="body">
+            <form>
+              <div className="form-group">
+                <div className="teacher-student">
+                  Student Name : {this.state.studentName}
+                </div>
+                <div>
+                  <textarea rows="4" cols="50" className="form-control" placeholder="Please add details here">
+
+                  </textarea>
+
+                  <div class="file btn btn-primary">
+                    Upload
+                    </div>
+                  <input accept ="video/*" type="file" name="file" />
+
+
+                </div>
+              </div>
+              <button type="submit" className="btn btn-default">Submit</button>
+            </form>
           </div>
         </Modal>
 
@@ -57,7 +67,6 @@ class ModalPopUp extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state', state);
   return {
     modalState: state.teacherDetailsReducer.requestForReviewPop
   };

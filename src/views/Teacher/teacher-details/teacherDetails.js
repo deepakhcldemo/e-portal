@@ -3,9 +3,6 @@ import './teacherDetails.scss';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import ModalPopUp from '../../../shared/components/modalpopup/modalpopup'
-import { getCurriculumByTeacherId } from '../../../database/dal/firebase/curriculumDal';
-
-
 import HeaderHome from '../../../components/layout/header/HeaderHome';
 import Slider from '../../../components/slider/Slider';
 import {openModalForRequest} from './teacher-details.action'
@@ -14,45 +11,41 @@ class TeacherDetails extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
+        this. state = {
             detailModel: {
                 id: '',
                 title: 'title',
                 description: 'this is demo',
                 rating: 7,
+                category: '',
                 gender: ''
             },
-            my: ''
+            my: '',
+            teacherId : ''
         }
         this.openModalForRequest = this.openModalForRequest.bind(this);
     }
 
     componentDidMount() {
         const { id } = this.props.match.params;
-        const detailObj = _.filter(this.props.detailData, function(o) { return o.userId === id; });
-        this.getDetails(detailObj[0]);
+        this.setState({
+            teacherId : this.props.match.params
+        })
 
-        // getCurriculumByTeacherId('M6mNAMnGQNS7WvQcAOlC84A7Hd52').then(querySnapshot => {
-        //     console.log('ssdfsdf')
-        //     querySnapshot.forEach(doc => {
-        //       const user = doc.data();
-        //       console.log('ddss', user)
-
-        //     })
-        // });
+        console.log('this.state', this.state);
+        const data = this.props.detailData[id];
+        this.getDetails(data);
     }
     componentWillReceiveProps(nextProps) {
         console.log('nextProps', nextProps)
         if (nextProps.detailData !== this.props.detailData) {
             const { id } = nextProps.match.params;
-            const detailObj = _.filter(nextProps.detailData, function(o) { return o.userId === id; });
-            
-            this.getDetails(detailObj[0]);
+            const data = nextProps.detailData[id];
+            this.getDetails(data);
         }
 
     }
     getDetails(data) {
-        console.log('datadata', data)
         if (data) {
             const detailModel = { ...this.state.detailModel };
             detailModel.id = data.userId;
@@ -60,6 +53,7 @@ class TeacherDetails extends Component {
             detailModel.description = data.summary;
             detailModel.rating = 5;
             detailModel.gender = data.gender;
+
             this.setState({ detailModel });
         }
     }
@@ -70,6 +64,7 @@ class TeacherDetails extends Component {
 
     }
     moreDetails(isLogedIn, detailModel) {
+        console.log('detailModel in teacher details', detailModel);
         const { rating, category, gender } = detailModel;
         if (isLogedIn) {
             return (
@@ -92,7 +87,7 @@ class TeacherDetails extends Component {
         this.props.openModalPopUp();
     }
     render() {
-        console.log('this.state.detailModel', this.state.detailModel);
+        console.log('this.state.detailModel in teacher details', this.state.detailModel);
         const { title, description } = this.state.detailModel;
         const isLogedIn = localStorage.getItem('user');
         return (
@@ -104,7 +99,7 @@ class TeacherDetails extends Component {
                     <div className="container">
                         <div className="top-section">
                             <div>
-                                <h4>{title}</h4>
+                                <h4>Teacher Name</h4>
                                 <span className="sub-title">Credential</span>
                                 <span className="sub-title">Subject</span>
                                 <span className="sub-title last">Credential</span>
@@ -135,23 +130,15 @@ class TeacherDetails extends Component {
                                 <img className="profile-img" src="https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg" alt="..." />
                                 </div>
                                 <div className="col-sm-9">
-                                    <p><strong>{title}</strong> is dolor sit amet long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal. </p>
+                                    <p><strong>Teacher Name</strong> is dolor sit amet long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal. </p>
                                     <p>Color sit amet long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal </p>
-                                    <div className="icon-section d-flex">
-                                        <div className="icon">
-                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-thumbs-up"></i> </button>12,00
-                                        </div>
-                                        <div className="icon">
-                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-user-circle"></i></button> 12,00
-                                        </div>
-                                        <div className="icon">
-                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-file"></i> </button> 12,00
-                                        </div>
-                                        <div className="icon">
-                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-video"></i> </button> 12,00
-                                        </div>
+                                    <div className="icon-section">
+                                        <a href="#"><i className="fas fa-thumbs-up"></i> 12,00</a>
+                                        <a href="#"><i className="fas fa-user-circle"></i> 12,00</a>
+                                        <a href="#"><i className="fas fa-file"></i> 12,00</a>
+                                        <a href="#"><i className="fas fa-video"></i> 12,00</a>
                                     </div>
-                                    {!isLogedIn && (
+                                    {!localStorage.getItem('user') && (
                                         <button className="btn btn-primary" onClick={(e) => this.navigateToLogin()}>Login to view more</button>
                                     )}
                                 </div>
@@ -237,11 +224,12 @@ class TeacherDetails extends Component {
 }
 
 
-// const mapStateToProps = state => {
-//     return {
-//       modalState: state.teacherDetailsReducer.requestForReviewPop
-//     };
-//   };
+const mapStateToProps = state => {
+    console.log('satae in teacher details', state);
+    return {
+      modalState: state.teacherDetailsReducer.requestForReviewPop
+    };
+  };
   
   const mapDispatchToProps = dispatch => {
     return {
@@ -250,7 +238,7 @@ class TeacherDetails extends Component {
   };
   
   export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
   )(TeacherDetails);
 
