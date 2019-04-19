@@ -56,7 +56,7 @@ class TeacherDetails extends Component {
         if (data) {
             const detailModel = { ...this.state.detailModel };
             detailModel.id = data.userId;
-            detailModel.title = data.firstName + data.lastName;
+            detailModel.title = data.firstName + ' ' + data.lastName;
             detailModel.description = data.summary;
             detailModel.rating = 5;
             detailModel.gender = data.gender;
@@ -94,7 +94,7 @@ class TeacherDetails extends Component {
     render() {
         console.log('this.state.detailModel', this.state.detailModel);
         const { title, description } = this.state.detailModel;
-        const isLogedIn = !localStorage.getItem('user');
+        const isLogedIn = localStorage.getItem('user');
         return (
             <div className="details-wrapper">
                 <ModalPopUp/>
@@ -179,6 +179,30 @@ class TeacherDetails extends Component {
                                 </div>
                             </div>
                             
+                            <div className="comment-thread-element">
+                                <div className="author-thumbnail">
+                                    img
+                                </div>
+                                <div className="comment-content">
+                                    <span className="date">Comment mm/dd/yyy</span>
+                                    <p>
+                                        Is dolor sit amet long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
+                                        Color sit amet long established fact that a reader will be distracted by the readable
+                                    </p>
+                                    <div className="icon-section d-flex">
+                                        <div className="icon">
+                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-thumbs-up"></i> </button>
+                                        </div>
+                                        <div className="icon">
+                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-thumbs-down"></i></button>
+                                        </div>
+                                        <div className="icon">
+                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-comment-alt"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="comment-thread-element">
                                 <div className="author-thumbnail">
                                     img
