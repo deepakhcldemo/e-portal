@@ -10,7 +10,7 @@ class CategoryItem extends Component {
   render() {
     const { categoryList } = this.state;
     return (
-      <div className="row">
+     
         <div className="col-12 content-container--background">
           <h4>TOP CATEGORIES ></h4>
           <hr />
@@ -32,7 +32,7 @@ class CategoryItem extends Component {
             </div>
           </div>
         </div>
-      </div>
+     
     );
   }
 }

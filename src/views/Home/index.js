@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import HeaderHome from '../../components/layout/header/HeaderHome';
 import { connect } from 'react-redux';
 import Carousel from 'react-bootstrap/Carousel';
+import CategoryItem from '../CategoryItem';
 // import Slider from '../../components/slider/Slider_Santosh';
 // import Slider from '../../components/slider/Slider_new';
 import { getBanner, getCurriculum, getTeacher } from './actions';
@@ -118,7 +119,7 @@ class Home extends Component {
       if (carouselRecord.views) {
         rating = carouselRecord.views;
       }
-
+      console.log('---carouselRecord--',carouselRecord);
       return (
         <div key={index} className="vd-wrapper  col-xs-12 padR10">
           <a href="#" title={title}>
@@ -313,13 +314,13 @@ class Home extends Component {
           </div>
         </div> 
         }
-
-        <div className="row">
-            <div className="col-12 content-container--background">&nbsp;</div>
-        </div>
-        <div className="row">
-          <div className="col-12 content-container--background">&nbsp;</div>
-        </div> 
+        <CategoryItem />
+        
+        <div className="col-12 content-container--background">&nbsp;</div>
+        
+       
+        <div className="col-12 content-container--background">&nbsp;</div>
+        
 
       </div>     
     );
