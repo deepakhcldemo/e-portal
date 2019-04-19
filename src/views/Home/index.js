@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import HeaderHome from '../../components/layout/header/HeaderHome';
 import { connect } from 'react-redux';
 import Carousel from 'react-bootstrap/Carousel';
-import Slider from '../../components/slider/Slider_Santosh';
+// import Slider from '../../components/slider/Slider_Santosh';
+import Slider from '../../components/slider/Slider';
 import { getBanner, getCurriculum, getTeacher } from './actions';
 import GLOBAL_VARIABLES from '../../config/config';
 import CategoryItem from '../CategoryItem';
@@ -45,6 +46,26 @@ class Home extends Component {
 
   render() {
     const { bannerRows, carouselRows, teacherCarouselRows } = this.props;
+
+    // console.log('--teacherCarouselRows--', teacherCarouselRows);
+
+    const carouselAwaitingRows = carouselRows;
+    var awaitingRows = carouselAwaitingRows.filter(function(
+      carouselAwaitingRow
+    ) {
+      return !carouselAwaitingRow.awaiting;
+    });
+
+    // var listTop10Items_1 = listTop10Items.sort((a,b) => a.rating_count - b.rating_count);
+    // console.log('listTop10Items', listTop10Items_1);
+    
+    
+    // const carouselAwaitingRows = carouselRows;
+    // var awaitingRows = carouselAwaitingRows.filter(function(
+    //   carouselAwaitingRow
+    // ) {
+    //   return !carouselAwaitingRow.awaiting;
+    // });
 
     let listTop10Items = teacherCarouselRows;
     console.log('--listTop10Items--', listTop10Items);

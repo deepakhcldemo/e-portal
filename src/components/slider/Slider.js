@@ -20,7 +20,6 @@ class Slider extends React.Component {
       activeItemIndex: 0
       // carouselRows: carouselRows
     });
-
     setTimeout(() => {
       if (this.props.listTop10Items) {
         this.setState({
@@ -53,7 +52,6 @@ class Slider extends React.Component {
   }
   // method for opening modal with teacher details
   teacherDetails = (carouselRecord) => {
-    console.log('carouselRecord', carouselRecord);
     this.props.openModalForTeacher(carouselRecord);
   }
 
@@ -63,10 +61,10 @@ class Slider extends React.Component {
     const moreSymbol = '...';
     const today = Date.now() / 1000; // convert into second
     var noOfDays = this.daysBetween(carouselRecord.created_date ? carouselRecord.created_date.seconds : '', today);
-  
     return (
       <div key={index} className="vd-wrapper">
          {/* onClick={() => this.teacherDetails(carouselRecord)} */}
+         
         <Link className="nav-link" to={this.props.relativePath+'/1'} title={carouselRecord.name}>
           <div key={index} style={{ height: 150, background: '#000' }} className="vd-wrapper">
             {/* <iframe key={index} className="d-block w-100" src={carouselRecord.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
@@ -130,7 +128,7 @@ class Slider extends React.Component {
 
       return (
         <div key={index} className="vd-wrapper"  onClick={() => this.teacherDetails(carouselRecord)}>
-          <a href="#" title={title}>
+           <Link className="nav-link" to={this.props.relativePath+`/${index}`} title={carouselRecord.name}>
             <div
               key={index}
               style={{ height: 150, background: "#000" }}
@@ -151,7 +149,7 @@ class Slider extends React.Component {
                 Rating. {rating} and registered {noOfDays} days ago
               </p>
             </div>
-          </a>
+          </Link>
         </div>
       );
     });
