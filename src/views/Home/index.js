@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HeaderHome from '../../components/layout/header/HeaderHome';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import CategoryItem from '../CategoryItem';
 // import Slider from '../../components/slider/Slider_Santosh';
@@ -122,7 +123,7 @@ class Home extends Component {
       console.log('---carouselRecord--',carouselRecord);
       return (
         <div key={index} className="vd-wrapper  col-xs-12 padR10">
-          <a href="#" title={title}>
+          <Link className="nav-link" to={`/home/teacher/${carouselRecord.userId}`} title={carouselRecord.name}>
             <div 
               key={index}
               style={{ height: 150, background: "#000" }}
@@ -144,7 +145,7 @@ class Home extends Component {
                 { (noOfDays || noOfDays === 0) && ' Registered ' + noOfDays + ' days ago' }  
               </p>
             </div>
-          </a>
+          </Link>
         </div>
       );
     });
@@ -287,7 +288,7 @@ class Home extends Component {
         <h3 className="mt-30"> {GLOBAL_VARIABLES.TOP10_TUTOR} <i className="fas fa-chevron-right" /></h3>
           <div style={{background: "#FFF",textAlign: "center"}}>
             <Slider {...settingsTop10}>
-            {this.createChildren(carouselTop10Items)}
+              {this.createChildren(carouselTop10Items)}
             </Slider>
           </div>
         </div>

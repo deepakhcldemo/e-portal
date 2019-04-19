@@ -90,6 +90,8 @@ class TeacherDetails extends Component {
                                     </p>
                             </div>
                             <button className="btn btn-dark">Send Request</button>
+                            
+                            
                         </div>
                     </div>
                 </div>
@@ -118,6 +120,9 @@ class TeacherDetails extends Component {
                                         <a href="#"><i className="fas fa-file"></i> 12,00</a>
                                         <a href="#"><i className="fas fa-video"></i> 12,00</a>
                                     </div>
+                                    {!localStorage.getItem('user') && (
+                                        <button className="btn btn-primary" onClick={(e) => this.navigateToLogin()}>Login to view more</button>
+                                    )}
                                 </div>
                             </div>
                             
