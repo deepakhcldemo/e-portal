@@ -1,50 +1,21 @@
 import dbFactory from '../../dbFactory';
 
-export const getBannerFromDB = (dispatch) => {
+export const getBannerFromDB = () => {
     const db = dbFactory.create('firebase');
-    let data = [];
-    db.firestore().collection("banner")
+    return db.firestore().collection("banner")
     .where("page", "==", "home")
     .get()
-    .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            data.push(doc.data());
-        })
-        dispatch({type:'GET_BANNER', bannerCarouselData: data})
-    }) 
-    .catch(err => {
-        dispatch({type: 'ERROR', err})
-    })              
+ 
 }
 
-export const getCurriculumFromDB = (dispatch) => {
+export const getCurriculumFromDB = () => {
     const db = dbFactory.create('firebase');
-    let data = [];
-    db.firestore().collection("curriculum").get()
-    .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            data.push(doc.data())
-        })
-        dispatch({type:'GET_CURRICULUM', curriculumData: data})
-    }) 
-    .catch(err => {
-        dispatch({type: 'ERROR', err})
-    })              
+    return db.firestore().collection("curriculum").get()        
 }
 
-export const getTeacherFromDB = (dispatch) => {
+export const getTeacherFromDB = () => {
     const db = dbFactory.create('firebase');
-    let data = [];
-    db.firestore().collection("userProfiles")
+   return db.firestore().collection("userProfiles")
     .where("role", "==", "Teacher")
-    .get()
-    .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            data.push(doc.data());
-        })
-        dispatch({type:'GET_TEACHER', teacherCurriculumData: data})
-    }) 
-    .catch(err => {
-        dispatch({type: 'ERROR', err})
-    })              
+    .get();           
 }
