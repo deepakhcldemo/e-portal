@@ -68,13 +68,14 @@ class SearchTeacher extends Component {
                 default:
                 // code block
             }
-
+debugger
 
             this.setState({
                 selectedOption: {},
                 searchValue: '',
                 showValidationMessage : ''
             })
+            console.log('this.state in search button', this.state);
 
         }
 
@@ -83,6 +84,8 @@ class SearchTeacher extends Component {
                 showValidationMessage : 'Category and search field can not be empty'
             });
         }
+
+        
     }
     setfilteredTeacher = (filteredRecords) => {
         this.setState({
@@ -184,7 +187,7 @@ class SearchTeacher extends Component {
                         />
                     </div>
                     <div className="input-group search-teacher">
-                        <input type="text" className="form-control" value={this.state.value} onChange={(value) => this.setSaerchValue(value)} placeholder={"Search for.." + this.state.placeHolderValue} name="srch-term" id="srch-term" />
+                        <input type="text" className="form-control" value={this.state.searchValue} onChange={(value) => this.setSaerchValue(value)} placeholder={"Search for.." + this.state.placeHolderValue} name="srch-term" id="srch-term" />
                         <span className="fa fa-search teacher-search-icon" onClick={this.getSerachParameter}></span>
                     </div>
 
