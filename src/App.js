@@ -151,6 +151,7 @@ App.defaultProps = {
 };
 const mapStateToProps = state => {
   const loginResponse = JSON.parse(localStorage.getItem('user'));
+  console.log('app state', state)
   return {
     auth: true,
     spinnerStatus: state.spinnerStatus.spinnerStatus,

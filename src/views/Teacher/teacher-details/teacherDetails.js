@@ -3,6 +3,9 @@ import './teacherDetails.scss';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import ModalPopUp from '../../../shared/components/modalpopup/modalpopup'
+import { getCurriculumByTeacherId } from '../../../database/dal/firebase/curriculumDal';
+
+
 import HeaderHome from '../../../components/layout/header/HeaderHome';
 import Slider from '../../../components/slider/Slider';
 import {openModalForRequest} from './teacher-details.action'
@@ -11,13 +14,12 @@ class TeacherDetails extends Component {
 
     constructor(props) {
         super(props);
-        this. state = {
+        this.state = {
             detailModel: {
                 id: '',
                 title: 'title',
                 description: 'this is demo',
                 rating: 7,
-                category: '',
                 gender: ''
             },
             my: ''
@@ -27,28 +29,37 @@ class TeacherDetails extends Component {
 
     componentDidMount() {
         const { id } = this.props.match.params;
-        const data = this.props.detailData[id];
-        this.getDetails(data);
+        const detailObj = _.filter(this.props.detailData, function(o) { return o.userId === id; });
+        this.getDetails(detailObj[0]);
+
+        // getCurriculumByTeacherId('M6mNAMnGQNS7WvQcAOlC84A7Hd52').then(querySnapshot => {
+        //     console.log('ssdfsdf')
+        //     querySnapshot.forEach(doc => {
+        //       const user = doc.data();
+        //       console.log('ddss', user)
+
+        //     })
+        // });
     }
     componentWillReceiveProps(nextProps) {
         console.log('nextProps', nextProps)
         if (nextProps.detailData !== this.props.detailData) {
             const { id } = nextProps.match.params;
-            const data = nextProps.detailData[id];
-            this.getDetails(data);
+            const detailObj = _.filter(nextProps.detailData, function(o) { return o.userId === id; });
+            
+            this.getDetails(detailObj[0]);
         }
 
     }
     getDetails(data) {
+        console.log('datadata', data)
         if (data) {
             const detailModel = { ...this.state.detailModel };
-            detailModel.id = '00000';
-            detailModel.title = data.name;
-            detailModel.description = 'This is demo description';
-            detailModel.rating = data.rating;
-            detailModel.category = data.category;
+            detailModel.id = data.userId;
+            detailModel.title = data.firstName + data.lastName;
+            detailModel.description = data.summary;
+            detailModel.rating = 5;
             detailModel.gender = data.gender;
-
             this.setState({ detailModel });
         }
     }
@@ -83,7 +94,7 @@ class TeacherDetails extends Component {
     render() {
         console.log('this.state.detailModel', this.state.detailModel);
         const { title, description } = this.state.detailModel;
-
+        const isLogedIn = !localStorage.getItem('user');
         return (
             <div className="details-wrapper">
                 <ModalPopUp/>
@@ -93,7 +104,7 @@ class TeacherDetails extends Component {
                     <div className="container">
                         <div className="top-section">
                             <div>
-                                <h4>Teacher Name</h4>
+                                <h4>{title}</h4>
                                 <span className="sub-title">Credential</span>
                                 <span className="sub-title">Subject</span>
                                 <span className="sub-title last">Credential</span>
@@ -124,15 +135,23 @@ class TeacherDetails extends Component {
                                 <img className="profile-img" src="https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg" alt="..." />
                                 </div>
                                 <div className="col-sm-9">
-                                    <p><strong>Teacher Name</strong> is dolor sit amet long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal. </p>
+                                    <p><strong>{title}</strong> is dolor sit amet long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal. </p>
                                     <p>Color sit amet long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal </p>
-                                    <div className="icon-section">
-                                        <a href="#"><i className="fas fa-thumbs-up"></i> 12,00</a>
-                                        <a href="#"><i className="fas fa-user-circle"></i> 12,00</a>
-                                        <a href="#"><i className="fas fa-file"></i> 12,00</a>
-                                        <a href="#"><i className="fas fa-video"></i> 12,00</a>
+                                    <div className="icon-section d-flex">
+                                        <div className="icon">
+                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-thumbs-up"></i> </button>12,00
+                                        </div>
+                                        <div className="icon">
+                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-user-circle"></i></button> 12,00
+                                        </div>
+                                        <div className="icon">
+                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-file"></i> </button> 12,00
+                                        </div>
+                                        <div className="icon">
+                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-video"></i> </button> 12,00
+                                        </div>
                                     </div>
-                                    {!localStorage.getItem('user') && (
+                                    {!isLogedIn && (
                                         <button className="btn btn-primary" onClick={(e) => this.navigateToLogin()}>Login to view more</button>
                                     )}
                                 </div>
@@ -146,6 +165,44 @@ class TeacherDetails extends Component {
                                 </h4>
                                 </Slider>
                             </div>
+
+                            <div className="comments-hdr-section">
+                                <div className="author-thumbnail">
+                                    img
+                                </div>
+                                <div className="comments-input">
+                                    <input type="text" className="auto-input form-control" placeholder="Add a comment" />
+                                </div>
+                                <div className="total-comments">
+                                    <span className="count">1</span>
+                                    <span className="count-text">Comments</span>
+                                </div>
+                            </div>
+                            
+                            <div className="comment-thread-element">
+                                <div className="author-thumbnail">
+                                    img
+                                </div>
+                                <div className="comment-content">
+                                    <span className="date">Comment mm/dd/yyy</span>
+                                    <p>
+                                        Is dolor sit amet long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal.
+                                        Color sit amet long established fact that a reader will be distracted by the readable
+                                    </p>
+                                    <div className="icon-section d-flex">
+                                        <div className="icon">
+                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-thumbs-up"></i> </button>
+                                        </div>
+                                        <div className="icon">
+                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-thumbs-down"></i></button>
+                                        </div>
+                                        <div className="icon">
+                                            <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-comment-alt"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
 
                         </div>
                     </div>

@@ -3,6 +3,12 @@ import {closeModal} from './../../../views/Category/action'
 
 const db = dbFactory.create('firebase');
 
+const getDbRef = collectionName => {
+    const db = dbFactory.create('firebase');
+    const ref = db.firestore().collection(collectionName);
+    return ref;
+};
+  
 /* export const getCurrentUserFromDB = dispatch => {
     db.auth().onAuthStateChanged( user => {
         if(user) {
@@ -72,4 +78,10 @@ export const getContentFromDB = (dispatch, uid) => {
         });
         dispatch({type: 'GET_CONTENT',content})
     });
+}
+
+export const getCurriculumByTeacherId = (uid) => {
+    return getDbRef('curriculum')
+    .where('userId', '==', uid)
+    .get();
 }
