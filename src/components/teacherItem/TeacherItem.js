@@ -21,11 +21,16 @@ class TeacherItem extends Component {
               className="border_1px"
             />
 
-            <div className="vd-content user-details--height">
+            <div className="vd-content user-details--style">
               <h6>{userProfile.firstName + ' ' + userProfile.lastName}</h6>
               <p>Registered {userProfile.noOfDays} days ago.</p>
-              <p>Subject: {userProfile.subject}</p>
-              <p>Rating: {userProfile.rating ? userProfile.rating : 0}/5 </p>
+              <p>
+                <strong>Subject:</strong> {userProfile.subject}
+              </p>
+              <p>
+                <strong>Rating:</strong>{' '}
+                {userProfile.rating ? userProfile.rating : 0}/5{' '}
+              </p>
             </div>
           </div>
         </div>

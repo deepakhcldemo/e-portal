@@ -1,0 +1,42 @@
+.profile-image--style {
+  border-radius: 100px;
+}
+
+.user-profile-card--padding {
+  padding: 4px !important;
+}
+
+.user-details--height {
+  height: unset !important;
+}
+
+.block-with-text {
+  overflow: hidden;
+  position: relative;
+  line-height: 16px;
+  max-height: 50px;
+  text-align: justify;
+  margin-right: 0em;
+  padding-right: 1em;
+}
+
+.block-with-text:before {
+  content: "...";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.block-with-text:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  background: white;
+}
+
+.comment-box--height {
+  height: 100px !important;
+}
