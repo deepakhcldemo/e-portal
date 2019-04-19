@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import './VideoItem.css.css';
+import './VideoItem.css';
+import StarRatingComponent from 'react-star-rating-component';
 
 class VideoItem extends Component {
   render() {
@@ -8,24 +9,25 @@ class VideoItem extends Component {
       <div className="card">
         <div className="card-body user-profile-card--padding">
           <div className="vd-wrapper  col-xs-12">
-            <div
-              style={{
-                backgroundImage: `url( ${videoDetails.profileImage} )`,
-                backgroundPosition: 'top center',
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
-                height: '200px',
-                margin: '10px',
-                borderRadius: '100px'
-              }}
-              className="border_1px"
-            />
+            <div className="border_1px">
+              <video width="400" controls>
+                <source src={videoDetails.videoSrc} type="video/mp4" />
+              </video>
+            </div>
 
             <div className="vd-content user-details--height">
-              <h6>{videoDetails.firstName + ' ' + videoDetails.lastName}</h6>
-              <p>Registered {videoDetails.noOfDays} days ago.</p>
-              <p>Subject: {videoDetails.subject}</p>
-              <p>Rating: {videoDetails.rating ? videoDetails.rating : 0}/5 </p>
+              <h6>{videoDetails.title}</h6>
+              <p>{videoDetails.noOfDays} days ago.</p>
+              {/* <p>Rating: {videoDetails.rating ? videoDetails.rating : 0}/5 </p> */}
+              <StarRatingComponent
+                name="rate"
+                starCount={5}
+                value={videoDetails.rating}
+                // onStarClick={this.onStarClick.bind(this)}
+              />
+              <span className="rating-position">
+                ({videoDetails.noOfRatings})
+              </span>
             </div>
           </div>
         </div>
