@@ -39,3 +39,7 @@ code {
 .pad10{
     padding: 10px;
 }
+
+.padR10{
+    padding-right: 10px;
+}

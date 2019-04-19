@@ -95,9 +95,9 @@ class Slider extends React.Component {
       }
 
       return (
-        <div key={index} className="vd-wrapper">
+        <div key={index} className="vd-wrapper  col-xs-12">
           <a href="#" title={title}>
-            <div
+            <div 
               key={index}
               style={{ height: 150, background: "#000" }}
               className="vd-wrapper"
@@ -169,19 +169,10 @@ class Slider extends React.Component {
 
           // Carousel configurations
           numberOfCards={5}
-          gutter={5}
+          gutter={5 }
           showSlither={true}
           firstAndLastGutter={true}
           freeScrolling={false}
-
-          // Active item configurations
-          requestToChangeActive={this.changeActiveItem}
-          activeItemIndex={activeItemIndex}
-          activePosition={'center'}
-
-          chevronWidth={24}
-          rightChevron={'>'}
-          leftChevron={'<'}
           // Active item configurations
           requestToChangeActive={this.changeActiveItem}
           activeItemIndex={activeItemIndex}
