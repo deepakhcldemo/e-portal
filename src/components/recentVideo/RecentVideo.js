@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { handleResize } from '../../shared/library/window_resize';
+
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import GLOBAL_VARIABLES from '../../config/config';
@@ -13,25 +13,6 @@ class RecentVideo extends Component {
       noOfCarouselImage: ''
     };
   }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', handleResize);
-  }
-
-  componentDidMount = () => {
-    handleResize(prop => {
-      this.setState({
-        noOfCarouselImage: prop.noOfCarouselImage
-      });
-    });
-    window.addEventListener('resize', () => {
-      handleResize(prop => {
-        this.setState({
-          noOfCarouselImage: prop.noOfCarouselImage
-        });
-      });
-    });
-  };
 
   daysBetween(date1_seconds, date2_seconds) {
     if (date1_seconds && date2_seconds) {
@@ -98,6 +79,7 @@ class RecentVideo extends Component {
         <div key={index} className="vd-wrapper  col-xs-12 padR10">
           <Link
             className="nav-link"
+            style={{ padding: '0px' }}
             to={`/home/teacher/${carouselRecord.userId}`}
             title={carouselRecord.name}
           >
@@ -111,7 +93,7 @@ class RecentVideo extends Component {
   };
 
   render() {
-    let title = ''
+    let title = '';
     const { carousellistNewlyItems } = this.props;
        console.log('this.props in recent video', this.props)
        this.props.title ? title = this.props.title : title = "Recent Videos"
@@ -120,11 +102,35 @@ class RecentVideo extends Component {
       infinite: true,
       speed: 500,
       slidesToShow:
-        carousellistNewlyItems.length >= 5
-          ? this.state.noOfCarouselImage
-          : carousellistNewlyItems.length,
+        carousellistNewlyItems.length >= 5 ? 5 : carousellistNewlyItems.length,
       slidesToScroll: 1,
-      autoplay: true
+      autoplay: true,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: true,
+            dots: true
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            initialSlide: 1
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
     };
 
     return (

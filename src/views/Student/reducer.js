@@ -1,7 +1,7 @@
 const initialState = {
   studentModalState: false,
   teacherDetails: {},
-  notificationData : {}
+  notificationData: {}
 };
 const studentReducer = (state = initialState, action) => {
   switch (action.type) {
