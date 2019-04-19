@@ -196,68 +196,6 @@ class SearchTeacher extends Component {
             </div>
       );
     
-    // const options = [
-    //   { value: 'Name', label: 'Name' },
-    //   { value: 'Location', label: 'Location' },
-    //   { value: 'Mobile Number', label: 'Mobile Number' },
-    //   { value: 'Email', label: 'Email' }
-    // ];
-
-    // const { selectedOption } = this.state;
-    // return (
-    //   <div>
-    //     <div>
-    //       <HeaderHome
-    //         headeTitle="Student Dashboard"
-    //         dashboardLinks={STUDENT_DASHBOARD_LINKS}
-    //       />
-    //     </div>
-    //     <div className="filter-search">
-    //       <div className="filter-teacher">
-    //         <span>Filter By Category :</span>
-    //         <Select
-    //           value={selectedOption}
-    //           onChange={this.handleChange}
-    //           options={options}
-    //         />
-    //       </div>
-    //       <div className="input-group search-teacher">
-    //         <input
-    //           type="text"
-    //           className="form-control"
-    //           value={this.state.value}
-    //           onChange={value => this.setSaerchValue(value)}
-    //           placeholder={'Search for..' + this.state.placeHolderValue}
-    //           name="srch-term"
-    //           id="srch-term"
-    //         />
-    //       </div>
-    //       <button onClick={this.getSerachParameter}>Search</button>
-    //       <div className="wrapper">{filetredTeacherData}</div>
-    //       <div className="input-group chat-btn">
-    //         <input
-    //           onClick={this.openCalendarModal}
-    //           type="button"
-    //           className="btn btn-success"
-    //           value="Initiate Chat"
-    //         />
-    //         <input
-    //           type="button"
-    //           className="btn btn-success"
-    //           value="Initiate Chat"
-    //         />
-    //       </div>
-    //     </div>
-    //     <div>
-    //       <CalendarModal
-    //         modalState={this.state.calendarModal}
-    //         closeCalendarModal={this.closeCalendarModal}
-    //         classes="calendar-modal"
-    //       />
-    //     </div>
-    //     <Navbar links={STUDENT_DASHBOARD_LINKS} />
-    //   </div>
-    // );
   }
 }
 
