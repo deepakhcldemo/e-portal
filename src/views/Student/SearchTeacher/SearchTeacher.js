@@ -68,8 +68,6 @@ class SearchTeacher extends Component {
                 default:
                 // code block
             }
-debugger
-
             this.setState({
                 selectedOption: {},
                 searchValue: '',
