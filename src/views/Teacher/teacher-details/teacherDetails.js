@@ -2,23 +2,29 @@ import React, { Component } from 'react';
 import './teacherDetails.scss';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-
+import ModalPopUp from '../../../shared/components/modalpopup/modalpopup'
 import HeaderHome from '../../../components/layout/header/HeaderHome';
 import Slider from '../../../components/slider/Slider';
-
+import {openModalForRequest} from './teacher-details.action'
 
 class TeacherDetails extends Component {
-    state = {
-        detailModel: {
-            id: '',
-            title: 'title',
-            description: 'this is demo',
-            rating: 7,
-            category: '',
-            gender: ''
-        },
-        my: ''
+
+    constructor(props) {
+        super(props);
+        this. state = {
+            detailModel: {
+                id: '',
+                title: 'title',
+                description: 'this is demo',
+                rating: 7,
+                category: '',
+                gender: ''
+            },
+            my: ''
+        }
+        this.openModalForRequest = this.openModalForRequest.bind(this);
     }
+
     componentDidMount() {
         const { id } = this.props.match.params;
         const data = this.props.detailData[id];
@@ -70,11 +76,17 @@ class TeacherDetails extends Component {
             <button className="btn btn-primary" onClick={(e) => this.navigateToLogin()}>Login to view more</button>
         )
     }
+
+    openModalForRequest = () => {
+        this.props.openModalPopUp();
+    }
     render() {
+        console.log('this.state.detailModel', this.state.detailModel);
         const { title, description } = this.state.detailModel;
 
         return (
             <div className="details-wrapper">
+                <ModalPopUp/>
                 <HeaderHome />
                 <div className="top-bg">
                     
@@ -90,7 +102,7 @@ class TeacherDetails extends Component {
                                     </p>
                             </div>
                             <button className="btn btn-dark">Send Request</button>
-                            
+                            <button className="btn btn-dark" onClick ={this.openModalForRequest}>Request For Review</button>
                             
                         </div>
                     </div>
@@ -144,4 +156,20 @@ class TeacherDetails extends Component {
 }
 
 
-export default TeacherDetails;
+// const mapStateToProps = state => {
+//     return {
+//       modalState: state.teacherDetailsReducer.requestForReviewPop
+//     };
+//   };
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      openModalPopUp: () => dispatch(openModalForRequest())
+    };
+  };
+  
+  export default connect(
+    null,
+    mapDispatchToProps
+  )(TeacherDetails);
+

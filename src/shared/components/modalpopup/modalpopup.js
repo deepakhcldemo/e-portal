@@ -20,7 +20,7 @@ class ModalPopUp extends Component {
 
   render() {
     const openModal = this.props.modalState;
-
+    debugger
     return (
       <div>
         <Modal open={openModal} onClose={this.onCloseModal} center />
@@ -31,7 +31,7 @@ class ModalPopUp extends Component {
 
 const mapStateToProps = state => {
   return {
-    modalState: state.studentReducer.studentModalState
+    modalState: state.teacherDetailsReducer.requestForReviewPop
   };
 };
 

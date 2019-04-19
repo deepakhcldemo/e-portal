@@ -29,6 +29,11 @@ import StudentNotificationsDetails from './views/Student/Notification/notificati
 import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription';
 
 
+import CreateNewNotification from './views/Student/NotifyStudent/createNewNotification';
+import NotificationfromTeacher from './views/Student/NotifyStudent/notificationfromTeacher';
+import NotificationFullDetails from './views/Student/NotifyStudent/notificationFullDetails';
+
+
 import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
 
 import ContactUs from './views/ContactUs';
@@ -97,6 +102,7 @@ class App extends Component {
           <PrivateRoute path="/category" component={Category} exact />
           <PrivateRoute path="/teacher" component={Teacher} exact />
           <PrivateRoute path="/teacher/videos" component={Video} exact />
+          <PrivateRoute path="/student/createNewNotification" component={CreateNewNotification} exact />
 
           <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
           <Route path="/student/notificationsDetails" component={StudentNotificationsDetails} />
@@ -116,6 +122,16 @@ class App extends Component {
              <PrivateRoute
             path="/student/notifications"
             component={Notification}
+            exact
+          />
+           <PrivateRoute
+            path="/student/notificationfromTeacher"
+            component={NotificationfromTeacher}
+            exact
+          />
+             <PrivateRoute
+            path="/student/notificationFullDetails"
+            component={NotificationFullDetails}
             exact
           />
           <Redirect to="/home" />
