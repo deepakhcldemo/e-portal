@@ -65,16 +65,16 @@ class Student extends Component {
                     <RecentVideo carousellistNewlyItems={notifications} headeTitle="Video Reviewed"></RecentVideo>
                 
                 
-                    
-               
+                <div className="col-12 content-container--background">&nbsp;</div>
+                <div className="col-12 content-container--background">&nbsp;</div>
                 <Navbar links={STUDENT_DASHBOARD_LINKS} />
 
-        <RecentVideo
+        {/* <RecentVideo
           carousellistNewlyItems={notifications}
           title="Video Reviewed"
         />
 
-        <Navbar links={STUDENT_DASHBOARD_LINKS} />
+        <Navbar links={STUDENT_DASHBOARD_LINKS} /> */}
       </div>
     );
   }
