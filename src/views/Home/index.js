@@ -1,44 +1,26 @@
 import React, { Component } from 'react';
 import HeaderHome from '../../components/layout/header/HeaderHome';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import Carousel from 'react-bootstrap/Carousel';
 import CategoryItem from '../CategoryItem';
-// import Slider from '../../components/slider/Slider_Santosh';
-// import Slider from '../../components/slider/Slider_new';
-import { getBanner, getCurriculum, getTeacher } from './actions';
-import {
-  getBannerFromDB,
-  getCurriculumFromDB,
-  getTeacherFromDB
-} from './../../database/dal/firebase/homeDal';
-import TeacherItem from '../../components/teacherItem/TeacherItem';
-import GLOBAL_VARIABLES from '../../config/config';
-import './styles.css';
-import Slider from 'react-slick';
+import { getBannerFromDB, getCurriculumFromDB, getTeacherFromDB } from './../../database/dal/firebase/homeDal';
+import TopTutor from '../../components/topTutor/TopTutor';
+import RecentVideo from '../../components/recentVideo/RecentVideo';
+import StudentFeedback from '../../components/studentFeedback/StudentFeedback';
+import Banner from '../../components/banner/Banner';
 
 class Home extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      classessName: [],
-      isOpen: false,
-      carouselImageType: 'video',
-      carouselImage: '',
       bannerRows: [],
       carouselTop10Items: [],
       carousellistNewlyItems: []
     };
   }
-
-  componentWillReceiveProps = newProps => {
-    // console.log(newProps)
-  };
-
-  componentDidMount = () => {
-    getBannerFromDB().then(querySnapshot => {
-      let bannerData = [];
+ 
+  componentDidMount = ()=> {    
+    getBannerFromDB().then( querySnapshot =>{
+      let bannerData = []; 
       querySnapshot.forEach(doc => {
         bannerData.push(doc.data());
       });
@@ -66,123 +48,14 @@ class Home extends Component {
       if (currData.length > 0) {
         this.setState({
           carousellistNewlyItems: currData
-        });
-      }
-    });
-  };
-
-  createEvent = () => {
-    this.props.history.push('/createevent');
-  };
-
-  daysBetween(date1_seconds, date2_seconds) {
-    if (date1_seconds && date2_seconds) {
-      const one_day = 60 * 60 * 24 * 1000;
-      var difference_ms = Math.abs(date1_seconds - date2_seconds);
-      return Math.round(difference_ms / one_day);
-    } else {
-      return '';
-    }
+      })
+     }  
+    });       
   }
-
-  createChildren = records => {
-    const carouselRows = records.map((carouselRecord, index) => {
-      const moreSymbol = '...';
-      const today = Date.now();
-      var noOfDays = this.daysBetween(
-        carouselRecord.createdAt ? carouselRecord.createdAt : today,
-        today
-      );
-      carouselRecord.noOfDays = noOfDays;
-      let title = '';
-      let profileImg = '';
-      let rating = '';
-
-      if (carouselRecord.firstName) {
-        title = carouselRecord.firstName;
-
-        if (carouselRecord.lastName) {
-          title += ' ' + carouselRecord.lastName;
-        }
-      } else if (carouselRecord.title) {
-        title = carouselRecord.title;
-      }
-
-      if (carouselRecord.thumb) {
-        profileImg = carouselRecord.thumb;
-      } else {
-        if (carouselRecord.gender === 'Female') {
-          profileImg =
-            'https://i0.wp.com/www.antgibbz.com/wp-content/uploads/2016/05/person-placeholder-200x200.jpg?ssl=1';
-        }
-        if (carouselRecord.gender === 'Male') {
-          profileImg =
-            'https://tricityescaperooms.com/wp-content/uploads/2018/01/person-placeholder-male-5.jpg';
-        }
-      }
-
-      if (carouselRecord.rating) {
-        rating = carouselRecord.rating;
-      }
-
-      if (carouselRecord.views) {
-        rating = carouselRecord.views;
-      }
-      console.log('---carouselRecord--', carouselRecord);
-      return (
-        <div key={index} className="vd-wrapper  col-xs-12 padR10">
-          <Link
-            className="nav-link nav-link--padding"
-            to={`/home/teacher/${carouselRecord.userId}`}
-            title={carouselRecord.name}
-          >
-            <TeacherItem userProfile={carouselRecord} />
-          </Link>
-        </div>
-      );
-    });
-
-    return carouselRows;
-  };
-
-  studentsReviewChildren = records => {
-    const studentsReview = records.map((carouselRecord, index) => {
-      const moreSymbol = '...';
-      const stopSymbol = '.';
-      return (
-        <div key={index} className="vd-wrapper border_1px padR10">
-          <a href="#" title={carouselRecord.name}>
-            <div key={index} className="pad5 left profile_img_review">
-              <img src={carouselRecord.profile_image} />
-            </div>
-            <div className="pad5 left label-color">
-              <h5>
-                {carouselRecord.name.length > 50
-                  ? carouselRecord.name.substring(0, 50) + moreSymbol
-                  : carouselRecord.name}
-              </h5>
-            </div>
-            <div className="clear" />
-            <p className="pad5 label-color">
-              {carouselRecord.comment.length > 125
-                ? carouselRecord.comment.substring(0, 125) + moreSymbol
-                : carouselRecord.comment + stopSymbol}
-            </p>
-          </a>
-        </div>
-      );
-    });
-
-    return studentsReview;
-  };
+ 
 
   render() {
-    const {
-      bannerRows,
-      carouselTop10Items,
-      carousellistNewlyItems
-    } = this.state;
-
+    
     const studentsReview = [
       {
         name: 'Borivoje',
@@ -220,117 +93,38 @@ class Home extends Component {
           'The courses are fantastic and the instructors are so fun and knowledgeable. I only wish we found it sooner'
       }
     ];
-
-    let listAwaitingItems = '';
-    if (bannerRows && bannerRows.length > 0) {
-      listAwaitingItems = bannerRows.map((bannerRow, index) => (
-        <div key={index}>
-          {bannerRow.banner_image && (
-            <img src={bannerRow.banner_image} className="d-block w-100" />
-          )}
-        </div>
-      ));
-    }
-
-    const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true
-    };
-
-    const settingsTop10 = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow:
-        carouselTop10Items.length > 5 ? 5 : carouselTop10Items.length,
-      slidesToScroll: 1
-    };
-
-    const settingsNewlyItems = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow:
-        carousellistNewlyItems.length > 5 ? 5 : carousellistNewlyItems.length,
-      slidesToScroll: 1,
-      autoplay: true
-    };
-
-    const settingsStudentsReview = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: studentsReview.length > 5 ? 5 : studentsReview.length,
-      slidesToScroll: 1,
-      autoplay: true
-    };
-
+   
+    const { bannerRows, carouselTop10Items, carousellistNewlyItems } = this.state;
+    
     return (
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
             <HeaderHome headeTitle="Dashboard" />
           </div>
-        </div>
+        </div>        
+        
+        { bannerRows.length > 0 && 
+          <Banner bannerRows={bannerRows}/>
+        } 
+       
+        { carouselTop10Items.length > 0 && 
+          <TopTutor carouselTop10Items={carouselTop10Items}/>
+        } 
 
-        <div className="col-12 content-container--background">
-          <div style={{ background: '#FFF', textAlign: 'center' }}>
-            <Slider {...settings}>{listAwaitingItems}</Slider>
-          </div>
-        </div>
-
-        {carouselTop10Items.length > 0 && (
-          <div className="col-12 content-container--background">
-            <h3 className="mt-30">
-              {' '}
-              {GLOBAL_VARIABLES.TOP10_TUTOR}{' '}
-              <i className="fas fa-chevron-right" />
-            </h3>
-            <div style={{ background: '#FFF', textAlign: 'center' }}>
-              <Slider {...settingsTop10}>
-                {this.createChildren(carouselTop10Items)}
-              </Slider>
-            </div>
-          </div>
-        )}
-
-        {carousellistNewlyItems.length > 0 && (
-          <div className="col-12 content-container--background">
-            <h3 className="mt-30">
-              {GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}{' '}
-              <i className="fas fa-chevron-right" />
-            </h3>
-            <div style={{ background: '#FFF', textAlign: 'center' }}>
-              <Slider {...settingsNewlyItems}>
-                {this.createChildren(carousellistNewlyItems)}
-              </Slider>
-            </div>
-          </div>
-        )}
-
-        {studentsReview.length > 0 && (
-          <div className="col-12 content-container--background">
-            <h3 className="mt-30 pad10">
-              {GLOBAL_VARIABLES.STUDENTS_REVIEW}{' '}
-              <i className="fas fa-chevron-right" />
-            </h3>
-            <div style={{ background: '#FFF', textAlign: 'center' }}>
-              <Slider {...settingsStudentsReview}>
-                {this.studentsReviewChildren(studentsReview)}
-              </Slider>
-            </div>
-          </div>
-        )}
+        { carousellistNewlyItems.length > 0 && 
+          <RecentVideo carousellistNewlyItems={carousellistNewlyItems}/>
+        } 
+        
+        { studentsReview.length > 0 && 
+          <StudentFeedback studentsReview={studentsReview}/>
+        }
+        
         <CategoryItem />
-
+        
         <div className="col-12 content-container--background">&nbsp;</div>
-
         <div className="col-12 content-container--background">&nbsp;</div>
-      </div>
+      </div>     
     );
   }
 }
