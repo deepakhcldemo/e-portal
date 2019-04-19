@@ -1,7 +1,6 @@
 import dbFactory from '../../dbFactory';
 
 export const getTeachersFromDBBasedOnCategory = (dispatch, CategoryValue) => {
-    console.log('CategoryValue', CategoryValue);
     const db = dbFactory.create('firebase');
     let data = [];
     db.firestore().collection("userProfiles")

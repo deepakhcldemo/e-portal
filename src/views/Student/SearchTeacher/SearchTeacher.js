@@ -19,7 +19,8 @@ class SearchTeacher extends Component {
             calendarModal: false,
             searchValue: '',
             filtredTeacherRecord: [],
-            showValidationMessage : ''
+            showValidationMessage: '',
+            noRecordMessage: 'Search for yoour teacher here'
         };
         this.handleChange = this.handleChange.bind(this);
         this.getSerachParameter = this.getSerachParameter.bind(this);
@@ -71,7 +72,7 @@ class SearchTeacher extends Component {
             this.setState({
                 selectedOption: {},
                 searchValue: '',
-                showValidationMessage : ''
+                showValidationMessage: ''
             })
             console.log('this.state in search button', this.state);
 
@@ -79,11 +80,11 @@ class SearchTeacher extends Component {
 
         else {
             this.setState({
-                showValidationMessage : 'Category and search field can not be empty'
+                showValidationMessage: 'Category and search field can not be empty'
             });
         }
 
-        
+
     }
     setfilteredTeacher = (filteredRecords) => {
         this.setState({
@@ -154,11 +155,24 @@ class SearchTeacher extends Component {
                             <h4><b>{teacher.firstName} {teacher.lastName}</b></h4>
                             <p>{teacher.subject}</p>
                         </div>
+                        <div className="input-group chat-btn" >
+                        <input onClick={this.openCalendarModal} type="button" className="btn btn-success" value="Initiate Chat" />
+                        
                     </div>
+                    </div>
+                   
                 </div>
             )
         })
-        filetredTeacherData.length === 0 ? filetredTeacherData = "Record Not Found" : filetredTeacherData = filetredTeacherData;
+        if (filetredTeacherData.length === 0 || (this.state.placeHolderValue)) {
+            this.state.noRecordMessage = this.state.noRecordMessage;
+        }
+        else {
+
+            this.setState({
+                noRecordMessage: "no recoder found"
+            })
+        }
 
         const options = [
             { value: 'Name', label: 'Name' },
@@ -175,7 +189,7 @@ class SearchTeacher extends Component {
                     <HeaderHome headeTitle="Student Dashboard" dashboardLinks={STUDENT_DASHBOARD_LINKS} />
                 </div>
                 <div className="filter-search">
-                    <p className ="help-block validation-message">{this.state.showValidationMessage}</p>
+                    <p className="help-block validation-message">{this.state.showValidationMessage}</p>
                     <div className="filter-teacher">
                         <span>Filter By Category :</span>
                         <Select
@@ -188,15 +202,15 @@ class SearchTeacher extends Component {
                         <input type="text" className="form-control" value={this.state.searchValue} onChange={(value) => this.setSaerchValue(value)} placeholder={"Search for.." + this.state.placeHolderValue} name="srch-term" id="srch-term" />
                         <span className="fa fa-search teacher-search-icon" onClick={this.getSerachParameter}></span>
                     </div>
+                    <div className="row">
 
+                        {this.state.noRecordMessage}
+                    </div>
                     <div className="row">
 
                         {filetredTeacherData}
                     </div>
-                    <div className="input-group chat-btn" >
-                        <input onClick={this.openCalendarModal} type="button" className="btn btn-success" value="Initiate Chat" />
-                        <input type="button" className="btn btn-success" value="Initiate Chat" />
-                    </div>
+
                 </div>
                 <div>
                     <CalendarModal modalState={this.state.calendarModal} closeCalendarModal={this.closeCalendarModal} classes="calendar-modal"></CalendarModal>
@@ -209,7 +223,6 @@ class SearchTeacher extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('satate', state);
     return {
         modalSata: state.classes,
         carouselRows: state.carouselStore.carouselData,
