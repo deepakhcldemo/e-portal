@@ -18,7 +18,8 @@ class SearchTeacher extends Component {
             placeHolderValue: '',
             calendarModal: false,
             searchValue: '',
-            filtredTeacherRecord: []
+            filtredTeacherRecord: [],
+            showValidationMessage : ''
         };
         this.handleChange = this.handleChange.bind(this);
         this.getSerachParameter = this.getSerachParameter.bind(this);
@@ -68,13 +69,20 @@ class SearchTeacher extends Component {
                 // code block
             }
 
-        }
-        this.setState({
-            selectedOption : {},
-            searchValue : ''
-        })
 
-        console.log('this.state', this.state);
+            this.setState({
+                selectedOption: {},
+                searchValue: '',
+                showValidationMessage : ''
+            })
+
+        }
+
+        else {
+            this.setState({
+                showValidationMessage : 'Category and search field can not be empty'
+            });
+        }
     }
     setfilteredTeacher = (filteredRecords) => {
         this.setState({
@@ -138,7 +146,7 @@ class SearchTeacher extends Component {
         let filetredTeacherData = this.state.filtredTeacherRecord.map((teacher, index) => {
 
             return (
-                <div className="col-md-3" key ={index}>
+                <div className="col-md-3" key={index}>
                     <div className="card">
                         <img src={teacher.profileImage} alt="teacher" className="profile-image" />
                         <div className="container">
@@ -166,7 +174,7 @@ class SearchTeacher extends Component {
                     <HeaderHome headeTitle="Student Dashboard" dashboardLinks={STUDENT_DASHBOARD_LINKS} />
                 </div>
                 <div className="filter-search">
-
+                    <p className ="help-block validation-message">{this.state.showValidationMessage}</p>
                     <div className="filter-teacher">
                         <span>Filter By Category :</span>
                         <Select
@@ -177,9 +185,9 @@ class SearchTeacher extends Component {
                     </div>
                     <div className="input-group search-teacher">
                         <input type="text" className="form-control" value={this.state.value} onChange={(value) => this.setSaerchValue(value)} placeholder={"Search for.." + this.state.placeHolderValue} name="srch-term" id="srch-term" />
-                        <span class="fa fa-search teacher-search-icon" onClick={this.getSerachParameter}></span>
+                        <span className="fa fa-search teacher-search-icon" onClick={this.getSerachParameter}></span>
                     </div>
-                    
+
                     <div className="row">
 
                         {filetredTeacherData}
@@ -194,18 +202,18 @@ class SearchTeacher extends Component {
                 </div>
                 <Navbar links={STUDENT_DASHBOARD_LINKS} />
             </div>
-      );
-    
-  }
+        );
+
+    }
 }
 
 const mapStateToProps = state => {
-  console.log('satate', state);
-  return {
-    modalSata: state.classes,
-    carouselRows: state.carouselStore.carouselData,
-    TeacherList: state.searchTeacher.teacherDetails
-  };
+    console.log('satate', state);
+    return {
+        modalSata: state.classes,
+        carouselRows: state.carouselStore.carouselData,
+        TeacherList: state.searchTeacher.teacherDetails
+    };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -215,6 +223,6 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(SearchTeacher);

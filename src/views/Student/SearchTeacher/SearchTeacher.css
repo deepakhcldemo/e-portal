@@ -68,6 +68,10 @@
   .profile-image{
     height: 160px;
   }
+
+  .validation-message{
+    font-size: 15px;
+  }
 @media only screen and (max-width: 600px) {
     .filter-search{
         max-width: 20rem;
