@@ -21,6 +21,10 @@
   width: 100%;
 }
 
+.nav-link--padding {
+  padding: 0px !important;
+}
+
 .center-form {
   height: 100vh;
   margin: 0 auto;
@@ -139,6 +143,6 @@ form label {
   right: 10px !important;
 }
 
-.box_pad{
+.box_pad {
   padding: 0px 20px 0px 0px;
 }

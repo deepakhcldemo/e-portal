@@ -14,7 +14,7 @@ import {
 } from './../../database/dal/firebase/homeDal';
 import TeacherItem from '../../components/teacherItem/TeacherItem';
 import GLOBAL_VARIABLES from '../../config/config';
-
+import './styles.css';
 import Slider from 'react-slick';
 
 class Home extends Component {
@@ -132,7 +132,7 @@ class Home extends Component {
       return (
         <div key={index} className="vd-wrapper  col-xs-12 padR10">
           <Link
-            className="nav-link"
+            className="nav-link nav-link--padding"
             to={`/home/teacher/${carouselRecord.userId}`}
             title={carouselRecord.name}
           >

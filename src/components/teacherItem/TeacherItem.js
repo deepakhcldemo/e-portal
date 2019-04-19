@@ -15,6 +15,7 @@ class TeacherItem extends Component {
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 height: '200px',
+                margin: '10px',
                 borderRadius: '100px'
               }}
               className="border_1px"
