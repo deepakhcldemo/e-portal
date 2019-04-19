@@ -42,7 +42,7 @@ export const getNotificationFromDB = (dispatch) => {
 export const getBannerFromDB = () => {
     const db = dbFactory.create('firebase');
     return db.firestore().collection("banner")
-    .where("page", "==", "home")
+    .where("page", "==", "student")
     .get()
  
 }
