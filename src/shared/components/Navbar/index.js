@@ -6,7 +6,7 @@ class Navbar extends Component {
   render = () => {
     const { links } = this.props;
     return (
-      <footer className="header-container">
+      <footer className="header-container" style={{top: 'unset', bottom:'0px'}}>
         {links &&
           links.map((link, index) => {
             return (

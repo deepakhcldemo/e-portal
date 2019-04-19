@@ -147,7 +147,8 @@ class Teacher extends Component {
                 {carousellistNewlyItems.length > 0 && (
                     <RecentVideo carousellistNewlyItems={carousellistNewlyItems} headeTitle="My Video" />
                 )}
-
+                <div className="col-12 content-container--background">&nbsp;</div>
+                <div className="col-12 content-container--background">&nbsp;</div>
                 {/* <div className="row">
                     <div className="col-12 main-wrapper">
                        
@@ -155,9 +156,10 @@ class Teacher extends Component {
                         <TopVideo heading="Top 10 Videos" videoDetails={videoDetails} />
                     </div>
                 </div>
-                <div className="row">
+                */}
+                <div className="col-12">
                     <Navbar links={TEACHER_DASHBOARD_LINKS} />
-                </div> */}
+                </div> 
             </div>
         );
     }
