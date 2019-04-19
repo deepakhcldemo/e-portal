@@ -88,6 +88,8 @@ class TopTutor extends Component {
 
   render() {
     const { carouselTop10Items } = this.props;
+    let title = '';
+    (this.props.headeTitle) ? (title = this.props.headeTitle) : (title = "Top Tutor")
 
     const settingsTop10 = {
       dots: true,
@@ -126,25 +128,16 @@ class TopTutor extends Component {
     };
 
     return (
-      <React.Fragment>
-        {carouselTop10Items.length > 0 && (
-          <div className="col-12 content-container--background">
-            <h3 className="mt-30">
-              {' '}
-              {GLOBAL_VARIABLES.TOP10_TUTOR}{' '}
-              <i className="fas fa-chevron-right" />
-            </h3>
-            <div
-              style={{
-                background: '#FFF',
-                textAlign: 'center'
-              }}
-            >
-              <Slider {...settingsTop10}>
-                {this.createChildren(carouselTop10Items)}
-              </Slider>
-            </div>
+        <React.Fragment>
+        { carouselTop10Items.length > 0 && 
+        (<div className="col-12 content-container--background">
+        <h3 className="mt-30"> {title}{' '} <i className="fas fa-chevron-right" /></h3>
+          <div style={{background: "#FFF",textAlign: "center"}}>
+            <Slider {...settingsTop10}>
+              {this.createChildren(carouselTop10Items)}
+            </Slider>
           </div>
+        </div>
         )}
       </React.Fragment>
     );

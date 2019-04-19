@@ -11,6 +11,7 @@ import TopTutor from '../../components/topTutor/TopTutor';
 import RecentVideo from '../../components/recentVideo/RecentVideo';
 import StudentFeedback from '../../components/studentFeedback/StudentFeedback';
 import Banner from '../../components/banner/Banner';
+import GLOBAL_VARIABLES from '../../config/config';
 
 class Home extends Component {
   constructor(props) {
@@ -114,15 +115,15 @@ class Home extends Component {
         {bannerRows.length > 0 && <Banner bannerRows={bannerRows} />}
 
         {carouselTop10Items.length > 0 && (
-          <TopTutor carouselTop10Items={carouselTop10Items} />
+          <TopTutor carouselTop10Items={carouselTop10Items} headeTitle={GLOBAL_VARIABLES.TOP10_TUTOR} />
         )}
 
         {carousellistNewlyItems.length > 0 && (
-          <RecentVideo carousellistNewlyItems={carousellistNewlyItems} />
+          <RecentVideo carousellistNewlyItems={carousellistNewlyItems} headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}/>
         )}
 
         {studentsReview.length > 0 && (
-          <StudentFeedback studentsReview={studentsReview} />
+          <StudentFeedback studentsReview={studentsReview} headeTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW} />
         )}
 
         <CategoryItem />
