@@ -3,6 +3,7 @@ import { handleResize } from '../../shared/library/window_resize';
 import { Link } from 'react-router-dom';
 import Slider from "react-slick";
 import GLOBAL_VARIABLES from '../../config/config';
+import TeacherItem from '../../components/teacherItem/TeacherItem';
 
 class TopTutor extends Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class TopTutor extends Component {
 
   daysBetween(date1_seconds, date2_seconds) {
     if (date1_seconds && date2_seconds) {
-      const one_day = 60 * 60 * 24;
+      const one_day = 60 * 60 * 24*1000;
       var difference_ms = Math.abs(date1_seconds - date2_seconds);
       return Math.round(difference_ms / one_day);
     } else {
@@ -48,9 +49,9 @@ class TopTutor extends Component {
   createChildren = (records) =>{
     const carouselRows = records.map((carouselRecord, index) => {
       const moreSymbol = "...";
-      const today = Date.now() / 1000; // convert into second
+      const today = Date.now(); // convert into second
       var noOfDays = this.daysBetween(
-        carouselRecord.createdOn ? carouselRecord.createdOn.seconds : carouselRecord.created_date?(carouselRecord.created_date.seconds):(""),
+        carouselRecord.createdAt ? carouselRecord.createdAt :today,
         today
       );
 
@@ -91,27 +92,7 @@ class TopTutor extends Component {
       return (
         <div key={index} className="vd-wrapper  col-xs-12 padR10">
           <Link className="nav-link" to={`/home/teacher/${carouselRecord.userId}`} title={carouselRecord.name}>
-            <div 
-              key={index}
-              style={{ height: 150, background: "#fff"}}
-              className="border_1px"
-            >
-              {/* <iframe key={index} className="d-block w-100" src={carouselRecord.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
-              <img src={profileImg} />
-            </div>
-
-            <div className="vd-content">
-              <h5>
-                {title.length > 50
-                  ? title.substring(0, 50) + moreSymbol
-                  : title}{" "}
-                {/* <i className="fas fa-ellipsis-v" /> */}
-              </h5>
-              <p>
-                { rating && 'Rating ' + rating + ' and' }  
-                { (noOfDays || noOfDays === 0) && ' Registered ' + noOfDays + ' days ago' }  
-              </p>
-            </div>
+            <TeacherItem userProfile={carouselRecord}/>
           </Link>
         </div>
       );

@@ -82,14 +82,14 @@ class Home extends Component {
       },
       {
         name: 'Diana Hayden',
-        profile_image:
+        profileImage:
           'http://nrsinstitute.com/wp-content/uploads/2014/05/edu-oatcert.jpg',
         comment:
           'I believe in lifelong learning and it is a great place to learn from experts. I have learned a lot and recommend it to all my friends.'
       },
       {
         name: 'Ria Hazal',
-        profile_image:
+        profileImage:
           'https://media.gq.com/photos/5c115439a15f8517197598ac/16:9/w_1280%2Cc_limit/america-school-Teacher-guns-GQ.jpg',
         comment:
           'The courses are fantastic and the instructors are so fun and knowledgeable. I only wish we found it sooner'
