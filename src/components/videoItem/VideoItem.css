@@ -8,4 +8,9 @@
 
 .user-details--height {
   height: unset !important;
+  text-align: left;
+}
+
+.rating-position {
+  position: absolute;
 }
