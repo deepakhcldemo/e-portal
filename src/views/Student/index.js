@@ -47,24 +47,28 @@ class Student extends Component {
         console.log('listTop10Items', listTop10Items);
         let listNewlyItems = carouselRows;
         return (
-            <div className="col-12">
-                <HeaderHome headeTitle="Student Dashboard" dashboardLinks={STUDENT_DASHBOARD_LINKS} />
-                <div>
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-12">
+                        <HeaderHome headeTitle="Student Dashboard" dashboardLinks={STUDENT_DASHBOARD_LINKS} />
+                    </div>
+                </div>
+               
                     {bannerRows.length > 0 && <Banner bannerRows={bannerRows} />}
-                </div>
-                <div className="student-notification">
+                <CategoryItem></CategoryItem>
+                {/* <div className="student-notification">
 
-                </div>
-                <div className="student-tutor">
+                </div> */}
+               
                     <RecentVideo carousellistNewlyItems={notifications} title="Video Pending For Review"></RecentVideo>
-                </div>
+                
 
-                <div className="student-tutor rm-mrgn">
+                
                     <RecentVideo carousellistNewlyItems={notifications} title="Video Reviewed"></RecentVideo>
-                </div>
-                <div className="student-tutor rm-mrgn">
-                    <CategoryItem></CategoryItem>
-                </div>
+                
+                
+                    
+               
                 <Navbar links={STUDENT_DASHBOARD_LINKS} />
 
             </div>
