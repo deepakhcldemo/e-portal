@@ -11,6 +11,7 @@ class TopVideo extends Component {
 					<h4>{heading} {this.props.children && (<span className="link pull-right">{this.props.children}</span>)}</h4><hr/>
 					<ul className="list-unstyled video-list-thumbs">
 						{videoDetails && videoDetails.map((videoDetail,index) => {
+							debugger
 							return (
 								<li key={index}>
 									<NavLink to="" activeClassName="" exact title={videoDetail.title}>

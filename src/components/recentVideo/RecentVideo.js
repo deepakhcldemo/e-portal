@@ -121,8 +121,11 @@ class RecentVideo extends Component {
   }  
 
   render() {
+    let title = ''
     const { carousellistNewlyItems } = this.props;
-       
+    debugger
+       console.log('this.props in recent video', this.props)
+       this.props.title ? title = this.props.title : title = "Recent Videos"
     const settingsNewlyItems = {
         dots: true,
         infinite: true,
@@ -136,7 +139,7 @@ class RecentVideo extends Component {
         <React.Fragment>
         { carousellistNewlyItems.length > 0 && 
         <div className="col-12 content-container--background">
-        <h3 className="mt-30">{GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS} <i className="fas fa-chevron-right"></i></h3>
+        <h3 className="mt-30">{title} <i className="fas fa-chevron-right"></i></h3>
           <div style={{background: "#FFF",textAlign: "center"}}>
             <Slider {...settingsNewlyItems}>
               {this.createChildren(carousellistNewlyItems)}

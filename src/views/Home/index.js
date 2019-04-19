@@ -58,6 +58,7 @@ class Home extends Component {
   };
 
   render() {
+    console.log('this.state.carousellistNewlyItems', this.state.carousellistNewlyItems);
     const studentsReview = [
       {
         name: 'Borivoje',
