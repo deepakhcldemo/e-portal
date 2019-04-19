@@ -1,7 +1,7 @@
 const initialState = {
   studentModalState: false,
   teacherDetails: {},
-  notificationData : {}
+  notificationData: {}
 };
 const studentReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -17,8 +17,7 @@ const studentReducer = (state = initialState, action) => {
         studentModalState: false
       };
 
-      case 'GET_NOTIFICATION':
-      debugger
+    case 'GET_NOTIFICATION':
       return {
         ...state,
         notificationData: action.NotificationData
