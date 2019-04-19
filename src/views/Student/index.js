@@ -57,11 +57,17 @@ class Student extends Component {
                 {/* <div className="student-notification">
 
                 </div> */}
+               
+                    <RecentVideo carousellistNewlyItems={notifications} headeTitle="Video Pending For Review"></RecentVideo>
+                
 
-        <RecentVideo
-          carousellistNewlyItems={notifications}
-          title="Video Pending For Review"
-        />
+                
+                    <RecentVideo carousellistNewlyItems={notifications} headeTitle="Video Reviewed"></RecentVideo>
+                
+                
+                    
+               
+                <Navbar links={STUDENT_DASHBOARD_LINKS} />
 
         <RecentVideo
           carousellistNewlyItems={notifications}

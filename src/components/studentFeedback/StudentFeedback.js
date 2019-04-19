@@ -27,7 +27,9 @@ class StudentFeedback extends Component {
 
   render() {
     const { studentsReview } = this.props;
-
+    let title = '';
+    (this.props.headeTitle) ? (title = this.props.headeTitle) : (title = "Feedback")
+       
     const settingsStudentsReview = {
       dots: true,
       infinite: true,
@@ -67,15 +69,13 @@ class StudentFeedback extends Component {
       <React.Fragment>
         {studentsReview.length > 0 && (
           <div className="col-12 content-container--background">
-            <h3 className="mt-30 pad10">
-              {GLOBAL_VARIABLES.STUDENTS_REVIEW}{' '}
-              <i className="fas fa-chevron-right" />
-            </h3>
-            <div style={{ background: '#FFF', textAlign: 'center' }}>
-              <Slider {...settingsStudentsReview}>
-                {this.studentsReviewChildren(studentsReview)}
-              </Slider>
-            </div>
+          <h3 className="mt-30 pad10">{title}{' '} <i className="fas fa-chevron-right"></i></h3>
+          <div style={{background: "#FFF",textAlign: "center"}}>
+            <Slider {...settingsStudentsReview}>
+
+            {this.studentsReviewChildren(studentsReview)}
+            </Slider>
+          </div>
           </div>
         )}
       </React.Fragment>

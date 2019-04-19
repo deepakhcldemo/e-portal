@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import GLOBAL_VARIABLES from '../../config/config';
 import VideoItem from '../../components/videoItem/VideoItem';
 
 class RecentVideo extends Component {
@@ -95,8 +94,7 @@ class RecentVideo extends Component {
   render() {
     let title = '';
     const { carousellistNewlyItems } = this.props;
-       console.log('this.props in recent video', this.props)
-       this.props.title ? title = this.props.title : title = "Recent Videos"
+    (this.props.headeTitle) ? (title = this.props.headeTitle) : (title = "Recent Videos")
     const settingsNewlyItems = {
       dots: true,
       infinite: true,
@@ -132,13 +130,14 @@ class RecentVideo extends Component {
         }
       ]
     };
+    
 
     return (
       <React.Fragment>
         {carousellistNewlyItems.length > 0 && (
           <div className="col-12 content-container--background">
             <h3 className="mt-30">
-              {GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}{' '}
+              {title}{' '}
               <i className="fas fa-chevron-right" />
             </h3>
             <div style={{ background: '#FFF', textAlign: 'center' }}>

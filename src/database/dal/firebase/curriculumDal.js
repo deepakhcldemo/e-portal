@@ -85,3 +85,19 @@ export const getCurriculumByTeacherId = (uid) => {
     .where('userId', '==', uid)
     .get();
 }
+
+export const getBannerFromDB = () => {
+    return getDbRef("banner")
+    .where("page", "==", "teacher")
+    .get() 
+}
+
+export const getCurriculumFromDB = () => {
+        
+    return getDbRef("curriculum").get();      
+}
+
+export const getNotificationFromDB = () => {
+    const db = dbFactory.create('firebase');
+    return db.firestore().collection("notifications").get();       
+}
