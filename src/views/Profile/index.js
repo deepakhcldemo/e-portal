@@ -160,6 +160,7 @@ class Profile extends Component {
         currency !== ''
       ) {
         teacherDetails.createdAt = userDetails.user.createdAt;
+        teacherDetails.rating = 0;
         saveUserProfile(teacherDetails).then(() => {
           localStorage.setItem('userProfile', JSON.stringify(teacherDetails));
           toastr.success('Details Saved Successfully');

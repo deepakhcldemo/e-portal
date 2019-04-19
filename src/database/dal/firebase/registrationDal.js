@@ -103,26 +103,26 @@ export const getProfileDownloadUrl = (profilePic, userId) => {
   return mainImage.getDownloadURL();
 };
 
-export const saveReview = () => {
-  const reviewVideo = {
-    sId: '',
-    tId: '',
-    sStatus: '',
-    tStatus: '',
-    createdAt: '',
-    reschedule: '',
-    paymentStatus: '',
-    charge: '',
-    details: '',
-    comment: [
-      {
-        date: '',
-        by: '',
-        details: ''
-      }
-    ]
-  };
-  return getDbRef('chatNotifications')
-    .doc()
-    .set(reviewVideo);
-};
+// export const saveReview = () => {
+//   const reviewVideo = {
+//     sId: '',
+//     tId: '',
+//     sStatus: '',
+//     tStatus: '',
+//     createdAt: '',
+//     reschedule: '',
+//     paymentStatus: '',
+//     charge: '',
+//     details: '',
+//     comment: [
+//       {
+//         date: '',
+//         by: '',
+//         details: ''
+//       }
+//     ]
+//   };
+//   return getDbRef('chatNotifications')
+//     .doc()
+//     .set(reviewVideo);
+// };
