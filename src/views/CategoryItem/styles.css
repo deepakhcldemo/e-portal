@@ -3,3 +3,11 @@
   text-align: center !important;
   font-size: 20px !important;
 }
+
+.card-style {
+  cursor: pointer;
+}
+
+.categories-container-padding {
+  padding: 15px 0px;
+}

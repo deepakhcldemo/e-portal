@@ -12,14 +12,9 @@ import {
   uploadUserProfilePic,
   getProfileDownloadUrl
 } from '../../database/dal/firebase/registrationDal';
+import { getAllCategory } from '../../database/dal/firebase/categoryDal';
 
-const subjects = [
-  'Math',
-  'English',
-  'Science',
-  'Social Science',
-  'Computer Science'
-];
+let subjects = [];
 class Profile extends Component {
   state = {
     gender: '',
@@ -54,6 +49,11 @@ class Profile extends Component {
 
   componentDidMount = () => {
     const userId = JSON.parse(localStorage.getItem('user')).user.uid;
+    getAllCategory().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        subjects = [...doc.data().subjects];
+      });
+    });
     getUserProfile(userId).then(querySnapshot => {
       querySnapshot.forEach(doc => {
         const user = doc.data();
@@ -120,7 +120,8 @@ class Profile extends Component {
       summary
     } = this.state;
 
-    const userId = JSON.parse(localStorage.getItem('user')).user.uid;
+    const userDetails = JSON.parse(localStorage.getItem('user'));
+    const userId = userDetails.user.uid;
     this.setState({ submitted: true });
 
     if (role === 'Teacher') {
@@ -158,6 +159,7 @@ class Profile extends Component {
         charge !== '' &&
         currency !== ''
       ) {
+        teacherDetails.createdAt = userDetails.user.createdAt;
         saveUserProfile(teacherDetails).then(() => {
           localStorage.setItem('userProfile', JSON.stringify(teacherDetails));
           toastr.success('Details Saved Successfully');
@@ -194,6 +196,7 @@ class Profile extends Component {
         role !== '' &&
         subject !== ''
       ) {
+        studentDetails.createdAt = userDetails.user.createdAt;
         saveUserProfile(studentDetails).then(() => {
           localStorage.setItem('userProfile', JSON.stringify(studentDetails));
           toastr.success('Details Saved Successfully');

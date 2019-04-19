@@ -103,16 +103,26 @@ export const getProfileDownloadUrl = (profilePic, userId) => {
   return mainImage.getDownloadURL();
 };
 
-export const saveFeedback = () => {
-  const feedbacks = {
-    user_id: 1,
-    rate: 5,
-    like: 1,
-    comment: 'very good',
-    feedback_to: 'sGeyNegb2cZZcq7C76ndjaGUNSk1',
-    created_date: new Date()
+export const saveReview = () => {
+  const reviewVideo = {
+    sId: '',
+    tId: '',
+    sStatus: '',
+    tStatus: '',
+    createdAt: '',
+    reschedule: '',
+    paymentStatus: '',
+    charge: '',
+    details: '',
+    comment: [
+      {
+        date: '',
+        by: '',
+        details: ''
+      }
+    ]
   };
-  return getDbRef('feedback')
-    .doc('weqwreqwqewq')
-    .set(feedbacks);
+  return getDbRef('chatNotifications')
+    .doc()
+    .set(reviewVideo);
 };
