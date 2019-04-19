@@ -106,11 +106,11 @@ class Home extends Component {
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-12">
+          <div className="col-12 container--margin-bottom">
             <HeaderHome headeTitle="Dashboard" />
           </div>
         </div>
-
+        
         {bannerRows.length > 0 && <Banner bannerRows={bannerRows} />}
 
         {carouselTop10Items.length > 0 && (

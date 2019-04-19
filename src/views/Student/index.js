@@ -41,7 +41,6 @@ class Student extends Component {
     render() {
         const { bannerRows } = this.state;
         const { carouselRows, teacherCarouselRows, notifications } = this.props;
-        debugger
         console.log('notifications', notifications);
         const listTop10Items = teacherCarouselRows;
         console.log('listTop10Items', listTop10Items);
@@ -49,7 +48,7 @@ class Student extends Component {
         return (
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-12">
+                    <div className="col-12 container--margin-bottom">
                         <HeaderHome headeTitle="Student Dashboard" dashboardLinks={STUDENT_DASHBOARD_LINKS} />
                     </div>
                 </div>

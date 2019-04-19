@@ -82,7 +82,7 @@ class Teacher extends Component {
         return (
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-12">
+                    <div className="col-12 container--margin-bottom">
                         <HeaderHome headeTitle="Teacher Dashboard" dashboardLinks={TEACHER_DASHBOARD_LINKS}/>
                     </div>
                 </div>

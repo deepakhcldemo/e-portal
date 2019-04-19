@@ -18,7 +18,6 @@ const studentReducer = (state = initialState, action) => {
       };
 
       case 'GET_NOTIFICATION':
-      debugger
       return {
         ...state,
         notificationData: action.NotificationData

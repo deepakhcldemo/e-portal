@@ -113,7 +113,6 @@ class RecentVideo extends Component {
   render() {
     let title = ''
     const { carousellistNewlyItems } = this.props;
-    debugger
        console.log('this.props in recent video', this.props)
        this.props.title ? title = this.props.title : title = "Recent Videos"
     const settingsNewlyItems = {
