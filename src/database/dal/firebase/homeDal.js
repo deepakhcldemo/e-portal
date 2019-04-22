@@ -1,21 +1,37 @@
 import dbFactory from '../../dbFactory';
 
-export const getBannerFromDB = () => {
+const getDbRef = collectionName => {
     const db = dbFactory.create('firebase');
-    return db.firestore().collection("banner")
+    const ref = db.firestore().collection(collectionName);
+    return ref;
+};
+
+export const getBannerFromDB = () => {
+    return getDbRef("banner")
     .where("page", "==", "home")
     .get()
  
 }
 
 export const getCurriculumFromDB = () => {
-    const db = dbFactory.create('firebase');
-    return db.firestore().collection("curriculum").get()        
+    return getDbRef("curriculum").get()        
 }
 
 export const getTeacherFromDB = () => {
-    const db = dbFactory.create('firebase');
-   return db.firestore().collection("userProfiles")
+   
+    return getDbRef("userProfiles")
     .where("role", "==", "Teacher")
     .get();           
 }
+
+export const getFeedbackFromDB = () => {
+
+   return getDbRef("feedback").get();           
+}
+
+export const getUserProfileFromDB = (userId) => {
+
+    return getDbRef("userProfiles")
+    .where("userId", "==", userId)
+    .get();           
+ }
