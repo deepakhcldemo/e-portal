@@ -64,25 +64,27 @@ class ListContainer extends Component {
     return (
       <React.Fragment>
         {listType === 'Teacher' && (
-          <div className="col-12 content-container--background">
-            <div style={{ background: '#FFF', textAlign: 'center' }}>
-              <InfiniteScroll
-                dataLength={this.state.teacherList.length}
-                next={this.fetchNextTeacherItems}
-                hasMore={true}
-              >
-                {this.state.teacherList.map((item, index) => (
-                  <Link
-                    key={index}
-                    className="nav-link"
-                    style={{ padding: '0px' }}
-                    to={`/home/teacher/${item.userId}`}
-                    title={item.firstName}
-                  >
-                    <TeacherItem userProfile={item} isTrayItem={true} />
-                  </Link>
-                ))}
-              </InfiniteScroll>
+          <div className="row row-without--margin">
+            <div className="col-12 content-container--background col-without--padding">
+              <div style={{ background: '#FFF', textAlign: 'center' }}>
+                <InfiniteScroll
+                  dataLength={this.state.teacherList.length}
+                  next={this.fetchNextTeacherItems}
+                  hasMore={true}
+                >
+                  {this.state.teacherList.map((item, index) => (
+                    <Link
+                      key={index}
+                      className="nav-link"
+                      style={{ padding: '0px' }}
+                      to={`/home/teacher/${item.userId}`}
+                      title={item.firstName}
+                    >
+                      <TeacherItem userProfile={item} isTrayItem={true} />
+                    </Link>
+                  ))}
+                </InfiniteScroll>
+              </div>
             </div>
           </div>
         )}

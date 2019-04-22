@@ -109,26 +109,28 @@ class SearchTeacher extends Component {
         return (
           <div className="col-md-3" key={index}>
             <div className="card">
-              <img
-                src={teacher.profileImage}
-                alt="teacher"
-                className="profile-image"
-              />
-              <div className="container">
-                <h4>
-                  <b>
-                    {teacher.firstName} {teacher.lastName}
-                  </b>
-                </h4>
-                <p>{teacher.subject}</p>
-              </div>
-              <div className="input-group chat-btn">
-                <input
-                  onClick={this.openCalendarModal}
-                  type="button"
-                  className="btn btn-success"
-                  value="Initiate Chat"
+              <div className="card-body">
+                <img
+                  src={teacher.profileImage}
+                  alt="teacher"
+                  className="profile-image"
                 />
+                <div className="container">
+                  <h4>
+                    <b>
+                      {teacher.firstName} {teacher.lastName}
+                    </b>
+                  </h4>
+                  <p>{teacher.subject}</p>
+                </div>
+                <div className="input-group chat-btn">
+                  <input
+                    onClick={this.openCalendarModal}
+                    type="button"
+                    className="btn btn-success"
+                    value="Initiate Chat"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -151,41 +153,45 @@ class SearchTeacher extends Component {
     ];
     console.log(this.state.filtredTeacherRecord);
     return (
-      <div className="teacher-student-search">
+      <div className="teacher-student-search container-fluid">
         <div>
           <HeaderHome
             headeTitle="Student Dashboard"
             dashboardLinks={STUDENT_DASHBOARD_LINKS}
           />
         </div>
-        <div className="filter-search">
+        <div className="filter-search content-container--background">
           <p className="help-block validation-message">
             {this.state.showValidationMessage}
           </p>
 
-          <div className="row">
-            <div className="filter-teacher col-xs-12 col-12 col-md-6">
-              <i className="fas fa-caret-down" />
-              <Multiselect
-                options={searctTeacherData}
-                onSelectOptions={this.handleChange}
-                placeHolder="filter by Categoty"
-              />
-            </div>
-            <div className="input-group search-teacher col-xs-12 col-12 col-md-6">
-              <input
-                type="text"
-                className="form-control"
-                value={this.state.searchValue}
-                onChange={value => this.setSaerchValue(value)}
-                placeholder={'Search for..' + this.state.placeHolderValue}
-                name="srch-term"
-                id="srch-term"
-              />
-              <span
-                className="fa fa-search teacher-search-icon"
-                onClick={this.getSerachParameter}
-              />
+          <div className="card">
+            <div className="card-body">
+              <div className="row row-without--margin">
+                <div className="filter-teacher col-xs-12 col-12 col-md-6">
+                  {/* <i className="fas fa-caret-down" /> */}
+                  <Multiselect
+                    options={searctTeacherData}
+                    onSelectOptions={this.handleChange}
+                    placeHolder="filter by Categoty"
+                  />
+                </div>
+                <div className="input-group search-teacher col-xs-12 col-12 col-md-6">
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={this.state.searchValue}
+                    onChange={value => this.setSaerchValue(value)}
+                    placeholder={'Search for..' + this.state.placeHolderValue}
+                    name="srch-term"
+                    id="srch-term"
+                  />
+                  <span
+                    className="fa fa-search teacher-search-icon"
+                    onClick={this.getSerachParameter}
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
