@@ -14,8 +14,10 @@ class ModalPopUp extends Component {
     super(props);
 
     this.state = {
-      studentName: ''
+      studentName: '',
+    
     }
+    
   }
 
   onCloseModal = () => {
@@ -26,12 +28,18 @@ class ModalPopUp extends Component {
     if (studentDetails) {
       this.setState({
         studentName: studentDetails.firstName + ' ' + studentDetails.lastName
-      })
+      });
     }
+    // const teacherDetails = JSON.parse(localStorage.getItem('userProfile'));
+    // if (teacherDetails) {
+    //   this.setState({
+    //     teacherName: teacherDetails.firstName + ' ' + teacherDetails.lastName
+    //   });
+    // }
   }
   render() {
     const openModal = this.props.modalState;
-
+    const teacherDetails = this.props.title
     return (
       <div>
 
@@ -43,22 +51,19 @@ class ModalPopUp extends Component {
             <form>
               <div className="form-group">
                 <div className="teacher-student">
-                  Student Name : {this.state.studentName}
+                <div className="btn btn-sm btn-info">Student: {this.state.studentName}</div><b><i class="fa fa-angle-right"></i></b>
+                <div className="btn btn-sm btn-info teacher">Teacher: {teacherDetails}</div>
                 </div>
                 <div>
                   <textarea rows="4" cols="50" className="form-control" placeholder="Please add details here">
-
-                  </textarea>
-
-                  <div class="file btn btn-primary">
-                    Upload
-                    </div>
-                  <input accept="video/*" type="file" name="file" />
-
-
+                  </textarea> <br />
+                    <div className="file btn btn-info">  Upload
+                    </div> 
+                  <input accept ="video/*" type="file" name="file" className="fileOne" />
+                  
                 </div>
               </div>
-              <button type="submit" className="btn btn-dark">Submit</button>
+              <button type="submit" className="btn btn-dark submit">Submit</button>
             </form>
           </div>
         </Modal>
