@@ -148,22 +148,18 @@ class SearchTeacher extends Component {
                 </div>
                 <div className="filter-search">
                     <p className="help-block validation-message">{this.state.showValidationMessage}</p>
-                    <span>Filter By Category :</span>
+                    
                     <div className ="row">
-                        <div className="filter-teacher col-6 col-md-6">
-
-                            
-                            <Multiselect options={searctTeacherData} onSelectOptions={this.handleChange} />
+                        <div className="filter-teacher col-xs-12 col-12 col-md-6">
+                        <i class="fas fa-caret-down"></i>
+                            <Multiselect options={searctTeacherData} onSelectOptions={this.handleChange}  placeHolder ="filter by Categoty"/>
                         </div>
-                        <div className="input-group search-teacher col-6 col-md-6">
+                        <div className="input-group search-teacher col-xs-12 col-12 col-md-6">
                             <input type="text" className="form-control" value={this.state.searchValue} onChange={(value) => this.setSaerchValue(value)} placeholder={"Search for.." + this.state.placeHolderValue} name="srch-term" id="srch-term" />
                             <span className="fa fa-search teacher-search-icon" onClick={this.getSerachParameter}></span>
                         </div>
                     </div>
-                    <div className="row">
-
-                        {this.state.noRecordMessage}
-                    </div>
+                    
                     <div className="row">
 
                         {filetredTeacherData}

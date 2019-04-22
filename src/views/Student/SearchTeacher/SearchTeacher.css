@@ -21,10 +21,18 @@
   padding-left: 20px;
 }
 
+.filter-search .chip {
+  position: absolute;
+    top: -15px;
+}
+
 .teacher-search-icon{
-  padding: 10px;
-  background-color: #232838;
-  color: #ffffff;
+  padding: 11px;
+    background-color: #232838;
+    color: #ffffff;
+    position: absolute;
+    right: -20px;
+
 }
 
 .input-group-btn > .btn {
@@ -38,14 +46,24 @@
    border-color:#cccccc; 
   }
 
+  .caret-icon{
+    position: absolute;
+    top: 30px;
+    right: 34px;
+  }
+
 .filter-teacher{
     display: inline-block;
     width: 40%;
 }
+.label-multislect{
+  position: absolute;
+}
+
 .search-teacher{
-    width: 50% !important;
-    display: inline-flex !important;
-    margin-left: 20px;
+   width: 50% !important;
+   padding-top: 20px;
+    
 }
 
 .search-teacher button {
