@@ -26,9 +26,8 @@ class ModalPopUp extends Component {
     if (studentDetails) {
       this.setState({
         studentName: studentDetails.firstName + ' ' + studentDetails.lastName
-      });
+      })
     }
-    
   }
   render() {
     const openModal = this.props.modalState;
@@ -54,12 +53,12 @@ class ModalPopUp extends Component {
                   <div class="file btn btn-primary">
                     Upload
                     </div>
-                  <input accept ="video/*" type="file" name="file" />
+                  <input accept="video/*" type="file" name="file" />
 
 
                 </div>
               </div>
-              <button type="submit" className="btn btn-default">Submit</button>
+              <button type="submit" className="btn btn-dark">Submit</button>
             </form>
           </div>
         </Modal>
