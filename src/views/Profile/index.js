@@ -89,12 +89,17 @@ class Profile extends Component {
     const userId = JSON.parse(localStorage.getItem('user')).user.uid;
     if (fileDetails.type.indexOf('image') > -1) {
       this.setState({ isUploading: true, errorMessage: '' });
-      uploadUserProfilePic(fileDetails, userId).then(() => {
-        getProfileDownloadUrl(fileDetails, userId).then(url => {
-          this.setState({ isUploading: false, profileImage: url });
-          console.log(url);
+      uploadUserProfilePic(fileDetails, userId)
+        .then(() => {
+          getProfileDownloadUrl(fileDetails, userId).then(url => {
+            this.setState({ isUploading: false, profileImage: url });
+          });
+        })
+        .catch(error => {
+          this.setState({ isUploading: false });
+          toastr.error(error.code);
+          console.log(error);
         });
-      });
     } else {
       this.setState({ errorMessage: 'Only Images Accepted' });
     }
