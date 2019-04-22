@@ -89,7 +89,7 @@ class App extends Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/home" component={Home} />
           {/* <Route exact path="/home/teacher/:id" component={teacherDetails} />  */}
-          <Route exact path="/home/teacher/:id" render={(props) => <TeacherDetails {...props} detailData={this.props.teacherCarouselData}/>}/> 
+          <Route exact path="/home/teacher/:id" render={(props) => <TeacherDetails {...props} />}/> 
           <Route exact path="/contactus" component={ContactUs} />
           <Route exact path="/aboutus" component={AboutUs} />
           <Route exact path="/resetPassword" component={PasswordReset} />
@@ -156,8 +156,7 @@ const mapStateToProps = state => {
   return {
     auth: true,
     spinnerStatus: state.spinnerStatus.spinnerStatus,
-    modalState: state.openModal,
-    teacherCarouselData: state.homeReducerStore.teacherCarouselData
+    modalState: state.openModal
   };
 };
 
