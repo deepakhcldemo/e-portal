@@ -5,9 +5,10 @@ import "./styles.scss"
 class Progress extends Component {
 
     render = () => {  
-        const { progress } = this.props;
+        const { bgColor, progress } = this.props;
         const width = {
-            width: progress + '%'            
+            width: progress + '%',
+            backgroundColor: bgColor            
         }
         return (
             <div className="own-progress">
