@@ -12,3 +12,9 @@ export const getTeacherDetailFromDB = (userId) => {
     .where('userId', '==', userId)
     .get();
 }
+
+export const getTotalRating = (collection, userId) => {
+  return getDbRef(collection)
+    .where('userId', '==', userId)
+    .get();
+}

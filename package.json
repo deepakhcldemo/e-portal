@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@cogent-labs/react-rating-component": "^1.1.0",
     "@progress/kendo-react-animation": "^2.8.0",
     "@progress/kendo-react-treeview": "^2.8.0",
     "@progress/kendo-theme-default": "^3.5.0",
@@ -35,6 +36,7 @@
     "react-lightbox-component": "^1.2.1",
     "react-modal": "^3.8.1",
     "react-pdf": "^4.0.5",
+    "react-rating-component": "^1.0.0",
     "react-redux": "^6.0.1",
     "react-redux-firebase": "^2.2.6",
     "react-redux-toastr": "^7.4.8",
