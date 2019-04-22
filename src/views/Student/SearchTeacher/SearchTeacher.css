@@ -4,6 +4,23 @@
     cursor: pointer;
 }
 
+.filter-search .list-result{
+  background-color: white;
+}
+
+.filter-search .chip-body {
+  height: 30px;
+  padding: 3px;
+}
+
+
+.filter-search .search-result {
+  overflow-y: scroll;
+}
+.filter-search .container {
+  padding-left: 20px;
+}
+
 .teacher-search-icon{
   padding: 10px;
   background-color: #232838;

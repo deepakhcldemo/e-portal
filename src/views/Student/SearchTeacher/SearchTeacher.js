@@ -28,10 +28,7 @@ class SearchTeacher extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.getSerachParameter = this.getSerachParameter.bind(this);
         this.setfilteredTeacher = this.setfilteredTeacher.bind(this);
-        // this.filterBasedOnName = this.filterBasedOnName.bind(this);
-        // this.filterBasedOnEmail = this.filterBasedOnEmail.bind(this);
-        // this.filterBasedOnLocation = this.filterBasedOnLocation.bind(this);
-        
+
     }
 
 
@@ -53,80 +50,6 @@ class SearchTeacher extends Component {
         })
     }
 
-
-    // getSerachParameter = () => {
-    //     if (this.state.searchValue && this.state.selectedOption) {
-    //         switch (this.state.selectedOption.value) {
-    //             case "Name":
-    //                 this.filterBasedOnName(this.state.searchValue)
-    //                 break;
-    //             case "Mobile Number":
-    //                 this.filterBasedOnMobile(this.state.searchValue)
-    //                 break;
-    //             case "Email":
-    //                 this.filterBasedOnEmail(this.state.searchValue)
-    //                 break;
-    //             case "Location":
-    //                 this.filterBasedOnLocation(this.state.searchValue)
-    //                 break;
-    //             default:
-    //             // code block
-    //         }
-    //         this.setState({
-    //             selectedOption: {},
-    //             searchValue: '',
-    //             showValidationMessage: ''
-    //         })
-    //         console.log('this.state in search button', this.state);
-
-    //     }
-
-    //     else {
-    //         this.setState({
-    //             showValidationMessage: 'Category and search field can not be empty'
-    //         });
-    //     }
-
-
-    // }
-    // setfilteredTeacher = (filteredRecords) => {
-    //     this.setState({
-    //         filtredTeacherRecord: filteredRecords
-    //     })
-    // }
-
-    // filterBasedOnName = (searchName) => {
-    //     const teacherRecord = [];
-    //     this.props.TeacherList.map((teacher) => {
-    //         if (teacher.role === 'Teacher' && (teacher.firstName === searchName || teacher.lastName === searchName)) {
-    //             teacherRecord.push(teacher)
-    //         }
-    //     })
-
-    //     this.setfilteredTeacher(teacherRecord);
-    // }
-
-    // filterBasedOnMobile = (searchMobile) => {
-    //     const teacherRecord = [];
-    //     this.props.TeacherList.map((teacher) => {
-    //         if (teacher.role === 'Teacher' && teacher.mobile === searchMobile) {
-    //             teacherRecord.push(teacher)
-    //         }
-    //     })
-    //     this.setfilteredTeacher(teacherRecord);
-    // }
-
-    // filterBasedOnEmail = (searchEmail) => {
-    //     const teacherRecord = [];
-    //     this.props.TeacherList.map((teacher) => {
-    //         if (teacher.role === 'Teacher' && teacher.email === searchEmail) {
-    //             teacherRecord.push(teacher)
-    //         }
-    //     })
-
-    //     this.setfilteredTeacher(teacherRecord);
-    // }
-
     openCalendarModal = () => {
         this.setState({ calendarModal: true });
     }
@@ -135,18 +58,6 @@ class SearchTeacher extends Component {
     }
 
 
-
-    // filterBasedOnLocation = (searchLocation) => {
-    //     const teacherRecord = [];
-    //     this.props.TeacherList.map((teacher) => {
-    //         if (teacher.role === 'Teacher' && (teacher.address === searchLocation || teacher.city === searchLocation
-    //             || teacher.country === searchLocation)) {
-    //             teacherRecord.push(teacher)
-    //         }
-    //     })
-
-    //     this.setfilteredTeacher(teacherRecord);
-    // }
 
     getSerachParameter = () => {
         const lowerCase = this.state.searchValue.toLowerCase();
@@ -184,9 +95,9 @@ class SearchTeacher extends Component {
 
         })
         this.setState({
-            filtredTeacherRecord : tempArray
+            filtredTeacherRecord: tempArray
         })
-       
+
     }
 
 
@@ -216,15 +127,6 @@ class SearchTeacher extends Component {
                 </div>
             )
         })
-        // if (filetredTeacherData.length === 0 || (this.state.placeHolderValue)) {
-        //     this.state.noRecordMessage = this.state.noRecordMessage;
-        // }
-        // else {
-
-        //     this.setState({
-        //         noRecordMessage: "no recoder found"
-        //     })
-        // }
         const searctTeacherData = [{
             name: 'Name',
             value: 'Name'
@@ -236,16 +138,6 @@ class SearchTeacher extends Component {
         {
             name: 'Rating',
             value: 'rating'
-        },
-
-        {
-            name: 'Charge',
-            value: 'charge'
-        },
-
-        {
-            name: 'Currency',
-            value: 'currency'
         }
         ];
 
@@ -256,19 +148,17 @@ class SearchTeacher extends Component {
                 </div>
                 <div className="filter-search">
                     <p className="help-block validation-message">{this.state.showValidationMessage}</p>
-                    <div className="filter-teacher">
-                        <span>Filter By Category :</span>
-                        {/* <Select
-                            value={selectedOption}
-                            onChange={this.handleChange}
-                            options={options}
-                        /> */}
+                    <span>Filter By Category :</span>
+                    <div className ="row">
+                        <div className="filter-teacher col-6 col-md-6">
 
-                        <Multiselect options={searctTeacherData} onSelectOptions={this.handleChange} />
-                    </div>
-                    <div className="input-group search-teacher">
-                        <input type="text" className="form-control" value={this.state.searchValue} onChange={(value) => this.setSaerchValue(value)} placeholder={"Search for.." + this.state.placeHolderValue} name="srch-term" id="srch-term" />
-                        <span className="fa fa-search teacher-search-icon" onClick={this.getSerachParameter}></span>
+                            
+                            <Multiselect options={searctTeacherData} onSelectOptions={this.handleChange} />
+                        </div>
+                        <div className="input-group search-teacher col-6 col-md-6">
+                            <input type="text" className="form-control" value={this.state.searchValue} onChange={(value) => this.setSaerchValue(value)} placeholder={"Search for.." + this.state.placeHolderValue} name="srch-term" id="srch-term" />
+                            <span className="fa fa-search teacher-search-icon" onClick={this.getSerachParameter}></span>
+                        </div>
                     </div>
                     <div className="row">
 
