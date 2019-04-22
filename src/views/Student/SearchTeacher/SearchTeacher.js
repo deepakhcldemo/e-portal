@@ -20,7 +20,7 @@ class SearchTeacher extends Component {
             searchValue: '',
             filtredTeacherRecord: [],
             showValidationMessage: '',
-            noRecordMessage: 'Search for yoour teacher here'
+            noRecordMessage: 'Search for your teacher here'
         };
         this.handleChange = this.handleChange.bind(this);
         this.getSerachParameter = this.getSerachParameter.bind(this);
