@@ -23,9 +23,12 @@ class ModalPopUp extends Component {
   };
   componentDidMount() {
     const studentDetails = JSON.parse(localStorage.getItem('userProfile'));
-    this.setState({
-      studentName: studentDetails.firstName + ' ' + studentDetails.lastName
-    })
+    if (studentDetails) {
+      this.setState({
+        studentName: studentDetails.firstName + ' ' + studentDetails.lastName
+      });
+    }
+    
   }
   render() {
     const openModal = this.props.modalState;
