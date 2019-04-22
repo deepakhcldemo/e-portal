@@ -3,12 +3,13 @@ import './teacherDetails.scss';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Spinner } from 'react-bootstrap';
+import RatingComponent from 'react-star-rating-component';
 
 import ModalPopUp from '../../../shared/components/modalpopup/modalpopup'
 import HeaderHome from '../../../components/layout/header/HeaderHome';
 import Slider from '../../../components/slider/Slider';
 import {openModalForRequest} from './teacher-details.action';
-import { getTeacherDetailFromDB } from '../../../database/dal/firebase/teacherDetailDal';
+import { getTeacherDetailFromDB, getTotalRating } from '../../../database/dal/firebase/teacherDetailDal';
 
 class TeacherDetails extends Component {
 
@@ -25,7 +26,8 @@ class TeacherDetails extends Component {
             },
             my: '',
             teacherId : '',
-            spinner: true
+            spinner: true,
+            starRating: 1
         }
         this.openModalForRequest = this.openModalForRequest.bind(this);
     }
@@ -37,20 +39,30 @@ class TeacherDetails extends Component {
                 teacherId : this.props.match.params
             })
         }
-        
-
-        // const data = this.props.detailData[id];
-        // this.getDetails(data);
 
         getTeacherDetailFromDB(id).then((snapshot)=>{
-            console.log('dataaaa--', snapshot);
             snapshot.forEach(doc => {
                 const data = doc.data();
+                const userRating = data.userRating;
                 this.setState({spinner: false});
+                // Create model
                 this.getDetails(data);
-                console.log('doc-----', doc.data())
+                
+
+                if (userRating) {
+                    const userLength = userRating.length;
+                    let totalRating = 0;
+                    let averageRating = 0;
+                    userRating.forEach(user => {
+                        totalRating = totalRating + user.rating;
+                    });
+                    averageRating = totalRating/userLength;
+                    this.setState({starRating: averageRating});
+                }
             });
-        })    
+        });
+
+        
 
     }
     componentWillReceiveProps(nextProps) {
@@ -60,6 +72,7 @@ class TeacherDetails extends Component {
         //     const data = nextProps.detailData[id];
         //     this.getDetails(data);
         // }
+        
 
     }
     getDetails(data) {
@@ -80,25 +93,13 @@ class TeacherDetails extends Component {
         this.props.history.push('/login');
 
     }
-    moreDetails(isLogedIn, detailModel) {
-        console.log('detailModel in teacher details', detailModel);
-        const { rating, category, gender } = detailModel;
-        if (isLogedIn) {
-            return (
-                <div>
-                    More detail to be displayed
-                    <ul>
-                        <li>Rating: {rating}</li>
-                        <li>Category: {category}</li>
-                        <li>Gender: {gender}</li>
-                    </ul>
-                </div>
-            )
-        }
-        return (
-            <button className="btn btn-primary" onClick={(e) => this.navigateToLogin()}>Login to view more</button>
-        )
+
+    onStarClick(nextValue, prevValue, name) {
+        console.log('prevValue', prevValue)
+        console.log('nextValue', nextValue)
+        this.setState({starRating: nextValue});
     }
+    
 
     openModalForRequest = () => {
         this.props.openModalPopUp();
@@ -119,6 +120,8 @@ class TeacherDetails extends Component {
                     <div className="details-wrapper">
                         <ModalPopUp/>
                         <HeaderHome />
+                        
+                        
                         <div className="top-bg">
                             
                             <div className="container">
@@ -128,9 +131,14 @@ class TeacherDetails extends Component {
                                         <span className="sub-title">Credential</span>
                                         <span className="sub-title">Subject</span>
                                         <span className="sub-title last">Credential</span>
-                                        <p>
-                                            Rating: {rating}
-                                            </p>
+                                        <div>
+                                            <RatingComponent
+                                                name="rate1"
+                                                starCount={5}
+                                                value={this.state.starRating}
+                                                onStarClick={this.onStarClick.bind(this)}
+                                            />
+                                        </div>
                                     </div>
                                     <button className="btn btn-dark">Send Request</button>
                                     <button className="btn btn-dark" onClick ={this.openModalForRequest}>Request For Review</button>
@@ -143,12 +151,6 @@ class TeacherDetails extends Component {
                             
                             <div className="row">
                                 <div className="col-sm-12">
-                                    {/* <h5 className="mt-0">{title}</h5>
-                                    <p>
-                                        {description}
-                                    </p>
-                                    {this.moreDetails(localStorage.getItem('user'), this.state.detailModel)}
-                                        */}
                                     
                                     <div className="row main-setion">
                                         <div className="col-sm-3">

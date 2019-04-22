@@ -4,8 +4,10 @@
     title: '',
     tags: '',
     desc: '',
+    category: '',
     thumbnail: true,
     video: false,
     userDetails: '',
+    doc: '',
     fields: ['title', 'tags', 'desc']
 }

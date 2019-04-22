@@ -259,14 +259,15 @@ class Profile extends Component {
                 <div className="row">
                   <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <div className="form-group">
-                      <img
-                        src={profileImage}
-                        className="img-thumbnail thumbnail-style"
-                        alt="User Profile"
-                        width="240"
-                        height="200"
-                      />
-
+                      <div className="profile-image-placeholder">
+                        <img
+                          src={profileImage}
+                          className="img-thumbnail thumbnail-style"
+                          alt="User Profile"
+                          width="240"
+                          height="200"
+                        />
+                      </div>
                       {isUploading && (
                         <div className="text-block ">
                           <span className="blink-text">Uploading...</span>

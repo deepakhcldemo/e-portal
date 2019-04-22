@@ -1,5 +1,4 @@
 import dbFactory from '../../dbFactory'
-import {closeModal} from './../../../views/Category/action'
 
 const db = dbFactory.create('firebase');
 
@@ -8,15 +7,6 @@ const getDbRef = collectionName => {
     const ref = db.firestore().collection(collectionName);
     return ref;
 };
-  
-/* export const getCurrentUserFromDB = dispatch => {
-    db.auth().onAuthStateChanged( user => {
-        if(user) {
-            const uid = user.uid
-            dispatch({type: 'GET_CURRENT_USER', uid})
-        }
-    });
-} */
 
 export const saveFileMetaDataFromDB = (dispatch, fileName, user, doc, fields, type) => {
     let actualFileName;
@@ -32,14 +22,13 @@ export const saveFileMetaDataFromDB = (dispatch, fileName, user, doc, fields, ty
         videoMetadata: [],
         thumb: '',
         status: true,
-        subject: user.subject,
+        category: '',
         isPending: (user.role === 'Teacher') ? false : true,
         created: db.firestore.FieldValue.serverTimestamp()
     }
     if(type === 'metadata') {
         db.firestore().collection('curriculum').doc(doc).update(fields)
         .then(function(){
-            dispatch(closeModal())            
         })
         .catch(function(err) {
             dispatch({type: 'ERROR', err})
@@ -92,9 +81,8 @@ export const getBannerFromDB = () => {
     .get() 
 }
 
-export const getCurriculumFromDB = () => {
-        
-    return getDbRef("curriculum").get();      
+export const getCurriculumFromDB = (uid) => {   
+    return (uid) ? getDbRef("curriculum").where('userId', '==', uid).get() :  getDbRef("curriculum").get()
 }
 
 export const getNotificationFromDB = () => {

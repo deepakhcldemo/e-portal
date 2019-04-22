@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './TeacherItem.css';
+import StarRatingComponent from 'react-star-rating-component';
 
 class TeacherItem extends Component {
   render() {
@@ -27,10 +28,11 @@ class TeacherItem extends Component {
               <p>
                 <strong>Subject:</strong> {userProfile.subject}
               </p>
-              <p>
-                <strong>Rating:</strong>{' '}
-                {userProfile.rating ? userProfile.rating : 0}/5{' '}
-              </p>
+              <StarRatingComponent
+                name="rate"
+                starCount={5}
+                value={userProfile.rating}
+              />
             </div>
           </div>
         </div>

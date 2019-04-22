@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
+import StarRatingComponent from 'react-star-rating-component';
 import './topvideo.scss'
 
 class TopVideo extends Component {
@@ -12,13 +13,21 @@ class TopVideo extends Component {
 					<ul className="list-unstyled video-list-thumbs">
 						{videoDetails && videoDetails.map((videoDetail,index) => {
 							return (
-								<li key={index}>
+								<li className="card" key={index}>
 									<NavLink to="" activeClassName="" exact title={videoDetail.title}>
-										<img src={videoDetail.thumb} alt={videoDetail.title} className="img-responsive" height="130px" />
+										<img src="http://www.tompetty.com/sites/g/files/g2000007521/f/styles/photo-carousel/public/Sample-image10-highres.jpg?itok=TDZEPjP8" alt={videoDetail.title} className="img-responsive" height="130px" />
 										<h2>{videoDetail.title}</h2>
 										<i className="fas fa-play-circle"></i>
-										<span className="duration"></span>
+										<h6>2 Days Ago</h6>
 									</NavLink>
+									<h5>
+										<StarRatingComponent
+											name="rate"
+											starCount={5}
+											value={3}
+											// onStarClick={this.onStarClick.bind(this)}
+										/>
+									</h5>
 								</li>
 							)
 						})}
