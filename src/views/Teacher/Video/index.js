@@ -16,6 +16,7 @@ class Video extends Component {
         userDetails: '',
         filter: ''
     }
+    categorySubscriber;
     componentWillMount = () => {
         this.setState({
             userDetails: JSON.parse(localStorage.getItem('userProfile'))
@@ -23,21 +24,23 @@ class Video extends Component {
     }
 
     componentDidMount = () => {
-        getCurriculumFromDB(this.state.userDetails.userId).then(querySnapshot => {
+        getCurriculumFromDB(this.state.userDetails.userId).onSnapshot(querySnapshot => {
             let content = [];
             querySnapshot.forEach(doc => {
                 content.push(Object.assign({id: doc.id},doc.data()));
             });
             this.setState({content});
         });
-        getAllCategory().then(querySnapshot => {
+        this.categorySubscriber = getAllCategory().onSnapshot(querySnapshot => {
             querySnapshot.forEach(doc => {
               const category = [...doc.data().subjects];
               this.setState({ category });
             });
           });
     }
-    
+    componentWillUnmount = () => {
+        this.categorySubscriber()
+    }
     handleUpload = () => {
         this.setState({
             upload: !this.state.upload

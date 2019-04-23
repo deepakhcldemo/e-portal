@@ -82,7 +82,7 @@ export const getBannerFromDB = () => {
 }
 
 export const getCurriculumFromDB = (uid) => {   
-    return (uid) ? getDbRef("curriculum").where('userId', '==', uid).get() :  getDbRef("curriculum").get()
+    return (uid) ? getDbRef("curriculum").where('userId', '==', uid) :  getDbRef("curriculum")
 }
 
 export const getNotificationFromDB = () => {

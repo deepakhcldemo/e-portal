@@ -9,7 +9,7 @@ class CategoryItem extends Component {
   };
 
   componentDidMount = () => {
-    getAllCategory().then(querySnapshot => {
+    getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         const subjects = [...doc.data().subjects];
         this.setState({ categoryList: subjects });

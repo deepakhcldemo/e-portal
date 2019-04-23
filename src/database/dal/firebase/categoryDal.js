@@ -83,5 +83,5 @@ const splitItem = (item, seprator) => {
 };
 
 export const getAllCategory = () => {
-  return getDbRef('subject').get();
+  return getDbRef('subject');
 };
