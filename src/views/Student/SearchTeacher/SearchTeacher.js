@@ -7,6 +7,7 @@ import { getTeachersBasedOnCateogy } from './searchTeacherAction';
 import Navigation from '../Navigation/Navigation';
 import { connect } from 'react-redux';
 import Select from 'react-select';
+import { getAllCategory } from '../../../database/dal/firebase/categoryDal';
 
 import Multiselect from 'multiselect-dropdown-react';
 import './SearchTeacher.css';
@@ -24,15 +25,24 @@ class SearchTeacher extends Component {
       searchValue: '',
       filtredTeacherRecord: [],
       showValidationMessage: '',
-      noRecordMessage: 'Search for your teacher here'
+      noRecordMessage: 'Search for your teacher here',
+      categoryList: [],
+      selectedSubject : ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.getSerachParameter = this.getSerachParameter.bind(this);
     this.setfilteredTeacher = this.setfilteredTeacher.bind(this);
+   this.subjectChange = this.subjectChange.bind(this);
   }
 
   componentDidMount() {
     this.props.getTeachersBasedOnCateogy();
+    getAllCategory().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const subjects = [...doc.data().subjects];
+        this.setState({ categoryList: subjects });
+      });
+    });
   }
 
   handleChange = selectedOption => {
@@ -59,7 +69,7 @@ class SearchTeacher extends Component {
     const tempArray = [];
     this.props.TeacherList.forEach(teacher => {
       this.state.searchParameter.forEach(searchParameter => {
-        if (searchParameter === 'Name') {
+        if (searchParameter === 'Name' && teacher.subject === this.state.selectedSubject ) {
           const teacherFirsnameLower = teacher.firstName.toLowerCase();
           const teacherLastNameLower = teacher.lastName.toLowerCase();
           if (
@@ -70,7 +80,7 @@ class SearchTeacher extends Component {
           }
         }
 
-        if (searchParameter === 'Location') {
+        if (searchParameter === 'Location' && teacher.subject === this.state.selectedSubject) {
           const teacherCityName = teacher.city.toLowerCase();
           const teacheraddress = teacher.address.toLowerCase();
           const teachercountry = teacher.country.toLowerCase();
@@ -82,7 +92,7 @@ class SearchTeacher extends Component {
             tempArray.push(teacher);
           }
         }
-        if (searchParameter === 'currency') {
+        if (searchParameter === 'currency' && teacher.subject === this.state.selectedSubject) {
           if (teacher.currency) {
             const teacherCurrency = teacher.currency.toLowerCase();
             if (teacherCurrency.indexOf(lowerCase) !== -1) {
@@ -102,6 +112,13 @@ class SearchTeacher extends Component {
       filtredTeacherRecord: filteredRecords
     });
   };
+
+
+  subjectChange = (subjectValue) => {
+    this.setState({
+      selectedSubject : subjectValue.target.value
+    })
+  }
 
   render() {
     let filetredTeacherData = this.state.filtredTeacherRecord.map(
@@ -168,7 +185,16 @@ class SearchTeacher extends Component {
           <div className="card">
             <div className="card-body">
               <div className="row row-without--margin">
-                <div className="filter-teacher col-xs-12 col-12 col-md-6">
+                <div className=" filter-teacher add-padding col-xs-12 col-12 col-md-4">
+                <select className ="form-control" onChange ={this.subjectChange}>
+                  {this.state.categoryList.map(key => (
+                    
+                       <option key={key}>{key}</option>
+                    
+                  ))}
+                  </select>
+                </div>
+                <div className="filter-teacher col-xs-12 col-12 col-md-4">
                   {/* <i className="fas fa-caret-down" /> */}
                   <Multiselect
                     options={searctTeacherData}
@@ -176,7 +202,7 @@ class SearchTeacher extends Component {
                     placeHolder="filter by Categoty"
                   />
                 </div>
-                <div className="input-group search-teacher col-xs-12 col-12 col-md-6">
+                <div className="input-group search-teacher col-xs-12 col-12 col-md-4">
                   <input
                     type="text"
                     className="form-control"
