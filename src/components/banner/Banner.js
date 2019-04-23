@@ -34,8 +34,7 @@ class Banner extends Component {
                 "/" +
                 bannerRow.banner_image
               }
-              // className="d-block w-100"
-              className="d-block"
+              className="d-block w-100"
             /></center>
           )}
         </div>
