@@ -50,8 +50,7 @@ class Login extends Component {
     password: '',
     submitted: false,
     loggedInStatus: false,
-    errorMessage: '',
-    redirectToReferrer: false
+    errorMessage: ''
   };
 
   componentDidMount = () => {
@@ -109,18 +108,20 @@ class Login extends Component {
                 localStorage.setItem('userProfile', JSON.stringify(user));
                 if (doc.exists) {
                   if (user.role === 'Teacher') {
-                      const teacherDetailId = localStorage.getItem('teacherDetailId');
-        
-                      if (teacherDetailId) {
-                        console.log('logic')
-                        this.props.history.push(`/home/teacher/${teacherDetailId}`);
-                        localStorage.removeItem('teacherDetailsId');
-                      } else {
-                        console.log('else')
-                        this.props.history.push('/teacher');
-                      }
-                      
+                    const teacherDetailId = localStorage.getItem(
+                      'teacherDetailId'
+                    );
 
+                    if (teacherDetailId) {
+                      console.log('logic');
+                      this.props.history.push(
+                        `/home/teacher/${teacherDetailId}`
+                      );
+                      localStorage.removeItem('teacherDetailsId');
+                    } else {
+                      console.log('else');
+                      this.props.history.push('/teacher');
+                    }
                   } else {
                     this.props.history.push('/student');
                   }
@@ -139,9 +140,6 @@ class Login extends Component {
 
   setLoginStatus(userDetails, isNewUser) {
     AuthGuard.authenticate(() => {
-      this.setState(() => ({
-        redirectToReferrer: true
-      }));
       console.log('GLOBAL_VARIABLES.BASEROUTE', GLOBAL_VARIABLES.BASEROUTE);
       if (GLOBAL_VARIABLES.BASEROUTE !== '/home') {
         this.props.history.push(GLOBAL_VARIABLES.BASEROUTE);
@@ -155,7 +153,8 @@ class Login extends Component {
     });
   }
 
-  login = () => {
+  login = (e) => {
+    e.preventDefault();
     const { username, password } = this.state;
     this.setState({ submitted: true });
     const userDetails = { username, password };
@@ -267,11 +266,6 @@ class Login extends Component {
 
   render() {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
-    const { redirectToReferrer } = this.state;
-
-    if (redirectToReferrer === true) {
-      return <Redirect to={from} />;
-    }
 
     const { username, password, submitted } = this.state;
     return (
@@ -360,7 +354,7 @@ class Login extends Component {
                 </div>
                 <div className="form-group padding-top-15">
                   <button
-                    onClick={this.login}
+                    onClick={e=>this.login(e)}
                     type="button"
                     className="btn btn-success btn-block"
                   >

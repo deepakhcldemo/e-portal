@@ -26,14 +26,14 @@ class CategoryItem extends Component {
         <div className="users-list">
           <div className="row">
             {categoryList &&
-              categoryList.map((list, index) => {
+              categoryList.map((listItem, index) => {
                 return (
                   <div
                     key={index}
                     className="col-xs-6 col-sm-4 col-md-3 col-lg-3"
                   >
                     <div className="card card-style">
-                      <div className="card-body category-style">{list}</div>
+                      <div className="card-body category-style">{listItem}</div>
                     </div>
                   </div>
                 );

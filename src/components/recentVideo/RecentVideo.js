@@ -5,41 +5,45 @@ import moment from 'moment';
 import Slider from 'react-slick';
 // Video Item Component
 import VideoItem from '../../components/videoItem/VideoItem';
-import GLOBAL_VARIABLES from "../../config/config";
+import GLOBAL_VARIABLES from '../../config/config';
 
-class RecentVideo extends Component {    
-
-  tryRequire = (path) => {
+class RecentVideo extends Component {
+  tryRequire = path => {
     try {
-     return require(`${path}`);
+      return require(`${path}`);
     } catch (err) {
-     return null;
+      return null;
     }
   };
 
   createChildren = records => {
     return records.map((carouselRecord, index) => {
       carouselRecord.date = (carouselRecord.created) ? moment(carouselRecord.created.toDate()).fromNow() : ''
-      carouselRecord.thumb = this.tryRequire(carouselRecord.thumb)?(carouselRecord.thumb):(GLOBAL_VARIABLES.VIDEO_PLACEHOLDER); 
-     
+      carouselRecord.thumb = this.tryRequire(carouselRecord.thumb)
+        ? carouselRecord.thumb
+        : GLOBAL_VARIABLES.VIDEO_PLACEHOLDER;
+
       return (
         <div key={index} className="vd-wrapper col-xs-12 padR10">
-            <VideoItem isNotVisibleVideoMeta={this.props.isNotVisibleVideoMeta} videoDetails={carouselRecord} />
+          <VideoItem
+            isNotVisibleVideoMeta={this.props.isNotVisibleVideoMeta}
+            videoDetails={carouselRecord}
+          />
         </div>
       );
     });
   };
 
   render() {
-    const { headeTitle, carousellistNewlyItems } = this.props
-    const title = (headeTitle) ? headeTitle : "Recent Videos"
-    const style = { background: '#FFF', textAlign: 'center' }
+    const { headeTitle, carousellistNewlyItems } = this.props;
+    const title = headeTitle ? headeTitle : 'Recent Videos';
+    const style = { background: '#FFF', textAlign: 'center' };
     const settingsNewlyItems = {
       dots: true,
       infinite: true,
       speed: 500,
       slidesToShow:
-      carousellistNewlyItems.length >= 5 ? 5 : carousellistNewlyItems.length,
+        carousellistNewlyItems.length >= 5 ? 5 : carousellistNewlyItems.length,
       slidesToScroll: 1,
       autoplay: true,
       responsive: [
@@ -71,18 +75,18 @@ class RecentVideo extends Component {
     };
     return (
       <>
-      {carousellistNewlyItems.length > 0 && (
-        <div className="col-12 content-container--background">
-          <h3 className="mt-30">
-            {title} <i className="fas fa-chevron-right" />
-          </h3>
-          <div style={style}>
-            <Slider {...settingsNewlyItems}>
-              {this.createChildren(carousellistNewlyItems)}
-            </Slider>
+        {carousellistNewlyItems.length > 0 && (
+          <div className="col-12 content-container--background">
+            <h3 className="mt-30">
+              {title} <i className="fas fa-chevron-right" />
+            </h3>
+            <div style={style}>
+              <Slider {...settingsNewlyItems}>
+                {this.createChildren(carousellistNewlyItems)}
+              </Slider>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </>
     );
   }

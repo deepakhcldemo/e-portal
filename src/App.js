@@ -28,11 +28,10 @@ import Student from './views/Student/index';
 import StudentNotificationsDetails from './views/Student/Notification/notificationsDetails';
 import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription';
 
-
-// import CreateNewNotification from './views/Student/NotifyStudent/createNewNotification';
 import NotificationfromTeacher from './views/Student/NotifyStudent/notificationfromTeacher';
 import NotificationFullDetails from './views/Student/NotifyStudent/notificationFullDetails';
-
+import NotificationfromStudent from './views/Teacher/NotifyTeacher/notificationfromStudent';
+import TeacherNotificationFulldetails from './views/Teacher/NotifyTeacher/teacherNotificationFulldetails';
 
 import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
 
@@ -62,7 +61,7 @@ class App extends Component {
 
     if (!user && this.props.location) {
       GLOBAL_VARIABLES.BASEROUTE = this.props.location.pathname;
-      //this.props.history.push('/home');
+      this.props.history.push('/home');
     }
   }
   render() {
@@ -103,9 +102,7 @@ class App extends Component {
           <PrivateRoute path="/category" component={Category} exact />
           <PrivateRoute path="/teacher" component={Teacher} exact />
           <PrivateRoute path="/teacher/videos" component={Video} exact />
-          {/* <PrivateRoute path="/student/createNewNotification" component={CreateNewNotification} exact /> */}
-
-          <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
+         <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
           <Route path="/student/notificationsDetails" component={StudentNotificationsDetails} />
           <Route path="/teacher/notificationsDescription" component={NotificationsDescription} />
           <Route path="/student/notificationsDescription" component={StudentNotificationsDescription} />
@@ -133,6 +130,16 @@ class App extends Component {
              <PrivateRoute
             path="/student/notificationFullDetails"
             component={NotificationFullDetails}
+            exact
+          />
+             <PrivateRoute
+            path="/teacher/notificationfromStudent"
+            component={NotificationfromStudent}
+            exact
+          />
+             <PrivateRoute
+            path="/teacher/teacherNotificationFulldetails"
+            component={TeacherNotificationFulldetails}
             exact
           />
           <Redirect to="/home" />

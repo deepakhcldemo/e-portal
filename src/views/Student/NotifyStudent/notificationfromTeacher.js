@@ -32,7 +32,7 @@ class NotificationfromTeacher extends Component {
                                     <h4>Notifications</h4><hr />
 
 
-                                    <Link to={`/Student/notificationFullDetails`} activeClassName="active">
+                                    <Link to={`/teacher/notificationFullDetails`} activeClassName="active">
                                         <div class="alert alert-success">
                                             <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" class="img-circle" /></div>
                                             <div class="container" onClick={this.onOpenModal} style={{ cursor: "pointer" }}>
