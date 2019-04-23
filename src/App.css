@@ -1087,6 +1087,10 @@ li .fa {
   margin-bottom: 58px;
 }
 
+.list-container--margin {
+  margin: auto;
+}
+
 @media screen and (min-width: 768px) {
   .home-header-icon--size {
     font-size: inherit !important;

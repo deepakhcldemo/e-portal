@@ -221,7 +221,6 @@ class SearchTeacher extends Component {
                   </select>
                 </div>
                 <div className="filter-teacher col-xs-12 col-12 col-md-4">
-                  {/* <i className="fas fa-caret-down" /> */}
                   <Multiselect
                     options={searctTeacherData}
                     onSelectOptions={this.handleChange}
