@@ -23,7 +23,9 @@ class TeacherDetails extends Component {
                 description: 'this is demo',
                 rating: 7,
                 category: '',
-                gender: ''
+                gender: '',
+                subject: '',
+                imgPath: ''
             },
             my: '',
             teacherId : '',
@@ -84,6 +86,8 @@ class TeacherDetails extends Component {
             detailModel.description = data.summary;
             detailModel.rating = data.rating;
             detailModel.gender = data.gender;
+            detailModel.subject = data.subject;
+            detailModel.imgPath = data.profileImage;
 
             this.setState({ detailModel });
         }
@@ -106,7 +110,7 @@ class TeacherDetails extends Component {
         this.props.openModalPopUp();
     }
     render() {
-        const { title, description, rating } = this.state.detailModel;
+        const { title, description, rating, subject, imgPath } = this.state.detailModel;
         const isLogedIn = localStorage.getItem('user');
         return (
             <React.Fragment>
@@ -130,7 +134,7 @@ class TeacherDetails extends Component {
                                     <div>
                                         <h4>{title}</h4>
                                         <span className="sub-title">Credential</span>
-                                        <span className="sub-title">Subject</span>
+                                        <span className="sub-title">{subject}</span>
                                         <span className="sub-title last">Credential</span>
                                         <div className={classnames({'disbaled-stars': !isLogedIn })}>
                                             <RatingComponent
@@ -155,7 +159,7 @@ class TeacherDetails extends Component {
                                     
                                     <div className="row main-setion">
                                         <div className="col-sm-3">
-                                        <img className="profile-img" src="https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg" alt="..." />
+                                        <img className="profile-img" src={imgPath} alt="..." />
                                         </div>
                                         <div className="col-sm-9">
                                             <p><strong>{title}</strong> {description}</p>
