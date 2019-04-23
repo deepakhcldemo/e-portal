@@ -23,6 +23,7 @@ export const getUserProfile = userId => {
     .where('userId', '==', userId)
     .get();
 };
+
 export const fetchProviders = user => {
   const db = dbFactory.create('firebase');
   return db.auth().fetchSignInMethodsForEmail(user.username);

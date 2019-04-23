@@ -27,3 +27,26 @@
 .per-hour-title {
   font-size: 10px !important;
 }
+
+.tray-item--height {
+  height: 150px;
+  align-items: center;
+}
+
+.profile-pic-list {
+  height: 120px;
+  width: 120px;
+  border-radius: 60px;
+}
+
+.profile-pic-block {
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+}
+
+.profile-pic--align {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
