@@ -7,16 +7,16 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 class ListContainer extends Component {
   state = {
     teacherList: [],
-    noOfTeacherItems: 1
+    noOfTeacherItems: 3
   };
 
   componentWillReceiveProps(nextProps) {
     console.log('nextProps', nextProps);
-    const teachers = nextProps.itemList.slice(0, 1);
+    const teachers = nextProps.itemList.slice(0, 3);
     this.setState({ teacherList: teachers });
   }
   fetchNextTeacherItems = () => {
-    const itemCounter = this.state.noOfTeacherItems + 1;
+    const itemCounter = this.state.noOfTeacherItems + 3;
     const newItems = this.props.itemList.slice(
       this.state.noOfTeacherItems,
       itemCounter
@@ -31,21 +31,6 @@ class ListContainer extends Component {
 
   render() {
     const { listType, itemList } = this.props;
-
-    // const teacherList = itemList.map((item, index) => {
-    //   return (
-    //     <div key={index} className="col-xs-12">
-    //       <Link
-    //         className="nav-link"
-    //         style={{ padding: '0px' }}
-    //         to={`/home/teacher/${item.userId}`}
-    //         title={item.firstName}
-    //       >
-    //         <TeacherItem userProfile={item} />;
-    //       </Link>
-    //     </div>
-    //   );
-    // });
     const videoList = itemList.map((item, index) => {
       return (
         <div key={index} className="col-xs-12">

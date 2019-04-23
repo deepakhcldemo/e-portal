@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import GLOBAL_VARIABLES from "../../config/config";
+import { handleResize } from "../../shared/library/window_resize";
 import Slider from "react-slick";
 
 class Banner extends Component {
@@ -11,8 +11,27 @@ class Banner extends Component {
     };
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("resize", handleResize);
+  }
+
+  componentDidMount = () => {
+    handleResize(prop => {
+      this.setState({
+        noOfCarouselImage: prop.noOfCarouselImage
+      });
+    });
+    window.addEventListener("resize", () => {
+      handleResize(prop => {
+        this.setState({
+          noOfCarouselImage: prop.noOfCarouselImage
+        });
+      });
+    });
+  };
+
   render() {
-    const { bannerRows, pageName } = this.props;
+    const { bannerRows } = this.props;
     const settingsBanner = {
       dots: true,
       infinite: true,
@@ -27,16 +46,7 @@ class Banner extends Component {
       listAwaitingItems = bannerRows.map((bannerRow, index) => (
         <div key={index}>
           {bannerRow.banner_image && (
-            <center><img
-              src={
-                GLOBAL_VARIABLES.BANNER_PATH +
-                pageName +
-                "/" +
-                bannerRow.banner_image
-              }
-              // className="d-block w-100"
-              className="d-block"
-            /></center>
+            <img src={bannerRow.banner_image} className="d-block w-100" />
           )}
         </div>
       ));
@@ -45,7 +55,7 @@ class Banner extends Component {
       <React.Fragment>
         {listAwaitingItems.length > 0 && (
           <div className="col-12 content-container--background">
-            <div style={{ background: "#555555", textAlign: "center" }}>
+            <div style={{ background: "#FFF", textAlign: "center" }}>
               <Slider {...settingsBanner}>{listAwaitingItems}</Slider>
             </div>
           </div>

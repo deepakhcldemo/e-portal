@@ -82,9 +82,11 @@ export const getBannerFromDB = () => {
 }
 
 export const getCurriculumFromDB = (uid) => {   
-    return (uid) ? getDbRef("curriculum").where('userId', '==', uid).get() :  getDbRef("curriculum").get()
+    return (uid) ? getDbRef("curriculum").where('userId', '==', uid) :  getDbRef("curriculum")
 }
-
+export const getReviewContentFromDB = (uid, status) => {
+    return getDbRef("reviewVideo").where('tid', '==', uid).where('tStatus' , '==', status)
+} 
 export const getNotificationFromDB = () => {
     const db = dbFactory.create('firebase');
     return db.firestore().collection("notifications").get();       

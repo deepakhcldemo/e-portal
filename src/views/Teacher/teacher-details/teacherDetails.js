@@ -123,7 +123,7 @@ class TeacherDetails extends Component {
                 )}
                 {!this.state.spinner && (
                     <div className="details-wrapper">
-                        <ModalPopUp/>
+                        <ModalPopUp teacherDeatils = {this.state.detailModel}/>
                         <HeaderHome />
                         
                         

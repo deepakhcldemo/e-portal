@@ -35,7 +35,9 @@ class Profile extends Component {
     profileImage:
       'https://firebasestorage.googleapis.com/v0/b/e-project-4e023.appspot.com/o/profilepic%2FuserProfile.png?alt=media&token=cfb3e9a8-8508-4acd-8e45-dd97e2ea3dec',
     submitted: false,
-    errorMessage: ''
+    errorMessage: '',
+    rating: 0,
+    noOfRatings: 0
   };
 
   handleDropdownSelection = (option, property) => {
@@ -49,7 +51,7 @@ class Profile extends Component {
 
   componentDidMount = () => {
     const userId = JSON.parse(localStorage.getItem('user')).user.uid;
-    getAllCategory().then(querySnapshot => {
+    getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         subjects = [...doc.data().subjects];
       });
@@ -77,6 +79,16 @@ class Profile extends Component {
               charge: user.charge,
               currency: user.currency,
               summary: user.summary
+            });
+          }
+          if (user.rating) {
+            this.setState({
+              rating: user.rating
+            });
+          }
+          if (user.noOfRatings) {
+            this.setState({
+              noOfRatings: user.noOfRatings
             });
           }
         }
@@ -164,8 +176,17 @@ class Profile extends Component {
         charge !== '' &&
         currency !== ''
       ) {
-        teacherDetails.createdAt = userDetails.user.createdAt;
-        teacherDetails.rating = 0;
+        teacherDetails.createdAt = new Date(Number(userDetails.user.createdAt));
+        if (this.state.rating === 0) {
+          teacherDetails.rating = 0;
+        } else {
+          teacherDetails.rating = this.state.rating;
+        }
+        if (this.state.noOfRatings === 0) {
+          teacherDetails.noOfRatings = 0;
+        } else {
+          teacherDetails.noOfRatings = this.state.noOfRatings;
+        }
         saveUserProfile(teacherDetails).then(() => {
           localStorage.setItem('userProfile', JSON.stringify(teacherDetails));
           toastr.success('Details Saved Successfully');
@@ -202,7 +223,18 @@ class Profile extends Component {
         role !== '' &&
         subject !== ''
       ) {
-        studentDetails.createdAt = userDetails.user.createdAt;
+        studentDetails.createdAt = new Date(userDetails.user.createdAt);
+
+        if (this.state.rating === 0) {
+          studentDetails.rating = 0;
+        } else {
+          studentDetails.rating = this.state.rating;
+        }
+        if (this.state.noOfRatings === 0) {
+          studentDetails.noOfRatings = 0;
+        } else {
+          studentDetails.noOfRatings = this.state.noOfRatings;
+        }
         saveUserProfile(studentDetails).then(() => {
           localStorage.setItem('userProfile', JSON.stringify(studentDetails));
           toastr.success('Details Saved Successfully');
@@ -1106,16 +1138,32 @@ class Profile extends Component {
                   </div>
                 )}
 
-                <div className="form-group padding-top-15">
-                  <button
-                    type="button"
-                    onClick={e => this.saveDetails(e)}
-                    // onClick={() => saveFeedback()}
-                    className="btn btn-dark btn-block"
-                  >
-                    SAVE DETAILS
-                  </button>
+                <div className="row padding-top-15">
+                  <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        this.props.history.push('/home');
+                      }}
+                      // onClick={() => saveFeedback()}
+                      className="btn btn-dark btn-block"
+                    >
+                      CANCEL
+                    </button>
+                  </div>
+                  <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <button
+                      type="button"
+                      onClick={e => this.saveDetails(e)}
+                      // onClick={() => saveFeedback()}
+                      className="btn btn-dark btn-block"
+                    >
+                      SAVE DETAILS
+                    </button>
+                  </div>
                 </div>
+                <div className="form-group padding-top-15" />
+                <div className="col-12">&nbsp;</div>
               </form>
             </div>
           </div>

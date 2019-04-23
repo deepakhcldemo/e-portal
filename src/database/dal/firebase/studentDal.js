@@ -4,6 +4,7 @@ export const getTeachersFromDBBasedOnCategory = (dispatch,selectedSubject) => {
     const db = dbFactory.create('firebase');
     let data = [];
     let teacherStudentQuery = db.firestore().collection("userProfiles")
+    .where("role", "==", "Teacher")
     .where("subject", "==", selectedSubject)
     .get()
     .then(function(querySnapshot) {
