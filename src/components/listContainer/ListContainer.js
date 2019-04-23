@@ -7,16 +7,16 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 class ListContainer extends Component {
   state = {
     teacherList: [],
-    noOfTeacherItems: 1
+    noOfTeacherItems: 3
   };
 
   componentWillReceiveProps(nextProps) {
     console.log('nextProps', nextProps);
-    const teachers = nextProps.itemList.slice(0, 1);
+    const teachers = nextProps.itemList.slice(0, 3);
     this.setState({ teacherList: teachers });
   }
   fetchNextTeacherItems = () => {
-    const itemCounter = this.state.noOfTeacherItems + 1;
+    const itemCounter = this.state.noOfTeacherItems + 3;
     const newItems = this.props.itemList.slice(
       this.state.noOfTeacherItems,
       itemCounter
