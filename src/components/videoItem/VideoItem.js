@@ -1,32 +1,51 @@
 import React, { Component } from 'react';
 import StarRatingComponent from 'react-star-rating-component';
-import Modal from 'react-responsive-modal';
+
+import VideoPopup from '../videopopup/VideoPopup'
 import './VideoItem.css';
 
 class VideoItem extends Component {
   state = {
-    open: false
+    modalOpen: false,
+    userDetails: ''
   }
 
   handleClick = () => {
     this.setState({
-      open: !this.state.open
+      modalOpen: !this.state.modalOpen
+    })
+  }
+
+  componentWillMount = () => {
+    this.setState({
+      userDetails: JSON.parse(localStorage.getItem('userProfile'))
     })
   }
 
   render() {
     const { isNotVisibleVideoMeta, videoDetails } = this.props;
+    const { modalOpen, userDetails } = this.state;
     return (
       <>
       {videoDetails && (
         <div className="card">
           <div className="card-body user-profile-card--padding">
             <div className="vd-wrapper  col-xs-12">
-              <div className="border_1px">
-                <video width="400" preload="none" poster={videoDetails.thumb} onClick={this.handleClick}>
-                  <source src={videoDetails.src} type="video/mp4" />
-                </video>
-              </div>
+              <div
+                onClick={this.handleClick}
+                style={{
+                  cursor: 'pointer',
+                  backgroundImage: `url( ${
+                    videoDetails.thumb
+                  } )`,
+                  backgroundPosition: "top center",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  height: "200px",
+                  margin: "10px"
+                }}
+                className="border_1px"
+              />
               <div className="vd-content user-details--height">
                 <h6>{videoDetails.title}</h6>
                 <p>{videoDetails.createdDate}</p>
@@ -36,7 +55,7 @@ class VideoItem extends Component {
                     name="rate"
                     starCount={5}
                     value={videoDetails.rating}
-                    // onStarClick={this.onStarClick.bind(this)}
+                    editing={false}
                   />
                   <span className="rating-position">
                     ({videoDetails.views})
@@ -45,14 +64,11 @@ class VideoItem extends Component {
                 )}
               </div>
             </div>
-          </div>
-          <Modal open={this.state.open} onClose={this.handleClick} center>
-            <video width="100%" controls autoPlay={true}>
-              <source src={videoDetails.src} type="video/mp4" />
-            </video>
-          </Modal>
+          </div>  
+          {modalOpen && (        
+            <VideoPopup userDetails={userDetails} videoDetails={videoDetails} onVideoClose={this.handleClick}/>
+          )}
         </div>
-
       )}
       </>
     );

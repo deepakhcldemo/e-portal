@@ -152,7 +152,7 @@ class Curriculum extends Component {
                                                 <FileUploader
                                                     hidden
                                                     accept='video/*'
-                                                    storageRef={firebase.storage().ref(this.state.userDetails.userId)}
+                                                    storageRef={firebase.storage().ref("curriculum" + "/" + userDetails.userId)}
                                                     onUploadStart={this.handleUploadStart}
                                                     onUploadError={this.handleUploadError}
                                                     onUploadSuccess={this.handleVideoUploadSuccess}
@@ -172,7 +172,7 @@ class Curriculum extends Component {
                                                 hidden
                                                 accept='image/*'
                                                 filename={file => 'thumb_' + file.name.split('.')[1] }
-                                                storageRef={firebase.storage().ref(this.state.userDetails.userId)}
+                                                storageRef={firebase.storage().ref("curriculum" + "/" + userDetails.userId)}
                                                 onUploadStart={this.handleUploadStart}
                                                 onUploadError={this.handleUploadError}
                                                 onUploadSuccess={this.handleThumbUploadSuccess}

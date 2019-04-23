@@ -1,38 +1,65 @@
 import React, { Component } from 'react'
+import moment from 'moment';
 import { NavLink } from 'react-router-dom'
 import StarRatingComponent from 'react-star-rating-component';
+import VideoPopup from './../../../components/videopopup/VideoPopup'
 import './topvideo.scss'
 
 class TopVideo extends Component {
+
+	state = {
+		modalOpen: false,
+		userDetails: '',
+		videoData: ''
+	}
+	
+	handleClick = (videoData) => {
+		this.setState({
+			videoData,
+			modalOpen: !this.state.modalOpen
+		})
+	}
+
+	componentWillMount = () => {
+		this.setState({
+			userDetails: JSON.parse(localStorage.getItem('userProfile'))
+		})
+	}
+
     render = () => {
-		const {heading, videoDetails} = this.props		
+		const {heading, videoDetails} = this.props	
+		const { modalOpen, userDetails, videoData } = this.state;	
         return (
 			<div className="card">
 				<div className="card-body">
 					<h4>{heading} {this.props.children && (<span className="link pull-right">{this.props.children}</span>)}</h4><hr/>
 					<ul className="list-unstyled video-list-thumbs">
 						{videoDetails && videoDetails.map((videoDetail,index) => {
+							      videoDetail.date = (videoDetail.created) ? moment(videoDetail.created.toDate()).fromNow() : ''
 							return (
 								<li className="card" key={index}>
-									<NavLink to="" activeClassName="" exact title={videoDetail.title}>
-										<img src="http://www.tompetty.com/sites/g/files/g2000007521/f/styles/photo-carousel/public/Sample-image10-highres.jpg?itok=TDZEPjP8" alt={videoDetail.title} className="img-responsive" height="130px" />
+									<a onClick={() => this.handleClick(videoDetail)} href="#">
+										<img src={videoDetail.thumb} alt={videoDetail.title} className="img-responsive" height="130px" />
 										<h2>{videoDetail.title}</h2>
 										<i className="fas fa-play-circle"></i>
-										<h6>2 Days Ago</h6>
-									</NavLink>
+										<h6>{videoDetail.date}</h6>
+									</a>
 									<h5>
 										<StarRatingComponent
 											name="rate"
 											starCount={5}
-											value={3}
-											// onStarClick={this.onStarClick.bind(this)}
+											value={videoDetail.rating}
+											editing={false}
 										/>
-									</h5>
+									</h5>									
 								</li>
 							)
 						})}
 					</ul>
-				</div>
+				</div>				
+				{modalOpen && (        
+					<VideoPopup userDetails={userDetails} videoDetails={videoData} onVideoClose={this.handleClick}/>
+				)}
 			</div>
         );
     }

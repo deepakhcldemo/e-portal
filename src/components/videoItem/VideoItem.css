@@ -14,3 +14,24 @@
 .rating-position {
   position: absolute;
 }
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.video-margin {
+  margin-top: 25px
+}
+.views {
+  color: #868383;  
+}
+.video-meta-data {
+  display: flex;
+  flex-direction: row;
+  flex-flow: row;
+  justify-content: space-between;
+}
+.video-meta-data span small {
+  display: block
+}

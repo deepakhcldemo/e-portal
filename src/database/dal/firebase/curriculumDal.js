@@ -15,6 +15,8 @@ export const saveFileMetaDataFromDB = (dispatch, fileName, user, doc, fields, ty
     }
     const metaData = {
         userId: user.userId,
+        views: 0,
+        rating: 0,
         src:'',    
         title: (type === 'video' ) ? actualFileName[0] : '',
         desc: '',
@@ -34,11 +36,12 @@ export const saveFileMetaDataFromDB = (dispatch, fileName, user, doc, fields, ty
             dispatch({type: 'ERROR', err})
         });
     }else if(type !== 'metadata') {
-        db.storage().ref(user.userId).child(fileName).getDownloadURL().then(url => {
+        db.storage().ref("curriculum" + "/" + user.userId).child(fileName).getDownloadURL().then(url => {
             if(type === 'video') {
                 metaData.src = url
                 db.firestore().collection('curriculum').add(metaData)
                 .then(function(docRef) {
+                    console.log(docRef)
                     dispatch({type: 'SET_DOC_REF', ref: docRef.id})
                 })
                 .catch(function(err) {

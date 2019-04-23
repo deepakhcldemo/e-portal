@@ -36,6 +36,7 @@
 .video-list-thumbs > li > a > img {
 	width:180px;
 	height: 140px;
+	border: 1px solid #dcd9d9;
 }
 .video-list-thumbs > li > a:hover{
 	box-shadow:0 2px 5px rgba(0,0,0,.3);
@@ -43,9 +44,12 @@
 }
 .video-list-thumbs h2{
 	font-size: 14px;
-	margin: 8px 0 0;
-	text-align: left;
-	color: rgb(46, 45, 45)
+    margin: 8px 0 0;
+    text-align: left;
+    color: #2e2d2d;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .video-list-thumbs h6{
 	color: #6b5b5b;
