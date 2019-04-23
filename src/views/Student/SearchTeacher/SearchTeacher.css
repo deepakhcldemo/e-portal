@@ -158,4 +158,8 @@
     margin-left: -26px;
     font-size: 15px;
   }
+  .profile-pic-list {
+    height: 80px;
+    width: 60px;
+}
 }

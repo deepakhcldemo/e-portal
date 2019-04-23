@@ -123,7 +123,7 @@ class App extends Component {
             exact
           />
            <PrivateRoute
-            path="/student/notificationfromTeacher"
+            path="Student/NotifyStudent/notificationfromTeacher"
             component={NotificationfromTeacher}
             exact
           />
