@@ -63,14 +63,15 @@ class ModalPopUp extends Component {
 
   createNotification = () => {
     const loggedInUSerDetails = JSON.parse(localStorage.getItem('userProfile'));
+    debugger
     let tId , sId;
     if(loggedInUSerDetails.role === 'Teacher'){
       tId  = loggedInUSerDetails.userId;
-      sId = ''
+      sId = '';
     }
     else{
       sId  = loggedInUSerDetails.userId;
-      tId = this.state.tid
+      tId = ''
     }
     const notificationDetails = {
         notificationDesc : this.state.notificationDescription,
@@ -81,8 +82,9 @@ class ModalPopUp extends Component {
     }
     getVideoUrl().then(url => {
       let sVideo = '',  tVideo = '';
-      loggedInUSerDetails.role === 'Teacher' ? tVideo = url : sVideo = '';
+      loggedInUSerDetails.role === 'Teacher' ? tVideo = url : sVideo = url;
       notificationDetails.tvideo = tVideo;
+      notificationDetails.status = false;
       notificationDetails.sVideo = sVideo;
       notificationDetails.comments = [];
       saveNotification(notificationDetails)
