@@ -7,7 +7,7 @@ import { getTeachersBasedOnCateogy } from './searchTeacherAction';
 import Navigation from '../Navigation/Navigation';
 import { connect } from 'react-redux';
 import Select from 'react-select';
-import { getAllCategory, } from '../../../database/dal/firebase/categoryDal';
+import { getAllCategory } from '../../../database/dal/firebase/categoryDal';
 
 import Multiselect from 'multiselect-dropdown-react';
 import './SearchTeacher.css';
@@ -27,12 +27,12 @@ class SearchTeacher extends Component {
       showValidationMessage: '',
       noRecordMessage: 'Search for your teacher here',
       categoryList: [],
-      selectedSubject : ''
+      selectedSubject: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.getSerachParameter = this.getSerachParameter.bind(this);
     this.setfilteredTeacher = this.setfilteredTeacher.bind(this);
-   this.subjectChange = this.subjectChange.bind(this);
+    this.subjectChange = this.subjectChange.bind(this);
   }
 
   componentDidMount() {
@@ -46,7 +46,7 @@ class SearchTeacher extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getSerachParameter(nextProps, 'defalutSubjectSelected')
+    this.getSerachParameter(nextProps, 'defalutSubjectSelected');
   }
 
   handleChange = selectedOption => {
@@ -70,12 +70,15 @@ class SearchTeacher extends Component {
 
   getSerachParameter = (searchParameter, defalutSubjectSelected) => {
     console.log('searchParameter', searchParameter);
-    if(defalutSubjectSelected !== 'defalutSubjectSelected'){
+    if (defalutSubjectSelected !== 'defalutSubjectSelected') {
       const lowerCase = this.state.searchValue.toLowerCase();
       const tempArray = [];
       this.props.TeacherList.forEach(teacher => {
         this.state.searchParameter.forEach(searchParameter => {
-          if (searchParameter === 'Name' && teacher.subject === this.state.selectedSubject ) {
+          if (
+            searchParameter === 'Name' &&
+            teacher.subject === this.state.selectedSubject
+          ) {
             const teacherFirsnameLower = teacher.firstName.toLowerCase();
             const teacherLastNameLower = teacher.lastName.toLowerCase();
             if (
@@ -85,8 +88,11 @@ class SearchTeacher extends Component {
               tempArray.push(teacher);
             }
           }
-  
-          if (searchParameter === 'Location' && teacher.subject === this.state.selectedSubject) {
+
+          if (
+            searchParameter === 'Location' &&
+            teacher.subject === this.state.selectedSubject
+          ) {
             const teacherCityName = teacher.city.toLowerCase();
             const teacheraddress = teacher.address.toLowerCase();
             const teachercountry = teacher.country.toLowerCase();
@@ -98,7 +104,10 @@ class SearchTeacher extends Component {
               tempArray.push(teacher);
             }
           }
-          if (searchParameter === 'currency' && teacher.subject === this.state.selectedSubject) {
+          if (
+            searchParameter === 'currency' &&
+            teacher.subject === this.state.selectedSubject
+          ) {
             if (teacher.currency) {
               const teacherCurrency = teacher.currency.toLowerCase();
               if (teacherCurrency.indexOf(lowerCase) !== -1) {
@@ -111,8 +120,7 @@ class SearchTeacher extends Component {
       this.setState({
         filtredTeacherRecord: tempArray
       });
-    }
-    else{
+    } else {
       this.setState({
         filtredTeacherRecord: searchParameter.TeacherList
       });
@@ -126,13 +134,12 @@ class SearchTeacher extends Component {
     });
   };
 
-
-  subjectChange = (subjectValue) => {
+  subjectChange = subjectValue => {
     this.setState({
-      selectedSubject : subjectValue.target.value
-    })
+      selectedSubject: subjectValue.target.value
+    });
     this.props.getTeachersBasedOnCateogy(subjectValue.target.value);
-  }
+  };
 
   render() {
     let filetredTeacherData = this.state.filtredTeacherRecord.map(
@@ -182,7 +189,10 @@ class SearchTeacher extends Component {
         value: 'rating'
       }
     ];
-    console.log(this.state.filtredTeacherRecord, 'this.state.filtredTeacherRecord in search teacher');
+    console.log(
+      this.state.filtredTeacherRecord,
+      'this.state.filtredTeacherRecord in search teacher'
+    );
     return (
       <div className="teacher-student-search container-fluid">
         <div>
@@ -200,12 +210,13 @@ class SearchTeacher extends Component {
             <div className="card-body">
               <div className="row row-without--margin">
                 <div className=" filter-teacher add-padding col-xs-12 col-12 col-md-4">
-                <select className ="form-control" onChange ={this.subjectChange}>
-                  {this.state.categoryList.map(key => (
-                    
-                       <option key={key}>{key}</option>
-                    
-                  ))}
+                  <select
+                    className="form-control"
+                    onChange={this.subjectChange}
+                  >
+                    {this.state.categoryList.map(key => (
+                      <option key={key}>{key}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="filter-teacher col-xs-12 col-12 col-md-4">
@@ -240,7 +251,6 @@ class SearchTeacher extends Component {
                         {filetredTeacherData}
                     </div> */}
           <div>
-           
             {this.state.filtredTeacherRecord && (
               <ListContainer
                 listType="Teacher"
@@ -263,7 +273,10 @@ class SearchTeacher extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('state.searchTeacher.teacherDetails', state.searchTeacher.teacherDetails);
+  console.log(
+    'state.searchTeacher.teacherDetails',
+    state.searchTeacher.teacherDetails
+  );
   return {
     modalSata: state.classes,
     carouselRows: state.carouselStore.carouselData,
@@ -273,7 +286,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTeachersBasedOnCateogy: (selectedSubject) =>
+    getTeachersBasedOnCateogy: selectedSubject =>
       dispatch(getTeachersBasedOnCateogy(selectedSubject))
   };
 };

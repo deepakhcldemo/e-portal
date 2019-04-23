@@ -108,18 +108,20 @@ class Login extends Component {
                 localStorage.setItem('userProfile', JSON.stringify(user));
                 if (doc.exists) {
                   if (user.role === 'Teacher') {
-                      const teacherDetailId = localStorage.getItem('teacherDetailId');
-        
-                      if (teacherDetailId) {
-                        console.log('logic')
-                        this.props.history.push(`/home/teacher/${teacherDetailId}`);
-                        localStorage.removeItem('teacherDetailsId');
-                      } else {
-                        console.log('else')
-                        this.props.history.push('/teacher');
-                      }
-                      
+                    const teacherDetailId = localStorage.getItem(
+                      'teacherDetailId'
+                    );
 
+                    if (teacherDetailId) {
+                      console.log('logic');
+                      this.props.history.push(
+                        `/home/teacher/${teacherDetailId}`
+                      );
+                      localStorage.removeItem('teacherDetailsId');
+                    } else {
+                      console.log('else');
+                      this.props.history.push('/teacher');
+                    }
                   } else {
                     this.props.history.push('/student');
                   }

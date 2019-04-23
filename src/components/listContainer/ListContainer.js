@@ -27,27 +27,10 @@ class ListContainer extends Component {
       teacherList: updatedTeacherList,
       noOfTeacherItems: itemCounter
     });
-    console.log(this.state.teacherList);
   };
 
   render() {
     const { listType, itemList } = this.props;
-
-    // const teacherList = itemList.map((item, index) => {
-    //   return (
-    //     <div key={index} className="col-xs-12">
-    //       <Link
-    //         className="nav-link"
-    //         style={{ padding: '0px' }}
-    //         to={`/home/teacher/${item.userId}`}
-    //         title={item.firstName}
-    //       >
-    //         <TeacherItem userProfile={item} />;
-    //       </Link>
-    //     </div>
-    //   );
-    // });
-    console.log(this.state.teacherList);
     const videoList = itemList.map((item, index) => {
       return (
         <div key={index} className="col-xs-12">
