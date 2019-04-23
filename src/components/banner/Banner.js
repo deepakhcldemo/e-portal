@@ -29,7 +29,7 @@ class Banner extends Component {
           {bannerRow.banner_image && (
             <img
               src={
-                GLOBAL_VARIABLES.HOME_BANNER_PATH +
+                GLOBAL_VARIABLES.BANNER_PATH +
                 pageName +
                 "/" +
                 bannerRow.banner_image
