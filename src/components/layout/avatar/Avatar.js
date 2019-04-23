@@ -22,7 +22,8 @@ class Avatar extends Component {
                 id="popover-positioned-bottom"
                 title={this.props.userProfile.firstName + ' ' + this.props.userProfile.lastName}
               >
-                
+                {this.props.userProfile.role ==='Teacher' &&(<div className="avatar-item" onClick={() => this.navigateTo('/teacher')}>Dashboard</div>)}
+                {this.props.userProfile.role === 'Student' && (<div className="avatar-item" onClick={() => this.navigateTo('/student')}>Dashboard</div>)}
                 <div className="avatar-item" onClick={()=>this.navigateTo('/profile')}>Profile</div>
                 {this.props.currentUser.additionalUserInfo.providerId ==='password' && <div className="avatar-item">Change Password</div>}
                 <div className="avatar-item" onClick={() => AuthGuard.signout(() => { this.navigateTo('/home')})}>Sign Out</div>
