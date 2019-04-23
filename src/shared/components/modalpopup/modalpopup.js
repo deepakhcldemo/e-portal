@@ -63,7 +63,7 @@ class ModalPopUp extends Component {
                   
                 </div>
               </div>
-              <button type="submit" className="btn btn-dark submit">Submit</button>
+              <button type="submit" className="btn btn-dark submit">Create</button>
             </form>
           </div>
         </Modal>

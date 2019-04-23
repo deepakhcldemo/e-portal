@@ -51,3 +51,7 @@ textarea.form-control {
 .submit{
     float: right;
 }
+.fa-angle-right:before {
+    font-size: x-large;
+    padding-left: 40px;
+}
