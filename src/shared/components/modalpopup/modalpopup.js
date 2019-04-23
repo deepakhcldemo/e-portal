@@ -24,6 +24,7 @@ class ModalPopUp extends Component {
     this.props.closePopModal();
   };
   componentDidMount() {
+    console.log('this.props', this.props);
     const studentDetails = JSON.parse(localStorage.getItem('userProfile'));
     if (studentDetails) {
       this.setState({
@@ -51,7 +52,8 @@ class ModalPopUp extends Component {
             <form>
               <div className="form-group">
                 <div className="teacher-student">
-                <div className="btn btn-sm btn-info">Student: {this.state.studentName}</div><b><i class="fa fa-angle-right"></i></b>
+                <div className="btn btn-sm btn-info">Student: {this.state.studentName}</div>
+                <div className ="student-teacher-notifying"><b>Notifying to <i className="fa fa-angle-right"></i></b></div>
                 <div className="btn btn-sm btn-info teacher">Teacher: {teacherDetails}</div>
                 </div>
                 <div>

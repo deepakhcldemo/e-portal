@@ -3,7 +3,11 @@
     height: 150px;
     border-radius: 50%;
 }
-
+.student-teacher-notifying{
+    display: inline-block;
+    color: #117a8b;
+    padding-left: 20px;
+}
 .header{
     padding: 0px 0px 25px 0px;
 }
