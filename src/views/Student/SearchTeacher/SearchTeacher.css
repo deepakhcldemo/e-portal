@@ -15,10 +15,23 @@
 .filter-search .list-result{
   background-color: white;
 }
-
+.chip-body {
+  height: 20px;
+  min-width: 55px;
+  width: auto;
+  background-color: #2196f3;
+  color: #ffffff;
+  padding: 0px;
+  text-align: center;
+  border-radius: .25rem;
+  display: inline-block;
+  margin-left: 3px;
+  margin-bottom: 3px;
+}
 .filter-search .chip-body {
   height: 30px;
-  padding: 3px;
+  top: 60px;
+  left: 0px;
 }
 
 
@@ -115,12 +128,7 @@
   .validation-message{
     font-size: 15px;
   }
-@media only screen and (max-width: 600px) {
-    .filter-search{
-        max-width: 20rem;
-        
-    }
-  }
+
 
   .calendar-modal{
     width:80%;
@@ -129,4 +137,32 @@
 
   .calendar-modal .body{
     min-height: 70%;
+  }
+
+
+  @media only screen and (max-width: 600px) {
+    .filter-search{
+        max-width: 20rem;
+        min-height: 100%;
+        
+    }
+    .input-box{
+      margin: 8px -12px 1px -12px;
+    }
+    .border_1px{
+      height: 100px!important;
+    }
+    .vd-wrapper .vd-content {
+      padding: 5px 10px 0px;
+      border: 1px solid #d5d5d5;
+      color: #000000;
+  }
+  .charge-container{
+    height: 65px;
+    width: 59px;
+    margin-top: 10px;
+    margin-left: -26px;
+    font-size: 15px;
+  }
+
   }

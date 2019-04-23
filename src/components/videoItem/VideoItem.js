@@ -10,15 +10,13 @@ class VideoItem extends Component {
         <div className="card-body user-profile-card--padding">
           <div className="vd-wrapper  col-xs-12">
             <div className="border_1px">
-              <video width="400" controls>
-                <source src={videoDetails.videoSrc} type="video/mp4" />
+              <video width="400" preload="none" poster={videoDetails.thumb}>
+                <source src={videoDetails.src} type="video/mp4" />
               </video>
             </div>
-
             <div className="vd-content user-details--height">
-              <h6>{videoDetails.title}</h6>
-              <p>{videoDetails.noOfDays} days ago.</p>
-              {/* <p>Rating: {videoDetails.rating ? videoDetails.rating : 0}/5 </p> */}
+              <h6>{videoDetails.title.charAt(0).toUpperCase() + videoDetails.title.slice(1)}</h6>
+              <p>{videoDetails.date}</p>
               <StarRatingComponent
                 name="rate"
                 starCount={5}
@@ -26,7 +24,7 @@ class VideoItem extends Component {
                 // onStarClick={this.onStarClick.bind(this)}
               />
               <span className="rating-position">
-                ({videoDetails.noOfRatings})
+                ({videoDetails.views})
               </span>
             </div>
           </div>
