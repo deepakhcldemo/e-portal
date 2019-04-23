@@ -18,3 +18,6 @@ export const getTotalRating = (collection, userId) => {
     .where('userId', '==', userId)
     .get();
 }
+
+
+

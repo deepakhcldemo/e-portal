@@ -21,6 +21,7 @@ class RecentVideo extends Component {
     return records.map((carouselRecord, index) => {
       carouselRecord.date = moment(carouselRecord.created.toDate()).fromNow();
       carouselRecord.thumb = this.tryRequire(carouselRecord.thumb)?(carouselRecord.thumb):(GLOBAL_VARIABLES.VIDEO_PLACEHOLDER); 
+     
       return (
         <div key={index} className="vd-wrapper col-xs-12 padR10">
             <VideoItem isNotVisibleVideoMeta={this.props.isNotVisibleVideoMeta} videoDetails={carouselRecord} />
