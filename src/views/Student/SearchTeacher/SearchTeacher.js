@@ -121,6 +121,7 @@ class SearchTeacher extends Component {
         filtredTeacherRecord: tempArray
       });
     } else {
+      console.log('searchParameter.TeacherList', searchParameter.TeacherList);
       this.setState({
         filtredTeacherRecord: searchParameter.TeacherList
       });

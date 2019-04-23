@@ -87,7 +87,8 @@ class ModalPopUp extends Component {
       notificationDetails.status = false;
       notificationDetails.sVideo = sVideo;
       notificationDetails.comments = [];
-      saveNotification(notificationDetails)
+      saveNotification(notificationDetails);
+      this.onCloseModal();
     })
 
   }
