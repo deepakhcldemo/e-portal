@@ -21,7 +21,7 @@ class TeacherItem extends Component {
               <div
                 className={
                   isTrayItem
-                    ? 'col-3'
+                    ? 'col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 profile-pic--align'
                     : 'col-12 col-without--padding profile-pic--align'
                 }
               >
@@ -42,7 +42,11 @@ class TeacherItem extends Component {
                 />
               </div>
               <div
-                className={isTrayItem ? 'col-7' : 'col-12 col-without--padding'}
+                className={
+                  isTrayItem
+                    ? 'col-9 col-sm-9 col-md-7 col-lg-7 col-xl-7'
+                    : 'col-12 col-without--padding'
+                }
               >
                 <div className="vd-content user-details--style">
                   <h6>{userProfile.firstName + ' ' + userProfile.lastName}</h6>
@@ -58,7 +62,7 @@ class TeacherItem extends Component {
                 </div>
               </div>
               {isTrayItem && userProfile.currency && (
-                <div className="col-2">
+                <div className="col-3 col-sm-3 col-md-2 col-lg-2 col-xl-2">
                   <div className="charge-container">
                     <div>
                       <i
