@@ -12,8 +12,8 @@ const getDbRef = collectionName => {
 export const saveNotification = notificationDetails => {
   debugger
     return getDbRef('notifications')
-      .doc(notificationDetails.loggedInUserId)
-      .set({...notificationDetails});
+      .add({
+      ...notificationDetails});
   };
 
 
