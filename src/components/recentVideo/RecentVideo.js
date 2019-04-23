@@ -5,12 +5,22 @@ import moment from 'moment';
 import Slider from 'react-slick';
 // Video Item Component
 import VideoItem from '../../components/videoItem/VideoItem';
+import GLOBAL_VARIABLES from "../../config/config";
 
 class RecentVideo extends Component {    
 
+  tryRequire = (path) => {
+    try {
+     return require(`${path}`);
+    } catch (err) {
+     return null;
+    }
+  };
+
   createChildren = records => {
     return records.map((carouselRecord, index) => {
-      carouselRecord.date = moment(carouselRecord.created.toDate()).fromNow() 
+      carouselRecord.date = moment(carouselRecord.created.toDate()).fromNow();
+      carouselRecord.thumb = this.tryRequire(carouselRecord.thumb)?(carouselRecord.thumb):(GLOBAL_VARIABLES.VIDEO_PLACEHOLDER); 
       return (
         <div key={index} className="vd-wrapper col-xs-12 padR10">
             <VideoItem videoDetails={carouselRecord} />
