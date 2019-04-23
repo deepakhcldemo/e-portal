@@ -12,7 +12,7 @@ class Banner extends Component {
   }
 
   render() {
-    const { bannerRows } = this.props;
+    const { bannerRows, pageName } = this.props;
     const settingsBanner = {
       dots: true,
       infinite: true,
@@ -28,7 +28,12 @@ class Banner extends Component {
         <div key={index}>
           {bannerRow.banner_image && (
             <img
-              src={GLOBAL_VARIABLES.HOME_BANNER_PATH + bannerRow.banner_image}
+              src={
+                GLOBAL_VARIABLES.HOME_BANNER_PATH +
+                pageName +
+                "/" +
+                bannerRow.banner_image
+              }
               className="d-block w-100"
             />
           )}
