@@ -1,10 +1,11 @@
 import dbFactory from '../../dbFactory';
 
-export const getTeachersFromDBBasedOnCategory = (dispatch, filterBy, filterBasedON) => {
+export const getTeachersFromDBBasedOnCategory = (dispatch,selectedSubject) => {
     const db = dbFactory.create('firebase');
     let data = [];
-    let teacherStudentQuery = db.firestore().collection("userProfiles");
-    teacherStudentQuery.get()
+    let teacherStudentQuery = db.firestore().collection("userProfiles")
+    .where("subject", "==", selectedSubject)
+    .get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
             data.push(doc.data())

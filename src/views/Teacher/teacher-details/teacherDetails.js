@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { Spinner } from 'react-bootstrap';
 import RatingComponent from 'react-star-rating-component';
+import classnames from 'classnames';
 
 import ModalPopUp from '../../../shared/components/modalpopup/modalpopup'
 import HeaderHome from '../../../components/layout/header/HeaderHome';
@@ -131,7 +132,7 @@ class TeacherDetails extends Component {
                                         <span className="sub-title">Credential</span>
                                         <span className="sub-title">Subject</span>
                                         <span className="sub-title last">Credential</span>
-                                        <div>
+                                        <div className={classnames({'disbaled-stars': !isLogedIn })}>
                                             <RatingComponent
                                                 name="rate1"
                                                 starCount={5}

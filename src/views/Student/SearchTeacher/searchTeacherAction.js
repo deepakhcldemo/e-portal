@@ -1,9 +1,8 @@
 import { getTeachersFromDBBasedOnCategory } from '../../../database/dal/firebase/studentDal';
 
 
-export const getTeachersBasedOnCateogy = (filterBy, filterBasedON ) => {
-    
+export const getTeachersBasedOnCateogy = (selectedSubject) => {
     return (dispatch) => {
-        getTeachersFromDBBasedOnCategory(dispatch, filterBy, filterBasedON);
+        getTeachersFromDBBasedOnCategory(dispatch,selectedSubject);
     }
 }

@@ -6,6 +6,9 @@
   background: rgba(255, 255, 255, 0.8);
   box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
 }
+.container {
+  cursor: auto !important;
+}
 
 .content-container {
   padding-top: 0px;
@@ -203,4 +206,11 @@ form label {
   right: 0;
   margin: auto;
   top: 48%;
+}
+.disbaled-stars label {
+  cursor: auto !important;
+  pointer-events: none;
+}
+.disbaled-stars label.dv-star-rating-empty-star {
+  color: rgb(138, 138, 138) !important;
 }

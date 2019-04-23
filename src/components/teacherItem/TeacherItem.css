@@ -10,3 +10,20 @@
   height: unset !important;
   text-align: left;
 }
+
+.charge-container {
+  background: grey;
+  height: 80px;
+  width: 80px;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  color: white;
+}
+
+.per-hour-title {
+  font-size: 10px !important;
+}

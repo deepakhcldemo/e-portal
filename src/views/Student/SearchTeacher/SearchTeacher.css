@@ -4,6 +4,14 @@
     cursor: pointer;
 }
 
+.add-padding{
+  padding: 20px;
+}
+
+.filter-teacher select {
+  width: 100%;
+}
+
 .filter-search .list-result{
   background-color: white;
 }

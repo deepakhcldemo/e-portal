@@ -6,12 +6,17 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 class ListContainer extends Component {
   state = {
-    teacherList: this.props.itemList.slice(0, 10),
-    noOfTeacherItems: 10
+    teacherList: [],
+    noOfTeacherItems: 1
   };
 
+  componentWillReceiveProps(nextProps) {
+    console.log('nextProps', nextProps);
+    const teachers = nextProps.itemList.slice(0, 1);
+    this.setState({ teacherList: teachers });
+  }
   fetchNextTeacherItems = () => {
-    const itemCounter = this.state.noOfTeacherItems + 10;
+    const itemCounter = this.state.noOfTeacherItems + 1;
     const newItems = this.props.itemList.slice(
       this.state.noOfTeacherItems,
       itemCounter
@@ -59,25 +64,27 @@ class ListContainer extends Component {
     return (
       <React.Fragment>
         {listType === 'Teacher' && (
-          <div className="col-12 content-container--background">
-            <div style={{ background: '#FFF', textAlign: 'center' }}>
-              <InfiniteScroll
-                dataLength={this.state.teacherList.length}
-                next={this.fetchNextTeacherItems}
-                hasMore={true}
-                loader={<h4>Loading...</h4>}
-              >
-                {this.state.teacherList.map((item, index) => (
-                  <Link
-                    className="nav-link"
-                    style={{ padding: '0px' }}
-                    to={`/home/teacher/${item.userId}`}
-                    title={item.firstName}
-                  >
-                    <TeacherItem key={index} userProfile={item} />
-                  </Link>
-                ))}
-              </InfiniteScroll>
+          <div className="row row-without--margin">
+            <div className="col-12 content-container--background col-without--padding">
+              <div style={{ background: '#FFF', textAlign: 'center' }}>
+                <InfiniteScroll
+                  dataLength={this.state.teacherList.length}
+                  next={this.fetchNextTeacherItems}
+                  hasMore={true}
+                >
+                  {this.state.teacherList.map((item, index) => (
+                    <Link
+                      key={index}
+                      className="nav-link"
+                      style={{ padding: '0px' }}
+                      to={`/home/teacher/${item.userId}`}
+                      title={item.firstName}
+                    >
+                      <TeacherItem userProfile={item} isTrayItem={true} />
+                    </Link>
+                  ))}
+                </InfiniteScroll>
+              </div>
             </div>
           </div>
         )}
