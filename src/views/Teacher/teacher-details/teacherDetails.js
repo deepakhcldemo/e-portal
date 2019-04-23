@@ -283,7 +283,7 @@ class TeacherDetails extends Component {
                                     
                                     <div className="row main-setion">
                                         <div className="col-sm-3">
-                                        <img className="profile-img" src="https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration-i.jpg" alt="..." />
+                                        <img className="profile-img" src={imgPath} alt="..." />
                                         </div>
                                         <div className="col-sm-9">
                                             <p><strong>{title}</strong> {description}</p>
