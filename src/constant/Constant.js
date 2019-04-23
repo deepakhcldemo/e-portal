@@ -40,6 +40,15 @@ export const TEACHER_DASHBOARD_LINKS = [
             marginLeft: '5px'
         }
     },
+    {
+        name: 'Notification',
+        link: 'teacher/notificationfromStudent',
+        icon: 'fa fa-bell home-header-icon--size',
+        title: 'Notification',
+        style: {
+            marginLeft: '5px'
+        }
+    },
 ]
 
 export const STUDENT_DASHBOARD_LINKS = [

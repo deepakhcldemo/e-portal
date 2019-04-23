@@ -31,8 +31,8 @@ class NotificationFromStudent extends Component {
                                 <div className="card-body">
                                     <h4>Notification</h4><hr />
 
-
-                                    <Link to={`/student/notificationsDescription`} activeClassName="active">
+                                  
+                                    <Link to={`/student/notificationFullDetails`} activeClassName="active">
                                     <div className="alert alert-info">
                                         <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" /></div>
                                         <div className="container" onClick={this.onOpenModal} style={{ cursor: "pointer" }}>
