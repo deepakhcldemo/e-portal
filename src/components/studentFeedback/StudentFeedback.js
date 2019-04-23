@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Slider from 'react-slick';
-import GLOBAL_VARIABLES from '../../config/config';
-import CommentItem from '../../components/commentItem/CommentItem';
+import Slider from "react-slick";
+import GLOBAL_VARIABLES from "../../config/config";
+import CommentItem from "../../components/commentItem/CommentItem";
 
 class StudentFeedback extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      noOfCarouselImage: ''
+      noOfCarouselImage: ""
     };
   }
 
   studentsReviewChildren = records => {
     const studentsReview = records.map((carouselRecord, index) => {
+      // console.log("--profileData--", carouselRecord.profileData);
       return (
         <div key={index} className="vd-wrapper">
           <CommentItem commentDetails={carouselRecord} />
@@ -27,9 +28,11 @@ class StudentFeedback extends Component {
 
   render() {
     const { studentsReview } = this.props;
-    let title = '';
-    (this.props.headeTitle) ? (title = this.props.headeTitle) : (title = "Feedback")
-       
+    let title = "";
+    this.props.headeTitle
+      ? (title = this.props.headeTitle)
+      : (title = "Feedback");
+
     const settingsStudentsReview = {
       dots: true,
       infinite: true,
@@ -69,13 +72,14 @@ class StudentFeedback extends Component {
       <React.Fragment>
         {studentsReview.length > 0 && (
           <div className="col-12 content-container--background">
-          <h3 className="mt-30 pad10">{title}{' '} <i className="fas fa-chevron-right"></i></h3>
-          <div style={{background: "#FFF",textAlign: "center"}}>
-            <Slider {...settingsStudentsReview}>
-
-            {this.studentsReviewChildren(studentsReview)}
-            </Slider>
-          </div>
+            <h3 className="mt-30 pad10">
+              {title} <i className="fas fa-chevron-right" />
+            </h3>
+            <div style={{ background: "#FFF", textAlign: "center" }}>
+              <Slider {...settingsStudentsReview}>
+                {this.studentsReviewChildren(studentsReview)}
+              </Slider>
+            </div>
           </div>
         )}
       </React.Fragment>
