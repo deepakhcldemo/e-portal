@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import GLOBAL_VARIABLES from "../../config/config";
+import { handleResize } from "../../shared/library/window_resize";
 import Slider from "react-slick";
 
 class Banner extends Component {
@@ -10,6 +10,25 @@ class Banner extends Component {
       noOfCarouselImage: ""
     };
   }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", handleResize);
+  }
+
+  componentDidMount = () => {
+    handleResize(prop => {
+      this.setState({
+        noOfCarouselImage: prop.noOfCarouselImage
+      });
+    });
+    window.addEventListener("resize", () => {
+      handleResize(prop => {
+        this.setState({
+          noOfCarouselImage: prop.noOfCarouselImage
+        });
+      });
+    });
+  };
 
   render() {
     const { bannerRows } = this.props;
@@ -27,10 +46,7 @@ class Banner extends Component {
       listAwaitingItems = bannerRows.map((bannerRow, index) => (
         <div key={index}>
           {bannerRow.banner_image && (
-            <img
-              src={GLOBAL_VARIABLES.HOME_BANNER_PATH + bannerRow.banner_image}
-              className="d-block w-100"
-            />
+            <img src={bannerRow.banner_image} className="d-block w-100" />
           )}
         </div>
       ));
