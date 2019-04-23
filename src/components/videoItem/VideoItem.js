@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
-import './VideoItem.css';
 import StarRatingComponent from 'react-star-rating-component';
+import Modal from 'react-responsive-modal';
+import './VideoItem.css';
 
 class VideoItem extends Component {
+  state = {
+    open: false
+  }
+
+  handleClick = () => {
+    this.setState({
+      open: !this.state.open
+    })
+  }
+
   render() {
     const { isNotVisibleVideoMeta, videoDetails } = this.props;
     return (
@@ -12,7 +23,7 @@ class VideoItem extends Component {
           <div className="card-body user-profile-card--padding">
             <div className="vd-wrapper  col-xs-12">
               <div className="border_1px">
-                <video width="400" preload="none" poster={videoDetails.thumb}>
+                <video width="400" preload="none" poster={videoDetails.thumb} onClick={this.handleClick}>
                   <source src={videoDetails.src} type="video/mp4" />
                 </video>
               </div>
@@ -35,7 +46,13 @@ class VideoItem extends Component {
               </div>
             </div>
           </div>
+          <Modal open={this.state.open} onClose={this.handleClick} center>
+            <video width="100%" controls autoPlay={true}>
+              <source src={videoDetails.src} type="video/mp4" />
+            </video>
+          </Modal>
         </div>
+
       )}
       </>
     );

@@ -64,11 +64,13 @@ class Student extends Component {
                 </div> */}
 
         <RecentVideo
+          isNotVisibleVideoMeta={true}
           carousellistNewlyItems={notifications}
           headeTitle="Video Pending For Review"
         />
 
         <RecentVideo
+          isNotVisibleVideoMeta={true}
           carousellistNewlyItems={notifications}
           headeTitle="Video Reviewed"
         />

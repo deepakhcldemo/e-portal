@@ -19,7 +19,7 @@ class RecentVideo extends Component {
 
   createChildren = records => {
     return records.map((carouselRecord, index) => {
-      carouselRecord.date = moment(carouselRecord.created.toDate()).fromNow();
+      carouselRecord.date = (carouselRecord.created) ? moment(carouselRecord.created.toDate()).fromNow() : ''
       carouselRecord.thumb = this.tryRequire(carouselRecord.thumb)?(carouselRecord.thumb):(GLOBAL_VARIABLES.VIDEO_PLACEHOLDER); 
      
       return (
