@@ -212,5 +212,5 @@ form label {
   pointer-events: none;
 }
 .disbaled-stars label.dv-star-rating-empty-star {
-  color: rgb(138, 138, 138);
+  color: rgb(138, 138, 138) !important;
 }
