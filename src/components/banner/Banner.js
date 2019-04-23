@@ -27,18 +27,15 @@ class Banner extends Component {
       listAwaitingItems = bannerRows.map((bannerRow, index) => (
         <div key={index}>
           {bannerRow.banner_image && (
-            <center>
-              <img
-                src={
-                  GLOBAL_VARIABLES.BANNER_PATH +
-                  pageName +
-                  '/' +
-                  bannerRow.banner_image
-                }
-                alt="banner"
-                className="d-block w-100"
-              />
-            </center>
+            <center><img
+              src={
+                GLOBAL_VARIABLES.BANNER_PATH +
+                pageName +
+                "/" +
+                bannerRow.banner_image
+              }
+              className="d-block banner"
+            /></center>
           )}
         </div>
       ));
