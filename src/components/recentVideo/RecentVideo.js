@@ -24,7 +24,7 @@ class RecentVideo extends Component {
      
       return (
         <div key={index} className="vd-wrapper col-xs-12 padR10">
-            <VideoItem videoDetails={carouselRecord} />
+            <VideoItem isNotVisibleVideoMeta={this.props.isNotVisibleVideoMeta} videoDetails={carouselRecord} />
         </div>
       );
     });
