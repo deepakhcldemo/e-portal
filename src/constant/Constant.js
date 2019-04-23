@@ -23,6 +23,15 @@ export const CATEGORY = {
 }
 export const TEACHER_DASHBOARD_LINKS = [
     {
+        name: 'Notification',
+        link: 'teacher/notificationfromStudent',
+        icon: 'fa fa-bell home-header-icon--size',
+        title: 'Notification',
+        style: {
+            marginLeft: '5px'
+        }
+    },
+    {
         name: 'Video',
         link: '/teacher/videos',
         icon: 'fas fa-video home-header-icon--size',
@@ -40,15 +49,7 @@ export const TEACHER_DASHBOARD_LINKS = [
             marginLeft: '5px'
         }
     },
-    {
-        name: 'Notification',
-        link: 'teacher/notificationfromStudent',
-        icon: 'fa fa-bell home-header-icon--size',
-        title: 'Notification',
-        style: {
-            marginLeft: '5px'
-        }
-    },
+    
 ]
 
 export const STUDENT_DASHBOARD_LINKS = [
