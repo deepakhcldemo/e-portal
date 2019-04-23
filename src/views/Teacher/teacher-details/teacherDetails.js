@@ -237,8 +237,8 @@ class TeacherDetails extends Component {
                         </Spinner>
                     </div>
                 )}
-                {!this.state.spinner && (
-                    <div className="details-wrapper">
+                
+                <div className="details-wrapper">
                     {isLogedIn && (
                         <ModalPopUp teacherDeatils = {this.state.detailModel}/>
                     )}
@@ -380,7 +380,7 @@ class TeacherDetails extends Component {
                             </div>
                         </div>
                     </div>
-                )}
+                
                 
             </React.Fragment>
 

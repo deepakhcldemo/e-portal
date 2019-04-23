@@ -269,6 +269,7 @@ class SearchTeacher extends Component {
                 itemList={this.state.filtredTeacherRecord}
               />
             )}
+            {this.state.filtredTeacherRecord.length === 0 && (<div className="col-12 text-center"><b>No Records Found.</b></div>)}
           </div>
         </div>
         <div>
