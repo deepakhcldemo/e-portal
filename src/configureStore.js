@@ -12,6 +12,7 @@ import loginReducer from './views/Login/reducer';
 import spinnerStatusReducer from './spinnerStore/reducer';
 import curriculumReducer from './views/Curriculum/reducer';
 import categoryReducer from './views/Category/reducer';
+import categoryReducerForSubject from './views/CategoryItem/reducer';
 import carouselReducer from './components/carousel/reducer';
 import modalReducer  from './shared/components/modalpopup/modalReducer';
 import  studentReducer from './views/Student/reducer';
@@ -19,6 +20,7 @@ import homeReducer from './views/Home/reducer';
 import teacherDetailsReducer from './views/Teacher/teacher-details/teacher-details.reducer';
 import searchTeacherReducer from './views/Student/SearchTeacher/searchTeacherReducer';
 import videoReducer from './views/Teacher/Video/reducer';
+
 const rootPersistConfig = {
   key: 'root',
   storage,
@@ -40,7 +42,9 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   studentReducer : studentReducer,
   searchTeacher : searchTeacherReducer,
   video: videoReducer,
-  teacherDetailsReducer : teacherDetailsReducer
+  teacherDetailsReducer : teacherDetailsReducer,
+  categoryItem : categoryReducerForSubject
+  
 });
 
 const history = createBrowserHistory();

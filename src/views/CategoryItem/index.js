@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { createBrowserHistory } from 'history';
 import './styles.css';
+import { withRouter } from 'react-router';
 import { getAllCategory } from '../../database/dal/firebase/categoryDal';
+import {sendSubjectToTeacherSearch} from './actions';
 
 class CategoryItem extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      categoryList: []
+    }
+    this.navigateToSearchTeacher = this.navigateToSearchTeacher.bind(this);
+  }
   state = {
     categoryList: []
   };
@@ -16,6 +28,13 @@ class CategoryItem extends Component {
       });
     });
   };
+
+
+
+  navigateToSearchTeacher = (subjectDetails) => {
+   this.props.sendSubjectToTeacherSearch(subjectDetails)
+    this.props.history.push('/student/teacher');
+  }
 
   render() {
     const { categoryList } = this.state;
@@ -31,7 +50,7 @@ class CategoryItem extends Component {
                   <div
                     key={index}
                     className="col-xs-6 col-sm-4 col-md-3 col-lg-3"
-                  >
+                  onClick = {() =>this.navigateToSearchTeacher(listItem)}>
                     <div className="card card-style">
                       <div className="card-body category-style">{listItem}</div>
                     </div>
@@ -52,9 +71,12 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+
+    sendSubjectToTeacherSearch: (subject) => dispatch(sendSubjectToTeacherSearch(subject))
+  };
 };
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(CategoryItem);
+)(CategoryItem));

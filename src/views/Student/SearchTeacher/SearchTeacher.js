@@ -36,11 +36,22 @@ class SearchTeacher extends Component {
   }
 
   componentDidMount() {
+    const self = this;
+    
+    console.log(this.props, 'this.porps in componentWill');
     getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         const subjects = [...doc.data().subjects];
         this.setState({ categoryList: subjects });
-        this.props.getTeachersBasedOnCateogy(subjects['0']);
+        if(self.props.selectedSubjectFromHome){
+          self.props.getTeachersBasedOnCateogy(self.props.selectedSubjectFromHome);
+          this.setState({
+            selectedSubject : self.props.selectedSubjectFromHome
+          })
+        }
+        else{
+          this.props.getTeachersBasedOnCateogy(subjects['0']);
+        }
       });
     });
   }
@@ -214,6 +225,7 @@ class SearchTeacher extends Component {
                   <select
                     className="form-control"
                     onChange={this.subjectChange}
+                    value = {this.state.selectedSubject}
                   >
                     {this.state.categoryList.map(key => (
                       <option key={key}>{key}</option>
@@ -273,14 +285,11 @@ class SearchTeacher extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(
-    'state.searchTeacher.teacherDetails',
-    state.searchTeacher.teacherDetails
-  );
   return {
     modalSata: state.classes,
     carouselRows: state.carouselStore.carouselData,
-    TeacherList: state.searchTeacher.teacherDetails
+    TeacherList: state.searchTeacher.teacherDetails,
+    selectedSubjectFromHome : state.categoryItem.getSelectedSubj
   };
 };
 

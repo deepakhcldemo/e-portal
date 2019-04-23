@@ -10,7 +10,6 @@ const getDbRef = collectionName => {
   
 
 export const saveNotification = notificationDetails => {
-  debugger
     return getDbRef('notifications')
       .add({
       ...notificationDetails});
