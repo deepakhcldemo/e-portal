@@ -27,6 +27,7 @@ class ListContainer extends Component {
       teacherList: updatedTeacherList,
       noOfTeacherItems: itemCounter
     });
+    console.log(this.state.teacherList);
   };
 
   render() {
@@ -46,6 +47,7 @@ class ListContainer extends Component {
     //     </div>
     //   );
     // });
+    console.log(this.state.teacherList);
     const videoList = itemList.map((item, index) => {
       return (
         <div key={index} className="col-xs-12">

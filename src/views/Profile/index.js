@@ -49,7 +49,7 @@ class Profile extends Component {
 
   componentDidMount = () => {
     const userId = JSON.parse(localStorage.getItem('user')).user.uid;
-    getAllCategory().then(querySnapshot => {
+    getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         subjects = [...doc.data().subjects];
       });
