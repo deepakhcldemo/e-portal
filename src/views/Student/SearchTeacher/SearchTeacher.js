@@ -36,13 +36,18 @@ class SearchTeacher extends Component {
   }
 
   componentDidMount() {
-    this.props.getTeachersBasedOnCateogy();
+    //this.props.getTeachersBasedOnCateogy();
     getAllCategory().then(querySnapshot => {
       querySnapshot.forEach(doc => {
         const subjects = [...doc.data().subjects];
         this.setState({ categoryList: subjects });
+        this.props.getTeachersBasedOnCateogy(subjects['0']);
       });
     });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.getSerachParameter(nextProps, 'defalutSubjectSelected')
   }
 
   handleChange = selectedOption => {
@@ -64,47 +69,56 @@ class SearchTeacher extends Component {
     this.setState({ calendarModal: false });
   };
 
-  getSerachParameter = () => {
-    const lowerCase = this.state.searchValue.toLowerCase();
-    const tempArray = [];
-    this.props.TeacherList.forEach(teacher => {
-      this.state.searchParameter.forEach(searchParameter => {
-        if (searchParameter === 'Name' && teacher.subject === this.state.selectedSubject ) {
-          const teacherFirsnameLower = teacher.firstName.toLowerCase();
-          const teacherLastNameLower = teacher.lastName.toLowerCase();
-          if (
-            teacherFirsnameLower.indexOf(lowerCase) !== -1 ||
-            teacherLastNameLower.indexOf(lowerCase) !== -1
-          ) {
-            tempArray.push(teacher);
-          }
-        }
-
-        if (searchParameter === 'Location' && teacher.subject === this.state.selectedSubject) {
-          const teacherCityName = teacher.city.toLowerCase();
-          const teacheraddress = teacher.address.toLowerCase();
-          const teachercountry = teacher.country.toLowerCase();
-          if (
-            teacherCityName.indexOf(lowerCase) !== -1 ||
-            teacheraddress.indexOf(lowerCase) !== -1 ||
-            teachercountry.indexOf(lowerCase) !== -1
-          ) {
-            tempArray.push(teacher);
-          }
-        }
-        if (searchParameter === 'currency' && teacher.subject === this.state.selectedSubject) {
-          if (teacher.currency) {
-            const teacherCurrency = teacher.currency.toLowerCase();
-            if (teacherCurrency.indexOf(lowerCase) !== -1) {
+  getSerachParameter = (searchParameter, defalutSubjectSelected) => {
+    console.log('searchParameter', searchParameter);
+    if(defalutSubjectSelected !== 'defalutSubjectSelected'){
+      const lowerCase = this.state.searchValue.toLowerCase();
+      const tempArray = [];
+      this.props.TeacherList.forEach(teacher => {
+        this.state.searchParameter.forEach(searchParameter => {
+          if (searchParameter === 'Name' && teacher.subject === this.state.selectedSubject ) {
+            const teacherFirsnameLower = teacher.firstName.toLowerCase();
+            const teacherLastNameLower = teacher.lastName.toLowerCase();
+            if (
+              teacherFirsnameLower.indexOf(lowerCase) !== -1 ||
+              teacherLastNameLower.indexOf(lowerCase) !== -1
+            ) {
               tempArray.push(teacher);
             }
           }
-        }
+  
+          if (searchParameter === 'Location' && teacher.subject === this.state.selectedSubject) {
+            const teacherCityName = teacher.city.toLowerCase();
+            const teacheraddress = teacher.address.toLowerCase();
+            const teachercountry = teacher.country.toLowerCase();
+            if (
+              teacherCityName.indexOf(lowerCase) !== -1 ||
+              teacheraddress.indexOf(lowerCase) !== -1 ||
+              teachercountry.indexOf(lowerCase) !== -1
+            ) {
+              tempArray.push(teacher);
+            }
+          }
+          if (searchParameter === 'currency' && teacher.subject === this.state.selectedSubject) {
+            if (teacher.currency) {
+              const teacherCurrency = teacher.currency.toLowerCase();
+              if (teacherCurrency.indexOf(lowerCase) !== -1) {
+                tempArray.push(teacher);
+              }
+            }
+          }
+        });
       });
-    });
-    this.setState({
-      filtredTeacherRecord: tempArray
-    });
+      this.setState({
+        filtredTeacherRecord: tempArray
+      });
+    }
+    else{
+      this.setState({
+        filtredTeacherRecord: searchParameter.TeacherList
+      });
+    }
+    //this.props.getTeachersBasedOnCateogy(this.state.selectedSubject);
   };
 
   setfilteredTeacher = filteredRecords => {
@@ -118,6 +132,7 @@ class SearchTeacher extends Component {
     this.setState({
       selectedSubject : subjectValue.target.value
     })
+    this.props.getTeachersBasedOnCateogy(subjectValue.target.value);
   }
 
   render() {
@@ -168,7 +183,7 @@ class SearchTeacher extends Component {
         value: 'rating'
       }
     ];
-    console.log(this.state.filtredTeacherRecord);
+    console.log(this.state.filtredTeacherRecord, 'this.state.filtredTeacherRecord in search teacher');
     return (
       <div className="teacher-student-search container-fluid">
         <div>
@@ -226,6 +241,7 @@ class SearchTeacher extends Component {
                         {filetredTeacherData}
                     </div> */}
           <div>
+           
             {this.state.filtredTeacherRecord && (
               <ListContainer
                 listType="Teacher"
@@ -248,6 +264,7 @@ class SearchTeacher extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log('state.searchTeacher.teacherDetails', state.searchTeacher.teacherDetails);
   return {
     modalSata: state.classes,
     carouselRows: state.carouselStore.carouselData,
@@ -257,8 +274,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTeachersBasedOnCateogy: (searchParameter, selectedValue) =>
-      dispatch(getTeachersBasedOnCateogy(searchParameter, selectedValue))
+    getTeachersBasedOnCateogy: (selectedSubject) =>
+      dispatch(getTeachersBasedOnCateogy(selectedSubject))
   };
 };
 

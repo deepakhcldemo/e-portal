@@ -44,9 +44,9 @@ class TeacherItem extends Component {
                 <div className={isTrayItem ? 'col-2' : 'col-12'}>
                   <div className="charge-container">
                     <div>
-                      <i
+                      {/* <i
                         className={`fa fa-${userProfile.currency.toLowerCase()}`}
-                      />
+                      /> */}
                       {userProfile.charge}
                     </div>
                     <div className="per-hour-title">PER HOUR</div>
