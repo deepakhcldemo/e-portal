@@ -21,3 +21,9 @@ export const getTotalRating = (collection, userId) => {
 
 
 
+export const getTeacherRating = (teacherId) => {
+  return getDbRef('userRating').doc(teacherId).get();
+}
+export const saveTeacherRating = (reacherId, data) => {
+  return getDbRef('userRating').doc(reacherId).set(data);
+}
