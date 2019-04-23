@@ -18,15 +18,6 @@ import {
 
 import './teacher.scss'
 
-const userList = [
-    {
-        uid: 'sdfdf',
-        img: '',
-        name: 'varun',
-        desc: 'Brunch this weekend',
-        notification: 'Brunch this weekend'
-    }
-]
 class Teacher extends Component {
     constructor(props) {
         super(props);
@@ -47,7 +38,7 @@ class Teacher extends Component {
             });
         });
 
-        getCurriculumFromDB().then(querySnapshot => {
+        getCurriculumFromDB().onSnapshot(querySnapshot => {
             let currData = [];
             querySnapshot.forEach(doc => {
                 currData.push(doc.data());
