@@ -2,104 +2,106 @@ import React, { Component } from "react";
 import HeaderHome from "../../components/layout/header/HeaderHome";
 import Navbar from "./../../shared/components/Navbar";
 // import NavBar from './../../shared/components/Navbar/index'
-import UserList from "./UserList/UserList";
-import TopVideo from "./TopVideo/TopVideo";
+// import UserList from "./UserList/UserList";
+// import TopVideo from "./TopVideo/TopVideo";
 import { TEACHER_DASHBOARD_LINKS } from "./../../constant/Constant";
-import GLOBAL_VARIABLES from "../../config/config";
-import Slider from "../../components/slider/Slider";
+// import GLOBAL_VARIABLES from "../../config/config";
+// import Slider from "../../components/slider/Slider";
 import Banner from "../../components/banner/Banner";
 import RecentVideo from "../../components/recentVideo/RecentVideo";
 import {
   getBannerFromDB,
   getCurriculumFromDB,
-  getNotificationFromDB
+  getReviewContentFromDB  
 } from "./../../database/dal/firebase/curriculumDal";
 
 import "./teacher.scss";
 
 class Teacher extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      bannerRows: [],
-      carousellistNewlyItems: []
-    };
+ 
+  state = {
+    userDetails: '',
+    bannerData: '',
+    myContent: [],
+    reviewedContent: [],
+    pendingContent: []
   }
-
+  
+  componentWillMount = () => {
+    this.setState({
+        userDetails: JSON.parse(localStorage.getItem('userProfile'))
+    })
+}
   componentDidMount = () => {
     getBannerFromDB().then(querySnapshot => {
       let bannerData = [];
       querySnapshot.forEach(doc => {
         bannerData.push(doc.data());
       });
-      this.setState({
-        bannerRows: bannerData
-      });
+      this.setState({bannerData});
     });
 
-    getCurriculumFromDB().onSnapshot(querySnapshot => {
-      let currData = [];
+    getCurriculumFromDB(this.state.userDetails.userId).onSnapshot(querySnapshot => {
+      let myContent = [];
       querySnapshot.forEach(doc => {
-        currData.push(doc.data());
+        myContent.push(doc.data());
       });
-
-      if (currData.length > 0) {
-        this.setState({
-          carousellistNewlyItems: currData
-        });
-      }
+        this.setState({myContent});
     });
+    this.getReviewContent(this.state.userDetails.userId, true, 'reviewedContent')
+    this.getReviewContent(this.state.userDetails.userId, true, 'pendingContent')
   };
 
-  render = () => {
-    const { bannerRows, carousellistNewlyItems } = this.state;
+  getReviewContent = (userId,status,state) => {
+    getReviewContentFromDB(userId, status).onSnapshot(querySnapshot => {
+      let content = [];
+      querySnapshot.forEach(doc => {
+        content.push(doc.data());
+      });
+      this.setState({[state]: content});
+    })
+  }
 
+  render = () => {
+    const { bannerData, myContent, reviewedContent, pendingContent } = this.state;
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-12 container--margin-bottom">
+          <div className="col-12">
             <HeaderHome
               headeTitle="Teacher Dashboard"
               dashboardLinks={TEACHER_DASHBOARD_LINKS}
             />
           </div>
         </div>
-
-        {bannerRows.length > 0 && (
-          <Banner bannerRows={bannerRows} pageName="teacher" />
-        )}
-
-        {carousellistNewlyItems.length > 0 && (
-          <RecentVideo
-            carousellistNewlyItems={carousellistNewlyItems}
-            headeTitle="Video Pending for Review"
-          />
-        )}
-
-        {carousellistNewlyItems.length > 0 && (
-          <RecentVideo
-            carousellistNewlyItems={carousellistNewlyItems}
-            headeTitle="Video Reviewed"
-          />
-        )}
-
-        {carousellistNewlyItems.length > 0 && (
-          <RecentVideo
-            carousellistNewlyItems={carousellistNewlyItems}
-            headeTitle="My Video"
-          />
-        )}
-        <div className="col-12 content-container--background">&nbsp;</div>
-        <div className="col-12 content-container--background">&nbsp;</div>
-        {/* <div className="row">
-                    <div className="col-12 main-wrapper">
-                       
-                        <UserList heading="Students List" userList={userList} />
-                        <TopVideo heading="Top 10 Videos" videoDetails={videoDetails} />
-                    </div>
-                </div>
-                */}
-        <div className="col-12">
+        <div className="row">
+          <div className="col-12 main-wrapper">
+            {bannerData && (
+              <Banner bannerRows={bannerData} pageName="teacher" />
+            )}
+            {pendingContent.length > 0 && (
+              <RecentVideo
+                isNotVisibleVideoMeta={true}
+                carousellistNewlyItems={[pendingContent]}
+                headeTitle="Video Pending for Review"
+              />
+            )}
+            {reviewedContent.length > 0 && (
+              <RecentVideo
+                isNotVisibleVideoMeta={true}
+                carousellistNewlyItems={reviewedContent}
+                headeTitle="Video Reviewed"
+              />
+            )}
+            {myContent.length > 0 && (
+              <RecentVideo
+                carousellistNewlyItems={myContent}
+                headeTitle="My Video"
+              />
+            )}            
+          </div>
+        </div>        
+        <div className="row main-wrapper">
           <Navbar links={TEACHER_DASHBOARD_LINKS} />
         </div>
       </div>

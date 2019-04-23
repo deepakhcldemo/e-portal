@@ -9,8 +9,8 @@ import TeacherItem from "../../components/teacherItem/TeacherItem";
 
 class TopTutor extends Component {
   createChildren = records => {
-    const carouselRows = records.map((carouselRecord, index) => {
-      carouselRecord.noOfDays = moment(carouselRecord.createdAt.toDate()).fromNow() 
+    const carouselRows = records.map((carouselRecord, index) => {      
+      carouselRecord.noOfDays = moment(moment(carouselRecord.createdAt,'yyyyMMddHHmmssfff').toDate()).fromNow() 
       return (
         <div key={index} className="vd-wrapper  col-xs-12">
           <Link

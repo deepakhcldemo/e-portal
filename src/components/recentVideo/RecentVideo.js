@@ -10,10 +10,10 @@ class RecentVideo extends Component {
 
   createChildren = records => {
     return records.map((carouselRecord, index) => {
-      carouselRecord.date = moment(carouselRecord.created.toDate()).fromNow() 
+      carouselRecord.createdDate = moment(carouselRecord.created.toDate()).fromNow() 
       return (
         <div key={index} className="vd-wrapper col-xs-12 padR10">
-            <VideoItem videoDetails={carouselRecord} />
+            <VideoItem isNotVisibleVideoMeta={this.props.isNotVisibleVideoMeta} videoDetails={carouselRecord} />
         </div>
       );
     });
