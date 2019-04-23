@@ -74,7 +74,7 @@ class TopTutor extends Component {
       <React.Fragment>
         {carouselTop10Items.length > 0 && (
           <div className="col-12 content-container--background">
-            <h3 className="mt-30">
+            <h3 className="mt-30 pad_top5">
               {title} <i className="fas fa-chevron-right" />
             </h3>
             <div style={{ background: '#FFF', textAlign: 'center' }}>

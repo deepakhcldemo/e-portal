@@ -27,7 +27,7 @@ class Banner extends Component {
       listAwaitingItems = bannerRows.map((bannerRow, index) => (
         <div key={index}>
           {bannerRow.banner_image && (
-            <img
+            <center><img
               src={
                 GLOBAL_VARIABLES.BANNER_PATH +
                 pageName +
@@ -36,7 +36,7 @@ class Banner extends Component {
               }
               // className="d-block w-100"
               className="d-block"
-            />
+            /></center>
           )}
         </div>
       ));
@@ -45,7 +45,7 @@ class Banner extends Component {
       <React.Fragment>
         {listAwaitingItems.length > 0 && (
           <div className="col-12 content-container--background">
-            <div style={{ background: "#FFF", textAlign: "center" }}>
+            <div style={{ background: "#555555", textAlign: "center" }}>
               <Slider {...settingsBanner}>{listAwaitingItems}</Slider>
             </div>
           </div>
