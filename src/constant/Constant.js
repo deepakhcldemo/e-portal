@@ -45,8 +45,7 @@ export const TEACHER_DASHBOARD_LINKS = [
 export const STUDENT_DASHBOARD_LINKS = [
     {
         name: 'Notification',
-        link: ' /Student/NotifyStudent',
-     
+        link: ' Student/NotifyStudent/notificationfromTeacher',
         icon: 'fa fa-bell home-header-icon--size',
         title: 'Notification',
         style: {
