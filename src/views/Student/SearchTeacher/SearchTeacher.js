@@ -7,7 +7,7 @@ import { getTeachersBasedOnCateogy } from './searchTeacherAction';
 import Navigation from '../Navigation/Navigation';
 import { connect } from 'react-redux';
 import Select from 'react-select';
-import { getAllCategory } from '../../../database/dal/firebase/categoryDal';
+import { getAllCategory, } from '../../../database/dal/firebase/categoryDal';
 
 import Multiselect from 'multiselect-dropdown-react';
 import './SearchTeacher.css';
@@ -36,8 +36,7 @@ class SearchTeacher extends Component {
   }
 
   componentDidMount() {
-    //this.props.getTeachersBasedOnCateogy();
-    getAllCategory().then(querySnapshot => {
+    getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         const subjects = [...doc.data().subjects];
         this.setState({ categoryList: subjects });
