@@ -62,7 +62,7 @@ class App extends Component {
 
     if (!user && this.props.location) {
       GLOBAL_VARIABLES.BASEROUTE = this.props.location.pathname;
-      this.props.history.push('/home');
+      //this.props.history.push('/home');
     }
   }
   render() {

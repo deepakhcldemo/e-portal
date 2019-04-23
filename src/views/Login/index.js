@@ -142,6 +142,7 @@ class Login extends Component {
       this.setState(() => ({
         redirectToReferrer: true
       }));
+      debugger;
       console.log('GLOBAL_VARIABLES.BASEROUTE', GLOBAL_VARIABLES.BASEROUTE);
       if (GLOBAL_VARIABLES.BASEROUTE !== '/home') {
         this.props.history.push(GLOBAL_VARIABLES.BASEROUTE);
