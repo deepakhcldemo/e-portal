@@ -39,7 +39,7 @@ class TeacherDetails extends Component {
 
     componentDidMount() {
         const teacherId  = this.props.match.params.id;
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
         
 
         /* show rating on the base of existing user has given */
@@ -71,7 +71,8 @@ class TeacherDetails extends Component {
         getTeacherDetailFromDB(teacherId).then((snapshot)=>{
             snapshot.forEach(doc => {
                 const data = doc.data();
-                const userRating = data.userRating;
+                console.log('-----data-----', data)
+                // const userRating = data.userRating;
                 this.setState({spinner: false});
                 // Create model
                 this.getDetails(data);
@@ -139,7 +140,7 @@ class TeacherDetails extends Component {
         console.log('nextValue', nextValue)
 
         const teacherId  = this.props.match.params.id;
-        const user = JSON.parse(localStorage.getItem('user'));
+        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
         /* show rating on the base of existing user has given */
         getTeacherRating(teacherId).then(doc => {
             if (doc.exists) {
@@ -185,7 +186,10 @@ class TeacherDetails extends Component {
                 )}
                 {!this.state.spinner && (
                     <div className="details-wrapper">
+                    {isLogedIn && (
                         <ModalPopUp teacherDeatils = {this.state.detailModel}/>
+                    )}
+                        
                         <HeaderHome />
                         
                         
@@ -249,12 +253,12 @@ class TeacherDetails extends Component {
                                     </div>
                                     
                                     <div className="vd-section">
-                                        <Slider listTop10Items={['a','b']}>
+                                        {/* <Slider listTop10Items={['a','b']}>
                                         <h4 className="mt-30 pad10">
                                             Online Courses
                                             <i className="fas fa-chevron-right" />
                                         </h4>
-                                        </Slider>
+                                        </Slider> */}
                                     </div>
 
                                     <div className="comments-hdr-section">
