@@ -7,16 +7,17 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 class ListContainer extends Component {
   state = {
     teacherList: [],
-    noOfTeacherItems: 3
+    noOfTeacherItems: 4
   };
 
   componentWillReceiveProps(nextProps) {
     console.log('nextProps', nextProps);
-    const teachers = nextProps.itemList.slice(0, 3);
+    const teachers = nextProps.itemList.slice(0, 4);
     this.setState({ teacherList: teachers });
   }
+
   fetchNextTeacherItems = () => {
-    const itemCounter = this.state.noOfTeacherItems + 3;
+    const itemCounter = this.state.noOfTeacherItems + 4;
     const newItems = this.props.itemList.slice(
       this.state.noOfTeacherItems,
       itemCounter
@@ -50,7 +51,7 @@ class ListContainer extends Component {
       <React.Fragment>
         {listType === 'Teacher' && (
           <div className="row row-without--margin">
-            <div className="col-12 content-container--background col-without--padding">
+            <div className="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-8  content-container--background col-without--padding list-container--margin">
               <div style={{ background: '#FFF', textAlign: 'center' }}>
                 <InfiniteScroll
                   dataLength={this.state.teacherList.length}

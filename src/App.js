@@ -56,7 +56,7 @@ class App extends Component {
     auth: true
   };
   componentWillMount() {
-    console.log('-----------------------------------------------------------');
+    // console.log('-----------------------------------------------------------');
     const user = JSON.parse(localStorage.getItem('user'));
 
     if (!user && this.props.location) {
@@ -155,7 +155,7 @@ App.defaultProps = {
 };
 const mapStateToProps = state => {
   const loginResponse = JSON.parse(localStorage.getItem('user'));
-  console.log('app state', state)
+  // console.log('app state', state)
   return {
     auth: true,
     spinnerStatus: state.spinnerStatus.spinnerStatus,

@@ -10,7 +10,10 @@ import ModalPopUp from '../../../shared/components/modalpopup/modalpopup'
 import HeaderHome from '../../../components/layout/header/HeaderHome';
 import Slider from '../../../components/slider/Slider';
 import {openModalForRequest} from './teacher-details.action';
-import { getTeacherDetailFromDB, getTotalRating } from '../../../database/dal/firebase/teacherDetailDal';
+import { getTeacherDetailFromDB, 
+    getTeacherRating, 
+    saveTeacherRating 
+} from '../../../database/dal/firebase/teacherDetailDal';
 
 class TeacherDetails extends Component {
 
@@ -18,54 +21,87 @@ class TeacherDetails extends Component {
         super(props);
         this.state = {
             detailModel: {
-                id: 'Teacher Name',
+                teacherId: '',
                 title: 'title',
                 description: 'this is demo',
                 rating: 7,
-                category: '',
-                gender: ''
+                gender: '',
+                subject: '',
+                imgPath: ''
             },
             my: '',
             teacherId : '',
             spinner: true,
-            starRating: 1
+            starRating: 0
         }
         this.openModalForRequest = this.openModalForRequest.bind(this);
     }
 
     componentDidMount() {
-        const { id } = this.props.match.params;
-        if (id) {
-            this.setState({
-                teacherId : this.props.match.params
-            })
-        }
+        const teacherId  = this.props.match.params.id;
+        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+        
 
-        getTeacherDetailFromDB(id).then((snapshot)=>{
+        /* show rating on the base of existing user has given */
+        getTeacherRating(teacherId).then(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                const ratings = data.ratings;
+                const nOfUser = ratings.length;
+
+                if (nOfUser > 0) {
+                    let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
+                    if (data.rating != totalRating) {
+                        data.rating = totalRating;
+                        saveTeacherRating(teacherId, data);
+                    }
+                    if (user) {
+                        const userId = user.user.uid;
+                        const currentUser = _.filter(ratings, (user) => user.userId === userId)[0];
+                        this.setState({starRating: Math.round(currentUser.rating)});
+                    } else {
+                        this.setState({starRating: totalRating});
+                    }
+                    
+                }
+                
+            }
+        });
+
+        getTeacherDetailFromDB(teacherId).then((snapshot)=>{
             snapshot.forEach(doc => {
                 const data = doc.data();
-                const userRating = data.userRating;
+                console.log('-----data-----', data)
+                // const userRating = data.userRating;
                 this.setState({spinner: false});
                 // Create model
                 this.getDetails(data);
                 
 
-                if (userRating) {
-                    const userLength = userRating.length;
-                    let totalRating = 0;
-                    let averageRating = 0;
-                    userRating.forEach(user => {
-                        totalRating = totalRating + user.rating;
-                    });
-                    averageRating = totalRating/userLength;
-                    this.setState({starRating: averageRating});
-                }
+                // if (userRating) {
+                //     const userLength = userRating.length;
+                //     let totalRating = 0;
+                //     let averageRating = 0;
+                //     userRating.forEach(user => {
+                //         totalRating = totalRating + user.rating;
+                //     });
+                //     averageRating = totalRating/userLength;
+                //     this.setState({starRating: averageRating});
+                // }
             });
         });
 
-        
-
     }
+
+
+    getTotalRating(ratings, nOfUser) {
+        let rating = 0;
+        ratings.forEach(user => {
+            rating = rating + user.rating;
+        });
+        return rating/nOfUser;
+    }
+
     componentWillReceiveProps(nextProps) {
         console.log('nextProps', nextProps)
         // if (nextProps.detailData !== this.props.detailData) {
@@ -76,18 +112,22 @@ class TeacherDetails extends Component {
         
 
     }
+
     getDetails(data) {
         if (data) {
             const detailModel = { ...this.state.detailModel };
-            detailModel.id = data.userId;
+            detailModel.teacherId = data.userId;
             detailModel.title = data.firstName + ' ' + data.lastName;
             detailModel.description = data.summary;
             detailModel.rating = data.rating;
             detailModel.gender = data.gender;
+            detailModel.subject = data.subject;
+            detailModel.imgPath = data.profileImage;
 
             this.setState({ detailModel });
         }
     }
+
     navigateToLogin() {
         const currentId = this.props.match.params.id;
         localStorage.setItem('teacherDetailId', currentId);
@@ -98,15 +138,42 @@ class TeacherDetails extends Component {
     onStarClick(nextValue, prevValue, name) {
         console.log('prevValue', prevValue)
         console.log('nextValue', nextValue)
-        this.setState({starRating: nextValue});
+
+        const teacherId  = this.props.match.params.id;
+        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+        /* show rating on the base of existing user has given */
+        getTeacherRating(teacherId).then(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                const ratings = data.ratings;
+                const nOfUser = ratings.length;
+
+                if (nOfUser > 0) {
+                    if (user) {
+                        const userId = user.user.uid;
+                        const currentUser = _.filter(ratings, (user) => user.userId === userId)[0];
+                        currentUser.rating = nextValue;
+
+                        let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
+                        data.rating = totalRating;
+                        saveTeacherRating(teacherId, data);
+                        this.setState({starRating: nextValue});
+                    }
+                    
+                }
+                
+            }
+        });
+
+        
     }
     
-
+    
     openModalForRequest = () => {
         this.props.openModalPopUp();
     }
     render() {
-        const { title, description, rating } = this.state.detailModel;
+        const { title, description, rating, subject, imgPath } = this.state.detailModel;
         const isLogedIn = localStorage.getItem('user');
         return (
             <React.Fragment>
@@ -119,7 +186,10 @@ class TeacherDetails extends Component {
                 )}
                 {!this.state.spinner && (
                     <div className="details-wrapper">
+                    {isLogedIn && (
                         <ModalPopUp teacherDeatils = {this.state.detailModel}/>
+                    )}
+                        
                         <HeaderHome />
                         
                         
@@ -130,7 +200,7 @@ class TeacherDetails extends Component {
                                     <div>
                                         <h4>{title}</h4>
                                         <span className="sub-title">Credential</span>
-                                        <span className="sub-title">Subject</span>
+                                        <span className="sub-title">{subject}</span>
                                         <span className="sub-title last">Credential</span>
                                         <div className={classnames({'disbaled-stars': !isLogedIn })}>
                                             <RatingComponent
@@ -141,8 +211,13 @@ class TeacherDetails extends Component {
                                             />
                                         </div>
                                     </div>
-                                    <button className="btn btn-dark">Send Request</button>
-                                    <button className="btn btn-dark" onClick ={this.openModalForRequest}>Request For Review</button>
+                                    
+                                    {isLogedIn && (
+                                        <div>
+                                            <button className="btn btn-dark">Send Request</button>
+                                            <button className="btn btn-dark" onClick ={this.openModalForRequest}>Request For Review</button>
+                                        </div>
+                                    )}
                                     
                                 </div>
                             </div>
@@ -178,12 +253,12 @@ class TeacherDetails extends Component {
                                     </div>
                                     
                                     <div className="vd-section">
-                                        <Slider listTop10Items={['a','b']}>
+                                        {/* <Slider listTop10Items={['a','b']}>
                                         <h4 className="mt-30 pad10">
                                             Online Courses
                                             <i className="fas fa-chevron-right" />
                                         </h4>
-                                        </Slider>
+                                        </Slider> */}
                                     </div>
 
                                     <div className="comments-hdr-section">
@@ -262,7 +337,6 @@ class TeacherDetails extends Component {
 
 
 const mapStateToProps = state => {
-    console.log('satae in teacher details', state);
     return {
       modalState: state.teacherDetailsReducer.requestForReviewPop
     };

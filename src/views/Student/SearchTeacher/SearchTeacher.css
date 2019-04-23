@@ -1,5 +1,4 @@
 .filter-search {
-  max-width: 50rem;
   margin: 69px auto;
   cursor: pointer;
 }
@@ -51,7 +50,7 @@
   background-color: #232838;
   color: #ffffff;
   position: absolute;
-  right: -20px;
+  right: 16px;
 }
 
 .input-group-btn > .btn {
@@ -137,7 +136,6 @@
 
 @media only screen and (max-width: 600px) {
   .filter-search {
-    max-width: 20rem;
     min-height: 100%;
   }
   .input-box {
@@ -158,8 +156,4 @@
     margin-left: -26px;
     font-size: 15px;
   }
-  .profile-pic-list {
-    height: 80px;
-    width: 60px;
-}
 }

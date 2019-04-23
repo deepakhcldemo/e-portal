@@ -28,7 +28,7 @@ class ModalPopUp extends Component {
     this.props.closePopModal();
   };
   componentDidMount() {
-    const studentDetails = JSON.parse(localStorage.getItem('userProfile'));
+    const studentDetails = localStorage.getItem('userProfile') ? JSON.parse(localStorage.getItem('userProfile')) : null;
     if (studentDetails) {
       this.setState({
         studentName: studentDetails.firstName + ' ' + studentDetails.lastName,
@@ -93,7 +93,7 @@ class ModalPopUp extends Component {
 
   }
   render() {
-    const studentDetails = JSON.parse(localStorage.getItem('userProfile'));
+    const studentDetails = localStorage.getItem('userProfile') ? JSON.parse(localStorage.getItem('userProfile')) : null;
     const { userDetails } = this.props
     const openModal = this.props.modalState;
     const teacherDetails = this.props.title;

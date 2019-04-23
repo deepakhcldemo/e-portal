@@ -8,6 +8,10 @@
   color: #fff !important;
 } */
 
+.banner-container .slick-slide {
+  max-width: unset !important;
+}
+
 .spinner-overlay-container {
   position: fixed;
   width: 100%;
@@ -1085,6 +1089,14 @@ li .fa {
 }
 .container--margin-bottom {
   margin-bottom: 58px;
+}
+
+.list-container--margin {
+  margin: auto;
+}
+
+.slick-slide {
+  max-width: 300px !important;
 }
 
 @media screen and (min-width: 768px) {

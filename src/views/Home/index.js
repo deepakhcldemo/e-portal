@@ -26,6 +26,15 @@ class Home extends Component {
     };
   }
 
+  componentWillUnmount(){
+    this.setState({
+      bannerRows: [],
+      carouselTop10Items: [],
+      carousellistNewlyItems: [],
+      studentsReview: []
+    });
+  }
+  
   componentDidMount = () => {
     getBannerFromDB().onSnapshot(querySnapshot => {
       let bannerData = [];
@@ -38,13 +47,14 @@ class Home extends Component {
     });
 
     getTeacherFromDB().onSnapshot(querySnapshot => {
-      let techerData = [];
+      let teacherData = [];
       querySnapshot.forEach(doc => {
-        techerData.push(doc.data());
+        teacherData.push(doc.data());
       });
       this.setState({
-        carouselTop10Items: techerData
+        carouselTop10Items: teacherData
       });
+      teacherData = [];
     });
 
     getCurriculumFromDB().onSnapshot(querySnapshot => {
@@ -58,6 +68,7 @@ class Home extends Component {
           carousellistNewlyItems: currData
         });
       }
+      currData = [];
     });
 
     getFeedbackFromDB().onSnapshot(querySnapshot => {
