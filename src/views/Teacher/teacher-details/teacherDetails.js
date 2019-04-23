@@ -32,7 +32,8 @@ class TeacherDetails extends Component {
             my: '',
             teacherId : '',
             spinner: true,
-            starRating: 0
+            starRating: 0,
+            totalUser: 0
         }
         this.openModalForRequest = this.openModalForRequest.bind(this);
     }
@@ -48,21 +49,39 @@ class TeacherDetails extends Component {
                 const data = doc.data();
                 const ratings = data.ratings;
                 const nOfUser = ratings.length;
-
+                console.log('-----', nOfUser)
+                // this.setState({totalUser: nOfUser})
                 if (nOfUser > 0) {
                     let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
-                    if (data.rating != totalRating) {
-                        data.rating = totalRating;
-                        saveTeacherRating(teacherId, data);
-                    }
+                    
                     if (user) {
                         const userId = user.user.uid;
-                        const currentUser = _.filter(ratings, (user) => user.userId === userId)[0];
+                        let currentUser = _.filter(ratings, (user) => user.userId === userId)[0];
+                        if (!currentUser) {
+                            currentUser = {userId: userId, like: 0, dislike: 0, rating: 0};
+                            ratings.push(currentUser);
+                        }
+                        data.rating = totalRating;
+                        saveTeacherRating(teacherId, data);
                         this.setState({starRating: Math.round(currentUser.rating)});
                     } else {
                         this.setState({starRating: totalRating});
                     }
                     
+                } else {
+                    if (user) {
+                        const userId = user.user.uid;
+                        // let currentUser = _.filter(ratings, (user) => user.userId === userId)[0];
+                        let newUser = {userId: userId, like: 0, dislike: 0, rating: 0};
+
+                        ratings.push(newUser);
+                        let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
+                        data.rating = totalRating;
+                        
+                        saveTeacherRating(teacherId, data);
+                        this.setState({starRating: newUser.rating});
+
+                    }
                 }
                 
             }
@@ -96,10 +115,17 @@ class TeacherDetails extends Component {
 
     getTotalRating(ratings, nOfUser) {
         let rating = 0;
+        let totalRating = 0;
         ratings.forEach(user => {
             rating = rating + user.rating;
         });
-        return rating/nOfUser;
+        if (!rating/nOfUser) {
+            totalRating = 0;
+        } else {
+            totalRating = rating/nOfUser;
+        }
+
+        return totalRating;
     }
 
     componentWillReceiveProps(nextProps) {
@@ -147,21 +173,48 @@ class TeacherDetails extends Component {
                 const data = doc.data();
                 const ratings = data.ratings;
                 const nOfUser = ratings.length;
+                
 
+                
                 if (nOfUser > 0) {
+                    
                     if (user) {
                         const userId = user.user.uid;
-                        const currentUser = _.filter(ratings, (user) => user.userId === userId)[0];
-                        currentUser.rating = nextValue;
-
+                        let currentUser = _.filter(ratings, (user) => user.userId === userId)[0];
+                        let newUser = {userId: '0', like: 0, dislike: 0, rating: 0};
+                        if (currentUser) {
+                            currentUser.rating = nextValue;
+                        } else {
+                            newUser.userId = userId;
+                            currentUser = newUser;
+                            ratings.push(currentUser);
+                        }
                         let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
                         data.rating = totalRating;
                         saveTeacherRating(teacherId, data);
                         this.setState({starRating: nextValue});
                     }
                     
+                } else {
+                    if (user) {
+                        const userId = user.user.uid;
+                        let currentUser = _.filter(ratings, (user) => user.userId === userId)[0];
+                        let newUser = {userId: userId, like: 0, dislike: 0, rating: nextValue};
+
+                        if (currentUser) {
+                            currentUser.rating = nextValue;
+                        } else {
+                            currentUser = newUser;
+                            ratings.push(currentUser);
+                        }
+                        let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
+                        data.rating = totalRating;
+                        
+                        saveTeacherRating(teacherId, data);
+                        this.setState({starRating: nextValue});
+
+                    }
                 }
-                
             }
         });
 
@@ -173,7 +226,7 @@ class TeacherDetails extends Component {
         this.props.openModalPopUp();
     }
     render() {
-        const { title, description, rating, subject, imgPath } = this.state.detailModel;
+        const { title, description, rating, subject, imgPath, totalUser } = this.state.detailModel;
         const isLogedIn = localStorage.getItem('user');
         return (
             <React.Fragment>
@@ -208,7 +261,7 @@ class TeacherDetails extends Component {
                                                 starCount={5}
                                                 value={this.state.starRating}
                                                 onStarClick={this.onStarClick.bind(this)}
-                                            />
+                                            /> 
                                         </div>
                                     </div>
                                     
