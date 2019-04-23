@@ -160,7 +160,6 @@
   }
   .profile-pic-list {
     height: 80px;
-    width: 80px;
-    border-radius: 37px;
+    width: 60px;
 }
 }
