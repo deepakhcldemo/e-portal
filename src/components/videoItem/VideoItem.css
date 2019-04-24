@@ -1,45 +1,55 @@
 .profile-image--style {
-  border-radius: 100px;
+    border-radius: 100px;
 }
 
 .user-profile-card--padding {
-  padding: 4px !important;
+    padding: 4px !important;
 }
 
 .user-details--height {
-  text-align: left;
-  border: none !important;
-  color: white !important;
+    text-align: left;
+    border: none !important;
+    color: white !important;
 }
 
 .rating-position {
-  position: absolute;
+    position: absolute;
 }
+
 .left {
-  float: left;
+    float: left;
 }
+
 .right {
-  float: right;
+    float: right;
 }
+
 .video-margin {
-  margin-top: 25px;
+    margin-top: 25px;
 }
+
 .views {
-  color: #868383;
+    color: #868383;
 }
+
 .video-meta-data {
-  display: flex;
-  flex-direction: row;
-  flex-flow: row;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    justify-content: space-between;
 }
+
 .video-meta-data span small {
-  display: block;
+    display: block;
 }
 
 .video-title {
-  width: 160px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+    width: 160px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.detail--text {
+    color: #000 !important;
 }

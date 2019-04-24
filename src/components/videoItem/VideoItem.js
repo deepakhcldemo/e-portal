@@ -44,7 +44,7 @@ class VideoItem extends Component {
                   }}
                   className="border_1px"
                 />
-                <div className="vd-content user-details--height content-container--background">
+                <div className="vd-content user-details--height detail--text">
                   <h6 className="video-title">{videoDetails.title}</h6>
                   <p>{videoDetails.createdDate}</p>
                   {!isNotVisibleVideoMeta && (
@@ -54,7 +54,7 @@ class VideoItem extends Component {
                         starCount={5}
                         value={videoDetails.rating}
                         editing={false}
-                        emptyStarColor={"white"}
+                        emptyStarColor={"gray"}
                       />
                       <span className="rating-position">
                         ({videoDetails.views})
