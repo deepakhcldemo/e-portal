@@ -7,6 +7,8 @@ export default class dbFactory {
                 return firebase;
             case 'indexeddb':
                 return iDB;
+            default:
+                return firebase;
         }
     }
 }

@@ -3,7 +3,8 @@ import dbFactory from '../../dbFactory';
 export const getTeachersFromDBBasedOnCategory = (dispatch,selectedSubject) => {
     const db = dbFactory.create('firebase');
     let data = [];
-    let teacherStudentQuery = db.firestore().collection("userProfiles")
+    // let teacherStudentQuery = 
+    db.firestore().collection("userProfiles")
     .where("role", "==", "Teacher")
     .where("subject", "==", selectedSubject)
     .get()

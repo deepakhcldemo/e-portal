@@ -47,8 +47,8 @@ class VideoItem extends Component {
                 className="border_1px"
               />
               <div className="vd-content user-details--height">
-                <h6>{videoDetails.title}</h6>
-                <p>{videoDetails.createdDate}</p>
+                {videoDetails.title && (<h6>{videoDetails.title}</h6>)}
+                {videoDetails.createdDate && (<p>{videoDetails.createdDate}</p>)}
                 {!isNotVisibleVideoMeta && (
                   <>
                   <StarRatingComponent

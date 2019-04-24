@@ -3,9 +3,6 @@ import Modal from 'react-responsive-modal';
 import Datetime from 'react-datetime';
 
 class CalendarModal extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   onCloseModal = () => {
     this.props.closeCalendarModal();

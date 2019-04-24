@@ -69,9 +69,9 @@ class RecentVideo extends Component {
     return (
       <>
         <div className="col-12 content-container--background">
-          <h4 className="mt-30">
+          <h6 className="mt-30">
             {title} <i className="fas fa-chevron-right" />
-          </h4>
+          </h6>
           <div className="tray-background--color">
             {carousellistNewlyItems.length > 0 && (
               <Slider {...settingsNewlyItems}>
