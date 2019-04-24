@@ -17,10 +17,11 @@ class ModalPopUp extends Component {
     this.state = {
       studentName: '',
       teacherName: '',
-      notificationDescription : ''
+      notificationDescription: '',
+      validationMessage : ''
     }
     this.createNotification = this.createNotification.bind(this);
-    this.notoficationDescription= this.notoficationDescription.bind(this);
+    this.notoficationDescription = this.notoficationDescription.bind(this);
   }
 
   onCloseModal = () => {
@@ -40,59 +41,75 @@ class ModalPopUp extends Component {
     console.log('nextProps in teacher', nextProps)
     this.setState({
       teacherName: nextProps.teacherDeatils.title,
-      tid : nextProps.teacherDeatils.teacherId
+      tid: nextProps.teacherDeatils.teacherId
     })
 
   }
-
+componentWillUnmount() {
+    this.props.closePopModal();
+}
 
   handleVideoUploadSuccess = fileName => {
     console.log(fileName);
   };
 
-  
+
 
   notoficationDescription = (event) => {
-    
+
     this.setState({
-      notificationDescription : event.target.value
+      notificationDescription: event.target.value
     })
   }
 
 
   createNotification = () => {
     const loggedInUSerDetails = JSON.parse(localStorage.getItem('userProfile'));
-    let tId , sId , tname , sname ='';
-    if(loggedInUSerDetails.role === 'Teacher'){
-      tId  = loggedInUSerDetails.userId;
+    let tId, sId, tname, sname = '';
+    let sstatus = false; let tstatus = false ;
+    if (loggedInUSerDetails.role === 'Teacher') {
+      tId = loggedInUSerDetails.userId;
       sId = '';
     }
-    else{
-      sId  = loggedInUSerDetails.userId;
-     
+    else {
+      sId = loggedInUSerDetails.userId;
+
     }
 
     tId = this.state.tid;
     tname = this.state.teacherName;
-    sname = this.state.studentName
+    sname = this.state.studentName;
     const notificationDetails = {
-        notificationDesc : this.state.notificationDescription,
-        tId, 
-        sId,
-        loggedInUserId : loggedInUSerDetails.userId,
-        tname,
-        sname
+      notificationDesc: this.state.notificationDescription,
+      tId,
+      sId,
+      loggedInUserId: loggedInUSerDetails.userId,
+      tname,
+      sname,
+      sstatus,
+      tstatus
 
     }
     getVideoUrl().then(url => {
-      let sVideo = '',  tVideo = '';
+      let sVideo = '', tVideo = '';
       loggedInUSerDetails.role === 'Teacher' ? tVideo = url : sVideo = url;
       notificationDetails.tvideo = tVideo;
-      notificationDetails.status = false;
+      //notificationDetails.status = false;
       notificationDetails.sVideo = sVideo;
       notificationDetails.comments = [];
-      saveNotification(notificationDetails);
-      this.onCloseModal();
+      if(url !== "" && notificationDetails.notificationDesc !== ''){
+        this.setState({
+          validationMessage : ''
+        })
+        saveNotification(notificationDetails);
+        this.onCloseModal();
+      }
+    else {
+        this.setState({
+          validationMessage : 'Description or Video can not be empty'
+        })
+    }
+      
     })
 
   }
@@ -118,24 +135,23 @@ class ModalPopUp extends Component {
                   <div className="btn btn-sm btn-info teacher">Teacher: {this.state.teacherName}</div>
                 </div>
                 <div>
-                  <textarea rows="4" cols="50" className="form-control" placeholder="Please add details here" onChange = {this.notoficationDescription}>
+                  <textarea rows="4" cols="50" className="form-control" placeholder="Please add details here" onChange={this.notoficationDescription}>
                   </textarea> <br />
-                  <div className="file btn btn-info">  Upload
                     <FileUploader
-
                       accept='video/*'
+                      className ="upload-video"
                       storageRef={firebase.storage().ref("notification" + "/" + studentDetails.userId)}
                       onUploadStart={this.handleUploadStart}
                       onUploadError={this.handleUploadError}
                       onUploadSuccess={this.handleVideoUploadSuccess}
                       onProgress={this.handleProgress}
                     />
-                  </div>
-
+                 
 
                 </div>
               </div>
-              <button type="button" className="btn btn-dark submit" onClick={this.createNotification}>Create</button>
+              <p className ="help-block">{this.state.validationMessage}</p>
+              <button type="button" className="btn btn-dark submit" onClick={this.createNotification}>Create Notofication</button>
             </form>
           </div>
         </Modal>
