@@ -52,7 +52,7 @@ class ListContainer extends Component {
         {listType === 'Teacher' && (
           <div className="row row-without--margin">
             <div className="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-8  content-container--background col-without--padding list-container--margin">
-              <div style={{ background: '#FFF', textAlign: 'center' }}>
+              <div style={{ textAlign: 'center' }}>
                 <InfiniteScroll
                   dataLength={this.state.teacherList.length}
                   next={this.fetchNextTeacherItems}

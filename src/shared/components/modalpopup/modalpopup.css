@@ -3,7 +3,13 @@
     height: 150px;
     border-radius: 50%;
 }
+.help-block {
+    font-size: 17px !important;
+}
 
+.already-notified{
+    color: #117a8b;
+}
 .student-teacher-label{
     font-size: 20px;
     color: #117a8b;
@@ -15,6 +21,7 @@
 }
 .header{
     padding: 0px 0px 25px 0px;
+    color: black;
 }
 
 .margn-top {

@@ -34,7 +34,10 @@ class CommentItem extends Component {
               </h6>
 
               <span style={{ fontSize: '25px' }}>&#10077;</span>
-              <p className="block-with-text">
+              <p
+                className="block-with-text"
+                title={commentDetails.feedback.comment}
+              >
                 {commentDetails.feedback.comment}
               </p>
             </div>

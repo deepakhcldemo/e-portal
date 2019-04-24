@@ -37,19 +37,20 @@ class SearchTeacher extends Component {
 
   componentDidMount() {
     const self = this;
-    
+
     console.log(this.props, 'this.porps in componentWill');
     getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         const subjects = [...doc.data().subjects];
         this.setState({ categoryList: subjects });
-        if(self.props.selectedSubjectFromHome){
-          self.props.getTeachersBasedOnCateogy(self.props.selectedSubjectFromHome);
+        if (self.props.selectedSubjectFromHome) {
+          self.props.getTeachersBasedOnCateogy(
+            self.props.selectedSubjectFromHome
+          );
           this.setState({
-            selectedSubject : self.props.selectedSubjectFromHome
-          })
-        }
-        else{
+            selectedSubject: self.props.selectedSubjectFromHome
+          });
+        } else {
           this.props.getTeachersBasedOnCateogy(subjects['0']);
         }
       });
@@ -218,14 +219,14 @@ class SearchTeacher extends Component {
             {this.state.showValidationMessage}
           </p>
 
-          <div className="card">
+          <div className="card" style={{ background: ' #4b4e68' }}>
             <div className="card-body">
               <div className="row row-without--margin">
                 <div className=" filter-teacher add-padding col-xs-12 col-12 col-md-4">
                   <select
                     className="form-control"
                     onChange={this.subjectChange}
-                    value = {this.state.selectedSubject}
+                    value={this.state.selectedSubject}
                   >
                     {this.state.categoryList.map(key => (
                       <option key={key}>{key}</option>
@@ -269,7 +270,11 @@ class SearchTeacher extends Component {
                 itemList={this.state.filtredTeacherRecord}
               />
             )}
-            {this.state.filtredTeacherRecord.length === 0 && (<div className="col-12 text-center"><b>No Records Found.</b></div>)}
+            {this.state.filtredTeacherRecord.length === 0 && (
+              <div className="col-12 text-center">
+                <b>No Records Found.</b>
+              </div>
+            )}
           </div>
         </div>
         <div>
@@ -290,7 +295,7 @@ const mapStateToProps = state => {
     modalSata: state.classes,
     carouselRows: state.carouselStore.carouselData,
     TeacherList: state.searchTeacher.teacherDetails,
-    selectedSubjectFromHome : state.categoryItem.getSelectedSubj
+    selectedSubjectFromHome: state.categoryItem.getSelectedSubj
   };
 };
 

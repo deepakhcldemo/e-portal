@@ -71,11 +71,11 @@ class StudentFeedback extends Component {
     return (
       <React.Fragment>
         {studentsReview.length > 0 && (
-          <div className="col-12 content-container--background">
-            <h4 className="mt-30">
+          <div className="col-12 content-container--background container-margin-20">
+            <h4 className="mt-30 pad10">
               {title} <i className="fas fa-chevron-right" />
             </h4>
-            <div style={{ background: "#FFF", textAlign: "center" }}>
+            <div>
               <Slider {...settingsStudentsReview}>
                 {this.studentsReviewChildren(studentsReview)}
               </Slider>
