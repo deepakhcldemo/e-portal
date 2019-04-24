@@ -105,7 +105,6 @@ class TeacherDetails extends Component {
       querySnapshot.forEach(doc => {
         currData.push(doc.data());
       });
-
       if (currData.length > 0) {
         this.setState({
           carousellistNewlyItems: currData

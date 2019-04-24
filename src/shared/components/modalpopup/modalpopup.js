@@ -10,7 +10,6 @@ import {
 
 } from './modalAction';
 import './modalpopup.css';
-import FirebaseStorage from 'firebase';
 class ModalPopUp extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +40,7 @@ class ModalPopUp extends Component {
     console.log('nextProps in teacher', nextProps)
     this.setState({
       teacherName: nextProps.teacherDeatils.title,
-      tid : nextProps.teacherDeatils.title.id
+      tid : nextProps.teacherDeatils.teacherId
     })
 
   }
@@ -63,20 +62,26 @@ class ModalPopUp extends Component {
 
   createNotification = () => {
     const loggedInUSerDetails = JSON.parse(localStorage.getItem('userProfile'));
-    let tId , sId;
+    let tId , sId , tname , sname ='';
     if(loggedInUSerDetails.role === 'Teacher'){
       tId  = loggedInUSerDetails.userId;
       sId = '';
     }
     else{
       sId  = loggedInUSerDetails.userId;
-      tId = ''
+     
     }
+
+    tId = this.state.tid;
+    tname = this.state.teacherName;
+    sname = this.state.studentName
     const notificationDetails = {
         notificationDesc : this.state.notificationDescription,
         tId, 
         sId,
-        loggedInUserId : loggedInUSerDetails.userId
+        loggedInUserId : loggedInUSerDetails.userId,
+        tname,
+        sname
 
     }
     getVideoUrl().then(url => {
