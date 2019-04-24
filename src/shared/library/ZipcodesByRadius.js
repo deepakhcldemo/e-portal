@@ -3,7 +3,7 @@ import jsonp from 'jsonp';
 
 export const zipRequestDispatch = (zipcode) => {
     return (dispatch) => {
-        console.log(zipcode)
+        // console.log(zipcode)
         jsonp('https://www.zipcodeapi.com/rest/smSkfHWKkUriOnIvrOfvpwrXKktOzw0r7Zrt3rOGZwTLUmMMyJjdux1FZhpcc3iA/radius.json/' + zipcode + '/5/km', 
             // response => dispatch({type: 'get_jsonp', jsonp: JSON.parse(response.data)})
             response => console.log('---------Data----',response)
