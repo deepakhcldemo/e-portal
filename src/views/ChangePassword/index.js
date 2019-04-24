@@ -98,13 +98,15 @@ class ChangePassword extends Component {
 
     const { password, confirmPassword, submitted } = this.state;
     return (
-      <div className="container-background">
+      <div>
         <div className="row row-without--margin">
           <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container content-align--middle">
-            <div className="card card-border-radius">
+            <div
+              className="card card-border-radius"
+              style={{ background: '#4b4e68' }}
+            >
               <div className="col-12 sign-in--text">
-                <span className="text-style-1">-</span>
-                <span className="sign-in-text--padding">Reset Password</span>
+                <span className="sign-in-text--color">Reset Password</span>
               </div>
 
               <form name="form" className="login-form--padding">
@@ -116,7 +118,9 @@ class ChangePassword extends Component {
                     'form-group' + (submitted && !password ? ' has-error' : '')
                   }
                 >
-                  <label htmlFor="password">Enter New Password</label>
+                  <label className="label-color" htmlFor="password">
+                    Enter New Password
+                  </label>
                   <div className="input-group">
                     <input
                       type="password"
@@ -143,7 +147,9 @@ class ChangePassword extends Component {
                     (submitted && !confirmPassword ? ' has-error' : '')
                   }
                 >
-                  <label htmlFor="confirmPassword">Confirm Password</label>
+                  <label className="label-color" htmlFor="confirmPassword">
+                    Confirm Password
+                  </label>
                   <div className="input-group">
                     <input
                       type="password"
@@ -174,6 +180,15 @@ class ChangePassword extends Component {
                     className="btn btn-success btn-block"
                   >
                     UPDATE PASSWORD
+                  </button>
+                  <button
+                    onClick={() => {
+                      this.props.history.push('/home');
+                    }}
+                    type="button"
+                    className="btn btn-dark btn-block"
+                  >
+                    CANCEL
                   </button>
                 </div>
               </form>

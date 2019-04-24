@@ -10,6 +10,11 @@ const spinnerStatusReducer = (state = initialState, action) => {
         ...state,
         spinnerStatus: action.payload
       };
+    default :
+      return {
+        ...state
+      }
+      
   }
   return state;
 };

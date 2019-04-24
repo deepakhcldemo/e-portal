@@ -4,9 +4,9 @@ import HeaderHome from '../../../components/layout/header/HeaderHome';
 import { STUDENT_DASHBOARD_LINKS } from './../../../constant/Constant';
 import Navbar from './../../../shared/components/Navbar';
 import { getTeachersBasedOnCateogy } from './searchTeacherAction';
-import Navigation from '../Navigation/Navigation';
+// import Navigation from '../Navigation/Navigation';
 import { connect } from 'react-redux';
-import Select from 'react-select';
+// import Select from 'react-select';
 import { getAllCategory } from '../../../database/dal/firebase/categoryDal';
 
 import Multiselect from 'multiselect-dropdown-react';
@@ -14,6 +14,8 @@ import './SearchTeacher.css';
 
 import CalendarModal from '../../../shared/components/calendar-modal/calendarmodal';
 import ListContainer from '../../../components/listContainer/ListContainer';
+import { zipRequestDispatch } from '../../../shared/library/ZipcodesByRadius';
+
 class SearchTeacher extends Component {
   constructor(props) {
     super(props);
@@ -138,6 +140,7 @@ class SearchTeacher extends Component {
         filtredTeacherRecord: searchParameter.TeacherList
       });
     }
+    this.props.getTeachersBasedOnZipcode('85001');
     //this.props.getTeachersBasedOnCateogy(this.state.selectedSubject);
   };
 
@@ -155,7 +158,7 @@ class SearchTeacher extends Component {
   };
 
   render() {
-    let filetredTeacherData = this.state.filtredTeacherRecord.map(
+    this.state.filtredTeacherRecord.map(
       (teacher, index) => {
         return (
           <div className="col-md-3" key={index}>
@@ -200,6 +203,10 @@ class SearchTeacher extends Component {
       {
         name: 'Rating',
         value: 'rating'
+      },
+      {
+        name: 'Nearby location',
+        value: 'nearByLocation'
       }
     ];
     console.log(
@@ -302,7 +309,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getTeachersBasedOnCateogy: selectedSubject =>
-      dispatch(getTeachersBasedOnCateogy(selectedSubject))
+      dispatch(getTeachersBasedOnCateogy(selectedSubject)),
+    getTeachersBasedOnZipcode: zipcode =>
+      dispatch(zipRequestDispatch(zipcode))
   };
 };
 

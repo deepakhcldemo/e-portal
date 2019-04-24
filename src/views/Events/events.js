@@ -2,11 +2,11 @@ import React, { Component } from "react"
 import { connect } from 'react-redux';
 import "./eventstyle.css"
 
-import { EVENT_CONSTANT } from '../../constant/Event-Constant'
+// import { EVENT_CONSTANT } from '../../constant/Event-Constant'
 import ModalPopUp from '../../shared/components/modalpopup/modalpopup';
 import DateTimePicker from 'react-datetime-picker';
 import { saveEventDetails } from '../../database/dal/firebase/eventDal'
-import { openModalPopUp, getStudentList, addStudent } from './eventAction';
+import { openModalPopUp, getStudentList, /* addStudent */ } from './eventAction';
 // import TimePicker from 'react-bootstrap-time-picker';
 class CreateEvent extends Component {
   constructor(props) {

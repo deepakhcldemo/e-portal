@@ -44,6 +44,7 @@ class HeaderHome extends Component {
           <a
             onClick={() => this.navigateTo(this.state.dashboardLink)}
             className="home-header-link"
+            href="#"
           >
             <i className="fa fa-sign-in home-header-icon--size" />{" "}
             <span className="home-header-text-link-status">SignIn/SignUp</span>

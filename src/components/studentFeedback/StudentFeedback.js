@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Slider from 'react-slick';
-import GLOBAL_VARIABLES from '../../config/config';
+// import GLOBAL_VARIABLES from '../../config/config';
 import CommentItem from '../../components/commentItem/CommentItem';
 
 class StudentFeedback extends Component {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthGuard from './authguard/AuthGuard';
-import { withRouter } from 'react-router';
+// import { withRouter } from 'react-router';
 import GLOBAL_VARIABLES from './config/config';
 import './App.css';
 import CreateEvent from './views/Events/events';
@@ -154,7 +154,7 @@ App.defaultProps = {
   children: null
 };
 const mapStateToProps = state => {
-  const loginResponse = JSON.parse(localStorage.getItem('user'));
+  // const loginResponse = JSON.parse(localStorage.getItem('user'));
   // console.log('app state', state)
   return {
     auth: true,

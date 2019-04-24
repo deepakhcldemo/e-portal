@@ -76,29 +76,23 @@ class Teacher extends Component {
         </div>
         <div className="row">
           <div className="col-12 main-wrapper">
-            {bannerData && (
-              <Banner bannerRows={bannerData} pageName="teacher" />
-            )}
-            {pendingContent.length > 0 && (
+              {bannerData && (
+                <Banner bannerRows={bannerData} pageName="teacher" />
+              )}
               <RecentVideo
                 isNotVisibleVideoMeta={true}
                 carousellistNewlyItems={[pendingContent]}
                 headeTitle="Video Pending for Review"
               />
-            )}
-            {reviewedContent.length > 0 && (
               <RecentVideo
                 isNotVisibleVideoMeta={true}
                 carousellistNewlyItems={reviewedContent}
                 headeTitle="Video Reviewed"
               />
-            )}
-            {myContent.length > 0 && (
               <RecentVideo
                 carousellistNewlyItems={myContent}
                 headeTitle="My Video"
               />
-            )}            
           </div>
         </div>        
         <div className="row main-wrapper">
