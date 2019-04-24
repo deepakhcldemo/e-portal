@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // Date format Plugin
-import moment from 'moment';
+import moment from "moment";
 // Slider Component Plugin
-import Slider from 'react-slick';
+import Slider from "react-slick";
 // Link Plugin
-import { Link } from 'react-router-dom';
-import TeacherItem from '../../components/teacherItem/TeacherItem';
+import { Link } from "react-router-dom";
+import TeacherItem from "../../components/teacherItem/TeacherItem";
 
 class TopTutor extends Component {
   createChildren = records => {
@@ -17,7 +17,7 @@ class TopTutor extends Component {
         <div key={index} className="vd-wrapper  col-xs-12">
           <Link
             className="nav-link"
-            style={{ padding: '0px' }}
+            style={{ padding: "0px" }}
             to={`/home/teacher/${carouselRecord.userId}`}
             title={carouselRecord.name}
           >
@@ -32,7 +32,7 @@ class TopTutor extends Component {
 
   render() {
     const { headeTitle, carouselTop10Items } = this.props;
-    const title = headeTitle ? headeTitle : 'Top Tutor';
+    const title = headeTitle ? headeTitle : "Top Tutor";
 
     const settingsTop10 = {
       dots: true,
@@ -77,7 +77,7 @@ class TopTutor extends Component {
             <h3 className="mt-30 pad_top5">
               {title} <i className="fas fa-chevron-right" />
             </h3>
-            <div style={{ background: '#FFF', textAlign: 'center' }}>
+            <div className="tray-background--color">
               <Slider {...settingsTop10}>
                 {this.createChildren(carouselTop10Items)}
               </Slider>

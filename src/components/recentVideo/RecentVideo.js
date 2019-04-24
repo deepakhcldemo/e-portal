@@ -31,7 +31,6 @@ class RecentVideo extends Component {
   render() {
     const { headeTitle, carousellistNewlyItems } = this.props;
     const title = headeTitle ? headeTitle : "Recent Videos";
-    const style = { background: "#FFF", textAlign: "center" };
     const settingsNewlyItems = {
       dots: true,
       infinite: true,
@@ -73,7 +72,7 @@ class RecentVideo extends Component {
           <h3 className="mt-30">
             {title} <i className="fas fa-chevron-right" />
           </h3>
-          <div style={style}>
+          <div className="tray-background--color">
             {carousellistNewlyItems.length > 0 && (
               <Slider {...settingsNewlyItems}>
                 {this.createChildren(carousellistNewlyItems)}

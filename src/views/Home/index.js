@@ -26,7 +26,7 @@ class Home extends Component {
     };
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.setState({
       bannerRows: [],
       carouselTop10Items: [],
@@ -34,7 +34,7 @@ class Home extends Component {
       studentsReview: []
     });
   }
-  
+
   componentDidMount = () => {
     getBannerFromDB().onSnapshot(querySnapshot => {
       let bannerData = [];
@@ -101,7 +101,7 @@ class Home extends Component {
     } = this.state;
 
     return (
-      <div className="container-fluid">
+      <div className="container-fluid containe-without-padding">
         <div className="row">
           <div className="col-12 container--margin-bottom">
             <HeaderHome headeTitle="Dashboard" />
