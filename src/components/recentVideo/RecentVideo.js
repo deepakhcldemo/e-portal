@@ -1,19 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // Date format Plugin
-import moment from 'moment';
+import moment from "moment";
 // Slider Component Plugin
-import Slider from 'react-slick';
+import Slider from "react-slick";
 // Video Item Component
-import VideoItem from '../../components/videoItem/VideoItem';
-import GLOBAL_VARIABLES from '../../config/config';
+import VideoItem from "../../components/videoItem/VideoItem";
+import GLOBAL_VARIABLES from "../../config/config";
 
 class RecentVideo extends Component {
-
   createChildren = records => {
     return records.map((carouselRecord, index) => {
-      carouselRecord.date = (carouselRecord.created) ? moment(carouselRecord.created.toDate()).fromNow() : ''
-      carouselRecord.thumb = (carouselRecord.thumb) ?  carouselRecord.thumb : GLOBAL_VARIABLES.VIDEO_PLACEHOLDER;
-     
+      carouselRecord.date = carouselRecord.created
+        ? moment(carouselRecord.created.toDate()).fromNow()
+        : "";
+      carouselRecord.thumb = carouselRecord.thumb
+        ? carouselRecord.thumb
+        : GLOBAL_VARIABLES.VIDEO_PLACEHOLDER;
+
       return (
         <div key={index} className="vd-wrapper col-xs-12 padR10">
           <VideoItem
@@ -27,8 +30,8 @@ class RecentVideo extends Component {
 
   render() {
     const { headeTitle, carousellistNewlyItems } = this.props;
-    const title = headeTitle ? headeTitle : 'Recent Videos';
-    const style = { background: '#FFF', textAlign: 'center' };
+    const title = headeTitle ? headeTitle : "Recent Videos";
+    const style = { background: "#FFF", textAlign: "center" };
     const settingsNewlyItems = {
       dots: true,
       infinite: true,
@@ -66,18 +69,23 @@ class RecentVideo extends Component {
     };
     return (
       <>
-        {carousellistNewlyItems.length > 0 && (
-          <div className="col-12 content-container--background">
-            <h3 className="mt-30">
-              {title} <i className="fas fa-chevron-right" />
-            </h3>
-            <div style={style}>
+        <div className="col-12 content-container--background">
+          <h3 className="mt-30">
+            {title} <i className="fas fa-chevron-right" />
+          </h3>
+          <div style={style}>
+            {carousellistNewlyItems.length > 0 && (
               <Slider {...settingsNewlyItems}>
                 {this.createChildren(carousellistNewlyItems)}
               </Slider>
-            </div>
+            )}
+            {carousellistNewlyItems.length === 0 && (
+              <span>
+                <b>No Records</b>
+              </span>
+            )}
           </div>
-        )}
+        </div>
       </>
     );
   }
