@@ -8,7 +8,7 @@ class TeacherItem extends Component {
     const { userProfile, isTrayItem } = this.props;
 
     return (
-      <div>
+      <div className="card">
         <div
           className={
             isTrayItem

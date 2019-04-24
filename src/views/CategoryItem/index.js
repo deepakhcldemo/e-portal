@@ -37,9 +37,7 @@ class CategoryItem extends Component {
     const { categoryList } = this.state;
     return (
       <div className="col-12 content-container--background categories-container-padding container-margin-20">
-        <h4>
-          Top Categories <i className="fas fa-chevron-right" />
-        </h4>
+        <h4>Top Categories</h4>
 
         <div className="users-list">
           <div className="row category-container">
