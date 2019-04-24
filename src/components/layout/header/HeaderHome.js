@@ -23,10 +23,10 @@ class HeaderHome extends Component {
       this.setState({ dashboardLink: "/login" });
     }
   };
-  /* navigateTo = linkName => {
+  navigateTo = linkName => {
     console.log(linkName);
     this.props.history.push(linkName);
-  }; */
+  };
 
   render() {
     let userLink;
