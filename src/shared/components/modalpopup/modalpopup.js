@@ -21,7 +21,8 @@ class ModalPopUp extends Component {
       teacherName: '',
       notificationDescription: '',
       validationMessage: '',
-      notificationPermission: true
+      notificationPermission: true, 
+      videoName : ''
     }
     this.createNotification = this.createNotification.bind(this);
     this.notoficationDescription = this.notoficationDescription.bind(this);
@@ -66,7 +67,9 @@ class ModalPopUp extends Component {
   }
 
   handleVideoUploadSuccess = fileName => {
-    console.log(fileName);
+    this.setState({
+      videoName : fileName
+    })
   };
 
 
@@ -106,7 +109,7 @@ class ModalPopUp extends Component {
       tstatus
 
     }
-    getVideoUrl().then(url => {
+    getVideoUrl(this.state.videoName).then(url => {
       let sVideo = '', tVideo = '';
       loggedInUSerDetails.role === 'Teacher' ? tVideo = url : sVideo = url;
       notificationDetails.tvideo = tVideo;
