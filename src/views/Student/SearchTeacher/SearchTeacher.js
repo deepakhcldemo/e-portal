@@ -39,8 +39,8 @@ class SearchTeacher extends Component {
 
   componentDidMount() {
     const self = this;
-
-    console.log(this.props, 'this.porps in componentWill');
+    this.props.getTeachersBasedOnZipcode('85001');
+    // console.log(this.props, 'this.porps in componentWill');
     getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         const subjects = [...doc.data().subjects];
@@ -83,7 +83,7 @@ class SearchTeacher extends Component {
   };
 
   getSerachParameter = (searchParameter, defalutSubjectSelected) => {
-    console.log('searchParameter', searchParameter);
+    // console.log('searchParameter', searchParameter);
     if (defalutSubjectSelected !== 'defalutSubjectSelected') {
       const lowerCase = this.state.searchValue.toLowerCase();
       const tempArray = [];
@@ -135,12 +135,12 @@ class SearchTeacher extends Component {
         filtredTeacherRecord: tempArray
       });
     } else {
-      console.log('searchParameter.TeacherList', searchParameter.TeacherList);
+      // console.log('searchParameter.TeacherList', searchParameter.TeacherList);
       this.setState({
         filtredTeacherRecord: searchParameter.TeacherList
       });
     }
-    this.props.getTeachersBasedOnZipcode('85001');
+    
     //this.props.getTeachersBasedOnCateogy(this.state.selectedSubject);
   };
 
@@ -207,10 +207,7 @@ class SearchTeacher extends Component {
         value: 'nearByLocation'
       }
     ];
-    console.log(
-      this.state.filtredTeacherRecord,
-      'this.state.filtredTeacherRecord in search teacher'
-    );
+    // console.log(this.state.filtredTeacherRecord,'this.state.filtredTeacherRecord in search teacher');
     return (
       <div className="teacher-student-search container-fluid">
         <div>
@@ -296,6 +293,7 @@ class SearchTeacher extends Component {
 }
 
 const mapStateToProps = state => {
+  // console.log(state.searchTeacher)
   return {
     modalSata: state.classes,
     carouselRows: state.carouselStore.carouselData,
