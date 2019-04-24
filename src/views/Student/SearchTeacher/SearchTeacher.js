@@ -202,6 +202,10 @@ class SearchTeacher extends Component {
       {
         name: 'Rating',
         value: 'rating'
+      },
+      {
+        name: 'Nearby location',
+        value: 'nearByLocation'
       }
     ];
     console.log(
@@ -304,7 +308,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getTeachersBasedOnCateogy: selectedSubject =>
-      dispatch(getTeachersBasedOnCateogy(selectedSubject))
+      dispatch(getTeachersBasedOnCateogy(selectedSubject)),
+    getTeachersBasedOnZipcode: zipcode =>
+      dispatch(zipRequestDispatch(zipcode))
   };
 };
 
