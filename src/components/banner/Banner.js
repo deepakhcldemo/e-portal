@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import GLOBAL_VARIABLES from '../../config/config';
-import Slider from 'react-slick';
+import React, { Component } from "react";
+import GLOBAL_VARIABLES from "../../config/config";
+import Slider from "react-slick";
 
 class Banner extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      noOfCarouselImage: ''
+      noOfCarouselImage: ""
     };
   }
 
@@ -22,21 +22,23 @@ class Banner extends Component {
       autoplay: true
     };
 
-    let listAwaitingItems = '';
+    let listAwaitingItems = "";
     if (bannerRows && bannerRows.length > 0) {
       listAwaitingItems = bannerRows.map((bannerRow, index) => (
         <div key={index}>
           {bannerRow.banner_image && (
-            <center><img
-              alt=""
-              src={
-                GLOBAL_VARIABLES.BANNER_PATH +
-                pageName +
-                "/" +
-                bannerRow.banner_image
-              }
-              className="d-block banner"
-            /></center>
+            <center>
+              <img
+                alt=""
+                src={
+                  GLOBAL_VARIABLES.BANNER_PATH +
+                  pageName +
+                  "/" +
+                  bannerRow.banner_image
+                }
+                className="d-block banner"
+              />
+            </center>
           )}
         </div>
       ));
@@ -44,10 +46,10 @@ class Banner extends Component {
     return (
       <React.Fragment>
         {listAwaitingItems.length > 0 && (
-          <div className="col-12 content-container--background">
+          <div className="col-12 content-container--background col-without--padding">
             <div
               className="banner-container"
-              style={{ background: '#555555', textAlign: 'center' }}
+              style={{ background: "#555555", textAlign: "center" }}
             >
               <Slider {...settingsBanner}>{listAwaitingItems}</Slider>
             </div>

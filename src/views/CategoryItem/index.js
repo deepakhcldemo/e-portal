@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 // import { createBrowserHistory } from 'history';
-import './styles.css';
-import { withRouter } from 'react-router';
-import { getAllCategory } from '../../database/dal/firebase/categoryDal';
-import { sendSubjectToTeacherSearch } from './actions';
+import "./styles.css";
+import { withRouter } from "react-router";
+import { getAllCategory } from "../../database/dal/firebase/categoryDal";
+import { sendSubjectToTeacherSearch } from "./actions";
 
 class CategoryItem extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class CategoryItem extends Component {
 
   navigateToSearchTeacher = subjectDetails => {
     this.props.sendSubjectToTeacherSearch(subjectDetails);
-    this.props.history.push('/student/teacher');
+    this.props.history.push("/student/teacher");
   };
 
   render() {
@@ -46,11 +46,20 @@ class CategoryItem extends Component {
                 return (
                   <div
                     key={index}
-                    className="category-items--align"
+                    className="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-2 category-items--align"
                     onClick={() => this.navigateToSearchTeacher(listItem)}
                   >
                     <div className="card-style">
-                      <div className="category-style">{listItem}</div>
+                      <div className="category-style">
+                        <div className="category--title">
+                          <div className="category--icon">
+                            <i className="fa fa-sign-language" />
+                          </div>
+                          <span className="category--item-text">
+                            {listItem}
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 );
