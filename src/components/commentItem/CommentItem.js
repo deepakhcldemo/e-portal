@@ -16,8 +16,8 @@ class CommentItem extends Component {
                 backgroundPosition: "top center",
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
-                height: "200px",
-                margin: "10px"
+                height: "100px",
+                margin: "5px"
               }}
               className="border_1px"
             />
