@@ -13,6 +13,14 @@
   color: black !important;
 }
 
+.user-title {
+  width: 120px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: bold;
+}
+
 .charge-container {
   background: grey;
   height: 70px;
@@ -32,7 +40,7 @@
 }
 
 .tray-item--height {
-  height: 150px;
+  height: unset;
   align-items: center;
 }
 
@@ -62,8 +70,11 @@
   text-align: left !important;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 768px) {
   .tray-item--height {
-    height: unset;
+    height: 150px;
+  }
+  .user-title {
+    width: 160px;
   }
 }

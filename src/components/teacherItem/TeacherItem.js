@@ -64,7 +64,9 @@ class TeacherItem extends Component {
                   }
                   style={{ border: 'none' }}
                 >
-                  <h6>{userProfile.firstName + ' ' + userProfile.lastName}</h6>
+                  <h6 className="user-title">
+                    {userProfile.firstName + ' ' + userProfile.lastName}
+                  </h6>
                   <p>
                     <strong>Subject:</strong> {userProfile.subject}
                   </p>
