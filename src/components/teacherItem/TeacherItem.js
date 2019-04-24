@@ -9,8 +9,17 @@ class TeacherItem extends Component {
 
     return (
       <div>
-        <div className="user-profile-card--padding">
-          <div className="vd-wrapper  col-xs-12">
+        <div
+          className={
+            isTrayItem
+              ? 'card user-profile-card--padding tray-item--style'
+              : 'user-profile-card--padding'
+          }
+        >
+          <div
+            className="card-body vd-wrapper col-xs-12"
+            style={{ padding: '0px' }}
+          >
             <div
               className={
                 isTrayItem
@@ -47,7 +56,13 @@ class TeacherItem extends Component {
                     : 'col-12 col-without--padding content-container--background '
                 }
               >
-                <div className="vd-content user-details--style">
+                <div
+                  className={
+                    isTrayItem
+                      ? 'vd-content user-details-tray--style user-detail--align'
+                      : 'vd-content user-details--style'
+                  }
+                >
                   <h6>{userProfile.firstName + ' ' + userProfile.lastName}</h6>
                   <p>
                     <strong>Subject:</strong> {userProfile.subject}

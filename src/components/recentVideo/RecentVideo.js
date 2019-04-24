@@ -1,18 +1,18 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 // Date format Plugin
-import moment from "moment";
+import moment from 'moment';
 // Slider Component Plugin
-import Slider from "react-slick";
+import Slider from 'react-slick';
 // Video Item Component
-import VideoItem from "../../components/videoItem/VideoItem";
-import GLOBAL_VARIABLES from "../../config/config";
+import VideoItem from '../../components/videoItem/VideoItem';
+import GLOBAL_VARIABLES from '../../config/config';
 
 class RecentVideo extends Component {
   createChildren = records => {
     return records.map((carouselRecord, index) => {
       carouselRecord.date = carouselRecord.created
         ? moment(carouselRecord.created.toDate()).fromNow()
-        : "";
+        : '';
       carouselRecord.thumb = carouselRecord.thumb
         ? carouselRecord.thumb
         : GLOBAL_VARIABLES.VIDEO_PLACEHOLDER;
@@ -30,13 +30,13 @@ class RecentVideo extends Component {
 
   render() {
     const { headeTitle, carousellistNewlyItems } = this.props;
-    const title = headeTitle ? headeTitle : "Recent Videos";
+    const title = headeTitle ? headeTitle : 'Recent Videos';
     const settingsNewlyItems = {
       dots: true,
       infinite: true,
       speed: 500,
       slidesToShow:
-        carousellistNewlyItems.length >= 5 ? 5 : carousellistNewlyItems.length,
+        carousellistNewlyItems.length >= 7 ? 7 : carousellistNewlyItems.length,
       slidesToScroll: 1,
       autoplay: true,
       responsive: [
@@ -60,7 +60,7 @@ class RecentVideo extends Component {
         {
           breakpoint: 480,
           settings: {
-            slidesToShow: 1,
+            slidesToShow: 2,
             slidesToScroll: 1
           }
         }
@@ -68,7 +68,7 @@ class RecentVideo extends Component {
     };
     return (
       <>
-        <div className="col-12 content-container--background">
+        <div className="col-12 content-container--background container-margin-20">
           <h4 className="mt-30">
             {title} <i className="fas fa-chevron-right" />
           </h4>

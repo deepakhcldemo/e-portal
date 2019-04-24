@@ -4,16 +4,15 @@ import { createBrowserHistory } from 'history';
 import './styles.css';
 import { withRouter } from 'react-router';
 import { getAllCategory } from '../../database/dal/firebase/categoryDal';
-import {sendSubjectToTeacherSearch} from './actions';
+import { sendSubjectToTeacherSearch } from './actions';
 
 class CategoryItem extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
       categoryList: []
-    }
+    };
     this.navigateToSearchTeacher = this.navigateToSearchTeacher.bind(this);
   }
   state = {
@@ -29,30 +28,31 @@ class CategoryItem extends Component {
     });
   };
 
-
-
-  navigateToSearchTeacher = (subjectDetails) => {
-   this.props.sendSubjectToTeacherSearch(subjectDetails)
+  navigateToSearchTeacher = subjectDetails => {
+    this.props.sendSubjectToTeacherSearch(subjectDetails);
     this.props.history.push('/student/teacher');
-  }
+  };
 
   render() {
     const { categoryList } = this.state;
     return (
-      <div className="col-12 content-container--background categories-container-padding">
-        <h4>TOP CATEGORIES ></h4>
+      <div className="col-12 content-container--background categories-container-padding container-margin-20">
+        <h4>
+          Top Categories <i className="fas fa-chevron-right" />
+        </h4>
 
         <div className="users-list">
-          <div className="row">
+          <div className="row category-container">
             {categoryList &&
               categoryList.map((listItem, index) => {
                 return (
                   <div
                     key={index}
-                    className="col-xs-6 col-sm-4 col-md-3 col-lg-3"
-                  onClick = {() =>this.navigateToSearchTeacher(listItem)}>
-                    <div className="card card-style">
-                      <div className="card-body category-style">{listItem}</div>
+                    className="category-items--align"
+                    onClick={() => this.navigateToSearchTeacher(listItem)}
+                  >
+                    <div className="card-style">
+                      <div className="category-style">{listItem}</div>
                     </div>
                   </div>
                 );
@@ -72,11 +72,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-
-    sendSubjectToTeacherSearch: (subject) => dispatch(sendSubjectToTeacherSearch(subject))
+    sendSubjectToTeacherSearch: subject =>
+      dispatch(sendSubjectToTeacherSearch(subject))
   };
 };
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CategoryItem));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(CategoryItem)
+);

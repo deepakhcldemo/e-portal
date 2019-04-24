@@ -73,7 +73,7 @@ class TopTutor extends Component {
     return (
       <React.Fragment>
         {carouselTop10Items.length > 0 && (
-          <div className="col-12 content-container--background">
+          <div className="col-12 content-container--background container-margin-20">
             <h4 className="mt-30 pad_top5">
               {title} <i className="fas fa-chevron-right" />
             </h4>
