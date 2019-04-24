@@ -136,7 +136,7 @@ class Home extends Component {
 
         <CategoryItem />
 
-        <div className="col-12 content-container--background">{zipRequestDispatch('85001')}</div>
+        <div className="col-12 content-container--background">&npsp;</div>
         <div className="col-12 content-container--background">&nbsp;</div>
         <div className="col-12 content-container--background">&nbsp;</div>
       </div>
