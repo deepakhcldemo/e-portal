@@ -14,6 +14,8 @@ import './SearchTeacher.css';
 
 import CalendarModal from '../../../shared/components/calendar-modal/calendarmodal';
 import ListContainer from '../../../components/listContainer/ListContainer';
+import { zipRequestDispatch } from '../../../shared/library/ZipcodesByRadius';
+
 class SearchTeacher extends Component {
   constructor(props) {
     super(props);

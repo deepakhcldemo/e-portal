@@ -14,6 +14,7 @@ import RecentVideo from '../../components/recentVideo/RecentVideo';
 import StudentFeedback from '../../components/studentFeedback/StudentFeedback';
 import Banner from '../../components/banner/Banner';
 import GLOBAL_VARIABLES from '../../config/config';
+import { zipRequestDispatch } from '../../shared/library/ZipcodesByRadius';
 
 class Home extends Component {
   constructor(props) {
@@ -91,7 +92,7 @@ class Home extends Component {
       });
     });
   };
-
+  
   render() {
     const {
       bannerRows,
@@ -135,12 +136,28 @@ class Home extends Component {
 
         <CategoryItem />
 
+        <div className="col-12 content-container--background">{zipRequestDispatch('85001')}</div>
         <div className="col-12 content-container--background">&nbsp;</div>
         <div className="col-12 content-container--background">&nbsp;</div>
       </div>
     );
   }
 }
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     onSubmit: componentState => {
+
+//       dispatch(
+//         loginAction.loginRequestDispatch({
+//           userName: componentState.username,
+//           password: componentState.password
+//         })
+//       );
+//     },    
+//   };
+// };
+
 const mapStateToProps = state => {
   return {};
 };
