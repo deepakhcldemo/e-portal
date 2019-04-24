@@ -1,0 +1,8 @@
+.top-header-section {
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+}
+.nav-section {
+    padding-top: 3px;
+}

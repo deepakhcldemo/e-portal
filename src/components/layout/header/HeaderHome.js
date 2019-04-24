@@ -4,6 +4,9 @@ import { withRouter, NavLink } from "react-router-dom";
 import "./HomeHeader.css";
 import Avatar from "../avatar/Avatar";
 
+import pearsonLogo from '../../../images/pearson-logo.png';
+
+
 class HeaderHome extends Component {
   state = {
     headeTitle: this.props.headeTitle ? this.props.headeTitle : "Default",
@@ -60,8 +63,8 @@ class HeaderHome extends Component {
     }
     const { dashboardLinks } = this.props;
     return (
-      <header className="header-container">
-        <div
+      <header className="header-container top-header-section">
+        {/* <div
           className="home-header-nav-item home-header-logo"
           style={{
             backgroundPosition: "center center",
@@ -70,8 +73,11 @@ class HeaderHome extends Component {
             backgroundSize: "contain"
           }}
           onClick={() => this.navigateTo("/home")}
-        />
-        <div>
+        /> */}
+        <a href="javascript:void(0)" onClick={() => this.navigateTo("/home")}>
+            <img src={pearsonLogo}/>
+          </a>
+        <div className="nav-section">
           {userLink}
           {!dashboardLinks && (
             <>

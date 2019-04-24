@@ -8,6 +8,7 @@ import classnames from 'classnames';
 
 import ModalPopUp from '../../../shared/components/modalpopup/modalpopup';
 import HeaderHome from '../../../components/layout/header/HeaderHome';
+import profileImgs from '../../../images/profile-imgs.png';
 
 import { openModalForRequest } from './teacher-details.action';
 import {
@@ -18,6 +19,7 @@ import {
 import { getCurriculumFromDB } from '../../../database/dal/firebase/curriculumDal';
 import GLOBAL_VARIABLES from '../../../config/config';
 import RecentVideo from '../../../components/recentVideo/RecentVideo';
+import bannerImg from '../../../images/detail-banner.jpg';
 
 class TeacherDetails extends Component {
   constructor(props) {
@@ -247,221 +249,220 @@ class TeacherDetails extends Component {
           {isLogedIn && <ModalPopUp teacherDeatils={this.state.detailModel} />}
 
           <HeaderHome />
+          <div className="bnr-section">
+            {/* <img src={profileImgs} className="bnr-img1"/> */}
+            <img src={bannerImg} className="bnr-img"/>
+          </div>
+          <div className="profile-section">
+            <div className="container">
+              <div className="row">
+                <div className="col-sm-3">
+                  <div className="profile-img-section">
+                    <img
+                      className="profile-img"
+                      src={imgPath}
+                      alt="..."
+                    />
+                  </div>
+                  <div className="icon-section d-flex">
+                    <div className="icon">
+                      <button
+                        className="btn btn-transparent"
+                        disabled={!isLogedIn}
+                      >
+                        <i className="fas fa-thumbs-up" />{' '}
+                        <span>1000</span>
+                      </button>
+                    </div>
+                    <div className="icon">
+                      <button
+                        className="btn btn-transparent"
+                        disabled={!isLogedIn}
+                      >
+                        <i className="fas fa-thumbs-down" />{' '}
+                        <span>1000</span>
+                      </button>
+                    </div>
+                    <div className="icon">
+                      <button
+                        className="btn btn-transparent"
+                        disabled={!isLogedIn}
+                      >
+                        <i className="fas fa-comment-alt" />{' '}
+                        <span>1000</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-sm-9">
+                  <div>
+                    <h3>{title}</h3>
+                    <span className="sub-title">
+                      Subject: {subject}
+                    </span>
+                    <div
+                        className={classnames({
+                          'disbaled-stars': !isLogedIn,
+                          'ratings-wrpr': true
+                        })}
+                      >
+                        <RatingComponent
+                          name="rate1"
+                          starCount={5}
+                          value={this.state.starRating}
+                          onStarClick={this.onStarClick.bind(this)}
+                        />
+                      </div>
+                    
+                  </div>
+                  <p className="description">{description}</p>
 
-          <div className="card">
-            <div className="card-body">
+                  
+                  {!isLogedIn && (
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={e => this.navigateToLogin()}
+                    >
+                      Login to view more
+                    </button>
+                  )}
+                  {isLogedIn && (
+                    <div>
+                      <button className="btn btn-outline-primary">
+                        Send Request
+                      </button>
+                      <button
+                        className="btn btn-outline-primary"
+                        onClick={this.openModalForRequest}
+                      >
+                        Request For Review
+                      </button>
+                      
+                      
+                      
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="top-courses-section">
               <div className="container">
-                <div className="row">
-                  <div className="col-sm-12">
-                    <div className="card">
-                      <div className="card-body">
-                        <div className="row main-setion">
-                          <div className="col-sm-3">
-                            <img
-                              className="profile-img"
-                              src={imgPath}
-                              alt="..."
-                            />
-                          </div>
-                          <div className="col-sm-9">
-                            <div>
-                              <h4>{title}</h4>
-                              <span className="sub-title">
-                                Subject: {subject}
-                              </span>
-                              <div
-                                className={classnames({
-                                  'disbaled-stars': !isLogedIn
-                                })}
-                              >
-                                <RatingComponent
-                                  name="rate1"
-                                  starCount={5}
-                                  value={this.state.starRating}
-                                  onStarClick={this.onStarClick.bind(this)}
-                                />
-                              </div>
-                            </div>
-                            <p>{description}</p>
+                <div className="col-sm-12">
+                  <div className="vd-section">
+                    <RecentVideo
+                      carousellistNewlyItems={carousellistNewlyItems}
+                      headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
+                    />
+                  </div>
+                </div>
+              </div>
+          </div>
 
-                            <div className="icon-section d-flex">
-                              <div className="icon">
-                                <button
-                                  className="btn btn-transparent"
-                                  disabled={!isLogedIn}
-                                >
-                                  <i className="fas fa-thumbs-up" />{' '}
-                                  <span>1000</span>
-                                </button>
-                              </div>
-                              <div className="icon">
-                                <button
-                                  className="btn btn-transparent"
-                                  disabled={!isLogedIn}
-                                >
-                                  <i className="fas fa-thumbs-down" />{' '}
-                                  <span>1000</span>
-                                </button>
-                              </div>
-                              <div className="icon">
-                                <button
-                                  className="btn btn-transparent"
-                                  disabled={!isLogedIn}
-                                >
-                                  <i className="fas fa-comment-alt" />{' '}
-                                  <span>1000</span>
-                                </button>
-                              </div>
-                            </div>
-                            {!isLogedIn && (
-                              <button
-                                className="btn btn-primary"
-                                onClick={e => this.navigateToLogin()}
-                              >
-                                Login to view more
-                              </button>
-                            )}
-                            {isLogedIn && (
-                              <div>
-                                <button className="btn btn-dark">
-                                  Send Request
-                                </button>
-                                <button
-                                  className="btn btn-dark"
-                                  onClick={this.openModalForRequest}
-                                >
-                                  Request For Review
-                                </button>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
+
+          <div className="comments-section">
+            <div className="container">
+              <div className="row">
+                <div className="col-sm-12">
+                  <div className="comments-hdr-section">
+                    <div className="author-thumbnail">img</div>
+                    <div className="comments-input">
+                      <input
+                        type="text"
+                        className="auto-input form-control"
+                        placeholder="Add a comment"
+                      />
                     </div>
-
-                    <div className="card">
-                      <div className="card-body">
-                        <div className="vd-section">
-                          {/* <Slider listTop10Items={['a','b']}>
-                                        <h4 className="mt-30 pad10">
-                                            Online Courses
-                                            <i className="fas fa-chevron-right" />
-                                        </h4>
-                                        </Slider> */}
-
-                          <RecentVideo
-                            carousellistNewlyItems={carousellistNewlyItems}
-                            headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
-                          />
-                        </div>
-                      </div>
+                    <div className="total-comments">
+                      <span className="count">1</span>
+                      <span className="count-text">Comments</span>
                     </div>
+                  </div>
 
-                    <div className="card">
-                      <div className="card-body">
-                        <div className="comments-hdr-section">
-                          <div className="author-thumbnail">img</div>
-                          <div className="comments-input">
-                            <input
-                              type="text"
-                              className="auto-input form-control"
-                              placeholder="Add a comment"
-                            />
-                          </div>
-                          <div className="total-comments">
-                            <span className="count">1</span>
-                            <span className="count-text">Comments</span>
-                          </div>
+                  <div className="comment-thread-element">
+                    <div className="author-thumbnail">img</div>
+                    <div className="comment-content">
+                      <span className="date">Comment mm/dd/yyy</span>
+                      <p>
+                        Is dolor sit amet long established fact that a
+                        reader will be distracted by the readable content
+                        of a page when looking at its layout. The point of
+                        using Lorem Ipsum is that it has a more-or-less
+                        normal. Color sit amet long established fact that
+                        a reader will be distracted by the readable
+                      </p>
+                      <div className="icon-section d-flex">
+                        <div className="icon">
+                          <button
+                            className="btn btn-transparent"
+                            disabled={!isLogedIn}
+                          >
+                            <i className="fas fa-thumbs-up" />{' '}
+                          </button>
                         </div>
-
-                        <div className="comment-thread-element">
-                          <div className="author-thumbnail">img</div>
-                          <div className="comment-content">
-                            <span className="date">Comment mm/dd/yyy</span>
-                            <p>
-                              Is dolor sit amet long established fact that a
-                              reader will be distracted by the readable content
-                              of a page when looking at its layout. The point of
-                              using Lorem Ipsum is that it has a more-or-less
-                              normal. Color sit amet long established fact that
-                              a reader will be distracted by the readable
-                            </p>
-                            <div className="icon-section d-flex">
-                              <div className="icon">
-                                <button
-                                  className="btn btn-transparent"
-                                  disabled={!isLogedIn}
-                                >
-                                  <i className="fas fa-thumbs-up" />{' '}
-                                </button>
-                              </div>
-                              <div className="icon">
-                                <button
-                                  className="btn btn-transparent"
-                                  disabled={!isLogedIn}
-                                >
-                                  <i className="fas fa-thumbs-down" />
-                                </button>
-                              </div>
-                              <div className="icon">
-                                <button
-                                  className="btn btn-transparent"
-                                  disabled={!isLogedIn}
-                                >
-                                  <i className="fas fa-comment-alt" />
-                                </button>
-                              </div>
-                            </div>
-                          </div>
+                        <div className="icon">
+                          <button
+                            className="btn btn-transparent"
+                            disabled={!isLogedIn}
+                          >
+                            <i className="fas fa-thumbs-down" />
+                          </button>
                         </div>
-
-                        <div className="comment-thread-element">
-                          <div className="author-thumbnail">img</div>
-                          <div className="comment-content">
-                            <span className="date">Comment mm/dd/yyy</span>
-                            <p>
-                              Is dolor sit amet long established fact that a
-                              reader will be distracted by the readable content
-                              of a page when looking at its layout. The point of
-                              using Lorem Ipsum is that it has a more-or-less
-                              normal. Color sit amet long established fact that
-                              a reader will be distracted by the readable
-                            </p>
-                            <div className="icon-section d-flex">
-                              <div className="icon">
-                                <button
-                                  className="btn btn-transparent"
-                                  disabled={!isLogedIn}
-                                >
-                                  <i className="fas fa-thumbs-up" />{' '}
-                                </button>
-                              </div>
-                              <div className="icon">
-                                <button
-                                  className="btn btn-transparent"
-                                  disabled={!isLogedIn}
-                                >
-                                  <i className="fas fa-thumbs-down" />
-                                </button>
-                              </div>
-                              <div className="icon">
-                                <button
-                                  className="btn btn-transparent"
-                                  disabled={!isLogedIn}
-                                >
-                                  <i className="fas fa-comment-alt" />
-                                </button>
-                              </div>
-                            </div>
-                          </div>
+                        <div className="icon">
+                          <button
+                            className="btn btn-transparent"
+                            disabled={!isLogedIn}
+                          >
+                            <i className="fas fa-comment-alt" />
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
+
+                  <div className="comment-thread-element">
+                    <div className="author-thumbnail">img</div>
+                    <div className="comment-content">
+                      <span className="date">Comment mm/dd/yyy</span>
+                      <p>
+                        Is dolor sit amet long established fact that a
+                        reader will be distracted by the readable content
+                        of a page when looking at its layout. The point of
+                        using Lorem Ipsum is that it has a more-or-less
+                        normal. Color sit amet long established fact that
+                        a reader will be distracted by the readable
+                      </p>
+                      <div className="icon-section d-flex">
+                        <div className="icon">
+                          <button
+                            className="btn btn-transparent"
+                            disabled={!isLogedIn}
+                          >
+                            <i className="fas fa-thumbs-up" />{' '}
+                          </button>
+                        </div>
+                        <div className="icon">
+                          <button
+                            className="btn btn-transparent"
+                            disabled={!isLogedIn}
+                          >
+                            <i className="fas fa-thumbs-down" />
+                          </button>
+                        </div>
+                        <div className="icon">
+                          <button
+                            className="btn btn-transparent"
+                            disabled={!isLogedIn}
+                          >
+                            <i className="fas fa-comment-alt" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-sm-12">&nbsp;</div>
               </div>
             </div>
           </div>

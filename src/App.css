@@ -792,9 +792,8 @@ body.toastr-confirm-active {
   /* -webkit-box-shadow: 0px 1px 1px #4c4f58db;
     -moz-box-shadow: 0px 1px 1px #4c4f58db;
     box-shadow: 0px 1px 1px #4c4f58db; */
-  /* max-width: 360px; */
-  left: 0;
-  padding-top: 4px;
+    /* max-width: 360px; */
+    left: 0;
 }
 
 .navbar {
