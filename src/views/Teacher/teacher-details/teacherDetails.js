@@ -14,6 +14,9 @@ import { getTeacherDetailFromDB,
     getTeacherRating, 
     saveTeacherRating 
 } from '../../../database/dal/firebase/teacherDetailDal';
+import { getCurriculumFromDB } from '../../../database/dal/firebase/curriculumDal';
+import GLOBAL_VARIABLES from '../../../config/config';
+import RecentVideo from '../../../components/recentVideo/RecentVideo';
 
 class TeacherDetails extends Component {
 
@@ -29,11 +32,11 @@ class TeacherDetails extends Component {
                 subject: '',
                 imgPath: ''
             },
-            my: '',
-            teacherId : '',
             spinner: true,
             starRating: 0,
-            totalUser: 0
+            totalUser: 0,
+            carousellistNewlyItems: []
+
         }
         this.openModalForRequest = this.openModalForRequest.bind(this);
     }
@@ -49,7 +52,6 @@ class TeacherDetails extends Component {
                 const data = doc.data();
                 const ratings = data.ratings;
                 const nOfUser = ratings.length;
-                console.log('-----', nOfUser)
                 // this.setState({totalUser: nOfUser})
                 if (nOfUser > 0) {
                     let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
@@ -90,25 +92,27 @@ class TeacherDetails extends Component {
         getTeacherDetailFromDB(teacherId).then((snapshot)=>{
             snapshot.forEach(doc => {
                 const data = doc.data();
-                console.log('-----data-----', data)
-                // const userRating = data.userRating;
                 this.setState({spinner: false});
                 // Create model
                 this.getDetails(data);
-                
-
-                // if (userRating) {
-                //     const userLength = userRating.length;
-                //     let totalRating = 0;
-                //     let averageRating = 0;
-                //     userRating.forEach(user => {
-                //         totalRating = totalRating + user.rating;
-                //     });
-                //     averageRating = totalRating/userLength;
-                //     this.setState({starRating: averageRating});
-                // }
             });
         });
+
+        /* Get curriculum videos */
+        const userId = user ? user.user.uid : '';
+        getCurriculumFromDB(userId).onSnapshot(querySnapshot => {
+            let currData = [];
+            querySnapshot.forEach(doc => {
+              currData.push(doc.data());
+            });
+      
+            if (currData.length > 0) {
+              this.setState({
+                carousellistNewlyItems: currData
+              });
+            }
+            currData = [];
+          });
 
     }
 
@@ -126,17 +130,6 @@ class TeacherDetails extends Component {
         }
 
         return totalRating;
-    }
-
-    componentWillReceiveProps(nextProps) {
-        console.log('nextProps', nextProps)
-        // if (nextProps.detailData !== this.props.detailData) {
-        //     const { id } = nextProps.match.params;
-        //     const data = nextProps.detailData[id];
-        //     this.getDetails(data);
-        // }
-        
-
     }
 
     getDetails(data) {
@@ -162,8 +155,8 @@ class TeacherDetails extends Component {
     }
 
     onStarClick(nextValue, prevValue, name) {
-        console.log('prevValue', prevValue)
-        console.log('nextValue', nextValue)
+        // console.log('prevValue', prevValue)
+        // console.log('nextValue', nextValue)
 
         const teacherId  = this.props.match.params.id;
         const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
@@ -226,7 +219,8 @@ class TeacherDetails extends Component {
         this.props.openModalPopUp();
     }
     render() {
-        const { title, description, rating, subject, imgPath, totalUser } = this.state.detailModel;
+        const { title, description, rating, subject, imgPath } = this.state.detailModel;
+        const { carousellistNewlyItems } = this.state;
         const isLogedIn = localStorage.getItem('user');
         return (
             <React.Fragment>
@@ -246,35 +240,7 @@ class TeacherDetails extends Component {
                         <HeaderHome />
                         
                         
-                        <div className="top-bg">
-                            
-                            <div className="container">
-                                <div className="top-section">
-                                    <div>
-                                        <h4>{title}</h4>
-                                        <span className="sub-title">Credential</span>
-                                        <span className="sub-title">{subject}</span>
-                                        <span className="sub-title last">Credential</span>
-                                        <div className={classnames({'disbaled-stars': !isLogedIn })}>
-                                            <RatingComponent
-                                                name="rate1"
-                                                starCount={5}
-                                                value={this.state.starRating}
-                                                onStarClick={this.onStarClick.bind(this)}
-                                            /> 
-                                        </div>
-                                    </div>
-                                    
-                                    {isLogedIn && (
-                                        <div>
-                                            <button className="btn btn-dark">Send Request</button>
-                                            <button className="btn btn-dark" onClick ={this.openModalForRequest}>Request For Review</button>
-                                        </div>
-                                    )}
-                                    
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div className="container">
                             
                             
@@ -286,7 +252,20 @@ class TeacherDetails extends Component {
                                         <img className="profile-img" src={imgPath} alt="..." />
                                         </div>
                                         <div className="col-sm-9">
-                                            <p><strong>{title}</strong> {description}</p>
+                                            <div>
+                                                <h4>{title}</h4>
+                                                <span className="sub-title">Subject: {subject}</span>
+                                                <div className={classnames({'disbaled-stars': !isLogedIn })}>
+                                                    <RatingComponent
+                                                        name="rate1"
+                                                        starCount={5}
+                                                        value={this.state.starRating}
+                                                        onStarClick={this.onStarClick.bind(this)}
+                                                    /> 
+                                                </div>
+                                            </div>
+                                            <p>{description}</p>
+
                                             <div className="icon-section d-flex">
                                                 <div className="icon">
                                                     <button className="btn btn-transparent" disabled={!isLogedIn}><i className="fas fa-thumbs-up"></i> <span>1000</span></button>
@@ -301,7 +280,12 @@ class TeacherDetails extends Component {
                                             {!isLogedIn && (
                                                     <button className="btn btn-primary" onClick={(e) => this.navigateToLogin()}>Login to view more</button>
                                                 )}
-
+                                            {isLogedIn && (
+                                                <div>
+                                                    <button className="btn btn-dark">Send Request</button>
+                                                    <button className="btn btn-dark" onClick ={this.openModalForRequest}>Request For Review</button>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                     
@@ -312,6 +296,13 @@ class TeacherDetails extends Component {
                                             <i className="fas fa-chevron-right" />
                                         </h4>
                                         </Slider> */}
+                                        {carousellistNewlyItems.length > 0 && (
+                                            <RecentVideo
+                                                carousellistNewlyItems={carousellistNewlyItems}
+                                                headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
+                                            />
+                                            
+                                        )}
                                     </div>
 
                                     <div className="comments-hdr-section">
