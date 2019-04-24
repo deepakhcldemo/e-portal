@@ -784,7 +784,7 @@ body.toastr-confirm-active {
 .header-container {
   height: 66px;
   position: fixed;
-  background-color: rgba(22, 25, 37, 0.9);
+  background: black;
   width: 100%;
   color: #fff;
   line-height: 56px;

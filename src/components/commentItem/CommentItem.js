@@ -5,7 +5,7 @@ class CommentItem extends Component {
   render() {
     const { commentDetails } = this.props;
     return (
-      <div>
+      <div className="card">
         <div className="user-profile-card--padding">
           <div className="vd-wrapper col-xs-12">
             <div className="profile-pic--align">
@@ -33,7 +33,7 @@ class CommentItem extends Component {
                   commentDetails.profileData.lastName}
               </h6>
 
-              <span style={{ fontSize: '25px' }}>&#10077;</span>
+              {/* <span style={{ fontSize: '25px' }}>&#10077;</span> */}
               <p
                 className="block-with-text"
                 title={commentDetails.feedback.comment}
