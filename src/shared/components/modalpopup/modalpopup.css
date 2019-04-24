@@ -6,6 +6,10 @@
 .help-block {
     font-size: 17px !important;
 }
+
+.already-notified{
+    color: #117a8b;
+}
 .student-teacher-label{
     font-size: 20px;
     color: #117a8b;

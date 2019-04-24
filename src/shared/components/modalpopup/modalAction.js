@@ -1,3 +1,5 @@
+import {getNotificationFromDB}  from '../../../database/dal/firebase/notificationdal';
+
 export const closeModalPopUp = () => {
     return {
         type: 'CLOSE_MODAL'
@@ -24,3 +26,9 @@ export const addStudent = student => {
     taggedStudent: student
   };
 };
+
+export const getNotifications = () => {
+  return (dispatch) => {
+    getNotificationFromDB(dispatch);
+  }
+}

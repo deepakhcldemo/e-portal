@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { saveNotification, getVideoUrl } from '../../../database/dal/firebase/notificationdal';
+import { saveNotification, getVideoUrl, getNotificationFromDB } from '../../../database/dal/firebase/notificationdal';
 import ReactDOM from 'react-dom';
+import { getNotifications } from './modalAction';
 import FileUploader from 'react-firebase-file-uploader';
 import firebase from 'firebase'
 import Modal from 'react-responsive-modal';
@@ -10,6 +11,7 @@ import {
 
 } from './modalAction';
 import './modalpopup.css';
+import { stat } from 'fs';
 class ModalPopUp extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,8 @@ class ModalPopUp extends Component {
       studentName: '',
       teacherName: '',
       notificationDescription: '',
-      validationMessage : ''
+      validationMessage: '',
+      notificationPermission: true
     }
     this.createNotification = this.createNotification.bind(this);
     this.notoficationDescription = this.notoficationDescription.bind(this);
@@ -28,6 +31,8 @@ class ModalPopUp extends Component {
     this.props.closePopModal();
   };
   componentDidMount() {
+    // if notofication already has been created 
+    this.props.getNotifications()
     const studentDetails = localStorage.getItem('userProfile') ? JSON.parse(localStorage.getItem('userProfile')) : null;
     if (studentDetails) {
       this.setState({
@@ -38,16 +43,27 @@ class ModalPopUp extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps in teacher', nextProps)
     this.setState({
       teacherName: nextProps.teacherDeatils.title,
       tid: nextProps.teacherDeatils.teacherId
     })
-
+    // if notofication already has been created 
+    this.props.savedNotifications.forEach((notification) => {
+      if (notification.tId === this.state.tid && notification.sId === this.state.userDetails.userId) {
+        this.setState({
+          notificationPermission: false
+        })
+      }
+      else {
+        this.setState({
+          notificationPermission: true
+        })
+      }
+    })
   }
-componentWillUnmount() {
+  componentWillUnmount() {
     this.props.closePopModal();
-}
+  }
 
   handleVideoUploadSuccess = fileName => {
     console.log(fileName);
@@ -66,7 +82,7 @@ componentWillUnmount() {
   createNotification = () => {
     const loggedInUSerDetails = JSON.parse(localStorage.getItem('userProfile'));
     let tId, sId, tname, sname = '';
-    let sstatus = false; let tstatus = false ;
+    let sstatus = false; let tstatus = false;
     if (loggedInUSerDetails.role === 'Teacher') {
       tId = loggedInUSerDetails.userId;
       sId = '';
@@ -97,19 +113,19 @@ componentWillUnmount() {
       //notificationDetails.status = false;
       notificationDetails.sVideo = sVideo;
       notificationDetails.comments = [];
-      if(url !== "" && notificationDetails.notificationDesc !== ''){
+      if (url !== "" && notificationDetails.notificationDesc !== '') {
         this.setState({
-          validationMessage : ''
+          validationMessage: ''
         })
         saveNotification(notificationDetails);
         this.onCloseModal();
       }
-    else {
+      else {
         this.setState({
-          validationMessage : 'Description or Video can not be empty'
+          validationMessage: 'Description or Video can not be empty'
         })
-    }
-      
+      }
+
     })
 
   }
@@ -123,37 +139,47 @@ componentWillUnmount() {
       <div>
 
         <Modal open={openModal} onClose={this.onCloseModal} center>
-          <div className="header">
-            <h2>Create Notification</h2>
-          </div>
-          <div className="body">
-            <form>
-              <div className="form-group">
-                <div className="teacher-student">
-                  <div className="btn btn-sm btn-info">Student: {this.state.studentName}</div>
-                  {/* <div className ="student-teacher-notifying"><b><i className="fa fa-angle-right">Notifying to </i></b></div> */}
-                  <div className="btn btn-sm btn-info teacher">Teacher: {this.state.teacherName}</div>
-                </div>
-                <div>
-                  <textarea rows="4" cols="50" className="form-control" placeholder="Please add details here" onChange={this.notoficationDescription}>
-                  </textarea> <br />
-                    <FileUploader
-                      accept='video/*'
-                      className ="upload-video"
-                      storageRef={firebase.storage().ref("notification" + "/" + studentDetails.userId)}
-                      onUploadStart={this.handleUploadStart}
-                      onUploadError={this.handleUploadError}
-                      onUploadSuccess={this.handleVideoUploadSuccess}
-                      onProgress={this.handleProgress}
-                    />
-                 
+          {this.state.notificationPermission ?
 
-                </div>
+            (<div><div className="header">
+              <h2>Create Notification</h2>
+            </div>
+              <div className="body">
+                <form>
+                  <div className="form-group">
+                    <div className="teacher-student">
+                      <div className="btn btn-sm btn-info">Student: {this.state.studentName}</div>
+                      {/* <div className ="student-teacher-notifying"><b><i className="fa fa-angle-right">Notifying to </i></b></div> */}
+                      <div className="btn btn-sm btn-info teacher">Teacher: {this.state.teacherName}</div>
+                    </div>
+                    <div>
+                      <textarea rows="4" cols="50" className="form-control" placeholder="Please add details here" onChange={this.notoficationDescription}>
+                      </textarea> <br />
+                      <FileUploader
+                        accept='video/*'
+                        className="upload-video"
+                        storageRef={firebase.storage().ref("notification" + "/" + studentDetails.userId)}
+                        onUploadStart={this.handleUploadStart}
+                        onUploadError={this.handleUploadError}
+                        onUploadSuccess={this.handleVideoUploadSuccess}
+                        onProgress={this.handleProgress}
+                      />
+
+
+                    </div>
+                  </div>
+                  <p className="help-block">{this.state.validationMessage}</p>
+                  <button type="button" className="btn btn-dark submit" onClick={this.createNotification}>Create Notofication</button>
+                </form>
+              </div></div>)
+            : (<div>
+              <div className="header">
+                <h2>Create Notification</h2>
               </div>
-              <p className ="help-block">{this.state.validationMessage}</p>
-              <button type="button" className="btn btn-dark submit" onClick={this.createNotification}>Create Notofication</button>
-            </form>
-          </div>
+              <div className="body">
+                <p className="already-notified">You have already created Notification for this Teacher</p>
+              </div>
+            </div>)}
         </Modal>
 
       </div>
@@ -163,13 +189,15 @@ componentWillUnmount() {
 
 const mapStateToProps = state => {
   return {
-    modalState: state.teacherDetailsReducer.requestForReviewPop
+    modalState: state.teacherDetailsReducer.requestForReviewPop,
+    savedNotifications: state.modalReducer.notifications
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    closePopModal: () => dispatch(closeModalPopUp())
+    closePopModal: () => dispatch(closeModalPopUp()),
+    getNotifications: () => dispatch(getNotifications())
   };
 };
 
