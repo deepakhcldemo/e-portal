@@ -146,3 +146,12 @@ form label {
 .box_pad {
   padding: 0px 20px 0px 0px;
 }
+
+.slick-prev{
+  left:0px !important;
+  z-index:10;
+}
+
+.slick-next{
+  right:0px !important;
+}
