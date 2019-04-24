@@ -1,15 +1,15 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import Slider from "react-slick";
-import GLOBAL_VARIABLES from "../../config/config";
-import CommentItem from "../../components/commentItem/CommentItem";
+import Slider from 'react-slick';
+import GLOBAL_VARIABLES from '../../config/config';
+import CommentItem from '../../components/commentItem/CommentItem';
 
 class StudentFeedback extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      noOfCarouselImage: ""
+      noOfCarouselImage: ''
     };
   }
 
@@ -28,18 +28,18 @@ class StudentFeedback extends Component {
 
   render() {
     const { studentsReview } = this.props;
-    let title = "";
+    let title = '';
     this.props.headeTitle
       ? (title = this.props.headeTitle)
-      : (title = "Feedback");
+      : (title = 'Feedback');
 
     const settingsStudentsReview = {
       dots: true,
       infinite: true,
       speed: 500,
-      slidesToShow: studentsReview.length >= 5 ? 5 : studentsReview.length,
+      slidesToShow: studentsReview.length >= 6 ? 6 : studentsReview.length,
       slidesToScroll: 1,
-      autoplay: true,
+      autoplay: false,
       responsive: [
         {
           breakpoint: 1024,
@@ -61,7 +61,7 @@ class StudentFeedback extends Component {
         {
           breakpoint: 480,
           settings: {
-            slidesToShow: 1,
+            slidesToShow: 2,
             slidesToScroll: 1
           }
         }
@@ -75,7 +75,7 @@ class StudentFeedback extends Component {
             <h3 className="mt-30 pad10">
               {title} <i className="fas fa-chevron-right" />
             </h3>
-            <div style={{ background: "#FFF", textAlign: "center" }}>
+            <div>
               <Slider {...settingsStudentsReview}>
                 {this.studentsReviewChildren(studentsReview)}
               </Slider>

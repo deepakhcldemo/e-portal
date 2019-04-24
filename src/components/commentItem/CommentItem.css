@@ -27,16 +27,23 @@
   bottom: 0;
 }
 
-.block-with-text:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  width: 1em;
-  height: 1em;
-  margin-top: 0.2em;
-  background: white;
+blockquote {
+  font-size: 30px;
+  border-left: 10px solid #ccc;
+  margin: 0.5em 10px;
+  padding: 0 10px;
+  quotes: "\201C""\201D""\2018""\2019";
+  padding: 10px 20px;
+  line-height: 1.4;
 }
 
-.comment-box--height {
+.comment-box--style {
   height: 100px !important;
+  background: #333546 !important;
+  border: none !important;
+  color: white !important;
+}
+
+.student-title--align {
+  text-align: center;
 }

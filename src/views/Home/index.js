@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import HeaderHome from "../../components/layout/header/HeaderHome";
-import { connect } from "react-redux";
-import CategoryItem from "../CategoryItem";
+import React, { Component } from 'react';
+import HeaderHome from '../../components/layout/header/HeaderHome';
+import { connect } from 'react-redux';
+import CategoryItem from '../CategoryItem';
 import {
   getBannerFromDB,
   getCurriculumFromDB,
   getTeacherFromDB,
   getFeedbackFromDB,
   getUserProfileFromDB
-} from "./../../database/dal/firebase/homeDal";
-import TopTutor from "../../components/topTutor/TopTutor";
-import RecentVideo from "../../components/recentVideo/RecentVideo";
-import StudentFeedback from "../../components/studentFeedback/StudentFeedback";
-import Banner from "../../components/banner/Banner";
-import GLOBAL_VARIABLES from "../../config/config";
+} from './../../database/dal/firebase/homeDal';
+import TopTutor from '../../components/topTutor/TopTutor';
+import RecentVideo from '../../components/recentVideo/RecentVideo';
+import StudentFeedback from '../../components/studentFeedback/StudentFeedback';
+import Banner from '../../components/banner/Banner';
+import GLOBAL_VARIABLES from '../../config/config';
 
 class Home extends Component {
   constructor(props) {
@@ -78,8 +78,8 @@ class Home extends Component {
       querySnapshot.forEach(doc => {
         getUserProfileFromDB(doc.data().user_id).onSnapshot(querySnapshot => {
           querySnapshot.forEach(profileData => {
-            tempArr["profileData"] = profileData.data();
-            tempArr["feedback"] = doc.data();
+            tempArr['profileData'] = profileData.data();
+            tempArr['feedback'] = doc.data();
 
             feedbackData.push(tempArr);
             this.setState({
