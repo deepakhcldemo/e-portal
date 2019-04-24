@@ -1,36 +1,36 @@
-import React, { Component } from "react";
-import "./teacherDetails.scss";
-import { connect } from "react-redux";
-import _ from "lodash";
-import { Spinner } from "react-bootstrap";
-import RatingComponent from "react-star-rating-component";
-import classnames from "classnames";
+import React, { Component } from 'react';
+import './teacherDetails.scss';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+import { Spinner } from 'react-bootstrap';
+import RatingComponent from 'react-star-rating-component';
+import classnames from 'classnames';
 
-import ModalPopUp from "../../../shared/components/modalpopup/modalpopup";
-import HeaderHome from "../../../components/layout/header/HeaderHome";
-import Slider from "../../../components/slider/Slider";
-import { openModalForRequest } from "./teacher-details.action";
+import ModalPopUp from '../../../shared/components/modalpopup/modalpopup';
+import HeaderHome from '../../../components/layout/header/HeaderHome';
+
+import { openModalForRequest } from './teacher-details.action';
 import {
   getTeacherDetailFromDB,
   getTeacherRating,
   saveTeacherRating
-} from "../../../database/dal/firebase/teacherDetailDal";
-import { getCurriculumFromDB } from "../../../database/dal/firebase/curriculumDal";
-import GLOBAL_VARIABLES from "../../../config/config";
-import RecentVideo from "../../../components/recentVideo/RecentVideo";
+} from '../../../database/dal/firebase/teacherDetailDal';
+import { getCurriculumFromDB } from '../../../database/dal/firebase/curriculumDal';
+import GLOBAL_VARIABLES from '../../../config/config';
+import RecentVideo from '../../../components/recentVideo/RecentVideo';
 
 class TeacherDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       detailModel: {
-        teacherId: "",
-        title: "title",
-        description: "this is demo",
+        teacherId: '',
+        title: 'title',
+        description: 'this is demo',
         rating: 7,
-        gender: "",
-        subject: "",
-        imgPath: ""
+        gender: '',
+        subject: '',
+        imgPath: ''
       },
       spinner: true,
       starRating: 0,
@@ -42,8 +42,8 @@ class TeacherDetails extends Component {
 
   componentDidMount() {
     const teacherId = this.props.match.params.id;
-    const user = localStorage.getItem("user")
-      ? JSON.parse(localStorage.getItem("user"))
+    const user = localStorage.getItem('user')
+      ? JSON.parse(localStorage.getItem('user'))
       : null;
 
     /* show rating on the base of existing user has given */
@@ -99,7 +99,7 @@ class TeacherDetails extends Component {
     });
 
     /* Get curriculum videos */
-    const userId = user ? user.user.uid : "";
+    const userId = user ? user.user.uid : '';
     getCurriculumFromDB(userId).onSnapshot(querySnapshot => {
       let currData = [];
       querySnapshot.forEach(doc => {
@@ -133,7 +133,7 @@ class TeacherDetails extends Component {
     if (data) {
       const detailModel = { ...this.state.detailModel };
       detailModel.teacherId = data.userId;
-      detailModel.title = data.firstName + " " + data.lastName;
+      detailModel.title = data.firstName + ' ' + data.lastName;
       detailModel.description = data.summary;
       detailModel.rating = data.rating;
       detailModel.gender = data.gender;
@@ -146,8 +146,8 @@ class TeacherDetails extends Component {
 
   navigateToLogin() {
     const currentId = this.props.match.params.id;
-    localStorage.setItem("teacherDetailId", currentId);
-    this.props.history.push("/login");
+    localStorage.setItem('teacherDetailId', currentId);
+    this.props.history.push('/login');
   }
 
   onStarClick(nextValue, prevValue, name) {
@@ -155,8 +155,8 @@ class TeacherDetails extends Component {
     // console.log('nextValue', nextValue)
 
     const teacherId = this.props.match.params.id;
-    const user = localStorage.getItem("user")
-      ? JSON.parse(localStorage.getItem("user"))
+    const user = localStorage.getItem('user')
+      ? JSON.parse(localStorage.getItem('user'))
       : null;
     /* show rating on the base of existing user has given */
     getTeacherRating(teacherId).then(doc => {
@@ -172,7 +172,7 @@ class TeacherDetails extends Component {
               ratings,
               user => user.userId === userId
             )[0];
-            let newUser = { userId: "0", like: 0, dislike: 0, rating: 0 };
+            let newUser = { userId: '0', like: 0, dislike: 0, rating: 0 };
             if (currentUser) {
               currentUser.rating = nextValue;
             } else {
@@ -228,7 +228,7 @@ class TeacherDetails extends Component {
       imgPath
     } = this.state.detailModel;
     const { carousellistNewlyItems } = this.state;
-    const isLogedIn = localStorage.getItem("user");
+    const isLogedIn = localStorage.getItem('user');
     return (
       <React.Fragment>
         {this.state.spinner && (
@@ -271,7 +271,7 @@ class TeacherDetails extends Component {
                               </span>
                               <div
                                 className={classnames({
-                                  "disbaled-stars": !isLogedIn
+                                  'disbaled-stars': !isLogedIn
                                 })}
                               >
                                 <RatingComponent
@@ -290,7 +290,7 @@ class TeacherDetails extends Component {
                                   className="btn btn-transparent"
                                   disabled={!isLogedIn}
                                 >
-                                  <i className="fas fa-thumbs-up" />{" "}
+                                  <i className="fas fa-thumbs-up" />{' '}
                                   <span>1000</span>
                                 </button>
                               </div>
@@ -299,7 +299,7 @@ class TeacherDetails extends Component {
                                   className="btn btn-transparent"
                                   disabled={!isLogedIn}
                                 >
-                                  <i className="fas fa-thumbs-down" />{" "}
+                                  <i className="fas fa-thumbs-down" />{' '}
                                   <span>1000</span>
                                 </button>
                               </div>
@@ -308,7 +308,7 @@ class TeacherDetails extends Component {
                                   className="btn btn-transparent"
                                   disabled={!isLogedIn}
                                 >
-                                  <i className="fas fa-comment-alt" />{" "}
+                                  <i className="fas fa-comment-alt" />{' '}
                                   <span>1000</span>
                                 </button>
                               </div>
@@ -392,7 +392,7 @@ class TeacherDetails extends Component {
                                   className="btn btn-transparent"
                                   disabled={!isLogedIn}
                                 >
-                                  <i className="fas fa-thumbs-up" />{" "}
+                                  <i className="fas fa-thumbs-up" />{' '}
                                 </button>
                               </div>
                               <div className="icon">
@@ -433,7 +433,7 @@ class TeacherDetails extends Component {
                                   className="btn btn-transparent"
                                   disabled={!isLogedIn}
                                 >
-                                  <i className="fas fa-thumbs-up" />{" "}
+                                  <i className="fas fa-thumbs-up" />{' '}
                                 </button>
                               </div>
                               <div className="icon">
