@@ -789,7 +789,7 @@ body.toastr-confirm-active {
 .header-container {
     height: 66px;
     position: fixed;
-    background: black;
+    background: rgba(0, 0, 0, 1);
     width: 100%;
     color: #fff;
     line-height: 56px;
@@ -800,7 +800,6 @@ body.toastr-confirm-active {
     /* max-width: 360px; */
     left: 0;
     padding: 0 10px;
-
 }
 
 .navbar {
@@ -825,7 +824,53 @@ body.toastr-confirm-active {
     letter-spacing: normal;
     color: #ffffff;
 }
-
+.banner-section {
+    height: 400px;
+    margin-top: 66px;
+    position: relative;
+}
+.banner-section div {
+    height: 100%;
+}
+.banner-section .slick-slide img {
+    width: 100%;
+    height: 100%;
+}
+.banner-section .slick-arrow.slick-prev {
+    left: 15px !important;
+}
+.banner-section .slick-arrow.slick-next {
+    right: 15px !important;
+}
+.banner-section .slick-dots li button {
+    margin: 0;
+}
+.banner-section .caption-wrapper {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: left;
+    font-size: 2rem;
+    font-weight: 200;
+    height: auto;
+    padding: 0 60px;
+}
+.banner-section .caption-wrapper h1 {
+    color: #ffb400;
+    font-size: 4.375rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    
+}
+.banner-section .caption-wrapper h2 {
+    font-size: 3.125rem;
+    
+    margin-bottom: 0;
+}
+.banner-section .caption-wrapper .container-fluid {
+    width: 100%;
+}
 .policy-content--container {
     position: relative;
     padding-top: 23px;

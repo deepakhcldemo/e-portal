@@ -29,21 +29,20 @@ class VideoItem extends Component {
       <>
         {videoDetails && (
           <div className="card">
-            <div className=" user-profile-card--padding">
+            <div className="">
               <div className="vd-wrapper col-xs-12">
                 <div
                   onClick={this.handleClick}
-                  style={{
-                    cursor: "pointer",
-                    backgroundImage: `url( ${videoDetails.thumb} )`,
-                    backgroundPosition: "top center",
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                    height: "100px",
-                    margin: "10px"
-                  }}
-                  className="border_1px"
-                />
+                  className="thumb-wrapper"
+                >
+                {videoDetails.thumb && (
+                  <React.Fragment>
+                    <img src={videoDetails.thumb}/>
+                    <i class="far fa-play-circle"></i>
+                  </React.Fragment>
+                )}
+                
+                </div>
                 <div className="vd-content user-details--height detail--text">
                   <h6 className="video-title">{videoDetails.title}</h6>
                   <p>{videoDetails.createdDate}</p>

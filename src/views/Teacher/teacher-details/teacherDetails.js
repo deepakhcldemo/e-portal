@@ -349,41 +349,85 @@ class TeacherDetails extends Component {
           
           <div className="top-courses-section">
               <div className="container">
-                <div className="col-sm-12">
                   <div className="vd-section">
+                    <div className="row">
                     <RecentVideo
                       carousellistNewlyItems={carousellistNewlyItems}
-                      headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
+                      headeTitle="Popular Courses"
+                      
                     />
+                    </div>
                   </div>
-                </div>
               </div>
           </div>
 
 
           <div className="comments-section">
+            <div className="text-field-section">
+              <div className="container">
+                <div className="row">
+                  <div className="col-sm-12">
+                    <div className="comments-hdr-section">
+                      <div className="author-thumbnail">
+                        <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-369-456321.png" alt=""/>
+                      </div>
+                      <div className="comments-input">
+                        <input
+                          type="text"
+                          className="auto-input form-control"
+                          placeholder="Add a comment"
+                        />
+                      </div>
+                      <div className="total-comments">
+                        <span className="count">1</span>
+                        <span className="count-text">Comments</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
             <div className="container">
               <div className="row">
                 <div className="col-sm-12">
-                  <div className="comments-hdr-section">
-                    <div className="author-thumbnail">img</div>
-                    <div className="comments-input">
-                      <input
-                        type="text"
-                        className="auto-input form-control"
-                        placeholder="Add a comment"
-                      />
-                    </div>
-                    <div className="total-comments">
-                      <span className="count">1</span>
-                      <span className="count-text">Comments</span>
-                    </div>
-                  </div>
 
                   <div className="comment-thread-element">
-                    <div className="author-thumbnail">img</div>
+                    <div className="author-thumbnail">
+                      <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-372-456324.png" alt=""/>
+                    </div>
                     <div className="comment-content">
-                      <span className="date">Comment mm/dd/yyy</span>
+                      <i className="fas fa-caret-left"></i>
+                      <div className="comment-hdr d-flex align-items-center justify-content-between">
+                        <span className="date">23/04/2019</span>
+                        <div className="icon-section d-flex">
+                          <div className="icon">
+                            <button
+                              className="btn btn-transparent"
+                              disabled={!isLogedIn}
+                            >
+                              <i className="fas fa-thumbs-up" />{' '}
+                            </button>
+                          </div>
+                          <div className="icon">
+                            <button
+                              className="btn btn-transparent"
+                              disabled={!isLogedIn}
+                            >
+                              <i className="fas fa-thumbs-down" />
+                            </button>
+                          </div>
+                          <div className="icon">
+                            <button
+                              className="btn btn-transparent"
+                              disabled={!isLogedIn}
+                            >
+                              <i className="fas fa-comment-alt" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      
                       <p>
                         Is dolor sit amet long established fact that a
                         reader will be distracted by the readable content
@@ -392,75 +436,55 @@ class TeacherDetails extends Component {
                         normal. Color sit amet long established fact that
                         a reader will be distracted by the readable
                       </p>
-                      <div className="icon-section d-flex">
-                        <div className="icon">
-                          <button
-                            className="btn btn-transparent"
-                            disabled={!isLogedIn}
-                          >
-                            <i className="fas fa-thumbs-up" />{' '}
-                          </button>
-                        </div>
-                        <div className="icon">
-                          <button
-                            className="btn btn-transparent"
-                            disabled={!isLogedIn}
-                          >
-                            <i className="fas fa-thumbs-down" />
-                          </button>
-                        </div>
-                        <div className="icon">
-                          <button
-                            className="btn btn-transparent"
-                            disabled={!isLogedIn}
-                          >
-                            <i className="fas fa-comment-alt" />
-                          </button>
-                        </div>
-                      </div>
+                      
                     </div>
                   </div>
 
                   <div className="comment-thread-element">
-                    <div className="author-thumbnail">img</div>
+                    <div className="author-thumbnail">
+                      <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-369-456321.png" alt=""/>
+                    </div>
                     <div className="comment-content">
-                      <span className="date">Comment mm/dd/yyy</span>
+                      <i className="fas fa-caret-left"></i>
+                      <div className="comment-hdr d-flex align-items-center justify-content-between">
+                        <span className="date">23/04/2019</span>
+                        <div className="icon-section d-flex">
+                          <div className="icon">
+                            <button
+                              className="btn btn-transparent"
+                              disabled={!isLogedIn}
+                            >
+                              <i className="fas fa-thumbs-up" />{' '}
+                            </button>
+                          </div>
+                          <div className="icon">
+                            <button
+                              className="btn btn-transparent"
+                              disabled={!isLogedIn}
+                            >
+                              <i className="fas fa-thumbs-down" />
+                            </button>
+                          </div>
+                          <div className="icon">
+                            <button
+                              className="btn btn-transparent"
+                              disabled={!isLogedIn}
+                            >
+                              <i className="fas fa-comment-alt" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      
                       <p>
                         Is dolor sit amet long established fact that a
                         reader will be distracted by the readable content
-                        of a page when looking at its layout. The point of
-                        using Lorem Ipsum is that it has a more-or-less
-                        normal. Color sit amet long established fact that
-                        a reader will be distracted by the readable
+                        of a page when looking at its layout.
                       </p>
-                      <div className="icon-section d-flex">
-                        <div className="icon">
-                          <button
-                            className="btn btn-transparent"
-                            disabled={!isLogedIn}
-                          >
-                            <i className="fas fa-thumbs-up" />{' '}
-                          </button>
-                        </div>
-                        <div className="icon">
-                          <button
-                            className="btn btn-transparent"
-                            disabled={!isLogedIn}
-                          >
-                            <i className="fas fa-thumbs-down" />
-                          </button>
-                        </div>
-                        <div className="icon">
-                          <button
-                            className="btn btn-transparent"
-                            disabled={!isLogedIn}
-                          >
-                            <i className="fas fa-comment-alt" />
-                          </button>
-                        </div>
-                      </div>
+                      
                     </div>
                   </div>
+
 
                 </div>
               </div>

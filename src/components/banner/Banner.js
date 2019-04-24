@@ -27,7 +27,7 @@ class Banner extends Component {
       listAwaitingItems = bannerRows.map((bannerRow, index) => (
         <div key={index}>
           {bannerRow.banner_image && (
-            <center>
+            <React.Fragment>
               <img
                 alt=""
                 src={
@@ -38,7 +38,15 @@ class Banner extends Component {
                 }
                 className="d-block banner"
               />
-            </center>
+
+              <div className="caption-wrapper">
+                <div className="container-fluid">
+                  <h1>Free</h1>
+                  <h2>Online Courses from experts</h2>
+                  <p>We are proud to say that since our opening in 2019</p>
+                </div>
+              </div>
+              </React.Fragment>
           )}
         </div>
       ));

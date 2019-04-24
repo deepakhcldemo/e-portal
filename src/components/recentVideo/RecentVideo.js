@@ -3,9 +3,12 @@ import React, { Component } from "react";
 import moment from "moment";
 // Slider Component Plugin
 import Slider from "react-slick";
+import './RecentVideo.scss';
+
 // Video Item Component
 import VideoItem from "../../components/videoItem/VideoItem";
 import GLOBAL_VARIABLES from "../../config/config";
+
 
 class RecentVideo extends Component {
   createChildren = records => {
@@ -18,7 +21,7 @@ class RecentVideo extends Component {
         : GLOBAL_VARIABLES.VIDEO_PLACEHOLDER;
 
       return (
-        <div key={index} className="vd-wrapper col-xs-12 padR10">
+        <div key={index} className="vd-wrapper col-xs-12">
           <VideoItem
             isNotVisibleVideoMeta={this.props.isNotVisibleVideoMeta}
             videoDetails={carouselRecord}

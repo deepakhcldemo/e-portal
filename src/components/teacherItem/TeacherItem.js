@@ -12,8 +12,8 @@ class TeacherItem extends Component {
         <div
           className={
             isTrayItem
-              ? "card user-profile-card--padding"
-              : "card user-profile-card--padding"
+              ? "card"
+              : "card"
           }
         >
           <div
@@ -30,24 +30,18 @@ class TeacherItem extends Component {
               <div
                 className={
                   isTrayItem
-                    ? "col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 profile-pic--align"
-                    : "col-12 col-without--padding profile-pic--align"
+                    ? "thumb-wrapper col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 profile-pic--align"
+                    : "thumb-wrapper col-12 col-without--padding profile-pic--align"
                 }
               >
-                <div
-                  style={{
-                    backgroundImage: `url( ${userProfile.profileImage} )`,
-                    backgroundPosition: "top center",
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                    margin: "10px"
-                  }}
-                  className={
+                <div className={
                     isTrayItem
-                      ? "border_1px profile-pic-list"
-                      : "border_1px profile-pic-block"
+                      ? "profile-pic-list"
+                      : "profile-pic-block"
                   }
-                />
+                >
+                  <img src={userProfile.profileImage} alt=""/>
+                </div>
               </div>
               <div
                 className={

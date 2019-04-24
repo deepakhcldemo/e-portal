@@ -102,44 +102,52 @@ class Home extends Component {
     } = this.state;
 
     return (
-      <div className="container-fluid mt-3">
-        <div className="row">
-          <div className="col-12 container--margin-bottom">
-            <HeaderHome headeTitle="Dashboard" />
+      <React.Fragment>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12">
+              <HeaderHome headeTitle="Dashboard" />
+            </div>
           </div>
         </div>
+        <div className="banner-section">
+          {bannerRows.length > 0 && (
+            <Banner bannerRows={bannerRows} pageName="home" />
+          )}
+          </div>
+          <div className="container-fluid">
+          {carouselTop10Items.length > 0 && (
+            <TopTutor
+              carouselTop10Items={carouselTop10Items}
+              headeTitle={GLOBAL_VARIABLES.TOP10_TUTOR}
+            />
+          )}
 
-        {bannerRows.length > 0 && (
-          <Banner bannerRows={bannerRows} pageName="home" />
-        )}
+          {carousellistNewlyItems.length > 0 && (
+            <RecentVideo
+              carousellistNewlyItems={carousellistNewlyItems}
+              headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
+            />
+          )}
 
-        {carouselTop10Items.length > 0 && (
-          <TopTutor
-            carouselTop10Items={carouselTop10Items}
-            headeTitle={GLOBAL_VARIABLES.TOP10_TUTOR}
-          />
-        )}
+          {studentsReview.length > 0 && (
+            <StudentFeedback
+              studentsReview={studentsReview}
+              headeTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW}
+            />
+          )}
 
-        {carousellistNewlyItems.length > 0 && (
-          <RecentVideo
-            carousellistNewlyItems={carousellistNewlyItems}
-            headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
-          />
-        )}
+          <CategoryItem />
 
-        {studentsReview.length > 0 && (
-          <StudentFeedback
-            studentsReview={studentsReview}
-            headeTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW}
-          />
-        )}
+          <div className="col-12 content-container--background">&npsp;</div>
+          <div className="col-12 content-container--background">&nbsp;</div>
+          <div className="col-12 content-container--background">&nbsp;</div>
 
-        <CategoryItem />
-
-        <div className="col-12 content-container--background">&npsp;</div>
-        <div className="col-12 content-container--background">&nbsp;</div>
-        <div className="col-12 content-container--background">&nbsp;</div>
+       
       </div>
+
+      </React.Fragment>
+      
     );
   }
 }

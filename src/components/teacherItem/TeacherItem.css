@@ -18,7 +18,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-weight: bold;
+  font-weight: 600;
+  margin-bottom: 0;
 }
 
 .charge-container {
@@ -53,7 +54,13 @@
 .profile-pic-block {
   height: 100px;
   width: 100px;
-  border-radius: 100px;
+  border-radius: 100%;
+  background: #fff;
+  overflow: hidden;
+  top: 50%;
+  transform: translateY(-50%);
+  position: relative;
+  display: inline-block;
 }
 
 .profile-pic--align {

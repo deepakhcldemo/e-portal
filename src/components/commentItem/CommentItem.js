@@ -6,24 +6,12 @@ class CommentItem extends Component {
     const { commentDetails } = this.props;
     return (
       <div className="card">
-        <div className="user-profile-card--padding">
+        <div className="">
           <div className="vd-wrapper col-xs-12">
-            <div className="profile-pic--align">
-              <div
-                style={{
-                  backgroundImage: `url( ${
-                    commentDetails.profileData.profileImage
-                  } )`,
-                  backgroundPosition: 'top center',
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
-                  height: '100px',
-                  width: '100px',
-                  borderRadius: '50px',
-                  margin: '10px'
-                }}
-                className="border_1px"
-              />
+            <div className="thumb-wrapper">
+              <div className="profile-pic-block">
+                <img src={commentDetails.profileData.profileImage} alt=""/>
+              </div>
             </div>
 
             <div className="vd-content comment-box--style">
