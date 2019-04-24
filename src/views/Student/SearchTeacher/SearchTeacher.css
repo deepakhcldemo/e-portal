@@ -27,6 +27,17 @@
   margin-left: 3px;
   margin-bottom: 3px;
 }
+
+.search-result {
+  position: absolute;
+  top: 60px;
+  width: 90%;
+  z-index: 10;
+  left: 20px;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+}
+
 .filter-search .chip-body {
   height: 30px;
   top: 60px;
@@ -34,7 +45,8 @@
 }
 
 .filter-search .search-result {
-  overflow-y: scroll;
+  overflow: hidden;
+  overflow-y: auto;
 }
 .filter-search .container {
   padding-left: 20px;
@@ -148,12 +160,5 @@
     padding: 5px 10px 0px;
     border: 1px solid #d5d5d5;
     color: #000000;
-  }
-  .charge-container {
-    height: 65px;
-    width: 59px;
-    margin-top: 10px;
-    margin-left: -26px;
-    font-size: 15px;
   }
 }

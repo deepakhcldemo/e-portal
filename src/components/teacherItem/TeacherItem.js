@@ -44,7 +44,7 @@ class TeacherItem extends Component {
               <div
                 className={
                   isTrayItem
-                    ? 'col-9 col-sm-9 col-md-7 col-lg-7 col-xl-7'
+                    ? 'col-9 col-sm-9 col-md-7 col-lg-7 col-xl-7 col-without--padding'
                     : 'col-12 col-without--padding'
                 }
               >
