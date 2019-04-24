@@ -8,6 +8,9 @@
   color: #fff !important;
 } */
 
+.container-fluid h4{
+    font-weight: 300;
+}
 .banner-container .slick-slide {
     max-width: unset !important;
 }
@@ -870,6 +873,9 @@ body.toastr-confirm-active {
 }
 .banner-section .caption-wrapper .container-fluid {
     width: 100%;
+}
+.content-container--background .tray-background--color {
+    margin: 0 -5px;
 }
 .policy-content--container {
     position: relative;
