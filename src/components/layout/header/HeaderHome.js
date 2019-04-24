@@ -23,10 +23,10 @@ class HeaderHome extends Component {
       this.setState({ dashboardLink: "/login" });
     }
   };
-  navigateTo = linkName => {
+  /* navigateTo = linkName => {
     console.log(linkName);
     this.props.history.push(linkName);
-  };
+  }; */
 
   render() {
     let userLink;
@@ -41,14 +41,20 @@ class HeaderHome extends Component {
     } else {
       userLink = (
         <div className="home-header-nav-item home-header-nav-item--position">
-          <a
+          <NavLink
+            to={this.state.dashboardLink}
+            exact
+            activeClassName=""
+            className="home-header-link"
+          >
+          {/* <a
             onClick={() => this.navigateTo(this.state.dashboardLink)}
             className="home-header-link"
             href="#"
-          >
+          > */}
             <i className="fa fa-sign-in home-header-icon--size" />{" "}
             <span className="home-header-text-link-status">SignIn/SignUp</span>
-          </a>
+          </NavLink>
         </div>
       );
     }
@@ -59,7 +65,7 @@ class HeaderHome extends Component {
           className="home-header-nav-item home-header-logo"
           style={{
             backgroundPosition: "center center",
-            backgroundImage: "url(" + "../../Assets/hdpi/logo.png " + ")",
+            backgroundImage: "url(\"../../Assets/hdpi/logo.png \")",
             backgroundRepeat: "no-repeat",
             backgroundSize: "contain"
           }}
@@ -70,24 +76,36 @@ class HeaderHome extends Component {
           {!dashboardLinks && (
             <>
               <div className="home-header-nav-item home-header-nav-item--position">
-                <a
+                <NavLink
+                    to="/contactus"
+                    exact
+                    activeClassName=""
+                    className="home-header-link"
+                  >
+                {/* <a
                   onClick={() => this.navigateTo("/contactus")}
                   className="home-header-link"
-                >
+                > */}
                   <i className="fa fa-phone-square home-header-icon--size" />{" "}
                   <span className="home-header-text-link-status">
                     Contact Us
                   </span>
-                </a>
+                </NavLink>
               </div>
               <div className="home-header-nav-item home-header-nav-item--position">
-                <a
+              <NavLink
+                    to="/aboutus"
+                    exact
+                    activeClassName=""
+                    className="home-header-link"
+                  >
+                {/* <a
                   onClick={() => this.navigateTo("/aboutus")}
                   className="home-header-link"
-                >
+                > */}
                   <i className="fa fa-info-circle home-header-icon--size" />{" "}
                   <span className="home-header-text-link-status">About Us</span>
-                </a>
+                </NavLink>
               </div>
             </>
           )}

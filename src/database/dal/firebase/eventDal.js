@@ -1,11 +1,12 @@
 import dbFactory from '../../dbFactory';
-import firebase from 'firebase';
+// import firebase from 'firebase';
 import { toastr } from 'react-redux-toastr';
-const getDbRef = collectionName => {
+/* const getDbRef = collectionName => {
     const db = dbFactory.create('firebase');
     const ref = db.firestore().collection(collectionName);
     return ref;
   };
+ */
 export const  getStudentFromDB = (dispatch) => {
     const student = [];
     const db = dbFactory.create('firebase');

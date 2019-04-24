@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // Date format Plugin
-import moment from 'moment';
+// import moment from 'moment';
 // Slider Component Plugin
 import Slider from 'react-slick';
 // Link Plugin

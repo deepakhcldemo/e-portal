@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { saveNotification, getVideoUrl, getNotificationFromDB } from '../../../database/dal/firebase/notificationdal';
-import ReactDOM from 'react-dom';
+import { saveNotification, getVideoUrl/* , getNotificationFromDB */ } from '../../../database/dal/firebase/notificationdal';
+// import ReactDOM from 'react-dom';
 import { getNotifications } from './modalAction';
 import FileUploader from 'react-firebase-file-uploader';
 import firebase from 'firebase'
@@ -11,7 +11,7 @@ import {
 
 } from './modalAction';
 import './modalpopup.css';
-import { stat } from 'fs';
+// import { stat } from 'fs';
 class ModalPopUp extends Component {
   constructor(props) {
     super(props);
@@ -131,7 +131,7 @@ class ModalPopUp extends Component {
   }
   render() {
     const studentDetails = localStorage.getItem('userProfile') ? JSON.parse(localStorage.getItem('userProfile')) : null;
-    const { userDetails } = this.props
+    // const { userDetails } = this.props
     const openModal = this.props.modalState;
     const teacherDetails = this.props.title;
     console.log('teacherDetails', teacherDetails);
@@ -158,7 +158,7 @@ class ModalPopUp extends Component {
                       <FileUploader
                         accept='video/*'
                         className="upload-video"
-                        storageRef={firebase.storage().ref("notification" + "/" + studentDetails.userId)}
+                        storageRef={firebase.storage().ref(`notification/${studentDetails.userId}`)}
                         onUploadStart={this.handleUploadStart}
                         onUploadError={this.handleUploadError}
                         onUploadSuccess={this.handleVideoUploadSuccess}

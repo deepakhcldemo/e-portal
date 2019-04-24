@@ -37,5 +37,5 @@ export const getNotificationFromDB = (dispatch) => {
 export const getVideoUrl = (id, name) => {
   const studentDetails = JSON.parse(localStorage.getItem('userProfile'));
   const db = dbFactory.create('firebase');
-  return db.storage().ref("notification" + "/" + studentDetails.userId).child('movie.mp4').getDownloadURL()
+  return db.storage().ref(`notification/${studentDetails.userId}`).child(name).getDownloadURL()
 }

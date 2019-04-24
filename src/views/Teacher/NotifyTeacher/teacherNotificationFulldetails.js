@@ -18,7 +18,7 @@ class teacherNotificationFulldetails extends Component {
                                     </div>
                                     <div class="modal-body">
                                         <center>
-                                            <img src="../Assets/avatar.png" name="aboutme" width="140" height="140" border="0" class="img-circle" />
+                                            <img alt="" src="../Assets/avatar.png" name="aboutme" width="140" height="140" border="0" class="img-circle" />
                                             <h3 class="media-heading">Bob Joe <small>USA</small></h3>
                                         </center>
                                         <span><strong>Date: </strong></span>

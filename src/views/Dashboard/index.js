@@ -7,7 +7,7 @@ import { getCurriculum } from '../../components/carousel/action';
 
 
 // import Carousel from "../../components/carousel/Carousel";
-import Modal from "../../components/carousel/Modal";
+// import Modal from "../../components/carousel/Modal";
 
 class Dashboard extends Component {
  
@@ -93,11 +93,11 @@ class Dashboard extends Component {
     // console.log('--carouselAwaitingRows--', carouselRows);
 
     let listTop10Items = carouselRows;
-    var listTop10Items_1 = this.customSort(listTop10Items, 'rating_count', 'desc');
+    // var listTop10Items_1 = this.customSort(listTop10Items, 'rating_count', 'desc');
     // console.log('listTop10Items', listTop10Items_1);
     
     let listNewlyItems = carouselRows;
-    var listNewlyItems_1 = listNewlyItems.sort((a,b) => a.created_date.seconds - b.created_date.seconds);
+    // var listNewlyItems_1 = listNewlyItems.sort((a,b) => a.created_date.seconds - b.created_date.seconds);
     // console.log('listNewlyItems',listNewlyItems)
 
     let trendingItems = carouselRows;
@@ -106,7 +106,7 @@ class Dashboard extends Component {
 
     const listAwaitingItems = awaitingRows.map((awaitingRows, index) =>
       <Carousel.Item key={index}>
-          <iframe key={index} className="d-block w-100 h-100" src={awaitingRows.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div>
+          <iframe title="carousel" key={index} className="d-block w-100 h-100" src={awaitingRows.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div>
       </Carousel.Item>
     );
 
@@ -190,5 +190,5 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(
   mapStateToProps,
-  {getCurriculum}
+  mapDispatchToProps
 )(Dashboard);

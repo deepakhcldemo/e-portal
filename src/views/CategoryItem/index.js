@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { createBrowserHistory } from 'history';
+// import { createBrowserHistory } from 'history';
 import './styles.css';
 import { withRouter } from 'react-router';
 import { getAllCategory } from '../../database/dal/firebase/categoryDal';

@@ -124,6 +124,8 @@ export default class AliceCarousel extends React.PureComponent {
         return this._slidePrev()
       case 39:
         return this._slideNext()
+      default:
+        return ''
     }
   }
 

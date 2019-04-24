@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { /* Link, */ Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as loginAction from './actions';
 
 import './styles.css';
-import AuthGuard from '../../authguard/AuthGuard';
+// import AuthGuard from '../../authguard/AuthGuard';
 import { toastr } from 'react-redux-toastr';
 import * as actionTypes from '../../spinnerStore/actions';
 import { recoverPassword } from '../../database/dal/firebase/registrationDal';
@@ -16,7 +16,7 @@ let userIcon = {
   right: '12px',
   top: '12px',
   zIndex: '10',
-  backgroundImage: 'url(' + '../../Assets/hdpi/login_disable.png' + ')',
+  backgroundImage: 'url(\'../../Assets/hdpi/login_disable.png\')',
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
@@ -44,20 +44,20 @@ class PasswordReset extends Component {
 
   userIconStyle() {
     document.getElementById('userIcon').style.backgroundImage =
-      'url(' + '../../Assets/hdpi/login_oragnge.png' + ')';
+      'url(\'../../Assets/hdpi/login_oragnge.png\')';
   }
   userIconDisableStyle() {
     document.getElementById('userIcon').style.backgroundImage =
-      'url(' + '../../Assets/hdpi/login_disable.png' + ')';
+      'url(\'../../Assets/hdpi/login_disable.png\')';
   }
 
   passwordIconStyle() {
     document.getElementById('passwordIcon').style.backgroundImage =
-      'url(' + '../../Assets/hdpi/password_orange.png' + ')';
+      'url(\'../../Assets/hdpi/password_orange.png\')';
   }
   passwordIconDisableStyle() {
     document.getElementById('passwordIcon').style.backgroundImage =
-      'url(' + '../../Assets/hdpi/password_disable.png' + ')';
+      'url(\'../../Assets/hdpi/password_disable.png\')';
   }
   togglePassword = () => {
     var x = document.getElementById('password');

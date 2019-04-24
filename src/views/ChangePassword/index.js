@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { /* Link, */ Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as loginAction from './actions';
 
@@ -16,7 +16,7 @@ let passwordIcon = {
   right: '10px',
   top: '15px',
   zIndex: '10',
-  backgroundImage: 'url(' + '../../Assets/hdpi/password_orange.png' + ')',
+  backgroundImage: 'url(\'../../Assets/hdpi/password_orange.png\')',
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
@@ -79,7 +79,7 @@ class ChangePassword extends Component {
           }
         })
         .catch(error => {
-          toastr.error(error.message + ' ' + ' Login Again');
+          toastr.error(`${error.message} Login Again`);
           AuthGuard.signout();
           this.props.history.push('/login');
         });

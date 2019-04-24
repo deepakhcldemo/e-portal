@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import * as loginAction from './actions';
 import './styles.css';
 import { toastr } from 'react-redux-toastr';
-import * as actionTypes from '../../spinnerStore/actions';
+// import * as actionTypes from '../../spinnerStore/actions';
 import {
   fetchProviders,
   createUserWithEmail,
@@ -26,7 +26,7 @@ let userIcon = {
   right: '12px',
   top: '12px',
   zIndex: '10',
-  backgroundImage: 'url(' + '../../Assets/hdpi/login_disable.png' + ')',
+  backgroundImage: 'url(\'../../Assets/hdpi/login_disable.png\')',
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
@@ -38,7 +38,7 @@ let passwordIcon = {
   right: '10px',
   top: '15px',
   zIndex: '10',
-  backgroundImage: 'url(' + '../../Assets/hdpi/password_disable.png' + ')',
+  backgroundImage: 'url(\'../../Assets/hdpi/password_disable.png\')',
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
@@ -66,20 +66,20 @@ class Login extends Component {
 
   userIconStyle() {
     document.getElementById('userIcon').style.backgroundImage =
-      'url(' + '../../Assets/hdpi/login_oragnge.png' + ')';
+      'url(\'../../Assets/hdpi/login_oragnge.png\')';
   }
   userIconDisableStyle() {
     document.getElementById('userIcon').style.backgroundImage =
-      'url(' + '../../Assets/hdpi/login_disable.png' + ')';
+      'url(\'../../Assets/hdpi/login_disable.png\')';
   }
 
   passwordIconStyle() {
     document.getElementById('passwordIcon').style.backgroundImage =
-      'url(' + '../../Assets/hdpi/password_orange.png' + ')';
+      'url(\'../../Assets/hdpi/password_orange.png\')';
   }
   passwordIconDisableStyle() {
     document.getElementById('passwordIcon').style.backgroundImage =
-      'url(' + '../../Assets/hdpi/password_disable.png' + ')';
+      'url(\'../../Assets/hdpi/password_disable.png\')';
   }
   togglePassword = () => {
     var x = document.getElementById('password');
@@ -265,7 +265,7 @@ class Login extends Component {
   };
 
   render() {
-    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    // const { from } = this.props.location.state || { from: { pathname: '/' } };
 
     const { username, password, submitted } = this.state;
     return (
@@ -367,7 +367,7 @@ class Login extends Component {
                     style={{
                       backgroundPosition: 'center center',
                       backgroundImage:
-                        'url(' + '../../Assets/hdpi/google_logo.ico ' + ')',
+                        'url(\'../../Assets/hdpi/google_logo.ico\')',
                       backgroundRepeat: 'no-repeat'
                     }}
                     onClick={e => this.loginWithGoogle(e)}
@@ -377,7 +377,7 @@ class Login extends Component {
                     style={{
                       backgroundPosition: 'center center',
                       backgroundImage:
-                        'url(' + '../../Assets/hdpi/fb_logo.ico ' + ')',
+                        'url(\'../../Assets/hdpi/fb_logo.ico\')',
                       backgroundRepeat: 'no-repeat'
                     }}
                     onClick={e => this.loginWithFacebook(e)}
@@ -387,7 +387,7 @@ class Login extends Component {
                     style={{
                       backgroundPosition: 'center center',
                       backgroundImage:
-                        'url(' + '../../Assets/hdpi/twitter_logo.ico ' + ')',
+                        'url(\'../../Assets/hdpi/twitter_logo.ico\')',
                       backgroundRepeat: 'no-repeat'
                     }}
                     onClick={e => this.loginWithTwitter(e)}

@@ -16,7 +16,6 @@ const spinnerStatusReducer = (state = initialState, action) => {
       }
       
   }
-  return state;
 };
 
 export default spinnerStatusReducer;

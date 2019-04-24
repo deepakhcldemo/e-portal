@@ -8,14 +8,14 @@ import Curriculum from "./../../Curriculum/index";
 import { getAllCategory } from "../../../database/dal/firebase/categoryDal";
 import { getCurriculumFromDB } from "../../../database/dal/firebase/curriculumDal";
 // Video Item Component
-import VideoItem from "./../../../components/videoItem/VideoItem";
+// import VideoItem from "./../../../components/videoItem/VideoItem";
 class Video extends Component {
   state = {
     upload: false,
     content: "",
     userDetails: "",
     filter: "",
-    categorySubscriber: ""
+    //categorySubscriber: ""
   };
 
   componentWillMount = () => {
@@ -34,7 +34,7 @@ class Video extends Component {
         this.setState({ content });
       }
     );
-    this.state.categorySubscriber = getAllCategory().onSnapshot(
+    getAllCategory().onSnapshot(
       querySnapshot => {
         querySnapshot.forEach(doc => {
           const category = [...doc.data().subjects];
@@ -44,9 +44,9 @@ class Video extends Component {
     );
   };
 
-  componentWillUnmount = () => {
+  /* componentWillUnmount = () => {
     this.state.categorySubscriber();
-  };
+  }; */
 
   handleUpload = () => {
     this.setState({

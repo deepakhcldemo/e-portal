@@ -9,16 +9,16 @@ const getDbRef = collectionName => {
 };
 
 export const saveFileMetaDataFromDB = (dispatch, fileName, user, doc, fields, type) => {
-    let actualFileName;
+    /* let actualFileName;
     if(type === 'video') {
         actualFileName = fileName.split(/\.(?=[^\.]+$)/);
-    }
+    } */
     const metaData = {
         userId: user.userId,
         views: 0,
         rating: 0,
         src:'',    
-        title: (type === 'video' ) ? actualFileName[0] : '',
+        title: '', //(type === 'video' ) ? actualFileName[0] : '',
         desc: '',
         tags: '',
         videoMetadata: [],
@@ -36,7 +36,7 @@ export const saveFileMetaDataFromDB = (dispatch, fileName, user, doc, fields, ty
             dispatch({type: 'ERROR', err})
         });
     }else if(type !== 'metadata') {
-        db.storage().ref("curriculum" + "/" + user.userId).child(fileName).getDownloadURL().then(url => {
+        db.storage().ref(`curriculum/${user.userId}`).child(fileName).getDownloadURL().then(url => {
             if(type === 'video') {
                 metaData.src = url
                 db.firestore().collection('curriculum').add(metaData)

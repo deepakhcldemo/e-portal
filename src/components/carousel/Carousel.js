@@ -41,7 +41,7 @@ class Carousel extends React.Component {
     // console.log('--carouselAwaitingRows--', carouselAwaitingRows);
     const listAwaitingItems = carouselAwaitingRows.map((awaitingRows, index) =>
       <div className="item" key={index} onClick={() => this.carouselModal('video', awaitingRows.src)}>
-          <iframe className="img-thumbnail" src={awaitingRows.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer img-thumbnail"></div>
+          <iframe title="iframe carousel" className="img-thumbnail" src={awaitingRows.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer img-thumbnail"></div>
       </div>
     );
 

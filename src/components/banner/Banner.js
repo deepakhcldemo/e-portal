@@ -28,6 +28,7 @@ class Banner extends Component {
         <div key={index}>
           {bannerRow.banner_image && (
             <center><img
+              alt=""
               src={
                 GLOBAL_VARIABLES.BANNER_PATH +
                 pageName +

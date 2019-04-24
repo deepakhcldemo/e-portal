@@ -18,7 +18,7 @@ class NotificationFullDetails extends Component {
                                     </div>
                                     <div className="modal-body">
                                         <center>
-                                            <img src="../Assets/avatar.png" name="aboutme" width="140" height="140" border="0" className="img-circle" />
+                                            <img alt="" src="../Assets/avatar.png" name="aboutme" width="140" height="140" border="0" className="img-circle" />
                                             <h3 className="media-heading">Kately <small>USA</small></h3>
                                         </center>
                                         <span><strong>Date: </strong></span>

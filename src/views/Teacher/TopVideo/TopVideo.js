@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import moment from 'moment';
-import { NavLink } from 'react-router-dom'
+// import { NavLink } from 'react-router-dom'
 import StarRatingComponent from 'react-star-rating-component';
 import VideoPopup from './../../../components/videopopup/VideoPopup'
 import './topvideo.scss'
@@ -38,7 +38,7 @@ class TopVideo extends Component {
 							      videoDetail.date = (videoDetail.created) ? moment(videoDetail.created.toDate()).fromNow() : ''
 							return (
 								<li className="card" key={index}>
-									<a onClick={() => this.handleClick(videoDetail)} href="#">
+									<a onClick={() => this.handleClick(videoDetail)} href="#1">
 										<img src={videoDetail.thumb} alt={videoDetail.title} className="img-responsive" height="130px" />
 										<h2>{videoDetail.title}</h2>
 										<i className="fas fa-play-circle"></i>

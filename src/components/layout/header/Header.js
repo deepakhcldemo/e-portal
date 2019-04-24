@@ -19,7 +19,7 @@ class Header extends Component {
           <div className="home-header-nav-item home-header-logo" style={{
             backgroundPosition: 'center center',
             backgroundImage:
-              'url(' + '../../Assets/hdpi/logo.png ' + ')',
+              'url(\'../../Assets/hdpi/logo.png\')',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain'
           }} onClick={() => this.navigateTo('/home')} ></div>

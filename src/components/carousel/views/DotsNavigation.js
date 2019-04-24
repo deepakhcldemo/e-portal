@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 import PropTypes from 'prop-types'
 
 import * as Utils from '../utils'
@@ -38,3 +38,4 @@ DotsNavigation.propTypes = {
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
 }
+ */

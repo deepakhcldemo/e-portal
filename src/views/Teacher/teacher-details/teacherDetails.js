@@ -223,7 +223,7 @@ class TeacherDetails extends Component {
     const {
       title,
       description,
-      rating,
+      /* rating, */
       subject,
       imgPath
     } = this.state.detailModel;

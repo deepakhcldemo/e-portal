@@ -34,7 +34,7 @@ class NotificationsDetails extends Component {
 
                                     <Link to={`/student/notificationsDescription`} activeClassName="active">
                                     <div className="alert alert-info">
-                                        <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" /></div>
+                                        <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" alt="" /></div>
                                         <div className="container" onClick={this.onOpenModal} style={{ cursor: "pointer" }}>
 
                                             <div className="alert-icon">
@@ -51,7 +51,7 @@ class NotificationsDetails extends Component {
                                 </Link>
 
                                 <div className="alert alert-info">
-                                    <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" /></div>
+                                    <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" alt="" /></div>
                                     <div className="container">
                                         <div className="alert-icon">
                                             <i className="material-icons">Student Belly</i>
@@ -76,7 +76,7 @@ class NotificationsDetails extends Component {
                                             </div>
                                             <div className="modal-body">
                                                 <center>
-                                                    <img src="../Assets/avatar.png" name="aboutme" width="140" height="140" border="0" className="img-circle" />
+                                                    <img src="../Assets/avatar.png" name="aboutme" width="140" height="140" border="0" className="img-circle" alt="" />
                                                     <h3 className="media-heading">Kately <small>USA</small></h3>
                                                 </center>
                                                 <span><strong>Date: </strong></span>

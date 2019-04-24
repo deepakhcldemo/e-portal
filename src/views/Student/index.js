@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import ModalPopUp from "../../shared/components/modalpopup/modalpopup";
+// import ModalPopUp from "../../shared/components/modalpopup/modalpopup";
 import CategoryItem from "../CategoryItem";
 import HeaderHome from "../../components/layout/header/HeaderHome";
 import { connect } from "react-redux";
 import Navbar from "./../../shared/components/Navbar";
-import SearchTeacher from "./SearchTeacher/SearchTeacher";
+// import SearchTeacher from "./SearchTeacher/SearchTeacher";
 import RecentVideo from "../../components/recentVideo/RecentVideo";
-import GLOBAL_VARIABLES from "../../config/config";
+// import GLOBAL_VARIABLES from "../../config/config";
 import { STUDENT_DASHBOARD_LINKS } from "./../../constant/Constant";
 //import Navigation from './Navigation/Navigation';
-import Slider from "../../components/slider/Slider";
+// import Slider from "../../components/slider/Slider";
 import { getTeacher, getCurriculum, getNotification } from "./action";
 import { getBannerFromDB } from "../../database/dal/firebase/studentDal";
 import Banner from "../../components/banner/Banner";
@@ -39,11 +39,11 @@ class Student extends Component {
   }
   render() {
     const { bannerRows } = this.state;
-    const { carouselRows, teacherCarouselRows, notifications } = this.props;
+    const { /* carouselRows, */ teacherCarouselRows, notifications } = this.props;
     console.log("notifications", notifications);
     const listTop10Items = teacherCarouselRows;
     console.log("listTop10Items", listTop10Items);
-    let listNewlyItems = carouselRows;
+    // let listNewlyItems = carouselRows;
     return (
       <div className="container-fluid">
         <div className="row">

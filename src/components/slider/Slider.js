@@ -9,9 +9,6 @@ import ItemsCarousel from 'react-items-carousel';
 import "./Slider.scss";
 
 class Slider extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentWillMount() {
     // const carouselRows = this.props.carouselRecords;
@@ -68,7 +65,7 @@ class Slider extends React.Component {
         <Link className="nav-link" to={this.props.relativePath+'/1'} title={carouselRecord.name}>
           <div key={index} style={{ height: 150, background: '#000' }} className="vd-wrapper">
             {/* <iframe key={index} className="d-block w-100" src={carouselRecord.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
-            <img src={carouselRecord.profile_image} />
+            <img alt="" src={carouselRecord.profile_image} />
           </div>
 
           <div className="vd-content">
@@ -135,7 +132,7 @@ class Slider extends React.Component {
               className="vd-wrapper"
             >
               {/* <iframe key={index} className="d-block w-100" src={carouselRecord.src} frameBorder="0"></iframe><div key="layer{index}" className="item-over layer"></div> */}
-              <img src={profileImg} />
+              <img alt="" src={profileImg} />
             </div>
 
             <div className="vd-content">
@@ -160,13 +157,13 @@ class Slider extends React.Component {
       const stopSymbol = ".";
       return (
         <div key={index} className="vd-wrapper border_1px">
-          <a href="#" title={carouselRecord.name}>
+          <a href="#1" title={carouselRecord.name}>
             <div
               key={index}
               className="pad5 left"
               style={{ width: 170, height: 80 }}
             >
-              <img src={carouselRecord.profile_image} />
+              <img alt="" src={carouselRecord.profile_image} />
             </div>
             <div className="pad5 left label-color">
               <h5>
@@ -214,12 +211,12 @@ class Slider extends React.Component {
           rightChevron={'>'}
           leftChevron={'<'}
           // Active item configurations
-          requestToChangeActive={this.changeActiveItem}
+          /* requestToChangeActive={this.changeActiveItem}
           activeItemIndex={activeItemIndex}
           activePosition={"center"}
           chevronWidth={24}
           rightChevron={">"}
-          leftChevron={"<"}
+          leftChevron={"<"} */
           outsideChevron={false}
         >
           {children}

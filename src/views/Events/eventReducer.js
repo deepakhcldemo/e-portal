@@ -11,12 +11,6 @@ const eventReducer = (state = initialState, action) => {
         students: action.student
       };
 
-    case 'GET_STUDENTS':
-      return {
-        ...state,
-        students: action.student
-      };
-
     case 'TAGGED_STUDENTS_NAMES':
       return {
         ...state,

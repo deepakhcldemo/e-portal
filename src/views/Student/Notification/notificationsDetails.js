@@ -34,7 +34,7 @@ class NotificationsDetails extends Component {
 
                                     <Link to={`/teacher/notificationsDescription`} activeClassName="active">
                                         <div class="alert alert-success">
-                                            <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" class="img-circle" /></div>
+                                            <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" class="img-circle" alt="" /></div>
                                             <div class="container" onClick={this.onOpenModal} style={{ cursor: "pointer" }}>
                                                 <div class="alert-icon">
                                                     <i class="material-icons">From Teacher Bob Joe</i>
@@ -48,7 +48,7 @@ class NotificationsDetails extends Component {
                                         </div>
                                     </Link>
                                     <div class="alert alert-danger">
-                                        <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" class="img-circle" /></div>
+                                        <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" class="img-circle" alt="" /></div>
                                         <div class="container">
                                             <div class="alert-icon">
                                                 <i class="material-icons">From Teacher David Joerge</i>
@@ -73,7 +73,7 @@ class NotificationsDetails extends Component {
                                                 </div>
                                                 <div class="modal-body">
                                                     <center>
-                                                        <img src="../Assets/avatar.png" name="aboutme" width="140" height="140" border="0" class="img-circle" />
+                                                        <img src="../Assets/avatar.png" name="aboutme" width="140" height="140" border="0" class="img-circle" alt="" />
                                                         <h3 class="media-heading">Bob Joe <small>USA</small></h3>
                                                     </center>
                                                     <span><strong>Date: </strong></span>
