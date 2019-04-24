@@ -94,3 +94,19 @@ export const getNotificationFromDB = () => {
     const db = dbFactory.create('firebase');
     return db.firestore().collection("notifications").get();       
 }
+// export const getNotificationFromDB = (dispatch) => {
+//     let data = [];
+//     const db = dbFactory.create('firebase');
+//     db.firestore().collection("notifications")
+//     .get()
+//     .then(function(querySnapshot) {
+//         querySnapshot.forEach(function(doc) {
+//             console.log(doc.data(), 'getNotification');
+//             data.push(doc.data())
+//         })
+//         dispatch({type:'GET_NOTIFICATION', NotificationData: data})
+//     }) 
+//     .catch(err => {
+//         dispatch({type: 'ERROR', err})
+//     })              
+// }

@@ -1,9 +1,31 @@
 import React, { Component } from 'react';
 import NavBar from '../../../shared/components/Navbar'
-
+import { connect } from "react-redux";
+import {  getNotification } from './action';
+import { getNotificationsFromDB} from "./../../../database/dal/firebase/studentDal";
 class teacherNotificationFulldetails extends Component {
     state = {}
+
+    componentDidMount = () => {
+        getNotificationsFromDB().onSnapshot(querySnapshot => {
+          let notifyData = [];
+          querySnapshot.forEach(doc => {
+            notifyData.push(doc.data());
+          });
+    
+          if (notifyData.length > 0) {
+            this.setState({
+              notificationslistNewlyItems: notifyData
+            });
+          }
+          notifyData = [];
+        });
+
+      };
+
     render() {
+        const {notificationslistNewlyItems} = this.state;
+        console.log('notificationslistNewlyItems', notificationslistNewlyItems);
         return (
             <div className="container-fluid">
                 <NavBar />
@@ -55,5 +77,17 @@ class teacherNotificationFulldetails extends Component {
         );
     }
 }
-
-export default teacherNotificationFulldetails;
+const mapStateToProps = state => {
+    return {
+        // notifyRows: state.notifyTeacherReducer.notifyTeacherData,
+    };
+  };
+const mapDispatchToProps = dispatch => {
+    return {
+     getNotification: () => dispatch(getNotification()),
+    };
+  };
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(teacherNotificationFulldetails);
