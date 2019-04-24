@@ -158,39 +158,37 @@ class SearchTeacher extends Component {
   };
 
   render() {
-    this.state.filtredTeacherRecord.map(
-      (teacher, index) => {
-        return (
-          <div className="col-md-3" key={index}>
-            <div className="card">
-              <div className="card-body">
-                <img
-                  src={teacher.profileImage}
-                  alt="teacher"
-                  className="profile-image"
+    this.state.filtredTeacherRecord.map((teacher, index) => {
+      return (
+        <div className="col-md-3" key={index}>
+          <div className="card">
+            <div className="card-body">
+              <img
+                src={teacher.profileImage}
+                alt="teacher"
+                className="profile-image"
+              />
+              <div className="container">
+                <h4>
+                  <b>
+                    {teacher.firstName} {teacher.lastName}
+                  </b>
+                </h4>
+                <p>{teacher.subject}</p>
+              </div>
+              <div className="input-group chat-btn">
+                <input
+                  onClick={this.openCalendarModal}
+                  type="button"
+                  className="btn btn-success"
+                  value="Initiate Chat"
                 />
-                <div className="container">
-                  <h4>
-                    <b>
-                      {teacher.firstName} {teacher.lastName}
-                    </b>
-                  </h4>
-                  <p>{teacher.subject}</p>
-                </div>
-                <div className="input-group chat-btn">
-                  <input
-                    onClick={this.openCalendarModal}
-                    type="button"
-                    className="btn btn-success"
-                    value="Initiate Chat"
-                  />
-                </div>
               </div>
             </div>
           </div>
-        );
-      }
-    );
+        </div>
+      );
+    });
     const searctTeacherData = [
       {
         name: 'Name',
@@ -226,7 +224,7 @@ class SearchTeacher extends Component {
             {this.state.showValidationMessage}
           </p>
 
-          <div className="card" style={{ background: ' #4b4e68' }}>
+          <div className="card">
             <div className="card-body">
               <div className="row row-without--margin">
                 <div className=" filter-teacher add-padding col-xs-12 col-12 col-md-4">
@@ -310,8 +308,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getTeachersBasedOnCateogy: selectedSubject =>
       dispatch(getTeachersBasedOnCateogy(selectedSubject)),
-    getTeachersBasedOnZipcode: zipcode =>
-      dispatch(zipRequestDispatch(zipcode))
+    getTeachersBasedOnZipcode: zipcode => dispatch(zipRequestDispatch(zipcode))
   };
 };
 

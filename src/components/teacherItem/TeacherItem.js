@@ -8,12 +8,12 @@ class TeacherItem extends Component {
     const { userProfile, isTrayItem } = this.props;
 
     return (
-      <div className="card">
+      <div>
         <div
           className={
             isTrayItem
-              ? 'card user-profile-card--padding tray-item--style'
-              : 'user-profile-card--padding'
+              ? 'card user-profile-card--padding'
+              : 'card user-profile-card--padding'
           }
         >
           <div
@@ -60,8 +60,9 @@ class TeacherItem extends Component {
                   className={
                     isTrayItem
                       ? 'vd-content user-details-tray--style user-detail--align'
-                      : 'vd-content user-details--style'
+                      : 'vd-content user-details-tray--style'
                   }
+                  style={{ border: 'none' }}
                 >
                   <h6>{userProfile.firstName + ' ' + userProfile.lastName}</h6>
                   <p>
@@ -72,7 +73,7 @@ class TeacherItem extends Component {
                     name="rate"
                     starCount={5}
                     value={userProfile.rating}
-                    emptyStarColor={'white'}
+                    emptyStarColor={'black'}
                   />
                 </div>
               </div>

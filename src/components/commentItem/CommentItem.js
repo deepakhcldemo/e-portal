@@ -33,7 +33,6 @@ class CommentItem extends Component {
                   commentDetails.profileData.lastName}
               </h6>
 
-              {/* <span style={{ fontSize: '25px' }}>&#10077;</span> */}
               <p
                 className="block-with-text"
                 title={commentDetails.feedback.comment}
