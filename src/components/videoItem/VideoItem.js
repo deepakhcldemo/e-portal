@@ -41,7 +41,7 @@ class VideoItem extends Component {
                   backgroundPosition: "top center",
                   backgroundSize: "cover",
                   backgroundRepeat: "no-repeat",
-                  height: "200px",
+                  height: "100px",
                   margin: "10px"
                 }}
                 className="border_1px"
