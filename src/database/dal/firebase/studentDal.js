@@ -1,5 +1,10 @@
 import dbFactory from '../../dbFactory';
 
+const getDbRef = collectionName => {
+    const db = dbFactory.create("firebase");
+    const ref = db.firestore().collection(collectionName);
+    return ref;
+  };
 export const getTeachersFromDBBasedOnCategory = (dispatch,selectedSubject) => {
     const db = dbFactory.create('firebase');
     let data = [];
@@ -22,8 +27,8 @@ export const getTeachersFromDBBasedOnCategory = (dispatch,selectedSubject) => {
 
 
 export const getNotificationFromDB = (dispatch) => {
-    const db = dbFactory.create('firebase');
     let data = [];
+    const db = dbFactory.create('firebase');
     db.firestore().collection("notifications")
     .get()
     .then(function(querySnapshot) {
@@ -38,7 +43,9 @@ export const getNotificationFromDB = (dispatch) => {
     })              
 }
 
-
+export const getNotificationsFromDB = () => {
+    return getDbRef("notifications");
+  };
 
 export const getBannerFromDB = () => {
     const db = dbFactory.create('firebase');

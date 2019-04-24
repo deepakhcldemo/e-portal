@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import NavBar from './../Navigation/Navigation'
 
 class NotifyStudent extends Component {
+    
     render = () => {
         return (
             <div className="container-fluid">

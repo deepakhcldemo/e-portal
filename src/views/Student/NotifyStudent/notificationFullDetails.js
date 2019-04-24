@@ -1,10 +1,32 @@
 import React, { Component } from 'react';
 import NavBar from '../../../shared/components/Navbar'
-
+import { connect } from "react-redux";
+import { getNotificationsFromDB} from "./../../../database/dal/firebase/studentDal";
+//import { getNotifications } from './actions';
 class NotificationFullDetails extends Component {
     state = {}
+
+    componentDidMount = () => {
+        getNotificationsFromDB().onSnapshot(querySnapshot => {
+          let notifyData = [];
+          querySnapshot.forEach(doc => {
+            notifyData.push(doc.data());
+          });
+    
+          if (notifyData.length > 0) {
+            this.setState({
+              notificationslistNewlyItems: notifyData
+            });
+          }
+          notifyData = [];
+        });
+
+      };
     render() {
+      const {notificationslistNewlyItems} = this.state;
+      console.log('notificationslistNewlyItems', notificationslistNewlyItems);
         return (
+          
             <div className="container-fluid">
                 <NavBar />
                 <div className="row margin-bottom">
@@ -56,5 +78,16 @@ class NotificationFullDetails extends Component {
                                 </div></div></div></div></div></div>);
     }
 }
-
-export default NotificationFullDetails;
+const mapStateToProps = state => {
+    return {
+    };
+  };
+const mapDispatchToProps = dispatch => {
+    return {
+      //getNotifications: () => dispatch(getNotifications()),
+    };
+  };
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(NotificationFullDetails);

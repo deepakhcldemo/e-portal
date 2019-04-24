@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import { connect } from "react-redux";
 import NavBar from '../../../shared/components/Navbar'
-
+import { getNotificationsFromDB} from "./../../../database/dal/firebase/studentDal";
 import Modal from 'react-responsive-modal'
 
 class NotificationfromTeacher extends Component {
-
-
     state = {
         open: false,
     };
@@ -19,8 +18,27 @@ class NotificationfromTeacher extends Component {
         this.setState({ open: false });
     };
 
+    componentDidMount = () => {
+        getNotificationsFromDB().onSnapshot(querySnapshot => {
+          let notifyData = [];
+          querySnapshot.forEach(doc => {
+            notifyData.push(doc.data());
+          });
+    
+          if (notifyData.length > 0) {
+            this.setState({
+              notificationslistNewlyItems: notifyData
+            });
+          }
+          notifyData = [];
+        });
+
+      };
+
     render = () => {
         const { open } = this.state;
+        const {notificationslistNewlyItems} = this.state;
+        console.log('notificationslistNewlyItems', notificationslistNewlyItems);
         return (
             <>
                 <div className="container-fluid">
@@ -121,4 +139,17 @@ class NotificationfromTeacher extends Component {
         );
     }
 }
-export default NotificationfromTeacher
+const mapStateToProps = state => {
+    return {
+    };
+  };
+const mapDispatchToProps = dispatch => {
+    return {
+     // getNotifications: () => dispatch(getNotifications()),
+    };
+  };
+  export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(NotificationfromTeacher);
+
