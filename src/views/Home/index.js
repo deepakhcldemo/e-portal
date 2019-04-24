@@ -101,7 +101,7 @@ class Home extends Component {
     } = this.state;
 
     return (
-      <div className="container-fluid containe-without-padding">
+      <div className="container-fluid mt-3">
         <div className="row">
           <div className="col-12 container--margin-bottom">
             <HeaderHome headeTitle="Dashboard" />
