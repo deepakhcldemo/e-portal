@@ -172,7 +172,7 @@ class ModalPopUp extends Component {
                     </div>
                   </div>
                   <p className="help-block">{this.state.validationMessage}</p>
-                  <button type="button" className="btn btn-dark submit" onClick={this.createNotification}>Create Notofication</button>
+                  <button type="button" className="btn btn-dark submit" onClick={this.createNotification}>Create Notification</button>
                 </form>
               </div></div>)
             : (<div>
