@@ -140,6 +140,7 @@ class SearchTeacher extends Component {
         filtredTeacherRecord: searchParameter.TeacherList
       });
     }
+    this.props.getTeachersBasedOnZipcode('85001');
     //this.props.getTeachersBasedOnCateogy(this.state.selectedSubject);
   };
 
