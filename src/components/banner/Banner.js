@@ -55,10 +55,7 @@ class Banner extends Component {
       <React.Fragment>
         {listAwaitingItems.length > 0 && (
           <div className="col-12 content-container--background col-without--padding">
-            <div
-              className="banner-container"
-              style={{ background: '#555555', textAlign: 'center' }}
-            >
+            <div className="banner-container" style={{ textAlign: 'center' }}>
               <Slider {...settingsBanner}>{listAwaitingItems}</Slider>
             </div>
           </div>
