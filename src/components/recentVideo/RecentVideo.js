@@ -80,7 +80,7 @@ class RecentVideo extends Component {
     return (
       <div className="col-12 content-container--background container-margin-20">
         <h4 className="mt-30">{title}</h4>
-        <div className="tray-background--color">
+        <div className="tray-background--color text-center">
           {carousellistNewlyItems.length > 0 && (
             <Slider {...settingsNewlyItems}>
               {this.createChildren(carousellistNewlyItems)}

@@ -8,13 +8,12 @@ const spinnerStatusReducer = (state = initialState, action) => {
     case actionTypes.SPINNER_STATUS:
       return {
         ...state,
-        spinnerStatus: action.payload
+        spinnerStatus: !state.spinnerStatus
       };
-    default :
+    default:
       return {
         ...state
-      }
-      
+      };
   }
 };
 

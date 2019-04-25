@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../../../shared/components/Navbar';
 import { connect } from "react-redux";
-import { getNotification, getTeachers, getStudents, getTeacherNotification } from './notificationAction';
+import { getTeachers, getStudents, getTeacherNotification } from './notificationAction';
 
-import Modal from 'react-responsive-modal';
+
 
 class NotificationsDetails extends Component {
 
@@ -13,14 +13,8 @@ class NotificationsDetails extends Component {
     };
 
     componentDidMount() {
-        console.log('hi');
         const loggedInUSer = JSON.parse(localStorage.getItem('user'));
-        //console.log("loggedInUSer deaatatat", loggedInUSer.user.uid)
         this.props.getTeacherNotification(loggedInUSer.user.uid);
-
-
-
-
     }
 
     onOpenModal = () => {
@@ -45,10 +39,6 @@ class NotificationsDetails extends Component {
         return alertClassName;
     }
     render = () => {
-        console.log("Notification data => ", this.props.notificationDetails)
-        console.log("Teacher data => ", this.props.teacherDetails)
-        console.log("Student data => ", this.props.studentDetails)
-
         const { open } = this.state;
         const { notificationDetails } = this.props;
         return (
@@ -60,7 +50,7 @@ class NotificationsDetails extends Component {
                             <div className="card">
                                 <div className="card-body">
                                     {Object.keys(notificationDetails).map((notificationDetail, ind) => (
-                                        //console.log(notificationDetails[notificationDetail].charge)
+
                                         <Link key={ind} to={`/teacher/notificationsDescription/` + notificationDetails[notificationDetail].nId}>
                                             <div className={this.getClassName(notificationDetails[notificationDetail].status)}>
                                                 <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" /></div>
