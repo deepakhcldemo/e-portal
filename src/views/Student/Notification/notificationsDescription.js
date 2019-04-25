@@ -171,7 +171,9 @@ class notificationsDescription extends Component {
                                             <div className="modal-footer">
 
                                                 <button onClick={this.handleBack} type="button" className="btn btn-primary" data-dismiss="modal">Back</button>
-                                                {(notificationData.status == 1) ? <button onClick={() => this.handlePay(notificationData.nId)} type="button" className="btn btn-success" data-dismiss="modal">Pay</button> : null}
+                                                {notificationData.status == -1 ? <button onClick={this.handleReject} type="button" className="btn btn-danger" data-dismiss="modal">Reject</button> : null}
+                                                {(notificationData.status == 1 || notificationData.status == -1) ? <button onClick={() => this.handlePay(notificationData.nId)} type="button" className="btn btn-success" data-dismiss="modal">Pay</button> : null}
+
 
 
                                             </div>
