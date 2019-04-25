@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //import GLOBAL_VARIABLES from '../../config/config';
 import HeaderHome from '../../../components/layout/header/HeaderHome';
 import Navbar from './../../../shared/components/Navbar';
-import { getTeachersBasedOnCateogy } from './searchTeacherAction';
+import { getTeachersBasedOnCateogy, zipRequestDispatch } from './searchTeacherAction';
 // import Navigation from '../Navigation/Navigation';
 import { connect } from "react-redux";
 // import Select from 'react-select';
@@ -11,9 +11,9 @@ import { getAllCategory } from "../../../database/dal/firebase/categoryDal";
 import Multiselect from "multiselect-dropdown-react";
 import "./SearchTeacher.css";
 
-import CalendarModal from "../../../shared/components/calendar-modal/calendarmodal";
-import ListContainer from "../../../components/listContainer/ListContainer";
-import { zipRequestDispatch } from "../../../shared/library/ZipcodesByRadius";
+import CalendarModal from '../../../shared/components/calendar-modal/calendarmodal';
+import ListContainer from '../../../components/listContainer/ListContainer';
+// import { zipRequestDispatch } from '../../../shared/library/ZipcodesByRadius';
 
 class SearchTeacher extends Component {
   constructor(props) {
@@ -38,9 +38,10 @@ class SearchTeacher extends Component {
   }
 
   componentDidMount() {
-    const self = this;
-    this.props.getTeachersBasedOnZipcode("85001");
-    // console.log(this.props, 'this.porps in componentWill');
+    let self =this;
+    // const zipcode = this.state.searchValue;
+    this.props.getTeachersBasedOnZipcode('99501') ;   
+    
     getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         const subjects = [...doc.data().subjects];
@@ -166,7 +167,13 @@ class SearchTeacher extends Component {
     this.props.getTeachersBasedOnCateogy(subjectValue.target.value);
   };
 
-  render() {
+  render() {    
+    const { getTeacherZipWise } = this.props;
+
+    if(getTeacherZipWise.zip_codes && getTeacherZipWise.zip_codes.length > 0) {
+      console.log('--getTeachersBasedOnZipcode--', getTeacherZipWise.zip_codes);
+    }
+    
     this.state.filtredTeacherRecord.map((teacher, index) => {
       return (
         <div className="col-md-3" key={index}>
@@ -264,15 +271,13 @@ class SearchTeacher extends Component {
                     className="fa fa-search teacher-search-icon"
                     onClick={this.getSerachParameter}
                   />
+
+                  
                 </div>
               </div>
             </div>
           </div>
 
-          {/* <div className="row">
-
-                        {filetredTeacherData}
-                    </div> */}
           <div>
             {this.state.filtredTeacherRecord && (
               <div>
@@ -294,6 +299,20 @@ class SearchTeacher extends Component {
               </div>
             )}
           </div>
+          <div className="text-center">
+            <ul className="list-group_1">
+              { getTeacherZipWise.zip_codes &&
+              getTeacherZipWise.zip_codes.length > 0 && 
+              getTeacherZipWise.zip_codes
+              .sort((a, b) => a.distance > b.distance)
+              .map((teacherList , index) => (
+              <li className="list-group-item bg-success" key={index}>
+                Zipcode: {teacherList.zip_code} <br />
+                Distance: {teacherList.distance}
+              </li>
+              ))}
+           </ul>
+          </div>
         </div>
         <div className="col-12">
         <Navbar />
@@ -304,12 +323,12 @@ class SearchTeacher extends Component {
 }
 
 const mapStateToProps = state => {
-  // console.log(state.searchTeacher)
   return {
     modalSata: state.classes,
     carouselRows: state.carouselStore.carouselData,
     TeacherList: state.searchTeacher.teacherDetails,
-    selectedSubjectFromHome: state.categoryItem.getSelectedSubj
+    selectedSubjectFromHome: state.categoryItem.getSelectedSubj,
+    getTeacherZipWise: state.searchTeacher.getTeacherList,
   };
 };
 

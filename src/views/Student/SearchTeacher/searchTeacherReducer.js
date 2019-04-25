@@ -1,6 +1,7 @@
 const initialState = {
   teacherDetails: [],
-  jsonp: ''
+  jsonp: '',
+  getTeacherList: '',
 };
 const searchTeacherReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -13,6 +14,11 @@ const searchTeacherReducer = (state = initialState, action) => {
       return {
         ...state,
         jsonp: action.jsonp
+      }
+    case 'SET':
+      return {
+        ...state,
+        getTeacherList: action.res
       }
 
     default:
