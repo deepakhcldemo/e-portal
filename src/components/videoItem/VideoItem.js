@@ -37,8 +37,8 @@ class VideoItem extends Component {
                 >
                 {videoDetails.thumb && (
                   <React.Fragment>
-                    <img src={videoDetails.thumb}/>
-                    <i class="far fa-play-circle"></i>
+                    <img src={videoDetails.thumb} alt={videoDetails.title} />
+                    <i className="far fa-play-circle"></i>
                   </React.Fragment>
                 )}
                 

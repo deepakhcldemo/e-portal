@@ -14,7 +14,7 @@ import RecentVideo from '../../components/recentVideo/RecentVideo';
 import StudentFeedback from '../../components/studentFeedback/StudentFeedback';
 import Banner from '../../components/banner/Banner';
 import GLOBAL_VARIABLES from '../../config/config';
-import { zipRequestDispatch } from '../../shared/library/ZipcodesByRadius';
+// import { zipRequestDispatch } from '../../shared/library/ZipcodesByRadius';
 
 class Home extends Component {
   constructor(props) {

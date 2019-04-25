@@ -74,9 +74,17 @@ class HeaderHome extends Component {
           }}
           onClick={() => this.navigateTo("/home")}
         /> */}
-        <a href="javascript:void(0)" onClick={() => this.navigateTo("/home")}>
+        {/* <a href="javascript:void(0)" onClick={() => this.navigateTo("/home")}>
             <img src={pearsonLogo}/>
-          </a>
+          </a> */}
+        <NavLink
+          to="/home"
+          exact
+          activeClassName=""
+          className=""
+        >
+          <img src={pearsonLogo} alt="" />
+        </NavLink>
         <div className="nav-section">
           {userLink}
           {!dashboardLinks && (

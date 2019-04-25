@@ -8,7 +8,7 @@ import classnames from 'classnames';
 
 import ModalPopUp from '../../../shared/components/modalpopup/modalpopup';
 import HeaderHome from '../../../components/layout/header/HeaderHome';
-import profileImgs from '../../../images/profile-imgs.png';
+// import profileImgs from '../../../images/profile-imgs.png';
 
 import { openModalForRequest } from './teacher-details.action';
 import {
@@ -17,7 +17,7 @@ import {
   saveTeacherRating
 } from '../../../database/dal/firebase/teacherDetailDal';
 import { getCurriculumFromDB } from '../../../database/dal/firebase/curriculumDal';
-import GLOBAL_VARIABLES from '../../../config/config';
+// import GLOBAL_VARIABLES from '../../../config/config';
 import RecentVideo from '../../../components/recentVideo/RecentVideo';
 import bannerImg from '../../../images/detail-banner.jpg';
 
@@ -251,7 +251,7 @@ class TeacherDetails extends Component {
           <HeaderHome />
           <div className="bnr-section">
             {/* <img src={profileImgs} className="bnr-img1"/> */}
-            <img src={bannerImg} className="bnr-img"/>
+            <img alt="" src={bannerImg} className="bnr-img"/>
           </div>
           <div className="profile-section">
             <div className="container">
