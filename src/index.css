@@ -24,13 +24,14 @@ code {
 
 .content-container {
     position: relative;
-    padding-top: 56px;
+    padding-top: 66px;
     overflow-y: auto;
     min-height: 100vh;
     top: 0px;
     bottom: 0px;
     margin: auto;
     background-color: #333546;
+    padding-bottom: 66px;
 }
 
 .content-container--background {
