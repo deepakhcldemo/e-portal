@@ -8,13 +8,13 @@ export const getTeacherNotification = (uid) => {
 }
 
 export const getNotification = (uid) => {
-    console.log("notification action page")
+    console.log("getNotification action page")
     return (dispatch) => {
         getNotificationFromDB(dispatch, uid);
     }
 }
 export const getStudentNotification = (uid) => {
-    console.log("notification action page")
+    console.log("getStudentNotification action page")
     return (dispatch) => {
         getTeacherFromStudentIdFromDB(dispatch, uid);
     }
@@ -22,14 +22,14 @@ export const getStudentNotification = (uid) => {
 
 
 export const getTeachers = (uid) => {
-    console.log("teacher action page")
+    console.log("getTeachers action page")
     return (dispatch) => {
         getTeacherFromDB(dispatch, uid);
     }
 }
 
 export const getStudents = (uid) => {
-    console.log("student action page")
+    console.log("getStudents action page")
     return (dispatch) => {
         getStudentFromDB(dispatch, uid);
     }

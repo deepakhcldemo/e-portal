@@ -6,7 +6,7 @@ import Tab from 'react-bootstrap/Tab'
 import Navbar from "./../../shared/components/Navbar";
 import HeaderHome from "../../components/layout/header/HeaderHome";
 import { getNotificationsFromDB } from "../../database/dal/firebase/studentDal";
-import {TEACHER_DASHBOARD_LINKS,STUDENT_DASHBOARD_LINKS } from './../../constant/Constant'
+import { TEACHER_DASHBOARD_LINKS, STUDENT_DASHBOARD_LINKS } from './../../constant/Constant'
 import TeacherNotificationDetails from './../Teacher/Notification/notificationsDetails';
 import NotificationsDetails from './../Student/Notification/notificationsDetails';
 // import Modal from 'react-responsive-modal'
@@ -35,38 +35,38 @@ class Notification extends Component {
     }
 
     componentDidMount = () => {
-        const {userDetails} = this.state;
-        getNotificationsFromDB(userDetails.userId,userDetails.role).onSnapshot(querySnapshot => {
+        const { userDetails } = this.state;
+        getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(querySnapshot => {
             let notificationsList = [];
             querySnapshot.forEach(doc => {
                 notificationsList.push(Object.assign({ id: doc.id }, doc.data()));
-            
+
             });
-            this.setState({notificationsList})
+            this.setState({ notificationsList })
         });
 
     };
 
     notificationStatus = (notificationDetails, type) => {
-        const {userDetails} = this.state
-        const classStatus = (notificationDetails.sstatus && notificationDetails.tstatus) ? 'alert alert-success' : (notificationDetails.status && !notificationDetails.tstatus) ?  'alert alert-warning' : 'alert alert-danger' 
+        const { userDetails } = this.state
+        const classStatus = (notificationDetails.sstatus && notificationDetails.tstatus) ? 'alert alert-success' : (notificationDetails.status && !notificationDetails.tstatus) ? 'alert alert-warning' : 'alert alert-danger'
         const userWiseStatus = (userDetails.role === 'Teacher') ? `Notification from  ${notificationDetails.sname}` : `Notification from  ${notificationDetails.tname}`;
         return (type === 'message') ? userWiseStatus : classStatus
     }
 
     render = () => {
         const { notificationsList, userDetails } = this.state;
-        
+
         return (
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-12">
-                    <HeaderHome
-                    headeTitle="Teacher Dashboard"
-                    dashboardLinks={TEACHER_DASHBOARD_LINKS}
-                    />
+                        <HeaderHome
+                            headeTitle="Teacher Dashboard"
+                            dashboardLinks={TEACHER_DASHBOARD_LINKS}
+                        />
                     </div>
-                </div>                
+                </div>
                 <div className="row margin-bottom">
                     <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
                         <div className="card">
@@ -101,6 +101,9 @@ class Notification extends Component {
                                 </Tabs>
                             </div>
                         </div>
+                    </div>
+                    <div className="row main-wrapper">
+                        <Navbar links={(userDetails.role === 'Teacher') ? TEACHER_DASHBOARD_LINKS : STUDENT_DASHBOARD_LINKS} />
                     </div>
                 </div>
                 <div className="row main-wrapper">

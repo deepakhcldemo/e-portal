@@ -93,7 +93,7 @@ class notificationsDescription extends Component {
     }
 
     handleBack = () => {
-        this.props.history.push("/student/notificationsDetails");
+        this.props.history.push("/notification");
     }
 
 
