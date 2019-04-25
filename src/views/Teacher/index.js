@@ -79,35 +79,26 @@ class Teacher extends Component {
     } = this.state;
     return (
       <div className="container-fluid">
-        <div className="row">
-          <div className="col-12">
-            <HeaderHome
-              headeTitle="Teacher Dashboard"
-            />
-          </div>
+        <HeaderHome headeTitle="Teacher Dashboard" />
+
+        <div className="content-container main-wrapper">
+          {bannerData && <Banner bannerRows={bannerData} pageName="teacher" />}
+          <RecentVideo
+            isNotVisibleVideoMeta={true}
+            carousellistNewlyItems={pendingContent}
+            headeTitle="Video Pending for Review"
+          />
+          <RecentVideo
+            isNotVisibleVideoMeta={true}
+            carousellistNewlyItems={reviewedContent}
+            headeTitle="Video Reviewed"
+          />
+          <RecentVideo
+            carousellistNewlyItems={myContent}
+            headeTitle="My Video"
+          />
         </div>
-        <div className="row">
-          <div className="col-12 main-wrapper">
-              {bannerData && (
-                <Banner bannerRows={bannerData} pageName="teacher" />
-              )}
-              <RecentVideo
-                isNotVisibleVideoMeta={true}
-                carousellistNewlyItems={pendingContent}
-                headeTitle="Video Pending for Review"
-              />
-              <RecentVideo
-                isNotVisibleVideoMeta={true}
-                carousellistNewlyItems={reviewedContent}
-                headeTitle="Video Reviewed"
-              />
-              <RecentVideo
-                carousellistNewlyItems={myContent}
-                headeTitle="My Video"
-              />
-          </div>
-        </div>        
-        <div className="row main-wrapper">
+        <div className="col-12 main-wrapper">
           <Navbar />
         </div>
       </div>
