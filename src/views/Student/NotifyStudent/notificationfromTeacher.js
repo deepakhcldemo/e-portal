@@ -6,6 +6,7 @@ import { STUDENT_DASHBOARD_LINKS } from "./../../../constant/Constant";
 import NavBar from '../../../shared/components/Navbar'
 import { getNotificationsFromDB } from "./../../../database/dal/firebase/studentDal";
 import Modal from 'react-responsive-modal'
+import './notificationstyle.css';
 
 class NotificationfromTeacher extends Component {
     state = {
@@ -55,8 +56,8 @@ class NotificationfromTeacher extends Component {
                     <NavBar />
                     <div className="row margin-bottom">
                         <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
-                            <div className="card">
-                                <div className="card-body">
+                            <div className="card notification-container">
+                                <div className="card-body notification-containerbody">
                                     <h4>Notifications</h4><hr />
 
 
