@@ -10,7 +10,9 @@ import {
   saveUserProfile,
   getUserProfile,
   uploadUserProfilePic,
-  getProfileDownloadUrl
+  getProfileDownloadUrl,
+  getUserRating,
+  createRatingRecord
 } from '../../database/dal/firebase/registrationDal';
 import { getAllCategory } from '../../database/dal/firebase/categoryDal';
 
@@ -56,6 +58,14 @@ class Profile extends Component {
         subjects = [...doc.data().subjects];
       });
     });
+
+    getUserRating(userId).then(doc => {
+      if (!doc.exists) {
+        const ratingRecord = { rating: 0, ratings: [] };
+        createRatingRecord(ratingRecord, userId);
+      }
+    });
+
     getUserProfile(userId).then(querySnapshot => {
       querySnapshot.forEach(doc => {
         const user = doc.data();

@@ -14,7 +14,8 @@ import {
   loginWithFacebook,
   loginWithTwitter,
   saveRecord,
-  getUserProfile
+  getUserProfile,
+  createRatingRecord
 } from '../../database/dal/firebase/registrationDal';
 import GLOBAL_VARIABLES from '../../config/config';
 import AuthGuard from '../../authguard/AuthGuard';
@@ -26,7 +27,7 @@ let userIcon = {
   right: '12px',
   top: '12px',
   zIndex: '10',
-  backgroundImage: 'url(\'../../Assets/hdpi/login_disable.png\')',
+  backgroundImage: "url('../../Assets/hdpi/login_disable.png')",
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
@@ -38,7 +39,7 @@ let passwordIcon = {
   right: '10px',
   top: '15px',
   zIndex: '10',
-  backgroundImage: 'url(\'../../Assets/hdpi/password_disable.png\')',
+  backgroundImage: "url('../../Assets/hdpi/password_disable.png')",
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
@@ -66,20 +67,20 @@ class Login extends Component {
 
   userIconStyle() {
     document.getElementById('userIcon').style.backgroundImage =
-      'url(\'../../Assets/hdpi/login_oragnge.png\')';
+      "url('../../Assets/hdpi/login_oragnge.png')";
   }
   userIconDisableStyle() {
     document.getElementById('userIcon').style.backgroundImage =
-      'url(\'../../Assets/hdpi/login_disable.png\')';
+      "url('../../Assets/hdpi/login_disable.png')";
   }
 
   passwordIconStyle() {
     document.getElementById('passwordIcon').style.backgroundImage =
-      'url(\'../../Assets/hdpi/password_orange.png\')';
+      "url('../../Assets/hdpi/password_orange.png')";
   }
   passwordIconDisableStyle() {
     document.getElementById('passwordIcon').style.backgroundImage =
-      'url(\'../../Assets/hdpi/password_disable.png\')';
+      "url('../../Assets/hdpi/password_disable.png')";
   }
   togglePassword = () => {
     var x = document.getElementById('password');
@@ -138,9 +139,13 @@ class Login extends Component {
       });
   }
 
+  createUserRatingRecord = userId => {
+    const ratingRecord = { rating: 0, ratings: [] };
+    createRatingRecord(ratingRecord, userId);
+  };
+
   setLoginStatus(userDetails, isNewUser) {
     AuthGuard.authenticate(() => {
-      console.log('GLOBAL_VARIABLES.BASEROUTE', GLOBAL_VARIABLES.BASEROUTE);
       if (GLOBAL_VARIABLES.BASEROUTE !== '/home') {
         this.props.history.push(GLOBAL_VARIABLES.BASEROUTE);
       } else {
@@ -153,7 +158,7 @@ class Login extends Component {
     });
   }
 
-  login = (e) => {
+  login = e => {
     e.preventDefault();
     const { username, password } = this.state;
     this.setState({ submitted: true });
@@ -165,13 +170,13 @@ class Login extends Component {
           createUserWithEmail(userDetails).then(
             loginResponse => {
               localStorage.setItem('user', JSON.stringify(loginResponse));
-              console.log('-----------', loginResponse);
               if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
                 saveRecord({
                   username: username,
                   userId: loginResponse.user.uid,
                   profileSaved: false
                 });
+                this.createUserRatingRecord(loginResponse.user.uid);
               }
               this.setLoginStatus(loginResponse, true);
             },
@@ -207,6 +212,7 @@ class Login extends Component {
           }).then(() => {
             this.setLoginStatus(loginResponse, true);
           });
+          this.createUserRatingRecord(loginResponse.user.uid);
         } else {
           this.setLoginStatus(loginResponse, false);
         }
@@ -229,6 +235,7 @@ class Login extends Component {
           }).then(() => {
             this.setLoginStatus(loginResponse, true);
           });
+          this.createUserRatingRecord(loginResponse.user.uid);
         } else {
           this.setLoginStatus(loginResponse, false);
         }
@@ -251,6 +258,7 @@ class Login extends Component {
           }).then(() => {
             this.setLoginStatus(loginResponse, true);
           });
+          this.createUserRatingRecord(loginResponse.user.uid);
         } else {
           this.setLoginStatus(loginResponse, false);
         }
@@ -354,7 +362,7 @@ class Login extends Component {
                 </div>
                 <div className="form-group padding-top-15">
                   <button
-                    onClick={e=>this.login(e)}
+                    onClick={e => this.login(e)}
                     type="button"
                     className="btn btn-success btn-block"
                   >
@@ -367,7 +375,7 @@ class Login extends Component {
                     style={{
                       backgroundPosition: 'center center',
                       backgroundImage:
-                        'url(\'../../Assets/hdpi/google_logo.ico\')',
+                        "url('../../Assets/hdpi/google_logo.ico')",
                       backgroundRepeat: 'no-repeat'
                     }}
                     onClick={e => this.loginWithGoogle(e)}
@@ -376,8 +384,7 @@ class Login extends Component {
                     className="btn social-login--size"
                     style={{
                       backgroundPosition: 'center center',
-                      backgroundImage:
-                        'url(\'../../Assets/hdpi/fb_logo.ico\')',
+                      backgroundImage: "url('../../Assets/hdpi/fb_logo.ico')",
                       backgroundRepeat: 'no-repeat'
                     }}
                     onClick={e => this.loginWithFacebook(e)}
@@ -387,7 +394,7 @@ class Login extends Component {
                     style={{
                       backgroundPosition: 'center center',
                       backgroundImage:
-                        'url(\'../../Assets/hdpi/twitter_logo.ico\')',
+                        "url('../../Assets/hdpi/twitter_logo.ico')",
                       backgroundRepeat: 'no-repeat'
                     }}
                     onClick={e => this.loginWithTwitter(e)}

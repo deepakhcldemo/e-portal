@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
+import HeaderHome from "../../../components/layout/header/HeaderHome";
+import { STUDENT_DASHBOARD_LINKS } from "./../../../constant/Constant";
 import NavBar from '../../../shared/components/Navbar'
-import { getNotificationsFromDB} from "./../../../database/dal/firebase/studentDal";
+import { getNotificationsFromDB } from "./../../../database/dal/firebase/studentDal";
 import Modal from 'react-responsive-modal'
 
 class NotificationfromTeacher extends Component {
@@ -20,28 +22,36 @@ class NotificationfromTeacher extends Component {
 
     componentDidMount = () => {
         getNotificationsFromDB().onSnapshot(querySnapshot => {
-          let notifyData = [];
-          querySnapshot.forEach(doc => {
-            notifyData.push(doc.data());
-          });
-    
-          if (notifyData.length > 0) {
-            this.setState({
-              notificationslistNewlyItems: notifyData
+            let notifyData = [];
+            querySnapshot.forEach(doc => {
+                notifyData.push(doc.data());
             });
-          }
-          notifyData = [];
+
+            if (notifyData.length > 0) {
+                this.setState({
+                    notificationslistNewlyItems: notifyData
+                });
+            }
+            notifyData = [];
         });
 
-      };
+    };
 
     render = () => {
         const { open } = this.state;
-        const {notificationslistNewlyItems} = this.state;
+        const { notificationslistNewlyItems } = this.state;
         console.log('notificationslistNewlyItems', notificationslistNewlyItems);
         return (
             <>
                 <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-12 container--margin-bottom">
+                            <HeaderHome
+                                headeTitle="Student Dashboard"
+                                dashboardLinks={STUDENT_DASHBOARD_LINKS}
+                            />
+                        </div>
+                    </div>
                     <NavBar />
                     <div className="row margin-bottom">
                         <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
@@ -49,7 +59,7 @@ class NotificationfromTeacher extends Component {
                                 <div className="card-body">
                                     <h4>Notifications</h4><hr />
 
-                                   
+
                                     <Link to={`/teacher/teacherNotificationFulldetails`} activeClassName="active">
                                         <div class="alert alert-success">
                                             <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" class="img-circle" alt="" /></div>
@@ -142,14 +152,14 @@ class NotificationfromTeacher extends Component {
 const mapStateToProps = state => {
     return {
     };
-  };
+};
 const mapDispatchToProps = dispatch => {
     return {
-     // getNotifications: () => dispatch(getNotifications()),
+        // getNotifications: () => dispatch(getNotifications()),
     };
-  };
-  export default connect(
+};
+export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(NotificationfromTeacher);
+)(NotificationfromTeacher);
 

@@ -104,8 +104,8 @@ class App extends Component {
           <PrivateRoute path="/teacher/videos" component={Video} exact />
          {/* <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
           <Route path="/student/notificationsDetails" component={StudentNotificationsDetails} />
-          <Route path="/teacher/notificationsDescription" component={NotificationsDescription} />
-          <Route path="/student/notificationsDescription" component={StudentNotificationsDescription} /> */}
+          <Route path="/teacher/notificationsDescription/:nid" component={NotificationsDescription} />
+          <Route path="/student/notificationsDescription/:sid" component={StudentNotificationsDescription} />
 
           <PrivateRoute
             path="/student/teacher"
