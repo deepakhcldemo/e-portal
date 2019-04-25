@@ -145,20 +145,6 @@ class Home extends Component {
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onSubmit: componentState => {
-
-//       dispatch(
-//         loginAction.loginRequestDispatch({
-//           userName: componentState.username,
-//           password: componentState.password
-//         })
-//       );
-//     },
-//   };
-// };
-
 const mapStateToProps = state => {
   return {};
 };
