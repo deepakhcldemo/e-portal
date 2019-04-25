@@ -299,7 +299,7 @@ class SearchTeacher extends Component {
               </div>
             )}
           </div>
-          <div className="text-center">
+          {/* <div className="text-center">
             <ul className="list-group_1">
               { getTeacherZipWise.zip_codes &&
               getTeacherZipWise.zip_codes.length > 0 && 
@@ -312,7 +312,7 @@ class SearchTeacher extends Component {
               </li>
               ))}
            </ul>
-          </div>
+          </div> */}
         </div>
         <div className="col-12">
         <Navbar />
