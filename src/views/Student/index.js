@@ -7,7 +7,6 @@ import Navbar from './../../shared/components/Navbar';
 // import SearchTeacher from "./SearchTeacher/SearchTeacher";
 import RecentVideo from '../../components/recentVideo/RecentVideo';
 // import GLOBAL_VARIABLES from "../../config/config";
-import { STUDENT_DASHBOARD_LINKS } from './../../constant/Constant';
 //import Navigation from './Navigation/Navigation';
 // import Slider from "../../components/slider/Slider";
 import { getTeacher, getCurriculum, /* getNotification */ } from './action';
@@ -65,7 +64,6 @@ class Student extends Component {
           <div className="col-12 container--margin-bottom">
             <HeaderHome
               headeTitle="Student Dashboard"
-              dashboardLinks={STUDENT_DASHBOARD_LINKS}
             />
           </div>
         </div>
@@ -99,7 +97,7 @@ class Student extends Component {
 
         <div className="col-12 content-container--background">&nbsp;</div>
         <div className="col-12 content-container--background">&nbsp;</div>
-        <Navbar links={STUDENT_DASHBOARD_LINKS} />
+        <Navbar />
 
         {/* <RecentVideo
           carousellistNewlyItems={notifications}

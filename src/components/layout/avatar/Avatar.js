@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import {NavLink } from "react-router-dom";
 import {
   ButtonToolbar,
   OverlayTrigger,
@@ -15,6 +16,7 @@ class Avatar extends Component {
   };
 
   render() {
+    const {dashboardLinks } = this.props
     return (
       <ButtonToolbar>
         <OverlayTrigger
@@ -30,22 +32,19 @@ class Avatar extends Component {
                 this.props.userProfile.lastName
               }
             >
-              {this.props.userProfile.role === 'Teacher' && (
-                <div
-                  className="avatar-item"
-                  onClick={() => this.navigateTo('/teacher')}
+            {dashboardLinks &&
+            dashboardLinks.map((link, index) => {
+              const href = link.link
+              return (
+                <div key={index}
+                className="avatar-item"
+                onClick={() => this.navigateTo(href)}
                 >
-                  <i className="fa fa-dashboard"> Dashboard</i>{' '}
-                </div>
-              )}
-              {this.props.userProfile.role === 'Student' && (
-                <div
-                  className="avatar-item"
-                  onClick={() => this.navigateTo('/student')}
-                >
-                  <i className="fa fa-dashboard"> Dashboard</i>
-                </div>
-              )}
+                  <i className={link.icon}> {link.name}</i>{' '}
+                </div>                  
+              );
+            })}
+              
               <div
                 className="avatar-item"
                 onClick={() => this.navigateTo('/profile')}

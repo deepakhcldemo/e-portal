@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import HeaderHome from "../../../components/layout/header/HeaderHome";
-import { STUDENT_DASHBOARD_LINKS } from "./../../../constant/Constant";
 import NavBar from '../../../shared/components/Navbar'
 import { getNotificationsFromDB } from "./../../../database/dal/firebase/studentDal";
 import Modal from 'react-responsive-modal'
@@ -49,7 +48,6 @@ class NotificationfromTeacher extends Component {
                         <div className="col-12 container--margin-bottom">
                             <HeaderHome
                                 headeTitle="Student Dashboard"
-                                dashboardLinks={STUDENT_DASHBOARD_LINKS}
                             />
                         </div>
                     </div>

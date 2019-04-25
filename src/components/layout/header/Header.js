@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import Avatar from "../avatar/Avatar";
 import "./HomeHeader.css";
-import companyLogo from "../../../images/pearson-logo.png";
+import {TEACHER_DASHBOARD_LINKS, STUDENT_DASHBOARD_LINKS} from './../../../constant/Constant'
+// import companyLogo from "../../../images/pearson-logo.png";
 class Header extends Component {
   state = {
     headeTitle: this.props.headeTitle ? this.props.headeTitle : "Default"
@@ -30,7 +31,7 @@ class Header extends Component {
         </div>
         {user && (
           <div className="home-header-nav-item home-header-nav-item--position">
-            <Avatar userProfile={user} currentUser={currentUser} />
+            <Avatar dashboardLinks={(user && user.role === 'Teacher') ? TEACHER_DASHBOARD_LINKS : STUDENT_DASHBOARD_LINKS} userProfile={user} currentUser={currentUser} />
           </div>
         )}
       </header>

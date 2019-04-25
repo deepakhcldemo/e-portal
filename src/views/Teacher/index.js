@@ -4,7 +4,6 @@ import Navbar from "./../../shared/components/Navbar";
 // import NavBar from './../../shared/components/Navbar/index'
 // import UserList from "./UserList/UserList";
 // import TopVideo from "./TopVideo/TopVideo";
-import { TEACHER_DASHBOARD_LINKS } from "./../../constant/Constant";
 // import GLOBAL_VARIABLES from "../../config/config";
 // import Slider from "../../components/slider/Slider";
 import Banner from "../../components/banner/Banner";
@@ -56,6 +55,7 @@ class Teacher extends Component {
     getReviewContentFromDB(userId, status).onSnapshot(querySnapshot => {
       let content = [];
       querySnapshot.forEach(doc => {
+        console.log(doc.data())
         content.push(doc.data());
       });
       this.setState({[state]: content});
@@ -64,13 +64,15 @@ class Teacher extends Component {
 
   render = () => {
     const { bannerData, myContent, reviewedContent, pendingContent } = this.state;
+   /*  console.log(myContent);
+    console.log(reviewedContent)
+    console.log(pendingContent) */
     return (
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
             <HeaderHome
               headeTitle="Teacher Dashboard"
-              dashboardLinks={TEACHER_DASHBOARD_LINKS}
             />
           </div>
         </div>
@@ -81,7 +83,7 @@ class Teacher extends Component {
               )}
               <RecentVideo
                 isNotVisibleVideoMeta={true}
-                carousellistNewlyItems={[pendingContent]}
+                carousellistNewlyItems={pendingContent}
                 headeTitle="Video Pending for Review"
               />
               <RecentVideo
@@ -96,7 +98,7 @@ class Teacher extends Component {
           </div>
         </div>        
         <div className="row main-wrapper">
-          <Navbar links={TEACHER_DASHBOARD_LINKS} />
+          <Navbar />
         </div>
       </div>
     );

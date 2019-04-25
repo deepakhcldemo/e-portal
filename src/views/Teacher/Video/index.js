@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { TEACHER_DASHBOARD_LINKS } from "./../../../constant/Constant";
 import HeaderHome from "../../../components/layout/header/HeaderHome";
 import Navbar from "./../../../shared/components/Navbar";
 import Filter from "./../../../shared/components/Filter";
@@ -80,7 +79,6 @@ class Video extends Component {
             <div className="col-12">
               <HeaderHome
                 headeTitle="Teacher Dashboard"
-                dashboardLinks={TEACHER_DASHBOARD_LINKS}
               />
             </div>
           </div>
@@ -130,7 +128,7 @@ class Video extends Component {
             </div>
           </div>
           <div className="row">
-            <Navbar links={TEACHER_DASHBOARD_LINKS} />
+            <Navbar />
           </div>
         </div>
       </>

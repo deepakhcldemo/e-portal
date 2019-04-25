@@ -2,7 +2,7 @@
 footer{
     bottom: 0;    
     display: flex!important;
-    flex-direction: row-reverse;
+    flex-direction: row;
     text-align: center;
     justify-content: space-evenly;
     @media (min-width: $mobileWidth) {        

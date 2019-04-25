@@ -44,7 +44,7 @@ class VideoItem extends Component {
                 
                 </div>
                 <div className="vd-content user-details--height detail--text">
-                  <h6 className="video-title">{videoDetails.title}</h6>
+                  <h6 className="video-title">{videoDetails.title ? videoDetails.title : videoDetails.notificationDesc}</h6>
                   <p>{videoDetails.createdDate}</p>
                   {!isNotVisibleVideoMeta && (
                     <>

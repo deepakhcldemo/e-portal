@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 //import GLOBAL_VARIABLES from '../../config/config';
 import HeaderHome from '../../../components/layout/header/HeaderHome';
-import { STUDENT_DASHBOARD_LINKS } from './../../../constant/Constant';
 import Navbar from './../../../shared/components/Navbar';
 import { getTeachersBasedOnCateogy } from './searchTeacherAction';
 // import Navigation from '../Navigation/Navigation';
@@ -222,7 +221,6 @@ class SearchTeacher extends Component {
         <div>
           <HeaderHome
             headeTitle="Student Dashboard"
-            dashboardLinks={STUDENT_DASHBOARD_LINKS}
           />
         </div>
         <div className="filter-search content-container--background">
@@ -296,7 +294,7 @@ class SearchTeacher extends Component {
             classes="calendar-modal"
           />
         </div>
-        <Navbar links={STUDENT_DASHBOARD_LINKS} />
+        <Navbar />
       </div>
     );
   }

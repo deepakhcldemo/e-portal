@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { withRouter, NavLink } from "react-router-dom";
 import "./HomeHeader.css";
 import Avatar from "../avatar/Avatar";
+import {TEACHER_DASHBOARD_LINKS, STUDENT_DASHBOARD_LINKS} from './../../../constant/Constant'
 
-import companyLogo from "../../../images/pearson-logo.png";
+// import companyLogo from "../../../images/pearson-logo.png";
 
 class HeaderHome extends Component {
   state = {
@@ -37,7 +38,7 @@ class HeaderHome extends Component {
     if (user) {
       userLink = (
         <div className="home-header-nav-item home-header-nav-item--position">
-          <Avatar userProfile={user} currentUser={currentUser} />
+          <Avatar dashboardLinks={(user && user.role === 'Teacher') ? TEACHER_DASHBOARD_LINKS : STUDENT_DASHBOARD_LINKS} userProfile={user} currentUser={currentUser} />
         </div>
       );
     } else {
@@ -60,7 +61,6 @@ class HeaderHome extends Component {
         </div>
       );
     }
-    const { dashboardLinks } = this.props;
     return (
       <header className="header-container top-header-section">
         {/* <div
@@ -88,7 +88,7 @@ class HeaderHome extends Component {
         />
         <div className="nav-section">
           {userLink}
-          {!dashboardLinks && (
+          {!userLink && (
             <>
               <div className="home-header-nav-item home-header-nav-item--position">
                 <NavLink
@@ -123,32 +123,7 @@ class HeaderHome extends Component {
                 </NavLink>
               </div>
             </>
-          )}
-          {dashboardLinks &&
-            dashboardLinks.map((link, index) => {
-              return (
-                <div
-                  key={index}
-                  className="home-header-nav-item home-header-nav-item--position home-header-text-link-status"
-                >
-                  <NavLink
-                    to={link.link}
-                    exact
-                    activeClassName=""
-                    className="home-header-link"
-                    title={link.title}
-                  >
-                    <i className={link.icon} aria-hidden="true" />
-                    <span
-                      className="home-header-text-link-status"
-                      style={link.style}
-                    >
-                      {link.name}
-                    </span>
-                  </NavLink>
-                </div>
-              );
-            })}
+          )}          
         </div>
       </header>
     );

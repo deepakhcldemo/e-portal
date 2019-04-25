@@ -6,7 +6,6 @@ import Tab from 'react-bootstrap/Tab'
 import Navbar from "./../../shared/components/Navbar";
 import HeaderHome from "../../components/layout/header/HeaderHome";
 import { getNotificationsFromDB } from "../../database/dal/firebase/studentDal";
-import { TEACHER_DASHBOARD_LINKS, STUDENT_DASHBOARD_LINKS } from './../../constant/Constant'
 import TeacherNotificationDetails from './../Teacher/Notification/notificationsDetails';
 import NotificationsDetails from './../Student/Notification/notificationsDetails';
 // import Modal from 'react-responsive-modal'
@@ -56,14 +55,16 @@ class Notification extends Component {
 
     render = () => {
         const { notificationsList, userDetails } = this.state;
-
+        const style = {
+            marginTop: '20px',
+            textAlign: 'center'
+        }
         return (
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-12">
                         <HeaderHome
-                            headeTitle="Teacher Dashboard"
-                            dashboardLinks={TEACHER_DASHBOARD_LINKS}
+                            headeTitle="Teacher Dashboard"                            
                         />
                     </div>
                 </div>
@@ -86,6 +87,9 @@ class Notification extends Component {
                                         )}
                                     </Tab>
                                     <Tab eventKey="notification" title="Notification">
+                                        {notificationsList.length === 0 && (
+                                            <h6 style={style}>No Notifications </h6>
+                                        )}
                                         {notificationsList && notificationsList.map((notification, ind) => {
                                             return (
                                             <Link key={ind} to={`/notification/details/${notification.id}`}>                                         
@@ -96,18 +100,15 @@ class Notification extends Component {
                                                 </div>
                                             </Link>
                                             )}
-                                        )}                                
+                                        )}                                                                        
                                     </Tab>
                                 </Tabs>
                             </div>
                         </div>
-                    </div>
-                    <div className="row main-wrapper">
-                        <Navbar links={(userDetails.role === 'Teacher') ? TEACHER_DASHBOARD_LINKS : STUDENT_DASHBOARD_LINKS} />
-                    </div>
+                    </div>                    
                 </div>
                 <div className="row main-wrapper">
-                    <Navbar links={ (userDetails.role === 'Teacher') ? TEACHER_DASHBOARD_LINKS : STUDENT_DASHBOARD_LINKS} />
+                    <Navbar />
                 </div>      
             </div>        
         );
