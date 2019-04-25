@@ -54,14 +54,11 @@ class Student extends Component {
 
   render() {
     const { bannerRows, carouselTop10Items } = this.state;
-    const {
-      /* carouselRows, */ teacherCarouselRows,
-      notifications
-    } = this.props;
+    const { teacherCarouselRows, notifications } = this.props;
     console.log('notifications', notifications);
     const listTop10Items = teacherCarouselRows;
     console.log('listTop10Items', listTop10Items);
-    // let listNewlyItems = carouselRows;
+
     return (
       <div className="container-fluid">
         <div className="row">

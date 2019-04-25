@@ -3,12 +3,11 @@ import React, { Component } from "react";
 import moment from "moment";
 // Slider Component Plugin
 import Slider from "react-slick";
-import './RecentVideo.scss';
+import "./RecentVideo.scss";
 
 // Video Item Component
 import VideoItem from "../../components/videoItem/VideoItem";
 import GLOBAL_VARIABLES from "../../config/config";
-
 
 class RecentVideo extends Component {
   createChildren = records => {
@@ -46,7 +45,10 @@ class RecentVideo extends Component {
         {
           breakpoint: 1024,
           settings: {
-            slidesToShow: 3,
+            slidesToShow:
+              carousellistNewlyItems.length >= 3
+                ? 3
+                : carousellistNewlyItems.length,
             slidesToScroll: 1,
             infinite: true,
             dots: true
@@ -55,7 +57,10 @@ class RecentVideo extends Component {
         {
           breakpoint: 600,
           settings: {
-            slidesToShow: 2,
+            slidesToShow:
+              carousellistNewlyItems.length >= 2
+                ? 2
+                : carousellistNewlyItems.length,
             slidesToScroll: 1,
             initialSlide: 1
           }
@@ -63,7 +68,10 @@ class RecentVideo extends Component {
         {
           breakpoint: 480,
           settings: {
-            slidesToShow: 2,
+            slidesToShow:
+              carousellistNewlyItems.length >= 2
+                ? 2
+                : carousellistNewlyItems.length,
             slidesToScroll: 1
           }
         }

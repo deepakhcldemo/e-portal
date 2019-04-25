@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import Header from '../../components/layout/header/Header';
+import React, { Component } from "react";
+import Header from "../../components/layout/header/Header";
 // import axios from 'axios';
-import './styles.css';
-import { toastr } from 'react-redux-toastr';
-import { connect } from 'react-redux';
-import { DropdownButton, Dropdown } from 'react-bootstrap';
-import * as actionTypes from '../../spinnerStore/actions';
+import "./styles.css";
+import { toastr } from "react-redux-toastr";
+import { connect } from "react-redux";
+import { DropdownButton, Dropdown } from "react-bootstrap";
+import * as actionTypes from "../../spinnerStore/actions";
 import {
   saveUserProfile,
   getUserProfile,
@@ -13,31 +13,31 @@ import {
   getProfileDownloadUrl,
   getUserRating,
   createRatingRecord
-} from '../../database/dal/firebase/registrationDal';
-import { getAllCategory } from '../../database/dal/firebase/categoryDal';
+} from "../../database/dal/firebase/registrationDal";
+import { getAllCategory } from "../../database/dal/firebase/categoryDal";
 
 let subjects = [];
 class Profile extends Component {
   state = {
-    gender: '',
-    firstName: '',
-    lastName: '',
-    dob: '',
-    address: '',
-    city: '',
-    country: '',
-    mobile: '',
-    email: '',
-    role: '',
-    subject: '',
-    charge: '',
-    currency: '',
-    summary: '',
+    gender: "",
+    firstName: "",
+    lastName: "",
+    dob: "",
+    address: "",
+    city: "",
+    country: "",
+    mobile: "",
+    email: "",
+    role: "",
+    subject: "",
+    charge: "",
+    currency: "",
+    summary: "",
     isUploading: false,
     profileImage:
-      'https://firebasestorage.googleapis.com/v0/b/e-project-4e023.appspot.com/o/profilepic%2FuserProfile.png?alt=media&token=cfb3e9a8-8508-4acd-8e45-dd97e2ea3dec',
+      "https://firebasestorage.googleapis.com/v0/b/e-project-4e023.appspot.com/o/profilepic%2FuserProfile.png?alt=media&token=cfb3e9a8-8508-4acd-8e45-dd97e2ea3dec",
     submitted: false,
-    errorMessage: '',
+    errorMessage: "",
     rating: 0,
     noOfRatings: 0
   };
@@ -52,7 +52,7 @@ class Profile extends Component {
   };
 
   componentDidMount = () => {
-    const userId = JSON.parse(localStorage.getItem('user')).user.uid;
+    const userId = JSON.parse(localStorage.getItem("user")).user.uid;
     getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         subjects = [...doc.data().subjects];
@@ -84,7 +84,7 @@ class Profile extends Component {
             profileImage: user.profileImage,
             subject: user.subject
           });
-          if (user.role === 'Teacher') {
+          if (user.role === "Teacher") {
             this.setState({
               charge: user.charge,
               currency: user.currency,
@@ -108,9 +108,9 @@ class Profile extends Component {
 
   uploadProfilePic = e => {
     const fileDetails = e.target.files[0];
-    const userId = JSON.parse(localStorage.getItem('user')).user.uid;
-    if (fileDetails.type.indexOf('image') > -1) {
-      this.setState({ isUploading: true, errorMessage: '' });
+    const userId = JSON.parse(localStorage.getItem("user")).user.uid;
+    if (fileDetails.type.indexOf("image") > -1) {
+      this.setState({ isUploading: true, errorMessage: "" });
       uploadUserProfilePic(fileDetails, userId)
         .then(() => {
           getProfileDownloadUrl(fileDetails, userId).then(url => {
@@ -123,7 +123,7 @@ class Profile extends Component {
           console.log(error);
         });
     } else {
-      this.setState({ errorMessage: 'Only Images Accepted' });
+      this.setState({ errorMessage: "Only Images Accepted" });
     }
   };
 
@@ -147,11 +147,11 @@ class Profile extends Component {
       summary
     } = this.state;
 
-    const userDetails = JSON.parse(localStorage.getItem('user'));
+    const userDetails = JSON.parse(localStorage.getItem("user"));
     const userId = userDetails.user.uid;
     this.setState({ submitted: true });
 
-    if (role === 'Teacher') {
+    if (role === "Teacher") {
       const teacherDetails = {
         firstName,
         lastName,
@@ -172,19 +172,19 @@ class Profile extends Component {
       };
 
       if (
-        firstName !== '' &&
-        lastName !== '' &&
-        dob !== '' &&
-        gender !== '' &&
-        address !== '' &&
-        city !== '' &&
-        country !== '' &&
-        email !== '' &&
-        mobile !== '' &&
-        role !== '' &&
-        subject !== '' &&
-        charge !== '' &&
-        currency !== ''
+        firstName !== "" &&
+        lastName !== "" &&
+        dob !== "" &&
+        gender !== "" &&
+        address !== "" &&
+        city !== "" &&
+        country !== "" &&
+        email !== "" &&
+        mobile !== "" &&
+        role !== "" &&
+        subject !== "" &&
+        charge !== "" &&
+        currency !== ""
       ) {
         teacherDetails.createdAt = new Date(Number(userDetails.user.createdAt));
         if (this.state.rating === 0) {
@@ -198,9 +198,9 @@ class Profile extends Component {
           teacherDetails.noOfRatings = this.state.noOfRatings;
         }
         saveUserProfile(teacherDetails).then(() => {
-          localStorage.setItem('userProfile', JSON.stringify(teacherDetails));
-          toastr.success('Details Saved Successfully');
-          this.props.history.push('/teacher');
+          localStorage.setItem("userProfile", JSON.stringify(teacherDetails));
+          toastr.success("Details Saved Successfully");
+          this.props.history.push("/teacher");
         });
       }
     } else {
@@ -221,17 +221,17 @@ class Profile extends Component {
       };
 
       if (
-        firstName !== '' &&
-        lastName !== '' &&
-        dob !== '' &&
-        gender !== '' &&
-        address !== '' &&
-        city !== '' &&
-        country !== '' &&
-        email !== '' &&
-        mobile !== '' &&
-        role !== '' &&
-        subject !== ''
+        firstName !== "" &&
+        lastName !== "" &&
+        dob !== "" &&
+        gender !== "" &&
+        address !== "" &&
+        city !== "" &&
+        country !== "" &&
+        email !== "" &&
+        mobile !== "" &&
+        role !== "" &&
+        subject !== ""
       ) {
         studentDetails.createdAt = new Date(userDetails.user.createdAt);
 
@@ -246,9 +246,9 @@ class Profile extends Component {
           studentDetails.noOfRatings = this.state.noOfRatings;
         }
         saveUserProfile(studentDetails).then(() => {
-          localStorage.setItem('userProfile', JSON.stringify(studentDetails));
-          toastr.success('Details Saved Successfully');
-          this.props.history.push('/student');
+          localStorage.setItem("userProfile", JSON.stringify(studentDetails));
+          toastr.success("Details Saved Successfully");
+          this.props.history.push("/student");
         });
       }
     }
@@ -284,7 +284,7 @@ class Profile extends Component {
     });
 
     return (
-      <div className="content-container container-padding">
+      <div className="container-fluid">
         <div className="row">
           <div className="col-12">
             <Header headeTitle="User Profile" />
@@ -332,7 +332,7 @@ class Profile extends Component {
                         <span className="help-block">
                           {this.state.errorMessage
                             ? this.state.errorMessage
-                            : ''}
+                            : ""}
                         </span>
                       </div>
                     </div>
@@ -379,7 +379,7 @@ class Profile extends Component {
                       name="gender"
                       title={gender}
                       variant="default"
-                      onSelect={e => this.handleDropdownSelection(e, 'gender')}
+                      onSelect={e => this.handleDropdownSelection(e, "gender")}
                     >
                       <Dropdown.Item eventKey="Male">Male</Dropdown.Item>
                       <Dropdown.Item eventKey="Female">Female</Dropdown.Item>
@@ -474,7 +474,7 @@ class Profile extends Component {
                       id="dropdown-basic-button"
                       title={country}
                       variant="default"
-                      onSelect={e => this.handleDropdownSelection(e, 'country')}
+                      onSelect={e => this.handleDropdownSelection(e, "country")}
                     >
                       <Dropdown.Item eventKey="Afghanistan">
                         Afghanistan
@@ -1025,7 +1025,7 @@ class Profile extends Component {
                       id="dropdown-basic-button"
                       title={role}
                       variant="default"
-                      onSelect={e => this.handleDropdownSelection(e, 'role')}
+                      onSelect={e => this.handleDropdownSelection(e, "role")}
                     >
                       <Dropdown.Item eventKey="Teacher">Teacher</Dropdown.Item>
                       <Dropdown.Item eventKey="Student">Student</Dropdown.Item>
@@ -1036,7 +1036,7 @@ class Profile extends Component {
                   </div>
                   <div className="col-xs-6 col-sm-6 col-md-6" />
                 </div>
-                {role === 'Teacher' && (
+                {role === "Teacher" && (
                   <div className="row">
                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                       <label className="label-color" htmlFor="subject">
@@ -1047,7 +1047,7 @@ class Profile extends Component {
                         title={subject}
                         variant="default"
                         onSelect={e =>
-                          this.handleDropdownSelection(e, 'subject')
+                          this.handleDropdownSelection(e, "subject")
                         }
                       >
                         {selectSubject}
@@ -1058,7 +1058,7 @@ class Profile extends Component {
                     </div>
                   </div>
                 )}
-                {role === 'Teacher' && (
+                {role === "Teacher" && (
                   <div className="form-group">
                     <label className="label-color" htmlFor="summary">
                       Summary (Optional)
@@ -1073,12 +1073,12 @@ class Profile extends Component {
                     />
                   </div>
                 )}
-                {role === 'Teacher' && (
+                {role === "Teacher" && (
                   <div className="panel-heading">
                     <h3 className="panel-title">Pricing Details</h3>
                   </div>
                 )}
-                {role === 'Teacher' && (
+                {role === "Teacher" && (
                   <div className="row">
                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                       <label className="label-color" htmlFor="charge">
@@ -1109,7 +1109,7 @@ class Profile extends Component {
                         title={currency}
                         variant="default"
                         onSelect={e =>
-                          this.handleDropdownSelection(e, 'currency')
+                          this.handleDropdownSelection(e, "currency")
                         }
                       >
                         <Dropdown.Item eventKey="Dollar">Dollar</Dropdown.Item>
@@ -1124,7 +1124,7 @@ class Profile extends Component {
                   </div>
                 )}
 
-                {role === 'Student' && (
+                {role === "Student" && (
                   <div className="row">
                     <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                       <label className="label-color" htmlFor="role">
@@ -1135,7 +1135,7 @@ class Profile extends Component {
                         title={subject}
                         variant="default"
                         onSelect={e =>
-                          this.handleDropdownSelection(e, 'subject')
+                          this.handleDropdownSelection(e, "subject")
                         }
                       >
                         {selectSubject}
@@ -1153,7 +1153,7 @@ class Profile extends Component {
                     <button
                       type="button"
                       onClick={() => {
-                        this.props.history.push('/home');
+                        this.props.history.push("/home");
                       }}
                       // onClick={() => saveFeedback()}
                       className="btn btn-dark btn-block"

@@ -4,8 +4,7 @@ import { withRouter, NavLink } from "react-router-dom";
 import "./HomeHeader.css";
 import Avatar from "../avatar/Avatar";
 
-import pearsonLogo from '../../../images/pearson-logo.png';
-
+import companyLogo from "../../../images/pearson-logo.png";
 
 class HeaderHome extends Component {
   state = {
@@ -50,7 +49,7 @@ class HeaderHome extends Component {
             activeClassName=""
             className="home-header-link"
           >
-          {/* <a
+            {/* <a
             onClick={() => this.navigateTo(this.state.dashboardLink)}
             className="home-header-link"
             href="#"
@@ -77,26 +76,28 @@ class HeaderHome extends Component {
         {/* <a href="javascript:void(0)" onClick={() => this.navigateTo("/home")}>
             <img src={pearsonLogo}/>
           </a> */}
-        <NavLink
-          to="/home"
-          exact
-          activeClassName=""
-          className=""
-        >
-          <img src={pearsonLogo} alt="" />
-        </NavLink>
+        <div
+          className="home-header-nav-item home-header-logo"
+          style={{
+            backgroundPosition: "center center",
+            backgroundImage: "url('../../Assets/hdpi/logo.png')",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain"
+          }}
+          onClick={() => this.navigateTo("/home")}
+        />
         <div className="nav-section">
           {userLink}
           {!dashboardLinks && (
             <>
               <div className="home-header-nav-item home-header-nav-item--position">
                 <NavLink
-                    to="/contactus"
-                    exact
-                    activeClassName=""
-                    className="home-header-link"
-                  >
-                {/* <a
+                  to="/contactus"
+                  exact
+                  activeClassName=""
+                  className="home-header-link"
+                >
+                  {/* <a
                   onClick={() => this.navigateTo("/contactus")}
                   className="home-header-link"
                 > */}
@@ -107,13 +108,13 @@ class HeaderHome extends Component {
                 </NavLink>
               </div>
               <div className="home-header-nav-item home-header-nav-item--position">
-              <NavLink
-                    to="/aboutus"
-                    exact
-                    activeClassName=""
-                    className="home-header-link"
-                  >
-                {/* <a
+                <NavLink
+                  to="/aboutus"
+                  exact
+                  activeClassName=""
+                  className="home-header-link"
+                >
+                  {/* <a
                   onClick={() => this.navigateTo("/aboutus")}
                   className="home-header-link"
                 > */}
