@@ -91,6 +91,13 @@
   animation-name: bounceOutUp;
 }
 
+.modal-body {
+  color: white;
+}
+
+.modal-title {
+  color: white;
+}
 @-webkit-keyframes bounceIn {
   from,
   20%,

@@ -1,0 +1,19 @@
+.styles_modal__gNwvD {
+  height: 100%;
+  overflow-y: auto;
+  background: #333546;
+  border-radius: 15px;
+}
+
+.styles_closeButton__20ID4 {
+  background: grey;
+  border-radius: 50%;
+}
+
+.modal-content {
+  background: #4b4d68 !important;
+}
+
+.c-error {
+  color: #ff704d;
+}

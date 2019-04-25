@@ -1,34 +1,35 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 //import { connect } from "react-redux"
-import Modal from "react-responsive-modal";
+import Modal from 'react-responsive-modal';
 // import Datetime from 'react-datetime';
 // import Select from 'react-select';
-import Joi from "joi-browser";
-import Input from "./helper/input";
-import TextArea from "./helper/textArea";
+import Joi from 'joi-browser';
+import Input from './helper/input';
+import TextArea from './helper/textArea';
 //import { getNotification } from './calendarAction';
-import { saveChatNotificationDetails } from "../../../database/dal/firebase/chatNotificationDal";
+import { saveChatNotificationDetails } from '../../../database/dal/firebase/chatNotificationDal';
+import './calendar.css';
 
 class CalendarModal extends Component {
   state = {
-    data: { datetime: "", duration: "", message: "" },
+    data: { datetime: '', duration: '', message: '' },
     errors: {}
   };
   componentDidMount() {
     const loggedInUSer = JSON.parse(localStorage.getItem('user'));
-    console.log(loggedInUSer)
+    console.log(loggedInUSer);
   }
 
   schema = {
     datetime: Joi.string()
       .required()
-      .label("Date Time"),
+      .label('Date Time'),
     duration: Joi.string()
       .required()
-      .label("Duration"),
+      .label('Duration'),
     message: Joi.string()
       .required()
-      .label("Message")
+      .label('Message')
   };
   validate = () => {
     const options = { abortEarly: false };
@@ -48,9 +49,9 @@ class CalendarModal extends Component {
   };
 
   randomString(length) {
-    var text = "";
+    var text = '';
     var possible =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     for (var i = 0; i < length; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
@@ -68,11 +69,11 @@ class CalendarModal extends Component {
     const { data } = this.state;
 
     const createdAt = new Date();
-    const loggedInUSer = JSON.parse(localStorage.getItem("user"));
+    const loggedInUSer = JSON.parse(localStorage.getItem('user'));
     if (loggedInUSer) {
       const chatNotificationDetails = {
         nId: randomString,
-        charge: "3$",
+        charge: '3$',
         createdAt,
         details: data.message,
         paymentStatus: false,
@@ -100,8 +101,6 @@ class CalendarModal extends Component {
       //this.props.history.push('/dashboard');
       //model close display message success or failure
     }
-
-
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -117,15 +116,11 @@ class CalendarModal extends Component {
     this.setState({ data, errors });
   };
 
-
   onCloseModal = () => {
     this.props.closeCalendarModal();
   };
 
-
-
   render() {
-
     const { firstName, lastName } = this.props.teacherData;
 
     const openModal = this.props.modalState;
@@ -146,7 +141,7 @@ class CalendarModal extends Component {
                   aria-hidden="true"
                 />
                 <h4 className="modal-title" id="myModalLabel">
-                  Send Chat Notification to {firstName} {lastName}{" "}
+                  Send Chat Notification to {firstName} {lastName}{' '}
                 </h4>
               </div>
               <div className="modal-body">
@@ -216,7 +211,7 @@ class CalendarModal extends Component {
                 <input
                   onClick={this.onCloseModal}
                   type="button"
-                  className="btn btn-success"
+                  className="btn btn-danger"
                   value="Cancel"
                 />
               </div>
@@ -227,6 +222,5 @@ class CalendarModal extends Component {
     );
   }
 }
-
 
 export default CalendarModal;
