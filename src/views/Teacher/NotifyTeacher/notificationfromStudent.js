@@ -23,22 +23,34 @@ class NotificationFromStudent extends Component {
     componentDidMount = () => {
         getNotificationsFromDB().onSnapshot(querySnapshot => {
             let notifyData = [];
+            let matchedNotifications = [];
             querySnapshot.forEach(doc => {
                 notifyData.push(doc.data());
+            
             });
-
+            debugger
+            const loggedInUser = localStorage.getItem('userProfile') ? JSON.parse(localStorage.getItem('userProfile')) : null;
+            console.log('loggedInUser', loggedInUser);
+            if(loggedInUser){
+                notifyData.forEach((notifyData) => {
+                    if(notifyData.tId === loggedInUser.userId ){
+                        matchedNotifications.push(notifyData);
+                    }
+                })
+            }
             if (notifyData.length > 0) {
                 this.setState({
-                    notificationslistNewlyItems: notifyData
+                    notificationslistNewlyItems: matchedNotifications
                 });
             }
-            notifyData = [];
+            
         });
 
     };
     render = () => {
         const { open } = this.state;
         const { notificationslistNewlyItems } = this.state;
+        
         console.log('notificationslistNewlyItems', notificationslistNewlyItems);
         return (
             <>
@@ -51,7 +63,7 @@ class NotificationFromStudent extends Component {
                                     <h4>Notification</h4><hr />
 
 
-                                    <Link to={`/student/notificationFullDetails`} activeClassName="active">
+                                    <Link to={`/student/notificationFullDetails`} activeclassName="active">
                                         <div className="alert alert-info">
                                             <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" alt="" /></div>
                                             <div className="container" onClick={this.onOpenModal} style={{ cursor: "pointer" }}>
@@ -68,7 +80,6 @@ class NotificationFromStudent extends Component {
                                         </div>
 
                                     </Link>
-                                    
 
                                     {/* <div className="alert alert-info">
                                         <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" alt="" /></div>
@@ -148,6 +159,7 @@ class NotificationFromStudent extends Component {
 }
 const mapStateToProps = state => {
     return {
+        //savedNotifications: state.notifyTeacherReducer.notifications
     };
 };
 const mapDispatchToProps = dispatch => {

@@ -1,8 +1,8 @@
-// import { getNotificationsFromDB } from '../../../database/dal/firebase/studentDal';
+import { getNotificationsFromDB } from '../../../database/dal/firebase/studentDal';
 
-// export const getNotification = () => {
-//     return (dispatch) => {
-//         getNotificationsFromDB(dispatch);
-//     }
-// }
+export const getNotifications = () => {
+    return (dispatch) => {
+        getNotificationsFromDB(dispatch);
+    }
+}
 

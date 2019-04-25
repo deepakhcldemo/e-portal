@@ -3,15 +3,12 @@ import { saveNotification, getVideoUrl/* , getNotificationFromDB */ } from '../.
 // import ReactDOM from 'react-dom';
 import { getNotifications } from './modalAction';
 import FileUploader from 'react-firebase-file-uploader';
-import firebase from 'firebase'
+import firebase from 'firebase';
 import Modal from 'react-responsive-modal';
 import { connect } from 'react-redux';
-import {
-  closeModalPopUp
-
-} from './modalAction';
+import { closeModalPopUp } from './modalAction';
 import './modalpopup.css';
-// import { stat } from 'fs';
+// import { state } from 'fs';
 class ModalPopUp extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +19,8 @@ class ModalPopUp extends Component {
       notificationDescription: '',
       validationMessage: '',
       notificationPermission: true, 
-      videoName : ''
+      videoName : '',
+      isUploading:false
     }
     this.createNotification = this.createNotification.bind(this);
     this.notoficationDescription = this.notoficationDescription.bind(this);
@@ -65,13 +63,14 @@ class ModalPopUp extends Component {
   componentWillUnmount() {
     this.props.closePopModal();
   }
-
+  handleUploadStart = () => this.setState({ isUploading: true});
+          
   handleVideoUploadSuccess = fileName => {
     this.setState({
+      isUploading: false,
       videoName : fileName
     })
   };
-
 
 
   notoficationDescription = (event) => {
@@ -172,7 +171,7 @@ class ModalPopUp extends Component {
                     </div>
                   </div>
                   <p className="help-block">{this.state.validationMessage}</p>
-                  <button type="button" className="btn btn-dark submit" onClick={this.createNotification}>Create Notification</button>
+                  <button type="button" disabled={this.state.isUploading} className="btn btn-dark submit" onClick={this.createNotification}>Create Notification</button>
                 </form>
               </div></div>)
             : (<div>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import NavBar from '../../../shared/components/Navbar'
 import { connect } from "react-redux";
-import {  getNotification } from './action';
+import {  getNotifications } from './action';
 import { getNotificationsFromDB} from "./../../../database/dal/firebase/studentDal";
 class teacherNotificationFulldetails extends Component {
     state = {}
@@ -84,7 +84,7 @@ const mapStateToProps = state => {
   };
 const mapDispatchToProps = dispatch => {
     return {
-     getNotification: () => dispatch(getNotification()),
+   //  getNotification: () => dispatch(getNotification()),
     };
   };
   export default connect(
