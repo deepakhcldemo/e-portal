@@ -1,15 +1,20 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
-import NavBar from '../../../shared/components/Navbar'
-import { getNotificationsFromDB } from "./../../../database/dal/firebase/studentDal";
-import Modal from 'react-responsive-modal'
+import NavBar from '../../shared/components/Navbar'
+import { getNotificationsFromDB } from "../../database/dal/firebase/studentDal";
+// import Modal from 'react-responsive-modal'
 
-class NotificationFromStudent extends Component {
+class Notification extends Component {
 
 
     state = {
         open: false,
+        userDetails: '',
+        notificationsList: ''
+        /* notificationFilteredList: {
+            pending: 
+        } */
     };
 
     onOpenModal = () => {
@@ -20,67 +25,80 @@ class NotificationFromStudent extends Component {
         this.setState({ open: false });
     };
 
+    componentWillMount = () => {
+        this.setState({
+            userDetails: JSON.parse(localStorage.getItem('userProfile'))
+        })
+    }
     componentDidMount = () => {
-        getNotificationsFromDB().onSnapshot(querySnapshot => {
-            let notifyData = [];
-            let matchedNotifications = [];
+        const {userDetails} = this.state;
+        getNotificationsFromDB(userDetails.userId,userDetails.role).onSnapshot(querySnapshot => {
+            let notificationsList = [];
+            // let matchedNotifications = [];?
             querySnapshot.forEach(doc => {
-                notifyData.push(doc.data());
+                console.log(doc.data())
+                notificationsList.push(Object.assign({ id: doc.id }, doc.data()));
             
             });
-            debugger
-            const loggedInUser = localStorage.getItem('userProfile') ? JSON.parse(localStorage.getItem('userProfile')) : null;
-            console.log('loggedInUser', loggedInUser);
-            if(loggedInUser){
+            this.setState({notificationsList})
+            /* if(userDetails){
                 notifyData.forEach((notifyData) => {
                     if(notifyData.tId === loggedInUser.userId ){
                         matchedNotifications.push(notifyData);
                     }
                 })
-            }
-            if (notifyData.length > 0) {
+            } */
+            /* if (notifyData.length > 0) {
                 this.setState({
                     notificationslistNewlyItems: matchedNotifications
                 });
-            }
+            } */
             
         });
 
     };
+
+    notificationStatus = (notificationDetails, type) => {
+        const {userDetails} = this.state
+        const classStatus = (notificationDetails.sstatus && notificationDetails.tstatus) ? 'alert alert-success' : (notificationDetails.status && !notificationDetails.tstatus) ?  'alert alert-warning' : 'alert alert-danger' 
+        const userWiseStatus = (userDetails.role === 'Teacher') ? `Notification from  ${notificationDetails.sname}` : `Notification from  ${notificationDetails.tname}`;
+        return (type === 'message') ? userWiseStatus : classStatus
+    }
+
     render = () => {
-        const { open } = this.state;
-        const { notificationslistNewlyItems } = this.state;
+        const { notificationsList } = this.state;
         
-        console.log('notificationslistNewlyItems', notificationslistNewlyItems);
         return (
             <>
                 <div className="container-fluid">
-                    <NavBar />
-                    <div className="row margin-bottom">
-                        <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h4>Notification</h4><hr />
-
-
-                                    <Link to={`/student/notificationFullDetails`} activeclassName="active">
-                                        <div className="alert alert-info">
-                                            <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" alt="" /></div>
-                                            <div className="container" onClick={this.onOpenModal} style={{ cursor: "pointer" }}>
-
-                                                <div className="alert-icon">
-                                                    <i className="material-icons">Student Kately</i>
-                                                </div>
-                                                <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                <NavBar />
+                <div className="row margin-bottom">
+                    <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
+                        <div className="card">
+                            <div className="card-body">
+                                <h4>Notification</h4><hr />
+                                {notificationsList && notificationsList.map((notification, ind) => {
+                                    return (
+                                    <Link key={ind} to={`/notification/details/${notification.id}`} activeclassName="active">                                         
+                                        <div className={this.notificationStatus(notification,'classes')}>
+                                            <div className="container">
+                                                {/* <button type="button" className="close" data-dismiss="alert" aria-label="Close">
                                                     <span aria-hidden="true"><i className="material-icons">clear</i></span>
-                                                </button>
+                                                </button> */}
 
-                                                <b>Message:</b> You have new chat request from Kately. Please click to see..
+                                                <b>Message:</b> {this.notificationStatus(notification,'message')}
                                         </div>
                                         </div>
-
                                     </Link>
-
+                                    )}
+                                )}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
                                     {/* <div className="alert alert-info">
                                         <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" alt="" /></div>
                                         <div className="container">
@@ -97,7 +115,7 @@ class NotificationFromStudent extends Component {
 
 
 
-                                    <div>
+                                    {/* <div>
 
                                         <Modal open={open} onClose={this.onCloseModal} center>
                                             <div className="modal-content">
@@ -153,7 +171,8 @@ class NotificationFromStudent extends Component {
                     </div>
                 </div>
 
-            </>
+                                    </>*/}
+                                </>
         );
     }
 }
@@ -170,4 +189,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(NotificationFromStudent);
+)(Notification);

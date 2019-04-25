@@ -37,7 +37,8 @@ class TeacherDetails extends Component {
       spinner: true,
       starRating: 0,
       totalUser: 0,
-      carousellistNewlyItems: []
+      carousellistNewlyItems: [],
+      loggedInUser : {}
     };
     this.openModalForRequest = this.openModalForRequest.bind(this);
   }
@@ -231,6 +232,7 @@ class TeacherDetails extends Component {
     } = this.state.detailModel;
     const { carousellistNewlyItems } = this.state;
     const isLogedIn = localStorage.getItem('user');
+    const loggedInUser = JSON.parse(localStorage.getItem('userProfile'));
     return (
       <React.Fragment>
         {this.state.spinner && (
@@ -331,12 +333,14 @@ class TeacherDetails extends Component {
                       <button className="btn btn-outline-primary">
                         Send Request
                       </button>
+                      {loggedInUser.role === "Student" ? 
                       <button
                         className="btn btn-outline-primary"
                         onClick={this.openModalForRequest}
                       >
                         Request For Review
-                      </button>
+                      </button> :
+                      null}
                       
                       
                       

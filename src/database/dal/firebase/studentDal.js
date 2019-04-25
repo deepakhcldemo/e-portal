@@ -43,9 +43,15 @@ export const getNotificationFromDB = (dispatch) => {
     })              
 }
 
-export const getNotificationsFromDB = () => {
-    return getDbRef("notifications");
-  };
+export const getNotificationsFromDB = (id, role) => {
+    let query = getDbRef("notifications")
+    if(role === 'Teacher'){
+        query = query.where('tId' , '==', id)
+    }else{
+         query = query.where('sId', '==', id)
+    }
+    return query;
+};
 
 export const getBannerFromDB = () => {
     const db = dbFactory.create('firebase');

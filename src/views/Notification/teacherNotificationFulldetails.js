@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import NavBar from '../../../shared/components/Navbar'
 import { connect } from "react-redux";
-import {  getNotifications } from './action';
+// import {  getNotifications } from './action';
 import { getNotificationsFromDB} from "./../../../database/dal/firebase/studentDal";
 class teacherNotificationFulldetails extends Component {
     state = {}

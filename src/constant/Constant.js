@@ -24,7 +24,7 @@ export const CATEGORY = {
 export const TEACHER_DASHBOARD_LINKS = [
     {
         name: 'Notification',
-        link: 'teacher/notificationfromStudent',
+        link: 'notification',
         icon: 'fa fa-bell home-header-icon--size',
         title: 'Notification',
         style: {

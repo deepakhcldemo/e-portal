@@ -26,7 +26,7 @@ class Student extends Component {
   }
 
   componentDidMount() {
-    this.props.getNotification();
+   // this.props.getNotification();
     getBannerFromDB().then(querySnapshot => {
       let bannerData = [];
       querySnapshot.forEach(doc => {
@@ -102,7 +102,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getCurriculum: () => dispatch(getCurriculum()),
     getTeacher: () => dispatch(getTeacher()),
-    getNotification: () => dispatch(getNotification())
+    //getNotification: () => dispatch(getNotification())
   };
 };
 export default connect(

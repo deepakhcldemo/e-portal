@@ -20,18 +20,18 @@ import Category from './views/Category';
 import Teacher from './views/Teacher';
 import Video from './views/Teacher/Video';
 
-import Notification from './views/Teacher/Notification';
-import NotificationsDetails from './views/Teacher/Notification/notificationsDetails';
+// import Notification from './views/Teacher/Notification';
+/* import NotificationsDetails from './views/Teacher/Notification/notificationsDetails';
 import NotificationsDescription from './views/Teacher/Notification/notificationsDescription';
-
+ */
 import Student from './views/Student/index';
-import StudentNotificationsDetails from './views/Student/Notification/notificationsDetails';
-import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription';
+/* import StudentNotificationsDetails from './views/Student/Notification/notificationsDetails';
+import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription'; */
 
-import NotificationfromTeacher from './views/Student/NotifyStudent/notificationfromTeacher';
-import NotificationFullDetails from './views/Student/NotifyStudent/notificationFullDetails';
-import NotificationfromStudent from './views/Teacher/NotifyTeacher/notificationfromStudent';
-import TeacherNotificationFulldetails from './views/Teacher/NotifyTeacher/teacherNotificationFulldetails';
+/* import NotificationfromTeacher from './views/Student/NotifyStudent/notificationfromTeacher';
+import NotificationFullDetails from './views/Student/NotifyStudent/notificationFullDetails'; */
+import Notification from './views/Notification';
+// import TeacherNotificationFulldetails from './views/Teacher/NotifyTeacher/teacherNotificationFulldetails';
 
 import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
 
@@ -102,23 +102,23 @@ class App extends Component {
           <PrivateRoute path="/category" component={Category} exact />
           <PrivateRoute path="/teacher" component={Teacher} exact />
           <PrivateRoute path="/teacher/videos" component={Video} exact />
-         <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
+         {/* <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
           <Route path="/student/notificationsDetails" component={StudentNotificationsDetails} />
           <Route path="/teacher/notificationsDescription" component={NotificationsDescription} />
-          <Route path="/student/notificationsDescription" component={StudentNotificationsDescription} />
+          <Route path="/student/notificationsDescription" component={StudentNotificationsDescription} /> */}
 
           <PrivateRoute
             path="/student/teacher"
             component={SearchTeacher}
             exact
           />
-          <PrivateRoute
+          {/* <PrivateRoute
             path="/teacher/notifications"
             component={Notification}
             exact
-          />
+          /> */}
             
-           <PrivateRoute
+           {/* <PrivateRoute
             path="/student/notificationfromTeacher"
             component={NotificationfromTeacher}
             exact
@@ -127,17 +127,17 @@ class App extends Component {
             path="/student/notificationFullDetails"
             component={NotificationFullDetails}
             exact
-          />
+          /> */}
              <PrivateRoute
-            path="/teacher/notificationfromStudent"
-            component={NotificationfromStudent}
+            path="/notification"
+            component={Notification}
             exact
           />
-             <PrivateRoute
+             {/* <PrivateRoute
             path="/teacher/teacherNotificationFulldetails"
             component={TeacherNotificationFulldetails}
             exact
-          />
+          /> */}
           <Redirect to="/home" />
         </Switch>
       </div>
