@@ -12,6 +12,18 @@ export const saveRecord = userDetails => {
     .set(userDetails);
 };
 
+export const getUserRating = userId => {
+  return getDbRef('userRating')
+    .doc(userId)
+    .get();
+};
+
+export const createRatingRecord = (ratingDetails, userId) => {
+  return getDbRef('userRating')
+    .doc(userId)
+    .set(ratingDetails);
+};
+
 export const getProfileStatus = userId => {
   return getDbRef('users')
     .where('userId', '==', userId)
@@ -103,27 +115,3 @@ export const getProfileDownloadUrl = (profilePic, userId) => {
   const mainImage = storageRef.child(`profilepic/${userId + '.' + type[1]}`);
   return mainImage.getDownloadURL();
 };
-
-// export const saveReview = () => {
-//   const reviewVideo = {
-//     sId: '',
-//     tId: '',
-//     sStatus: '',
-//     tStatus: '',
-//     createdAt: '',
-//     reschedule: '',
-//     paymentStatus: '',
-//     charge: '',
-//     details: '',
-//     comment: [
-//       {
-//         date: '',
-//         by: '',
-//         details: ''
-//       }
-//     ]
-//   };
-//   return getDbRef('chatNotifications')
-//     .doc()
-//     .set(reviewVideo);
-// };
