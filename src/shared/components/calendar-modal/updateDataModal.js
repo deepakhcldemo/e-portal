@@ -7,7 +7,7 @@ import Joi from "joi-browser"
 import Input from "./helper/input";
 import TextArea from "./helper/textArea";
 //import { getNotification } from './calendarAction';
-import { saveChatNotificationDetails } from '../../../database/dal/firebase/chatNotificationDal';
+import { saveChatNotificationDetails, udpateChatNotificationDetails } from '../../../database/dal/firebase/chatNotificationDal';
 
 
 
@@ -46,17 +46,7 @@ class CalendarModal extends Component {
     return error ? error.details[0].message : null;
   };
 
-  randomString(length) {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (var i = 0; i < length; i++) {
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-  }
-
   handleSubmit = e => {
-    const randomString = this.randomString(20)
     e.preventDefault();
 
     const errors = this.validate();
@@ -65,20 +55,20 @@ class CalendarModal extends Component {
 
     const { data } = this.state;
 
+    // let sId;
+    // if (this.props.studentData != null) {
+    //   Object.keys(this.props.studentData).map(data => {
+    //     sId = this.props.studentData["userId"];
+    //   })
+    // }
+
     const createdAt = new Date();
     const loggedInUSer = JSON.parse(localStorage.getItem('user'));
     if (loggedInUSer) {
       const chatNotificationDetails = {
-        nId: randomString,
-        charge: "3$",
-        createdAt,
-        details: data.message,
-        paymentStatus: false,
-        reschedule: true,
-        sId: loggedInUSer.user.uid,
-        sStatus: true,
-        tId: this.props.teacherData.userId,
-        tStatus: true,
+        nId: this.props.notificationId,
+        scheduleDate: data.datetime,
+        duration: data.duration,
         status: -1,
         comment: [{
           "by": loggedInUSer.user.uid,
@@ -86,11 +76,9 @@ class CalendarModal extends Component {
           "details": data.message
         }
 
-        ],
-        scheduleDate: data.datetime,
-        duration: data.duration
+        ]
       }
-      saveChatNotificationDetails({
+      udpateChatNotificationDetails({
         ...chatNotificationDetails
       })
       //this.props.history.push('/dashboard');
@@ -121,17 +109,16 @@ class CalendarModal extends Component {
     this.props.closeCalendarModal();
   };
 
-
-  // handleChange = e => {
-  //   const { name, value } = e.target;
-  //   console.log(value)
-  //   this.setState({ [name]: value });
-  // };firstName
-
-
   render() {
-    //console.log("RANDOM GENERATE STRING => ", this.randomString(20));
-    const { userId: teacherId, firstName, lastName } = this.props.teacherData;
+    console.log("PROPS => ", this.props);
+    // let fname;
+    // console.log("get All Student Data => ", this.props.studentData)
+    // if (this.props.studentData != null) {
+    //   Object.keys(this.props.studentData).map(data => {
+    //     fname = this.props.studentData["firstName"]
+    //   })
+    // }
+    //const { userId: teacherId, firstName, lastName } = this.props.studentData;
     console.log("get All Notification => ", this.props.notificationDetails)
     const options = [
       { value: '-1', label: 'Select' },
@@ -151,15 +138,14 @@ class CalendarModal extends Component {
     return (
       <div>
         <Modal open={openModal} onClose={this.onCloseModal} classNames={{ modal: this.props.classes }}>
+
           <form onSubmit={this.handleSubmit}>
             <div className="modal-content">
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 className="modal-title" id="myModalLabel">Send Chat Notification to {firstName} {lastName} </h4>
+                <h4 className="modal-title" id="myModalLabel">Discuss on Time with NotifyId:{this.props.notificationId}</h4>
               </div>
               <div className="modal-body">
-
-
 
                 <div className="row">
                   <div className="col-md-6 ">
@@ -168,6 +154,7 @@ class CalendarModal extends Component {
                   <div className="col-md-6">
                     Select a duration
 </div>
+
                 </div>
                 <div className="row">
                   <div className="col-md-6">
@@ -181,20 +168,8 @@ class CalendarModal extends Component {
                       placeHolder="04/20/2019 12:00 AM"
                     />
                   </div>
-                  <div className="col-md-6">
-                    {/* <Select
-      className="form-control"
-      onChange={this.handleChange}
-      options={options}
-    /> */}
-                    {/* <select className="form-control" onChange={this.handleChange} name="duration">
-      <option value={-1}>Select</option>
-      <option value={"15m"}> 15 minutes</option>
-      <option value={"30m"}> 30 minutes</option>
-      <option value={"1h"}> 1 hour</option>
-      <option value={"2h"}> 2 hours</option>
-    </select> */}
 
+                  <div className="col-md-6">
                     <Input
                       value={this.state.duration}
                       onChangeHandle={this.handleChange}
@@ -204,6 +179,7 @@ class CalendarModal extends Component {
                       placeHolder="Duration"
                     />
                   </div>
+
                 </div>
                 <div className="row">
 
@@ -246,6 +222,8 @@ class CalendarModal extends Component {
 
 
           </form>
+
+
         </Modal>
       </div >
     );

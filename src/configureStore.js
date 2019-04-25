@@ -20,6 +20,7 @@ import homeReducer from './views/Home/reducer';
 import teacherDetailsReducer from './views/Teacher/teacher-details/teacher-details.reducer';
 import searchTeacherReducer from './views/Student/SearchTeacher/searchTeacherReducer';
 import videoReducer from './views/Teacher/Video/reducer';
+import notificationReducer from './views/Teacher/Notification/notificationReducer';
 
 const rootPersistConfig = {
   key: 'root',
@@ -40,6 +41,7 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   modalReducer : modalReducer,
   homeReducerStore : homeReducer,
   studentReducer : studentReducer,
+  notificationReducer: notificationReducer,
   searchTeacher : searchTeacherReducer,
   video: videoReducer,
   teacherDetailsReducer : teacherDetailsReducer,

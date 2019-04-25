@@ -81,6 +81,15 @@ class SearchTeacher extends Component {
   closeCalendarModal = () => {
     this.setState({ calendarModal: false });
   };
+  
+  wrapperFunction = (data) => {
+        this.openCalendarModal();
+        this.setTeacherData(data);
+    }
+   
+    setTeacherData = (data) => {
+        this.setState({ teacherData: data });
+    }
 
   getSerachParameter = (searchParameter, defalutSubjectSelected) => {
     // console.log('searchParameter', searchParameter);
@@ -178,7 +187,7 @@ class SearchTeacher extends Component {
               </div>
               <div className="input-group chat-btn">
                 <input
-                  onClick={this.openCalendarModal}
+                  onClick={() => this.wrapperFunction(teacher)}
                   type="button"
                   className="btn btn-success"
                   value="Initiate Chat"
@@ -281,6 +290,7 @@ class SearchTeacher extends Component {
         </div>
         <div>
           <CalendarModal
+		   teacherData={this.state.teacherData}
             modalState={this.state.calendarModal}
             closeCalendarModal={this.closeCalendarModal}
             classes="calendar-modal"
