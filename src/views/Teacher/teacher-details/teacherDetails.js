@@ -38,7 +38,7 @@ class TeacherDetails extends Component {
       starRating: 0,
       totalUser: 0,
       carousellistNewlyItems: [],
-      loggedInUser : {}
+      loggedInUser: {}
     };
     this.openModalForRequest = this.openModalForRequest.bind(this);
   }
@@ -253,18 +253,14 @@ class TeacherDetails extends Component {
           <HeaderHome />
           <div className="bnr-section">
             {/* <img src={profileImgs} className="bnr-img1"/> */}
-            <img alt="" src={bannerImg} className="bnr-img"/>
+            <img alt="" src={bannerImg} className="bnr-img" />
           </div>
           <div className="profile-section">
             <div className="container">
               <div className="row">
                 <div className="col-sm-3">
                   <div className="profile-img-section">
-                    <img
-                      className="profile-img"
-                      src={imgPath}
-                      alt="..."
-                    />
+                    <img className="profile-img" src={imgPath} alt="..." />
                   </div>
                   <div className="icon-section d-flex">
                     <div className="icon">
@@ -272,8 +268,7 @@ class TeacherDetails extends Component {
                         className="btn btn-transparent"
                         disabled={!isLogedIn}
                       >
-                        <i className="fas fa-thumbs-up" />{' '}
-                        <span>1000</span>
+                        <i className="fas fa-thumbs-up" /> <span>1000</span>
                       </button>
                     </div>
                     <div className="icon">
@@ -281,8 +276,7 @@ class TeacherDetails extends Component {
                         className="btn btn-transparent"
                         disabled={!isLogedIn}
                       >
-                        <i className="fas fa-thumbs-down" />{' '}
-                        <span>1000</span>
+                        <i className="fas fa-thumbs-down" /> <span>1000</span>
                       </button>
                     </div>
                     <div className="icon">
@@ -290,8 +284,7 @@ class TeacherDetails extends Component {
                         className="btn btn-transparent"
                         disabled={!isLogedIn}
                       >
-                        <i className="fas fa-comment-alt" />{' '}
-                        <span>1000</span>
+                        <i className="fas fa-comment-alt" /> <span>1000</span>
                       </button>
                     </div>
                   </div>
@@ -299,27 +292,23 @@ class TeacherDetails extends Component {
                 <div className="col-sm-9">
                   <div>
                     <h3>{title}</h3>
-                    <span className="sub-title">
-                      Subject: {subject}
-                    </span>
+                    <span className="sub-title">Subject: {subject}</span>
                     <div
-                        className={classnames({
-                          'disbaled-stars': !isLogedIn,
-                          'ratings-wrpr': true
-                        })}
-                      >
-                        <RatingComponent
-                          name="rate1"
-                          starCount={5}
-                          value={this.state.starRating}
-                          onStarClick={this.onStarClick.bind(this)}
-                        />
-                      </div>
-                    
+                      className={classnames({
+                        'disbaled-stars': !isLogedIn,
+                        'ratings-wrpr': true
+                      })}
+                    >
+                      <RatingComponent
+                        name="rate1"
+                        starCount={5}
+                        value={this.state.starRating}
+                        onStarClick={this.onStarClick.bind(this)}
+                      />
+                    </div>
                   </div>
                   <p className="description">{description}</p>
 
-                  
                   {!isLogedIn && (
                     <button
                       className="btn btn-outline-primary"
@@ -333,38 +322,33 @@ class TeacherDetails extends Component {
                       <button className="btn btn-outline-primary">
                         Send Request
                       </button>
-                      {loggedInUser.role === "Student" ? 
-                      <button
-                        className="btn btn-outline-primary"
-                        onClick={this.openModalForRequest}
-                      >
-                        Request For Review
-                      </button> :
-                      null}
-                      
-                      
-                      
+                      {loggedInUser.role === 'Student' ? (
+                        <button
+                          className="btn btn-outline-primary"
+                          onClick={this.openModalForRequest}
+                        >
+                          Request For Review
+                        </button>
+                      ) : null}
                     </div>
                   )}
                 </div>
               </div>
             </div>
           </div>
-          
-          <div className="top-courses-section">
-              <div className="container">
-                  <div className="vd-section">
-                    <div className="row">
-                    <RecentVideo
-                      carousellistNewlyItems={carousellistNewlyItems}
-                      headeTitle="Popular Courses"
-                      
-                    />
-                    </div>
-                  </div>
-              </div>
-          </div>
 
+          <div className="top-courses-section">
+            <div className="container">
+              <div className="vd-section">
+                <div className="row">
+                  <RecentVideo
+                    carousellistNewlyItems={carousellistNewlyItems}
+                    headeTitle="RECENT VIDEOS"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div className="comments-section">
             <div className="text-field-section">
@@ -373,7 +357,10 @@ class TeacherDetails extends Component {
                   <div className="col-sm-12">
                     <div className="comments-hdr-section">
                       <div className="author-thumbnail">
-                        <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-369-456321.png" alt=""/>
+                        <img
+                          src="https://cdn.iconscout.com/icon/free/png-256/avatar-369-456321.png"
+                          alt=""
+                        />
                       </div>
                       <div className="comments-input">
                         <input
@@ -389,19 +376,20 @@ class TeacherDetails extends Component {
                     </div>
                   </div>
                 </div>
-                
               </div>
             </div>
             <div className="container">
               <div className="row">
                 <div className="col-sm-12">
-
                   <div className="comment-thread-element">
                     <div className="author-thumbnail">
-                      <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-372-456324.png" alt=""/>
+                      <img
+                        src="https://cdn.iconscout.com/icon/free/png-256/avatar-372-456324.png"
+                        alt=""
+                      />
                     </div>
                     <div className="comment-content">
-                      <i className="fas fa-caret-left"></i>
+                      <i className="fas fa-caret-left" />
                       <div className="comment-hdr d-flex align-items-center justify-content-between">
                         <span className="date">23/04/2019</span>
                         <div className="icon-section d-flex">
@@ -431,25 +419,27 @@ class TeacherDetails extends Component {
                           </div>
                         </div>
                       </div>
-                      
+
                       <p>
-                        Is dolor sit amet long established fact that a
-                        reader will be distracted by the readable content
-                        of a page when looking at its layout. The point of
-                        using Lorem Ipsum is that it has a more-or-less
-                        normal. Color sit amet long established fact that
-                        a reader will be distracted by the readable
+                        Is dolor sit amet long established fact that a reader
+                        will be distracted by the readable content of a page
+                        when looking at its layout. The point of using Lorem
+                        Ipsum is that it has a more-or-less normal. Color sit
+                        amet long established fact that a reader will be
+                        distracted by the readable
                       </p>
-                      
                     </div>
                   </div>
 
                   <div className="comment-thread-element">
                     <div className="author-thumbnail">
-                      <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-369-456321.png" alt=""/>
+                      <img
+                        src="https://cdn.iconscout.com/icon/free/png-256/avatar-369-456321.png"
+                        alt=""
+                      />
                     </div>
                     <div className="comment-content">
-                      <i className="fas fa-caret-left"></i>
+                      <i className="fas fa-caret-left" />
                       <div className="comment-hdr d-flex align-items-center justify-content-between">
                         <span className="date">23/04/2019</span>
                         <div className="icon-section d-flex">
@@ -479,17 +469,14 @@ class TeacherDetails extends Component {
                           </div>
                         </div>
                       </div>
-                      
+
                       <p>
-                        Is dolor sit amet long established fact that a
-                        reader will be distracted by the readable content
-                        of a page when looking at its layout.
+                        Is dolor sit amet long established fact that a reader
+                        will be distracted by the readable content of a page
+                        when looking at its layout.
                       </p>
-                      
                     </div>
                   </div>
-
-
                 </div>
               </div>
             </div>
