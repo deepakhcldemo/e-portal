@@ -9,7 +9,7 @@ import * as actionTypes from "../../../spinnerStore/actions";
 import ModalPopUp from "../../../shared/components/modalpopup/modalpopup";
 import HeaderHome from "../../../components/layout/header/HeaderHome";
 // import profileImgs from '../../../images/profile-imgs.png';
-
+import CalendarModal from '../../../shared/components/calendar-modal/calendarmodal';
 import { openModalForRequest } from "./teacher-details.action";
 import {
   getTeacherDetailFromDB,
@@ -33,7 +33,10 @@ class TeacherDetails extends Component {
         gender: "",
         subject: "",
         imgPath: ""
+        
       },
+      calendarModal: false,
+      teacherData: {},
       starRating: 0,
       totalUser: 0,
       carousellistNewlyItems: [],
@@ -92,6 +95,7 @@ class TeacherDetails extends Component {
       }
     });
 
+
     getTeacherDetailFromDB(teacherId).then(snapshot => {
       snapshot.forEach(doc => {
         const data = doc.data();
@@ -117,6 +121,20 @@ class TeacherDetails extends Component {
       currData = [];
     });
   }
+  setTeacherData = (data) => {
+    this.setState({ teacherData: data });
+  }
+  openCalendarModal = () => {
+    this.setState({ calendarModal: true });
+  };
+  closeCalendarModal = () => {
+    this.setState({ calendarModal: false });
+  };
+  wrapperFunction = (data) => {
+    this.openCalendarModal();
+    this.setTeacherData(data);
+  }
+
 
   getTotalRating(ratings, nOfUser) {
     let rating = 0;
@@ -308,8 +326,8 @@ class TeacherDetails extends Component {
                   )}
                   {isLogedIn && (
                     <div>
-                      <button className="btn btn-outline-primary">
-                        Send Request
+                      <button className="btn btn-outline-primary" onClick={() => this.wrapperFunction(this.state.detailModel)}>
+                        Request For Chat
                       </button>
                       {loggedInUser.role === "Student" ? (
                         <button
@@ -470,6 +488,12 @@ class TeacherDetails extends Component {
               </div>
             </div>
           </div>
+          <CalendarModal
+            teacherData={this.state.teacherData}
+            modalState={this.state.calendarModal}
+            closeCalendarModal={this.closeCalendarModal}
+            classes="calendar-modal"
+          />
         </div>
       </React.Fragment>
     );

@@ -14,6 +14,10 @@ class CalendarModal extends Component {
     data: { datetime: "", duration: "", message: "" },
     errors: {}
   };
+  componentDidMount() {
+    const loggedInUSer = JSON.parse(localStorage.getItem('user'));
+    console.log(loggedInUSer)
+  }
 
   schema = {
     datetime: Joi.string()
@@ -97,7 +101,7 @@ class CalendarModal extends Component {
       //model close display message success or failure
     }
 
-    //console.log(data)
+
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -113,39 +117,16 @@ class CalendarModal extends Component {
     this.setState({ data, errors });
   };
 
-  /* constructor(props) {
-    super(props);
-  } */
 
   onCloseModal = () => {
     this.props.closeCalendarModal();
   };
 
-  // handleChange = e => {
-  //   const { name, value } = e.target;
-  //   console.log(value)
-  //   this.setState({ [name]: value });
-  // };firstName
+
 
   render() {
-    //console.log("RANDOM GENERATE STRING => ", this.randomString(20));
-    const {
-      /* userId: teacherId, */ firstName,
-      lastName
-    } = this.props.teacherData;
-    console.log("get All Notification => ", this.props.notificationDetails);
-    /* const options = [
-      { value: '-1', label: 'Select' },
-      { value: '15m', label: '15 Minuts' },
-      { value: '30m', label: '30 Minuts' },
-      { value: '1h', label: '1 Hours' }
-    ]; */
 
-    /* const chatStatus = [
-      { value: '-1', label: 'Pending' },
-      { value: '1', label: 'Approved' },
-      { value: '0', label: 'Rejected' }
-    ]; */
+    const { firstName, lastName } = this.props.teacherData;
 
     const openModal = this.props.modalState;
     return (
@@ -247,17 +228,5 @@ class CalendarModal extends Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     notificationDetails: state.notificationReducer.notificationDetails,
-
-//   }
-// }
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     getNotification: () => dispatch(getNotification()),
-//   }
-// }
-//export default connect(mapStateToProps, mapDispatchToProps)(CalendarModal);
 
 export default CalendarModal;

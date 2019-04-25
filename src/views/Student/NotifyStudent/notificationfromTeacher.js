@@ -61,7 +61,7 @@ class NotificationfromTeacher extends Component {
 
                                     <Link to={`/teacher/teacherNotificationFulldetails`} activeClassName="active">
                                         <div class="alert alert-success">
-                                            <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" class="img-circle" alt="" /></div>
+                                            <div style={{ float: "left" }}><img src="../Assets/hdpi/avatar.png" name="aboutme" width="70" height="50" border="0" class="img-circle" alt="" /></div>
                                             <div class="container" onClick={this.onOpenModal} style={{ cursor: "pointer" }}>
                                                 <div class="alert-icon">
                                                     <i class="material-icons">From Teacher John Cruz</i>
@@ -75,7 +75,7 @@ class NotificationfromTeacher extends Component {
                                         </div>
                                     </Link>
                                     <div class="alert alert-danger">
-                                        <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" class="img-circle" alt="" /></div>
+                                        <div style={{ float: "left" }}><img src="../Assets/hdpi/avatar.png" name="aboutme" width="70" height="50" border="0" class="img-circle" alt="" /></div>
                                         <div class="container">
                                             <div class="alert-icon">
                                                 <i class="material-icons">From Teacher Ellena Dcruz</i>

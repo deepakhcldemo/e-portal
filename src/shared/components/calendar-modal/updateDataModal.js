@@ -55,13 +55,6 @@ class CalendarModal extends Component {
 
     const { data } = this.state;
 
-    // let sId;
-    // if (this.props.studentData != null) {
-    //   Object.keys(this.props.studentData).map(data => {
-    //     sId = this.props.studentData["userId"];
-    //   })
-    // }
-
     const createdAt = new Date();
     const loggedInUSer = JSON.parse(localStorage.getItem('user'));
     if (loggedInUSer) {
@@ -83,8 +76,7 @@ class CalendarModal extends Component {
       udpateChatNotificationDetails({
         ...chatNotificationDetails
       })
-      //this.props.history.push('/dashboard');
-      //model close display message success or failure
+
     }
 
     //console.log(data)
@@ -112,16 +104,8 @@ class CalendarModal extends Component {
   };
 
   render() {
-    console.log("PROPS => ", this.props);
-    // let fname;
-    // console.log("get All Student Data => ", this.props.studentData)
-    // if (this.props.studentData != null) {
-    //   Object.keys(this.props.studentData).map(data => {
-    //     fname = this.props.studentData["firstName"]
-    //   })
-    // }
-    //const { userId: teacherId, firstName, lastName } = this.props.studentData;
-    console.log("get All Notification => ", this.props.notificationDetails)
+
+
     const options = [
       { value: '-1', label: 'Select' },
       { value: '15m', label: '15 Minuts' },
@@ -232,17 +216,5 @@ class CalendarModal extends Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     notificationDetails: state.notificationReducer.notificationDetails,
-
-//   }
-// }
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     getNotification: () => dispatch(getNotification()),
-//   }
-// }
-//export default connect(mapStateToProps, mapDispatchToProps)(CalendarModal);
 
 export default CalendarModal;

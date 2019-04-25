@@ -10,8 +10,6 @@ import { getAllCategory } from "../../../database/dal/firebase/categoryDal";
 
 import Multiselect from "multiselect-dropdown-react";
 import "./SearchTeacher.css";
-
-import CalendarModal from '../../../shared/components/calendar-modal/calendarmodal';
 import ListContainer from '../../../components/listContainer/ListContainer';
 // import { zipRequestDispatch } from '../../../shared/library/ZipcodesByRadius';
 
@@ -22,14 +20,12 @@ class SearchTeacher extends Component {
       selectedOption: null,
       searchParameter: [],
       placeHolderValue: "",
-      calendarModal: false,
       searchValue: "",
       filtredTeacherRecord: [],
       showValidationMessage: "",
       noRecordMessage: "Search for your teacher here",
       categoryList: [],
-      selectedSubject: "",
-      teacherData: {}
+      selectedSubject: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.getSerachParameter = this.getSerachParameter.bind(this);
@@ -38,10 +34,10 @@ class SearchTeacher extends Component {
   }
 
   componentDidMount() {
-    let self =this;
+    let self = this;
     // const zipcode = this.state.searchValue;
-    this.props.getTeachersBasedOnZipcode('99501') ;   
-    
+    this.props.getTeachersBasedOnZipcode('99501');
+
     getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
         const subjects = [...doc.data().subjects];
@@ -76,21 +72,8 @@ class SearchTeacher extends Component {
     });
   };
 
-  openCalendarModal = () => {
-    this.setState({ calendarModal: true });
-  };
-  closeCalendarModal = () => {
-    this.setState({ calendarModal: false });
-  };
 
-  wrapperFunction = data => {
-    this.openCalendarModal();
-    this.setTeacherData(data);
-  };
 
-  setTeacherData = data => {
-    this.setState({ teacherData: data });
-  };
 
   getSerachParameter = (searchParameter, defalutSubjectSelected) => {
     // console.log('searchParameter', searchParameter);
@@ -167,13 +150,13 @@ class SearchTeacher extends Component {
     this.props.getTeachersBasedOnCateogy(subjectValue.target.value);
   };
 
-  render() {    
+  render() {
     const { getTeacherZipWise } = this.props;
 
-    if(getTeacherZipWise.zip_codes && getTeacherZipWise.zip_codes.length > 0) {
+    if (getTeacherZipWise.zip_codes && getTeacherZipWise.zip_codes.length > 0) {
       console.log('--getTeachersBasedOnZipcode--', getTeacherZipWise.zip_codes);
     }
-    
+
     this.state.filtredTeacherRecord.map((teacher, index) => {
       return (
         <div className="col-md-3" key={index}>
@@ -194,7 +177,6 @@ class SearchTeacher extends Component {
               </div>
               <div className="input-group chat-btn">
                 <input
-                  onClick={() => this.wrapperFunction(teacher)}
                   type="button"
                   className="btn btn-success"
                   value="Initiate Chat"
@@ -272,7 +254,7 @@ class SearchTeacher extends Component {
                     onClick={this.getSerachParameter}
                   />
 
-                  
+
                 </div>
               </div>
             </div>
@@ -284,12 +266,6 @@ class SearchTeacher extends Component {
                 <ListContainer
                   listType="Teacher"
                   itemList={this.state.filtredTeacherRecord}
-                />
-                <CalendarModal
-                  teacherData={this.state.teacherData}
-                  modalState={this.state.calendarModal}
-                  closeCalendarModal={this.closeCalendarModal}
-                  classes="calendar-modal"
                 />
               </div>
             )}
@@ -313,9 +289,6 @@ class SearchTeacher extends Component {
               ))}
            </ul>
           </div> */}
-        </div>
-        <div className="col-12">
-        <Navbar />
         </div>
       </div>
     );

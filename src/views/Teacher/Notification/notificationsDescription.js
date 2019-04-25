@@ -15,7 +15,7 @@ class notificationsDescription extends Component {
 
 
     componentDidMount() {
-        console.log("notificationsDescription componentDidMount props", this.props.match.params);
+
         let user;
         getNotificationDataFromNid(this.props.match.params.nid).then(querySnapshot => {
             querySnapshot.forEach(doc => {
@@ -101,7 +101,7 @@ class notificationsDescription extends Component {
     render() {
         const { notificationData } = this.state;
         const { open } = this.state;
-        //console.log(this.props.match.params.nid)
+
         return (
             <div className="container-fluid">
                 <NavBar />

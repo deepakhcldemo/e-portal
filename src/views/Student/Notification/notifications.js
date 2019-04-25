@@ -33,7 +33,7 @@ class Notifications extends Component {
 
                                 <Link>
                                     <div className="alert alert-info">
-                                        <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" /></div>
+                                        <div style={{ float: "left" }}><img src="../Assets/hdpi/avatar.png" name="aboutme" width="70" height="50" border="0" className="img-circle" /></div>
                                         <div style={{ float: "left" }} className="container" onClick={this.onOpenModal} style={{ cursor: "pointer" }}>
 
                                             <div className="alert-icon">

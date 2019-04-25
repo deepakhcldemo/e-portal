@@ -15,20 +15,16 @@ class notificationsDescription extends Component {
     };
 
     componentDidMount() {
-        console.log("Params Ids => ", this.props.match.params)
         let user;
-        //this.props.getNotification(this.props.match.params.sid);
-        //this.props.getTeachers(this.props.match.params.sid);
-        //this.props.getStudents(this.props.match.params.sid);
+
         getNotificationDataFromNid(this.props.match.params.sid).then(querySnapshot => {
             querySnapshot.forEach(doc => {
                 user = doc.data();
-                console.log("getNotificationDataFromNid", user)
+
                 if (doc.exists) {
                     this.setState({
                         notificationData: user
                     });
-
 
                 }
             });
@@ -99,7 +95,7 @@ class notificationsDescription extends Component {
 
     render() {
         const { notificationData } = this.state;
-        console.log("Notification data Student Description => ", notificationData)
+
 
         const { open } = this.state;
         return (
@@ -147,13 +143,6 @@ class notificationsDescription extends Component {
 
 
                                             </div>
-
-
-
-
-
-
-
 
                                         </div>
 
