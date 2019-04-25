@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // Date format Plugin
 // import moment from 'moment';
 // Slider Component Plugin
-import Slider from 'react-slick';
+import Slider from "react-slick";
 // Link Plugin
-import { Link } from 'react-router-dom';
-import TeacherItem from '../../components/teacherItem/TeacherItem';
+import { Link } from "react-router-dom";
+import TeacherItem from "../../components/teacherItem/TeacherItem";
 
 class TopTutor extends Component {
   createChildren = records => {
@@ -17,7 +17,7 @@ class TopTutor extends Component {
         <div key={index} className="vd-wrapper  col-xs-12">
           <Link
             className="nav-link"
-            style={{ padding: '0px' }}
+            style={{ padding: "0px" }}
             to={`/home/teacher/${carouselRecord.userId}`}
             title={carouselRecord.name}
           >
@@ -32,7 +32,7 @@ class TopTutor extends Component {
 
   render() {
     const { headeTitle, carouselTop10Items } = this.props;
-    const title = headeTitle ? headeTitle : 'World Class Experts';
+    const title = headeTitle ? headeTitle : "World Class Experts";
 
     const settingsTop10 = {
       dots: true,
@@ -46,7 +46,8 @@ class TopTutor extends Component {
         {
           breakpoint: 1024,
           settings: {
-            slidesToShow: 4,
+            slidesToShow:
+              carouselTop10Items.length >= 4 ? 4 : carouselTop10Items.length,
             slidesToScroll: 1,
             infinite: true,
             dots: true
@@ -55,7 +56,8 @@ class TopTutor extends Component {
         {
           breakpoint: 600,
           settings: {
-            slidesToShow: 2,
+            slidesToShow:
+              carouselTop10Items.length >= 2 ? 2 : carouselTop10Items.length,
             slidesToScroll: 1,
             initialSlide: 1
           }
@@ -63,7 +65,8 @@ class TopTutor extends Component {
         {
           breakpoint: 480,
           settings: {
-            slidesToShow: 2,
+            slidesToShow:
+              carouselTop10Items.length >= 2 ? 2 : carouselTop10Items.length,
             slidesToScroll: 1
           }
         }
