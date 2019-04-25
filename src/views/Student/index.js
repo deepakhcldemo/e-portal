@@ -86,8 +86,6 @@ class Student extends Component {
 
         <div className="col-12 content-container--background">&nbsp;</div>
         <div className="col-12 content-container--background">&nbsp;</div>
-        <Navbar />
-
           <RecentVideo
             isNotVisibleVideoMeta={true}
             carousellistNewlyItems={notifications}
@@ -95,7 +93,7 @@ class Student extends Component {
           />
         </div>
         <div className="col-12">
-          <Navbar links={STUDENT_DASHBOARD_LINKS} />
+          <Navbar />
         </div>
         {/* <RecentVideo
           carousellistNewlyItems={notifications}
