@@ -20,6 +20,7 @@ import Carousel from "./components/carousel/Carousel";
 import Category from "./views/Category";
 import Teacher from "./views/Teacher";
 import Video from "./views/Teacher/Video";
+//import NotificationDetails from './views/NotificationDetails/index';
 
 // import Notification from './views/Teacher/Notification';
 /* import NotificationsDetails from './views/Teacher/Notification/notificationsDetails';
@@ -35,9 +36,11 @@ import StudentNotificationsDescription from "./views/Student/Notification/notifi
 /* import NotificationfromTeacher from './views/Student/NotifyStudent/notificationfromTeacher';
 import NotificationFullDetails from './views/Student/NotifyStudent/notificationFullDetails'; */
 import Notification from "./views/Notification";
+
+import NotificationDetails from './views/NotificationDetails';
 // import TeacherNotificationFulldetails from './views/Teacher/NotifyTeacher/teacherNotificationFulldetails';
 
-// import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
+import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
 
 import ContactUs from "./views/ContactUs";
 import AboutUs from "./views/AboutUs";
@@ -113,6 +116,7 @@ class App extends Component {
           <PrivateRoute path="/category" component={Category} exact />
           <PrivateRoute path="/teacher" component={Teacher} exact />
           <PrivateRoute path="/teacher/videos" component={Video} exact />
+          <PrivateRoute path="/notificationDetails" component={NotificationDetails} exact />
           <PrivateRoute
             path="/teacher/notificationsDescription/:nid"
             component={NotificationsDescription}

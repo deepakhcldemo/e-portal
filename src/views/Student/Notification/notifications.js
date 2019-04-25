@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from '../../../shared/components/Navbar';
 import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
+import { withRouter } from 'react-router';
 import { getNotification, getTeachers, getStudents } from '../../Teacher/Notification/notificationAction';
 
 class Notifications extends Component {
@@ -30,7 +31,7 @@ class Notifications extends Component {
                             <h4>Notification</h4><hr />
                             {Object.keys(this.props.notificationDetails).map((notificationDetail) => (
 
-                                <Link to={`/student/notificationsDescription/` + this.props.notificationDetails[notificationDetail].sId} activeClassName="active">
+                                <Link>
                                     <div className="alert alert-info">
                                         <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" /></div>
                                         <div style={{ float: "left" }} className="container" onClick={this.onOpenModal} style={{ cursor: "pointer" }}>
@@ -77,4 +78,4 @@ const mapDispatchToProps = dispatch => {
 
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Notifications));

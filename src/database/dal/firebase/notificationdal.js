@@ -34,6 +34,15 @@ export const getNotificationFromDB = (dispatch) => {
 }
 
 
+export const rejectNotificationFromDB = (dispatch, rejectedNotificationsDetails) => {
+  let query = getDbRef("notifications")
+        .doc(rejectedNotificationsDetails.id)
+    .set(rejectedNotificationsDetails)
+    .then(() => {
+      dispatch({ type: "REJECT_NOTIFICATION"});
+    })
+};
+
 export const getVideoUrl = (name) => {
   const studentDetails = JSON.parse(localStorage.getItem('userProfile'));
   const db = dbFactory.create('firebase');

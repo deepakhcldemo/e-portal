@@ -39,7 +39,7 @@ class SearchTeacher extends Component {
 
   componentDidMount() {
     const self = this;
-    this.props.getTeachersBasedOnZipcode('85001');
+    this.props.getTeachersBasedOnZipcode('85001')
     // console.log(this.props, 'this.porps in componentWill');
     getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {

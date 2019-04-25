@@ -1,16 +1,22 @@
 const initialState = {
     notifications: [],
-    openModal: false
+    openModal: false, 
+    notificationDetails : []
 }
-const notifyTeacherReducer = (state = initialState, action) => {
-    switch (action.type) {     
+const notifDetils = (state = initialState, action) => {
+    switch (action.type) {
         case 'GET_NOTIFICATION':
-            return {                
-                ...state,                               
+            return {
+                ...state,
                 notifications: action.notifications
-            }   
+            }
+        case 'NOTIFICATIONS_DETAILS':
+            return {
+                ...state,
+                notificationDetails: action.payload
+            }
         default:
             return state
     }
 }
-export default notifyTeacherReducer
+export default notifDetils;

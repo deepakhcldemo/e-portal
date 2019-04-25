@@ -2,13 +2,16 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 // import { connect } from "react-redux";
 import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
+import Tab from 'react-bootstrap/Tab';
+ import { connect } from "react-redux";
+ import { withRouter } from 'react-router';
 import Navbar from "./../../shared/components/Navbar";
 import HeaderHome from "../../components/layout/header/HeaderHome";
 import { getNotificationsFromDB } from "../../database/dal/firebase/studentDal";
 import { TEACHER_DASHBOARD_LINKS, STUDENT_DASHBOARD_LINKS } from './../../constant/Constant'
 import TeacherNotificationDetails from './../Teacher/Notification/notificationsDetails';
 import NotificationsDetails from './../Student/Notification/notificationsDetails';
+import {setNotificationDetails} from './action';
 // import Modal from 'react-responsive-modal'
 
 class Notification extends Component {
@@ -52,6 +55,14 @@ class Notification extends Component {
         const classStatus = (notificationDetails.sstatus && notificationDetails.tstatus) ? 'alert alert-success' : (notificationDetails.status && !notificationDetails.tstatus) ? 'alert alert-warning' : 'alert alert-danger'
         const userWiseStatus = (userDetails.role === 'Teacher') ? `Notification from  ${notificationDetails.sname}` : `Notification from  ${notificationDetails.tname}`;
         return (type === 'message') ? userWiseStatus : classStatus
+    }
+
+
+    goToNotificationDetails = (notification) => {
+        debugger
+        this.props.setNotificationDetails(notification);
+        console.log(this.props);
+        this.props.history.push('/notificationDetails')
     }
 
     render = () => {
@@ -99,6 +110,20 @@ class Notification extends Component {
                                         )}                                
                                     </Tab>
                                 </Tabs>
+                                {notificationsList && notificationsList.map((notification, ind) => {
+                                    return (
+
+                                        <div className={this.notificationStatus(notification, 'classes')} onClick={() => this.goToNotificationDetails(notification)}>
+                                            <div className="container">
+
+                                                <b>Message:</b> {this.notificationStatus(notification, 'message')}
+                                            </div>
+                                        </div>
+
+                                    )
+                                }
+                                )}
+
                             </div>
                         </div>
                     </div>
@@ -113,4 +138,19 @@ class Notification extends Component {
         );
     }
 }
-export default Notification
+const mapStateToProps = state => {
+    return {
+        //savedNotifications: state.notifyTeacherReducer.notifications
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+
+
+        setNotificationDetails: (details) => dispatch(setNotificationDetails(details))
+    };
+};
+export default withRouter( connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Notification));
