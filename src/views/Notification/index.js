@@ -127,7 +127,7 @@ class Notification extends Component {
                       })}
                   </Tab>
                 </Tabs>
-                {notificationsList &&
+                {/* {notificationsList &&
                   notificationsList.map((notification, ind) => {
                     return (
                       <div
@@ -145,7 +145,7 @@ class Notification extends Component {
                         </div>
                       </div>
                     );
-                  })}
+                  })} */}
               </div>
             </div>
           </div>
