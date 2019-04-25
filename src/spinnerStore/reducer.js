@@ -1,4 +1,4 @@
-import * as actionTypes from "./actions";
+import * as actionTypes from './actions';
 const initialState = {
   spinnerStatus: false
 };
@@ -8,7 +8,7 @@ const spinnerStatusReducer = (state = initialState, action) => {
     case actionTypes.SPINNER_STATUS:
       return {
         ...state,
-        spinnerStatus: !state.spinnerStatus
+        spinnerStatus: action.payload
       };
     default:
       return {

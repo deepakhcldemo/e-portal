@@ -42,6 +42,11 @@ class Profile extends Component {
     noOfRatings: 0
   };
 
+  constructor(props) {
+    super(props);
+    this.props.setSpinnerStatus(true);
+  }
+
   handleDropdownSelection = (option, property) => {
     this.setState({ [property]: option });
   };
@@ -66,44 +71,51 @@ class Profile extends Component {
       }
     });
 
-    getUserProfile(userId).then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        const user = doc.data();
-        if (doc.exists) {
-          this.setState({
-            firstName: user.firstName,
-            lastName: user.lastName,
-            dob: user.dob,
-            gender: user.gender,
-            address: user.address,
-            city: user.city,
-            country: user.country,
-            email: user.email,
-            mobile: user.mobile,
-            role: user.role,
-            profileImage: user.profileImage,
-            subject: user.subject
-          });
-          if (user.role === 'Teacher') {
+    getUserProfile(userId).then(
+      querySnapshot => {
+        querySnapshot.forEach(doc => {
+          const user = doc.data();
+          if (doc.exists) {
             this.setState({
-              charge: user.charge,
-              currency: user.currency,
-              summary: user.summary
+              firstName: user.firstName,
+              lastName: user.lastName,
+              dob: user.dob,
+              gender: user.gender,
+              address: user.address,
+              city: user.city,
+              country: user.country,
+              email: user.email,
+              mobile: user.mobile,
+              role: user.role,
+              profileImage: user.profileImage,
+              subject: user.subject
             });
+            if (user.role === 'Teacher') {
+              this.setState({
+                charge: user.charge,
+                currency: user.currency,
+                summary: user.summary
+              });
+            }
+            if (user.rating) {
+              this.setState({
+                rating: user.rating
+              });
+            }
+            if (user.noOfRatings) {
+              this.setState({
+                noOfRatings: user.noOfRatings
+              });
+            }
           }
-          if (user.rating) {
-            this.setState({
-              rating: user.rating
-            });
-          }
-          if (user.noOfRatings) {
-            this.setState({
-              noOfRatings: user.noOfRatings
-            });
-          }
-        }
-      });
-    });
+        });
+        this.props.setSpinnerStatus(false);
+      },
+      error => {
+        this.props.setSpinnerStatus(false);
+        toastr.error(error.message);
+      }
+    );
   };
 
   uploadProfilePic = e => {

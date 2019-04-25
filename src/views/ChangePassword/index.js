@@ -16,7 +16,7 @@ let passwordIcon = {
   right: '10px',
   top: '15px',
   zIndex: '10',
-  backgroundImage: 'url(\'../../Assets/hdpi/password_orange.png\')',
+  backgroundImage: "url('../../Assets/hdpi/password_orange.png')",
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
@@ -63,11 +63,13 @@ class ChangePassword extends Component {
   };
 
   updatePassword = () => {
+    this.props.setSpinnerStatus(true);
     this.setState({ submitted: true });
     const { password, confirmPassword } = this.state;
     if (password === confirmPassword) {
       changePassword(this.state.password)
         .then(() => {
+          this.props.setSpinnerStatus(false);
           toastr.success('Password Updated Successfully');
           const user = JSON.parse(localStorage.getItem('userProfile'));
           if (user) {
@@ -79,11 +81,13 @@ class ChangePassword extends Component {
           }
         })
         .catch(error => {
+          this.props.setSpinnerStatus(false);
           toastr.error(`${error.message} Login Again`);
           AuthGuard.signout();
           this.props.history.push('/login');
         });
     } else {
+      this.props.setSpinnerStatus(false);
       this.setState({ errorMessage: 'Passwords do not match' });
     }
   };
@@ -208,19 +212,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: componentState => {
-      console.log('call', componentState);
-
-      dispatch(
-        loginAction.loginRequestDispatch({
-          userName: componentState.username,
-          password: componentState.password
-        })
-      );
-    },
-
-    openPDFModal: () => dispatch({ type: 'open' }),
-
     setSpinnerStatus: val => {
       dispatch({ type: actionTypes.SPINNER_STATUS, payload: val });
     }

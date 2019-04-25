@@ -18,6 +18,7 @@ import {
   createRatingRecord
 } from '../../database/dal/firebase/registrationDal';
 import GLOBAL_VARIABLES from '../../config/config';
+import * as actionTypes from '../../spinnerStore/actions';
 import AuthGuard from '../../authguard/AuthGuard';
 
 let userIcon = {
@@ -135,6 +136,7 @@ class Login extends Component {
         });
       })
       .catch(error => {
+        this.props.setSpinnerStatus(false);
         console.log('error.message', error.message);
       });
   }
@@ -145,6 +147,7 @@ class Login extends Component {
   };
 
   setLoginStatus(userDetails, isNewUser) {
+    this.props.setSpinnerStatus(false);
     AuthGuard.authenticate(() => {
       if (GLOBAL_VARIABLES.BASEROUTE !== '/home') {
         this.props.history.push(GLOBAL_VARIABLES.BASEROUTE);
@@ -160,6 +163,7 @@ class Login extends Component {
 
   login = e => {
     e.preventDefault();
+    this.props.setSpinnerStatus(true);
     const { username, password } = this.state;
     this.setState({ submitted: true });
     const userDetails = { username, password };
@@ -181,6 +185,7 @@ class Login extends Component {
               this.setLoginStatus(loginResponse, true);
             },
             error => {
+              this.props.setSpinnerStatus(false);
               toastr.error(error.message);
             }
           );
@@ -191,6 +196,7 @@ class Login extends Component {
               this.setLoginStatus(loginResponse, false);
             },
             error => {
+              this.props.setSpinnerStatus(false);
               toastr.error(error.message);
             }
           );
@@ -201,6 +207,7 @@ class Login extends Component {
 
   loginWithGoogle = e => {
     e.preventDefault();
+    this.props.setSpinnerStatus(true);
     loginWithGoogle()
       .then(loginResponse => {
         localStorage.setItem('user', JSON.stringify(loginResponse));
@@ -218,12 +225,14 @@ class Login extends Component {
         }
       })
       .catch(error => {
+        this.props.setSpinnerStatus(false);
         toastr.error(error.message);
       });
   };
 
   loginWithFacebook = e => {
     e.preventDefault();
+    this.props.setSpinnerStatus(true);
     loginWithFacebook()
       .then(loginResponse => {
         localStorage.setItem('user', JSON.stringify(loginResponse));
@@ -241,12 +250,14 @@ class Login extends Component {
         }
       })
       .catch(error => {
+        this.props.setSpinnerStatus(false);
         toastr.error(error.message);
       });
   };
 
   loginWithTwitter = e => {
     e.preventDefault();
+    this.props.setSpinnerStatus(true);
     loginWithTwitter()
       .then(loginResponse => {
         localStorage.setItem('user', JSON.stringify(loginResponse));
@@ -264,6 +275,7 @@ class Login extends Component {
         }
       })
       .catch(error => {
+        this.props.setSpinnerStatus(false);
         toastr.error(error.message);
       });
   };
@@ -286,7 +298,7 @@ class Login extends Component {
               </div>
 
               <form name="form" className="login-form--padding">
-                <div className="alert alert-dark" role="alert">
+                <div className="alert alert-info" role="alert">
                   Note: If you do not have an account, one will be created for
                   you!
                 </div>
@@ -419,24 +431,15 @@ const mapStateToProps = state => {
   };
 };
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onSubmit: componentState => {
-//       console.log('call', componentState);
-//       dispatch(
-//         loginAction.loginRequestDispatch({
-//           userName: componentState.username,
-//           password: componentState.password
-//         })
-//       );
-//     },
-//     openPDFModal: () => dispatch({ type: 'open' }),
-//     setSpinnerStatus: val => {
-//       dispatch({ type: actionTypes.SPINNER_STATUS, payload: val });
-//     }
-//   };
-// };
+const mapDispatchToProps = dispatch => {
+  return {
+    setSpinnerStatus: value => {
+      dispatch({ type: actionTypes.SPINNER_STATUS, payload: value });
+    }
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Login);

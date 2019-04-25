@@ -75,13 +75,16 @@ class PasswordReset extends Component {
   };
 
   resetPassword = () => {
+    this.props.setSpinnerStatus(true);
     this.setState({ submitted: true });
     recoverPassword(this.state.username)
       .then(() => {
+        this.props.setSpinnerStatus(false);
         toastr.success('Password Reset Link Sent Successfully');
         this.props.history.push('/login');
       })
       .catch(error => {
+        this.props.setSpinnerStatus(false);
         this.setState({ username: '' });
         toastr.error('User Not Found. Please Enter Registered Email ID');
       });
@@ -97,7 +100,7 @@ class PasswordReset extends Component {
 
     const { username, submitted } = this.state;
     return (
-      <div className="container-background">
+      <div>
         <div className="row row-without--margin">
           <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container content-align--middle">
             <div className="card card-border-radius">
@@ -114,7 +117,9 @@ class PasswordReset extends Component {
                     'form-group' + (submitted && !username ? ' has-error' : '')
                   }
                 >
-                  <label htmlFor="username">Enter Registered Email ID</label>
+                  <label className="label-color" htmlFor="username">
+                    Enter Registered Email ID
+                  </label>
                   <div className="input-group">
                     <input
                       type="email"
@@ -171,19 +176,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: componentState => {
-      console.log('call', componentState);
-
-      dispatch(
-        loginAction.loginRequestDispatch({
-          userName: componentState.username,
-          password: componentState.password
-        })
-      );
-    },
-
-    openPDFModal: () => dispatch({ type: 'open' }),
-
     setSpinnerStatus: val => {
       dispatch({ type: actionTypes.SPINNER_STATUS, payload: val });
     }
