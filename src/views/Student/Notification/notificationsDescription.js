@@ -57,13 +57,13 @@ class notificationsDescription extends Component {
         const loggedInUSer = JSON.parse(localStorage.getItem('user'));
         if (loggedInUSer) {
             const rejectedNotificationDetails = {
-                sId: id,
+                nId: id,
                 updatedAt,
                 status: 0,
                 comment: [{
                     "by": loggedInUSer.user.uid,
                     "date": createdAt,
-                    "details": "Hey, I have rejected chat offer. I am during this week."
+                    "details": "Hey, I have rejected chat offer. I am out during this week."
                 }]
             }
             udpateChatNotificationDetails({
@@ -100,38 +100,8 @@ class notificationsDescription extends Component {
     render() {
         const { notificationData } = this.state;
         console.log("Notification data Student Description => ", notificationData)
-        // console.log("Notification data Student Description Charge => ", this.state.notificationData.charge)
-        // const { notificationDetails } = this.props.notificationDetails;
-        // console.log("notifyData")\
-        // console.log("Notification Comment Data ---------", notificationData.comment)
-        // if (notificationData.comment != null) {
-        //     Object.keys(notificationData.comment).map(notifyData => {
-        //         //Object.keys(this.props.notificationDetails[notifyData].comment).map(data => {
-        //         console.log("---notifyData----", notificationData.comment[notifyData].details)
-        //         // })
-
-        //     })
-        // }
-
-        // const datas = this.props.studentDetails
-        //console.log("Student Details => ", this.getStudentData());
-        // datas.map(data => {
-        //     console.log(data)
-        // })
-        // if (this.props.studentDetails != null) {
-        //     this.props.studentDetails.map(data => {
-        //         console.log(data)
-        //     })
-        // }
-
-
-
-        //console.log("Student Details => ", this.props.studentDetails)
-
-
 
         const { open } = this.state;
-        //console.log(this.props.match.params.tid)
         return (
             <div className="container-fluid">
                 <NavBar />
@@ -171,8 +141,8 @@ class notificationsDescription extends Component {
                                             <div className="modal-footer">
 
                                                 <button onClick={this.handleBack} type="button" className="btn btn-primary" data-dismiss="modal">Back</button>
-                                                {notificationData.status == -1 && notificationData.reqForReSchedule === true ? <button onClick={this.handleReject} type="button" className="btn btn-danger" data-dismiss="modal">Reject</button> : null}
-                                                {(notificationData.status == 1 || notificationData.status == -1 && notificationData.reqForReSchedule === true) ? <button onClick={() => this.handlePay(notificationData.nId)} type="button" className="btn btn-success" data-dismiss="modal">Pay</button> : null}
+                                                {notificationData.status == -1 && notificationData.reqForReSchedule === true ? <button onClick={() => this.handleReject(notificationData.nId)} type="button" className="btn btn-danger" data-dismiss="modal">Reject</button> : null}
+                                                {((notificationData.paymentStatus == false && notificationData.status == 1) || (notificationData.status == -1 && notificationData.reqForReSchedule === true && notificationData.paymentStatus == false)) ? <button onClick={() => this.handlePay(notificationData.nId)} type="button" className="btn btn-success" data-dismiss="modal">Pay</button> : null}
 
 
 

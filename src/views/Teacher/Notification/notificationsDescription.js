@@ -164,11 +164,18 @@ class notificationsDescription extends Component {
 
                                                 <button onClick={this.handleBack} type="button" className="btn btn-primary" data-dismiss="modal">Back</button>
 
-                                                <button onClick={() => this.handleAccept(this.props.match.params.nid)} type="button" className="btn btn-success" data-dismiss="modal">Accept</button>
+                                                {(notificationData.paymentStatus == false && notificationData.status == -1) ? <button onClick={() => this.handleAccept(notificationData.nId)} type="button" className="btn btn-success" data-dismiss="modal">Accept</button> : null}
+
+
+                                                {(notificationData.paymentStatus == false && notificationData.status == -1) ? <button onClick={() => this.handleReject(notificationData.nId)} type="button" className="btn btn-success" data-dismiss="modal">Reject</button> : null}
+
+                                                {(notificationData.paymentStatus == false && notificationData.status == -1) ? <button onClick={() => this.wrapperFunction(notificationData.nId)} type="button" className="btn btn-success" data-dismiss="modal">Discuss on Time</button> : null}
+
+                                                {/* <button onClick={() => this.handleAccept(this.props.match.params.nid)} type="button" className="btn btn-success" data-dismiss="modal">Accept</button>
 
                                                 <button onClick={() => this.handleReject(this.props.match.params.nid)} type="button" className="btn btn-danger" data-dismiss="modal">Reject</button>
 
-                                                <button onClick={() => this.wrapperFunction(this.props.match.params.nid)} type="button" className="btn btn-warning" data-dismiss="modal">Discuss on Time</button>
+                                                <button onClick={() => this.wrapperFunction(this.props.match.params.nid)} type="button" className="btn btn-warning" data-dismiss="modal">Discuss on Time</button> */}
 
                                             </div>
 
