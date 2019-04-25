@@ -11,165 +11,153 @@ import { getNotificationsFromDB } from "../../database/dal/firebase/studentDal";
 import TeacherNotificationDetails from "./../Teacher/Notification/notificationsDetails";
 import NotificationsDetails from "./../Student/Notification/notificationsDetails";
 import { setNotificationDetails } from "./action";
+import { TEACHER_DASHBOARD_LINKS, STUDENT_DASHBOARD_LINKS } from './../../constant/Constant';
+
+import './Notification.css';
 // import Modal from 'react-responsive-modal'
 
 class Notification extends Component {
-  state = {
-    key: "chatNotification",
-    open: false,
-    userDetails: "",
-    notificationsList: ""
-  };
-
-  onOpenModal = () => {
-    this.setState({ open: true });
-  };
-
-  onCloseModal = () => {
-    this.setState({ open: false });
-  };
-
-  componentWillMount = () => {
-    this.setState({
-      userDetails: JSON.parse(localStorage.getItem("userProfile"))
-    });
-  };
-
-  componentDidMount = () => {
-    const { userDetails } = this.state;
-    getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(
-      querySnapshot => {
-        let notificationsList = [];
-        querySnapshot.forEach(doc => {
-          notificationsList.push(Object.assign({ id: doc.id }, doc.data()));
-        });
-        this.setState({ notificationsList });
-      }
-    );
-  };
-
-  notificationStatus = (notificationDetails, type) => {
-    const { userDetails } = this.state;
-    const classStatus =
-      notificationDetails.sstatus && notificationDetails.tstatus
-        ? "alert alert-success"
-        : notificationDetails.status && !notificationDetails.tstatus
-        ? "alert alert-warning"
-        : "alert alert-danger";
-    const userWiseStatus =
-      userDetails.role === "Teacher"
-        ? `Notification from  ${notificationDetails.sname}`
-        : `Notification from  ${notificationDetails.tname}`;
-    return type === "message" ? userWiseStatus : classStatus;
-  };
-
-  goToNotificationDetails = notification => {
-    debugger;
-    this.props.setNotificationDetails(notification);
-    console.log(this.props);
-    this.props.history.push("/notificationDetails");
-  };
-
-  render = () => {
-    const { notificationsList, userDetails } = this.state;
-    const style = {
-      marginTop: "20px",
-      textAlign: "center"
+    state = {
+        key: "chatNotification",
+        open: false,
+        userDetails: "",
+        notificationsList: ""
     };
-    return (
-      <div className="container-fluid">
-        <HeaderHome headeTitle="Teacher Dashboard" />
 
-        <div className="content-container margin-bottom">
-          <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
-            <div className="card">
-              <div className="card-body">
-                <h4>Notification</h4>
-                <hr />
-                <Tabs
-                  id="tabs"
-                  activeKey={this.state.key}
-                  onSelect={key => this.setState({ key })}
-                >
-                  <Tab eventKey="chatNotification" title="Chat Notification">
-                    {userDetails.role === "Teacher" && (
-                      <TeacherNotificationDetails />
-                    )}
-                    {userDetails.role === "Student" && <NotificationsDetails />}
-                  </Tab>
-                  <Tab eventKey="notification" title="Notification">
-                    {notificationsList.length === 0 && (
-                      <h6 style={style}>No Notifications </h6>
-                    )}
-                    {notificationsList &&
-                      notificationsList.map((notification, ind) => {
-                        return (
-                          <Link
-                            key={ind}
-                            to={`/notification/details/${notification.id}`}
-                          >
-                            <div
-                              className={this.notificationStatus(
-                                notification,
-                                "classes"
-                              )}
-                            >
-                              <div className="container">
-                                <b>Message:</b>{" "}
-                                {this.notificationStatus(
-                                  notification,
-                                  "message"
-                                )}
-                              </div>
+    onOpenModal = () => {
+        this.setState({ open: true });
+    };
+
+    onCloseModal = () => {
+        this.setState({ open: false });
+    };
+
+    componentWillMount = () => {
+        this.setState({
+            userDetails: JSON.parse(localStorage.getItem("userProfile"))
+        });
+    };
+
+    componentDidMount = () => {
+        const { userDetails } = this.state;
+        getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(
+            querySnapshot => {
+                let notificationsList = [];
+                querySnapshot.forEach(doc => {
+                    notificationsList.push(Object.assign({ id: doc.id }, doc.data()));
+                });
+                this.setState({ notificationsList });
+            }
+        );
+    };
+
+    notificationStatus = (notificationDetails, type) => {
+        const { userDetails } = this.state;
+        const classStatus =
+            notificationDetails.sstatus && notificationDetails.tstatus
+                ? "alert alert-success"
+                : notificationDetails.status && !notificationDetails.tstatus
+                    ? "alert alert-warning"
+                    : "alert alert-danger";
+        const userWiseStatus =
+            userDetails.role === "Teacher"
+                ? `Notification from  ${notificationDetails.sname}`
+                : `Notification from  ${notificationDetails.tname}`;
+        return type === "message" ? userWiseStatus : classStatus;
+    };
+
+    goToNotificationDetails = notification => {
+        debugger;
+        this.props.setNotificationDetails(notification);
+        console.log(this.props);
+        this.props.history.push("/notificationDetails");
+    };
+
+    
+
+        notificationStatus = (notificationDetails, type) => {
+            const { userDetails } = this.state
+            const classStatus = (notificationDetails.sstatus && notificationDetails.tstatus) ? 'alert alert-success' : (notificationDetails.status && !notificationDetails.tstatus) ? 'alert alert-warning' : 'alert alert-danger'
+            const userWiseStatus = (userDetails.role === 'Teacher') ? `Notification from  ${notificationDetails.sname}` : `Notification from  ${notificationDetails.tname}`;
+            return (type === 'message') ? userWiseStatus : classStatus
+        }
+
+
+        goToNotificationDetails = (notification) => {
+            debugger
+            this.props.setNotificationDetails(notification);
+            console.log(this.props);
+            this.props.history.push('/notificationDetails')
+        }
+
+        render = () => {
+            const { notificationsList, userDetails } = this.state;
+
+            return (
+                <div className="container-fluid">
+
+                    <HeaderHome
+                        headeTitle="Teacher Dashboard"
+                        dashboardLinks={TEACHER_DASHBOARD_LINKS}
+                    />
+
+                    <div className="content-container">
+                        <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
+                            <div className="card">
+                                <div className="card-body">
+                                    <h4>Notification</h4><hr />
+                                    <Tabs
+                                        id="tabs"
+                                        activeKey={this.state.key}
+                                        onSelect={key => this.setState({ key })}
+                                    >
+                                        <Tab eventKey="chatNotification" title="Chat Notification">
+                                            {(userDetails.role === 'Teacher') && (
+                                                <TeacherNotificationDetails />
+                                            )}
+                                            {(userDetails.role === 'Student') && (
+                                                <NotificationsDetails />
+                                            )}
+                                        </Tab>
+                                        <Tab eventKey="notification" title="Notification">
+                                            {notificationsList && notificationsList.map((notification, ind) => {
+                                                return (
+                                                    <div className="row" key ={ind}>
+                                                        <div className={this.notificationStatus(notification, 'classes')} onClick={() => this.goToNotificationDetails(notification)}>
+                                                            <div className="container">
+                                                                <b>Message:</b> {this.notificationStatus(notification, 'message')}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            }
+                                            )}
+                                        </Tab>
+                                    </Tabs>
+                                </div>
                             </div>
-                          </Link>
-                        );
-                      })}
-                  </Tab>
-                </Tabs>
-                {/* {notificationsList &&
-                  notificationsList.map((notification, ind) => {
-                    return (
-                      <div
-                        className={this.notificationStatus(
-                          notification,
-                          "classes"
-                        )}
-                        onClick={() =>
-                          this.goToNotificationDetails(notification)
-                        }
-                      >
-                        <div className="container">
-                          <b>Message:</b>{" "}
-                          {this.notificationStatus(notification, "message")}
                         </div>
-                      </div>
-                    );
-                  })} */}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-12 main-wrapper">
-          <Navbar />
-        </div>
-      </div>
-    );
-  };
-}
-const mapStateToProps = state => {
-  return {
-    //savedNotifications: state.notifyTeacherReducer.notifications
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    setNotificationDetails: details => dispatch(setNotificationDetails(details))
-  };
-};
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Notification)
-);
+
+                    </div>
+                    <div className="col-12 main-wrapper">
+                        <Navbar />
+                    </div>
+                </div>
+            )
+        };
+    };
+    const mapStateToProps = state => {
+        return {
+            //savedNotifications: state.notifyTeacherReducer.notifications
+        };
+    };
+    const mapDispatchToProps = dispatch => {
+        return {
+            setNotificationDetails: details => dispatch(setNotificationDetails(details))
+        };
+    };
+    export default withRouter(
+        connect(
+            mapStateToProps,
+            mapDispatchToProps
+        )(Notification));

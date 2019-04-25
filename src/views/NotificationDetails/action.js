@@ -7,3 +7,8 @@ export const rejectNotification = (rejectNotification) => {
         rejectNotificationFromDB(dispatch, rejectNotification);
     }
 }
+
+
+export const openModalForAcceptNotification = () => {
+    return { type: "OPEN_MODAL_FOR_ACCEPT"};
+  };

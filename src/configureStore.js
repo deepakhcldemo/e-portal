@@ -22,6 +22,7 @@ import searchTeacherReducer from './views/Student/SearchTeacher/searchTeacherRed
 import videoReducer from './views/Teacher/Video/reducer';
 import notificationReducer from './views/Teacher/Notification/notificationReducer';
 import notifDetils from './views/Notification/reducer';
+import notificationAcceptREducer from './views/NotificationDetails/reducer';
 const rootPersistConfig = {
   key: 'root',
   storage,
@@ -46,7 +47,8 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   searchTeacher : searchTeacherReducer,
   video: videoReducer,
   teacherDetailsReducer : teacherDetailsReducer,
-  categoryItem : categoryReducerForSubject
+  categoryItem : categoryReducerForSubject, 
+  notificationAcceptREducer : notificationAcceptREducer
   
 });
 

@@ -43,8 +43,20 @@ export const rejectNotificationFromDB = (dispatch, rejectedNotificationsDetails)
     })
 };
 
+
+export const saveNotificationAcceptedFromDB = (dispatch, acceptedNotificationsDetails) => {
+  debugger
+  let query = getDbRef("notifications")
+        .doc(acceptedNotificationsDetails.id)
+    .set(acceptedNotificationsDetails)
+    .then(() => {
+      dispatch({ type: "REJECT_NOTIFICATION"});
+    })
+};
+
 export const getVideoUrl = (name) => {
+  debugger
   const studentDetails = JSON.parse(localStorage.getItem('userProfile'));
   const db = dbFactory.create('firebase');
-  return db.storage().ref(`notification/${studentDetails.userId}`).child(name).getDownloadURL()
+  return db.storage().ref(`notification/v62ZwgXFwjVYwhYcNZlBDVQ2FdA2`).child(name).getDownloadURL()
 }

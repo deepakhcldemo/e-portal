@@ -134,11 +134,7 @@ class App extends Component {
           <Route path="/student/notificationsDetails" component={StudentNotificationsDetails} />
           
 
-          <PrivateRoute
-            path="/student/teacher"
-            component={SearchTeacher}
-            exact
-          />
+         
           {/* <PrivateRoute
             path="/teacher/notifications"
             component={Notification}
@@ -156,6 +152,11 @@ class App extends Component {
             exact
           /> */}
           <PrivateRoute path="/notification" component={Notification} exact />
+          <PrivateRoute
+            path="/student/teacher"
+            component={SearchTeacher}
+            exact
+          />
           {/* <PrivateRoute
             path="/teacher/teacherNotificationFulldetails"
             component={TeacherNotificationFulldetails}
