@@ -48,7 +48,9 @@
 .profile-pic-list {
   height: 120px;
   width: 120px;
-  border-radius: 60px;
+  border-radius: 100%;
+  display: inline-block;
+  overflow: hidden;
 }
 
 .profile-pic-block {

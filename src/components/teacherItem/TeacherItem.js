@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import "./TeacherItem.css";
-import StarRatingComponent from "react-star-rating-component";
+import React, { Component } from 'react';
+import './TeacherItem.css';
+import StarRatingComponent from 'react-star-rating-component';
 
 class TeacherItem extends Component {
   setColClass = () => {};
@@ -9,57 +9,50 @@ class TeacherItem extends Component {
 
     return (
       <div>
-        <div
-          className={
-            isTrayItem
-              ? "card"
-              : "card"
-          }
-        >
+        <div className={isTrayItem ? 'card' : 'card'}>
           <div
             className="card-body vd-wrapper col-xs-12"
-            style={{ padding: "0px" }}
+            style={{ padding: '0px' }}
           >
             <div
               className={
                 isTrayItem
-                  ? "row row-without--margin tray-item--height"
-                  : "row row-without--margin"
+                  ? 'row row-without--margin tray-item--height'
+                  : 'row row-without--margin'
               }
             >
               <div
                 className={
                   isTrayItem
-                    ? "thumb-wrapper col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 profile-pic--align"
-                    : "thumb-wrapper col-12 col-without--padding profile-pic--align"
+                    ? 'thumb-wrapper col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 profile-pic--align'
+                    : 'thumb-wrapper col-12 col-without--padding profile-pic--align'
                 }
               >
-                <div className={
-                    isTrayItem
-                      ? "profile-pic-list"
-                      : "profile-pic-block"
+                <div
+                  className={
+                    isTrayItem ? 'profile-pic-list' : 'profile-pic-block'
                   }
                 >
-                  <img src={userProfile.profileImage} alt=""/>
+                  <img src={userProfile.profileImage} alt="" />
                 </div>
               </div>
               <div
                 className={
                   isTrayItem
-                    ? "col-9 col-sm-9 col-md-7 col-lg-7 col-xl-7 col-without--padding content-container--background"
-                    : "col-12 col-without--padding content-container--background "
+                    ? 'col-9 col-sm-9 col-md-7 col-lg-7 col-xl-7 col-without--padding content-container--background'
+                    : 'col-12 col-without--padding content-container--background '
                 }
               >
                 <div
                   className={
                     isTrayItem
-                      ? "vd-content user-details-tray--style user-detail--align"
-                      : "vd-content user-details-tray--style"
+                      ? 'vd-content user-details-tray--style user-detail--align'
+                      : 'vd-content user-details-tray--style'
                   }
-                  style={{ border: "none" }}
+                  style={{ border: 'none' }}
                 >
                   <h6 className="user-title">
-                    {userProfile.firstName + " " + userProfile.lastName}
+                    {userProfile.firstName + ' ' + userProfile.lastName}
                   </h6>
                   <p>
                     <strong>Subject:</strong> {userProfile.subject}
@@ -69,7 +62,7 @@ class TeacherItem extends Component {
                     name="rate"
                     starCount={5}
                     value={userProfile.rating}
-                    emptyStarColor={"gray"}
+                    emptyStarColor={'gray'}
                   />
                 </div>
               </div>
@@ -79,9 +72,9 @@ class TeacherItem extends Component {
                     <div>
                       <i
                         className={
-                          userProfile.currency.toLowerCase() !== "pound"
+                          userProfile.currency.toLowerCase() !== 'pound'
                             ? `fa fa-${userProfile.currency.toLowerCase()}`
-                            : "fa fa-gbp"
+                            : 'fa fa-gbp'
                         }
                       />
                       {userProfile.charge}

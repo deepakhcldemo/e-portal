@@ -92,7 +92,7 @@ class Home extends Component {
       });
     });
   };
-  
+
   render() {
     const {
       bannerRows,
@@ -110,44 +110,37 @@ class Home extends Component {
             </div>
           </div>
         </div>
-        <div className="banner-section">
-          {bannerRows.length > 0 && (
-            <Banner bannerRows={bannerRows} pageName="home" />
-          )}
-          </div>
-          <div className="container-fluid">
-          {carouselTop10Items.length > 0 && (
-            <TopTutor
-              carouselTop10Items={carouselTop10Items}
-              headeTitle={GLOBAL_VARIABLES.TOP10_TUTOR}
-            />
-          )}
 
-          {carousellistNewlyItems.length > 0 && (
-            <RecentVideo
-              carousellistNewlyItems={carousellistNewlyItems}
-              headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
-            />
-          )}
+        {bannerRows.length > 0 && (
+          <Banner bannerRows={bannerRows} pageName="home" />
+        )}
 
-          {studentsReview.length > 0 && (
-            <StudentFeedback
-              studentsReview={studentsReview}
-              headeTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW}
-            />
-          )}
+        {carouselTop10Items.length > 0 && (
+          <TopTutor
+            carouselTop10Items={carouselTop10Items}
+            headeTitle={GLOBAL_VARIABLES.TOP10_TUTOR}
+          />
+        )}
 
-          <CategoryItem />
+        {carousellistNewlyItems.length > 0 && (
+          <RecentVideo
+            carousellistNewlyItems={carousellistNewlyItems}
+            headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
+          />
+        )}
 
-          <div className="col-12 content-container--background">&npsp;</div>
-          <div className="col-12 content-container--background">&nbsp;</div>
-          <div className="col-12 content-container--background">&nbsp;</div>
+        {studentsReview.length > 0 && (
+          <StudentFeedback
+            studentsReview={studentsReview}
+            headeTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW}
+          />
+        )}
 
-       
-      </div>
+        <CategoryItem />
 
+        <div className="col-12 content-container--background">&nbsp;</div>
+        <div className="col-12 content-container--background">&nbsp;</div>
       </React.Fragment>
-      
     );
   }
 }
@@ -162,7 +155,7 @@ class Home extends Component {
 //           password: componentState.password
 //         })
 //       );
-//     },    
+//     },
 //   };
 // };
 
