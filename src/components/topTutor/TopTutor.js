@@ -41,7 +41,7 @@ class TopTutor extends Component {
       slidesToShow:
         carouselTop10Items.length >= 7 ? 7 : carouselTop10Items.length,
       slidesToScroll: 1,
-      autoplay: false,
+      autoplay: true,
       responsive: [
         {
           breakpoint: 1024,

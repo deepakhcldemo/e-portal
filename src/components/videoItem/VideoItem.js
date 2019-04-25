@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import StarRatingComponent from "react-star-rating-component";
+import React, { Component } from 'react';
+import StarRatingComponent from 'react-star-rating-component';
 
-import VideoPopup from "../videopopup/VideoPopup";
-import "./VideoItem.css";
+import VideoPopup from '../videopopup/VideoPopup';
+import './VideoItem.css';
 
 class VideoItem extends Component {
   state = {
     modalOpen: false,
-    userDetails: ""
+    userDetails: ''
   };
 
   handleClick = () => {
@@ -18,7 +18,7 @@ class VideoItem extends Component {
 
   componentWillMount = () => {
     this.setState({
-      userDetails: JSON.parse(localStorage.getItem("userProfile"))
+      userDetails: JSON.parse(localStorage.getItem('userProfile'))
     });
   };
 
@@ -31,17 +31,13 @@ class VideoItem extends Component {
           <div className="card">
             <div className="">
               <div className="vd-wrapper col-xs-12">
-                <div
-                  onClick={this.handleClick}
-                  className="thumb-wrapper"
-                >
-                {videoDetails.thumb && (
-                  <React.Fragment>
-                    <img src={videoDetails.thumb}/>
-                    <i class="far fa-play-circle"></i>
-                  </React.Fragment>
-                )}
-                
+                <div onClick={this.handleClick} className="thumb-wrapper">
+                  {videoDetails.thumb && (
+                    <React.Fragment>
+                      <img src={videoDetails.thumb} />
+                      <i className="far fa-play-circle" />
+                    </React.Fragment>
+                  )}
                 </div>
                 <div className="vd-content user-details--height detail--text">
                   <h6 className="video-title">{videoDetails.title}</h6>
@@ -53,7 +49,7 @@ class VideoItem extends Component {
                         starCount={5}
                         value={videoDetails.rating}
                         editing={false}
-                        emptyStarColor={"gray"}
+                        emptyStarColor={'gray'}
                       />
                       <span className="rating-position">
                         ({videoDetails.views})
