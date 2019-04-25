@@ -277,13 +277,12 @@ class Login extends Component {
 
     const { username, password, submitted } = this.state;
     return (
-      <div className="container-background">
+      <div>
         <div className="row row-without--margin">
           <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container content-align--middle">
             <div className="card card-border-radius">
               <div className="col-12 sign-in--text">
-                <span className="text-style-1">-</span>
-                <span className="sign-in-text--padding">Sign In</span>
+                <span className="sign-in-text--padding">Sign In/Sign Up</span>
               </div>
 
               <form name="form" className="login-form--padding">
@@ -299,7 +298,9 @@ class Login extends Component {
                     'form-group' + (submitted && !username ? 'has-error' : '')
                   }
                 >
-                  <label htmlFor="username">Username</label>
+                  <label className="label-color" htmlFor="username">
+                    Username
+                  </label>
                   <div className="input-group">
                     <input
                       type="email"
@@ -325,7 +326,9 @@ class Login extends Component {
                     'form-group' + (submitted && !password ? ' has-error' : '')
                   }
                 >
-                  <label htmlFor="password">Password</label>
+                  <label className="label-color" htmlFor="password">
+                    Password
+                  </label>
                   <div className="input-group">
                     <input
                       id="password"
@@ -351,6 +354,7 @@ class Login extends Component {
                 </div>
                 <div>
                   <label
+                    className="label-color"
                     style={{ cursor: 'pointer' }}
                     onClick={this.handlePasswordReset}
                   >

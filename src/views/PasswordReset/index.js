@@ -16,7 +16,7 @@ let userIcon = {
   right: '12px',
   top: '12px',
   zIndex: '10',
-  backgroundImage: 'url(\'../../Assets/hdpi/login_disable.png\')',
+  backgroundImage: "url('../../Assets/hdpi/login_disable.png')",
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
@@ -44,20 +44,20 @@ class PasswordReset extends Component {
 
   userIconStyle() {
     document.getElementById('userIcon').style.backgroundImage =
-      'url(\'../../Assets/hdpi/login_oragnge.png\')';
+      "url('../../Assets/hdpi/login_oragnge.png')";
   }
   userIconDisableStyle() {
     document.getElementById('userIcon').style.backgroundImage =
-      'url(\'../../Assets/hdpi/login_disable.png\')';
+      "url('../../Assets/hdpi/login_disable.png')";
   }
 
   passwordIconStyle() {
     document.getElementById('passwordIcon').style.backgroundImage =
-      'url(\'../../Assets/hdpi/password_orange.png\')';
+      "url('../../Assets/hdpi/password_orange.png')";
   }
   passwordIconDisableStyle() {
     document.getElementById('passwordIcon').style.backgroundImage =
-      'url(\'../../Assets/hdpi/password_disable.png\')';
+      "url('../../Assets/hdpi/password_disable.png')";
   }
   togglePassword = () => {
     var x = document.getElementById('password');
@@ -102,7 +102,6 @@ class PasswordReset extends Component {
           <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container content-align--middle">
             <div className="card card-border-radius">
               <div className="col-12 sign-in--text">
-                <span className="text-style-1">-</span>
                 <span className="sign-in-text--padding">Reset Password</span>
               </div>
 
