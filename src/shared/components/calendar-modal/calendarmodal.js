@@ -80,6 +80,8 @@ class CalendarModal extends Component {
         tId: this.props.teacherData.userId,
         tStatus: true,
         status: -1,
+        reqForReSchedule: 0,
+        reschedule: 0,
         comment: [{
           "by": loggedInUSer.user.uid,
           "date": createdAt,

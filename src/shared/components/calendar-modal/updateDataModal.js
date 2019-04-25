@@ -70,6 +70,8 @@ class CalendarModal extends Component {
         scheduleDate: data.datetime,
         duration: data.duration,
         status: -1,
+        reqForReSchedule: 1,
+        reschedule: 0,
         comment: [{
           "by": loggedInUSer.user.uid,
           "date": createdAt,
