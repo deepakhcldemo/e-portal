@@ -60,13 +60,7 @@ class Student extends Component {
 
     return (
       <div className="container-fluid">
-        <div className="row">
-          <div className="col-12 container--margin-bottom">
-            <HeaderHome
-              headeTitle="Student Dashboard"
-            />
-          </div>
-        </div>
+        <HeaderHome headeTitle="Student Dashboard" />
 
         <div className="content-container">
           {bannerRows.length > 0 && (
@@ -84,8 +78,8 @@ class Student extends Component {
             />
           )}
 
-        <div className="col-12 content-container--background">&nbsp;</div>
-        <div className="col-12 content-container--background">&nbsp;</div>
+          <div className="col-12 content-container--background">&nbsp;</div>
+          <div className="col-12 content-container--background">&nbsp;</div>
           <RecentVideo
             isNotVisibleVideoMeta={true}
             carousellistNewlyItems={notifications}
