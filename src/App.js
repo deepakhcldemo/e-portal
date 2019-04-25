@@ -24,9 +24,12 @@ import Video from './views/Teacher/Video';
 /* import NotificationsDetails from './views/Teacher/Notification/notificationsDetails';
 import NotificationsDescription from './views/Teacher/Notification/notificationsDescription';
  */
+import NotificationsDescription from './views/Teacher/Notification/notificationsDescription';
+
 import Student from './views/Student/index';
 /* import StudentNotificationsDetails from './views/Student/Notification/notificationsDetails';
 import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription'; */
+import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription';
 
 /* import NotificationfromTeacher from './views/Student/NotifyStudent/notificationfromTeacher';
 import NotificationFullDetails from './views/Student/NotifyStudent/notificationFullDetails'; */
@@ -65,7 +68,7 @@ class App extends Component {
     }
   }
   render() {
-    
+
     return (
       <div>
         {this.props.spinnerStatus ? (
@@ -88,7 +91,7 @@ class App extends Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/home" component={Home} />
           {/* <Route exact path="/home/teacher/:id" component={teacherDetails} />  */}
-          <Route exact path="/home/teacher/:id" render={(props) => <TeacherDetails {...props} />}/> 
+          <Route exact path="/home/teacher/:id" render={(props) => <TeacherDetails {...props} />} />
           <Route exact path="/contactus" component={ContactUs} />
           <Route exact path="/aboutus" component={AboutUs} />
           <Route exact path="/resetPassword" component={PasswordReset} />
@@ -102,10 +105,12 @@ class App extends Component {
           <PrivateRoute path="/category" component={Category} exact />
           <PrivateRoute path="/teacher" component={Teacher} exact />
           <PrivateRoute path="/teacher/videos" component={Video} exact />
-         {/* <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
+
+          <PrivateRoute path="/teacher/notificationsDescription/:nid" component={NotificationsDescription} />
+          <PrivateRoute path="/student/notificationsDescription/:sid" component={StudentNotificationsDescription} />
+          {/* <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
           <Route path="/student/notificationsDetails" component={StudentNotificationsDetails} />
-          <Route path="/teacher/notificationsDescription/:nid" component={NotificationsDescription} />
-          <Route path="/student/notificationsDescription/:sid" component={StudentNotificationsDescription} />
+          
 
           <PrivateRoute
             path="/student/teacher"
@@ -117,8 +122,8 @@ class App extends Component {
             component={Notification}
             exact
           /> */}
-            
-           {/* <PrivateRoute
+
+          {/* <PrivateRoute
             path="/student/notificationfromTeacher"
             component={NotificationfromTeacher}
             exact
@@ -128,12 +133,12 @@ class App extends Component {
             component={NotificationFullDetails}
             exact
           /> */}
-             <PrivateRoute
+          <PrivateRoute
             path="/notification"
             component={Notification}
             exact
           />
-             {/* <PrivateRoute
+          {/* <PrivateRoute
             path="/teacher/teacherNotificationFulldetails"
             component={TeacherNotificationFulldetails}
             exact

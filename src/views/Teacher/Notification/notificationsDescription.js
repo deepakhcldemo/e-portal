@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import NavBar from '../../../shared/components/Navbar';
-import { saveChatNotificationDetails, udpateChatNotificationDetails, getNotificationDataFromNid } from '../../../database/dal/firebase/chatNotificationDal';
+import { udpateChatNotificationDetails, getNotificationDataFromNid } from '../../../database/dal/firebase/chatNotificationDal';
 import { getNotification, getTeachers, getStudents } from './notificationAction';
 
 import UpdateDataModal from '../../../shared/components/calendar-modal/updateDataModal';
@@ -20,19 +20,15 @@ class notificationsDescription extends Component {
         getNotificationDataFromNid(this.props.match.params.nid).then(querySnapshot => {
             querySnapshot.forEach(doc => {
                 user = doc.data();
-                console.log("getNotificationDataFromNid", user)
+
                 if (doc.exists) {
                     this.setState({
                         notificationData: user
                     });
-
-
                 }
             });
         });
-        //this.props.getNotification(this.props.match.params.nid);
-        //this.props.getTeachers(this.props.match.params.nid);
-        //this.props.getStudents(this.props.match.params.nid);
+
     }
 
 
@@ -98,37 +94,12 @@ class notificationsDescription extends Component {
     }
 
     handleBack = () => {
-        this.props.history.push("/teacher/notificationsDetails");
+        this.props.history.push("/notification");
     }
 
 
     render() {
         const { notificationData } = this.state;
-        console.log("Notification data Student Description => ", notificationData)
-        console.log("Notification Comment Data ---------", notificationData.comment)
-        if (notificationData.comment != null) {
-            Object.keys(notificationData.comment).map(notifyData => {
-                //Object.keys(this.props.notificationDetails[notifyData].comment).map(data => {
-                console.log("---notifyData----", notificationData.comment[notifyData].details)
-                // })
-
-            })
-        }
-        // const datas = this.props.studentDetails
-        //console.log("Student Details => ", this.getStudentData());
-        // datas.map(data => {
-        //     console.log(data)
-        // })
-        // if (this.props.studentDetails != null) {
-        //     this.props.studentDetails.map(data => {
-        //         console.log(data)
-        //     })
-        // }
-
-        //console.log("Student Details => ", this.props.studentDetails)
-
-
-
         const { open } = this.state;
         //console.log(this.props.match.params.nid)
         return (
@@ -164,24 +135,16 @@ class notificationsDescription extends Component {
 
                                                 <button onClick={this.handleBack} type="button" className="btn btn-primary" data-dismiss="modal">Back</button>
 
-                                                {(notificationData.paymentStatus == false && notificationData.status == -1) ? <button onClick={() => this.handleAccept(notificationData.nId)} type="button" className="btn btn-success" data-dismiss="modal">Accept</button> : null}
+                                                {(notificationData.paymentStatus === false && notificationData.status === -1) ? <button onClick={() => this.handleAccept(notificationData.nId)} type="button" className="btn btn-success" data-dismiss="modal">Accept</button> : null}
 
 
-                                                {(notificationData.paymentStatus == false && notificationData.status == -1) ? <button onClick={() => this.handleReject(notificationData.nId)} type="button" className="btn btn-success" data-dismiss="modal">Reject</button> : null}
+                                                {(notificationData.paymentStatus === false && notificationData.status === -1) ? <button onClick={() => this.handleReject(notificationData.nId)} type="button" className="btn btn-danger" data-dismiss="modal">Reject</button> : null}
 
-                                                {(notificationData.paymentStatus == false && notificationData.status == -1) ? <button onClick={() => this.wrapperFunction(notificationData.nId)} type="button" className="btn btn-success" data-dismiss="modal">Discuss on Time</button> : null}
+                                                {(notificationData.paymentStatus === false && notificationData.status === -1) ? <button onClick={() => this.wrapperFunction(notificationData.nId)} type="button" className="btn btn-warning" data-dismiss="modal">Discuss on Time</button> : null}
 
-                                                {/* <button onClick={() => this.handleAccept(this.props.match.params.nid)} type="button" className="btn btn-success" data-dismiss="modal">Accept</button>
 
-                                                <button onClick={() => this.handleReject(this.props.match.params.nid)} type="button" className="btn btn-danger" data-dismiss="modal">Reject</button>
-
-                                                <button onClick={() => this.wrapperFunction(this.props.match.params.nid)} type="button" className="btn btn-warning" data-dismiss="modal">Discuss on Time</button> */}
 
                                             </div>
-
-
-
-
 
                                             <div>
                                                 <UpdateDataModal notificationId={this.state.studentData} modalState={this.state.calendarModal} closeCalendarModal={this.closeCalendarModal} classes="calendar-modal"></UpdateDataModal>
