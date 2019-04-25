@@ -1,24 +1,26 @@
-import React, { Component } from "react";
-import HeaderHome from "../../components/layout/header/HeaderHome";
-import { connect } from "react-redux";
-import CategoryItem from "../CategoryItem";
+import React, { Component } from 'react';
+import HeaderHome from '../../components/layout/header/HeaderHome';
+import { connect } from 'react-redux';
+import CategoryItem from '../CategoryItem';
 import {
   getBannerFromDB,
   getCurriculumFromDB,
   getTeacherFromDB,
   getFeedbackFromDB,
   getUserProfileFromDB
-} from "./../../database/dal/firebase/homeDal";
-import TopTutor from "../../components/topTutor/TopTutor";
-import RecentVideo from "../../components/recentVideo/RecentVideo";
-import StudentFeedback from "../../components/studentFeedback/StudentFeedback";
-import Banner from "../../components/banner/Banner";
-import GLOBAL_VARIABLES from "../../config/config";
+} from './../../database/dal/firebase/homeDal';
+import TopTutor from '../../components/topTutor/TopTutor';
+import * as actionTypes from '../../spinnerStore/actions';
+import RecentVideo from '../../components/recentVideo/RecentVideo';
+import StudentFeedback from '../../components/studentFeedback/StudentFeedback';
+import Banner from '../../components/banner/Banner';
+import GLOBAL_VARIABLES from '../../config/config';
 // import { zipRequestDispatch } from '../../shared/library/ZipcodesByRadius';
 
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.props.setSpinnerStatus(true);
     this.state = {
       bannerRows: [],
       carouselTop10Items: [],
@@ -77,18 +79,24 @@ class Home extends Component {
       let tempArr = {};
       let feedbackData = [];
       querySnapshot.forEach(doc => {
-        getUserProfileFromDB(doc.data().user_id).onSnapshot(querySnapshot => {
-          querySnapshot.forEach(profileData => {
-            tempArr["profileData"] = profileData.data();
-            tempArr["feedback"] = doc.data();
+        getUserProfileFromDB(doc.data().user_id).onSnapshot(
+          querySnapshot => {
+            querySnapshot.forEach(profileData => {
+              tempArr['profileData'] = profileData.data();
+              tempArr['feedback'] = doc.data();
 
-            feedbackData.push(tempArr);
-            this.setState({
-              studentsReview: feedbackData
+              feedbackData.push(tempArr);
+              this.setState({
+                studentsReview: feedbackData
+              });
+              tempArr = {};
             });
-            tempArr = {};
-          });
-        });
+            this.props.setSpinnerStatus(false);
+          },
+          error => {
+            this.props.setSpinnerStatus(false);
+          }
+        );
       });
     });
   };
@@ -148,7 +156,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    setSpinnerStatus: value => {
+      dispatch({ type: actionTypes.SPINNER_STATUS, payload: value });
+    }
+  };
 };
 export default connect(
   mapStateToProps,

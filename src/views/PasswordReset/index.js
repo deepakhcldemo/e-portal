@@ -16,7 +16,7 @@ let userIcon = {
   right: '12px',
   top: '12px',
   zIndex: '10',
-  backgroundImage: 'url(\'../../Assets/hdpi/login_disable.png\')',
+  backgroundImage: "url('../../Assets/hdpi/login_disable.png')",
   backgroundPosition: 'center',
   backgroundSize: 'cover',
   backgroundRepeat: 'no-repeat'
@@ -44,20 +44,20 @@ class PasswordReset extends Component {
 
   userIconStyle() {
     document.getElementById('userIcon').style.backgroundImage =
-      'url(\'../../Assets/hdpi/login_oragnge.png\')';
+      "url('../../Assets/hdpi/login_oragnge.png')";
   }
   userIconDisableStyle() {
     document.getElementById('userIcon').style.backgroundImage =
-      'url(\'../../Assets/hdpi/login_disable.png\')';
+      "url('../../Assets/hdpi/login_disable.png')";
   }
 
   passwordIconStyle() {
     document.getElementById('passwordIcon').style.backgroundImage =
-      'url(\'../../Assets/hdpi/password_orange.png\')';
+      "url('../../Assets/hdpi/password_orange.png')";
   }
   passwordIconDisableStyle() {
     document.getElementById('passwordIcon').style.backgroundImage =
-      'url(\'../../Assets/hdpi/password_disable.png\')';
+      "url('../../Assets/hdpi/password_disable.png')";
   }
   togglePassword = () => {
     var x = document.getElementById('password');
@@ -75,13 +75,16 @@ class PasswordReset extends Component {
   };
 
   resetPassword = () => {
+    this.props.setSpinnerStatus(true);
     this.setState({ submitted: true });
     recoverPassword(this.state.username)
       .then(() => {
+        this.props.setSpinnerStatus(false);
         toastr.success('Password Reset Link Sent Successfully');
         this.props.history.push('/login');
       })
       .catch(error => {
+        this.props.setSpinnerStatus(false);
         this.setState({ username: '' });
         toastr.error('User Not Found. Please Enter Registered Email ID');
       });
@@ -97,12 +100,11 @@ class PasswordReset extends Component {
 
     const { username, submitted } = this.state;
     return (
-      <div className="container-background">
+      <div>
         <div className="row row-without--margin">
           <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container content-align--middle">
             <div className="card card-border-radius">
               <div className="col-12 sign-in--text">
-                <span className="text-style-1">-</span>
                 <span className="sign-in-text--padding">Reset Password</span>
               </div>
 
@@ -115,7 +117,9 @@ class PasswordReset extends Component {
                     'form-group' + (submitted && !username ? ' has-error' : '')
                   }
                 >
-                  <label htmlFor="username">Enter Registered Email ID</label>
+                  <label className="label-color" htmlFor="username">
+                    Enter Registered Email ID
+                  </label>
                   <div className="input-group">
                     <input
                       type="email"
@@ -172,19 +176,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: componentState => {
-      console.log('call', componentState);
-
-      dispatch(
-        loginAction.loginRequestDispatch({
-          userName: componentState.username,
-          password: componentState.password
-        })
-      );
-    },
-
-    openPDFModal: () => dispatch({ type: 'open' }),
-
     setSpinnerStatus: val => {
       dispatch({ type: actionTypes.SPINNER_STATUS, payload: val });
     }

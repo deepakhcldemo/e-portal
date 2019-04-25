@@ -11,62 +11,72 @@ import RecentVideo from "../../components/recentVideo/RecentVideo";
 import {
   getBannerFromDB,
   getCurriculumFromDB,
-  getReviewContentFromDB  
+  getReviewContentFromDB
 } from "./../../database/dal/firebase/curriculumDal";
 
 import "./teacher.scss";
 
 class Teacher extends Component {
- 
   state = {
-    userDetails: '',
-    bannerData: '',
+    userDetails: "",
+    bannerData: "",
     myContent: [],
     reviewedContent: [],
     pendingContent: []
-  }
-  
+  };
+
   componentWillMount = () => {
     this.setState({
-        userDetails: JSON.parse(localStorage.getItem('userProfile'))
-    })
-}
+      userDetails: JSON.parse(localStorage.getItem("userProfile"))
+    });
+  };
   componentDidMount = () => {
     getBannerFromDB().then(querySnapshot => {
       let bannerData = [];
       querySnapshot.forEach(doc => {
         bannerData.push(doc.data());
       });
-      this.setState({bannerData});
+      this.setState({ bannerData });
     });
 
-    getCurriculumFromDB(this.state.userDetails.userId).onSnapshot(querySnapshot => {
-      let myContent = [];
-      querySnapshot.forEach(doc => {
-        myContent.push(doc.data());
-      });
-        this.setState({myContent});
-    });
-    this.getReviewContent(this.state.userDetails.userId, true, 'reviewedContent')
-    this.getReviewContent(this.state.userDetails.userId, true, 'pendingContent')
+    getCurriculumFromDB(this.state.userDetails.userId).onSnapshot(
+      querySnapshot => {
+        let myContent = [];
+        querySnapshot.forEach(doc => {
+          myContent.push(doc.data());
+        });
+        this.setState({ myContent });
+      }
+    );
+    this.getReviewContent(
+      this.state.userDetails.userId,
+      true,
+      "reviewedContent"
+    );
+    this.getReviewContent(
+      this.state.userDetails.userId,
+      true,
+      "pendingContent"
+    );
   };
 
-  getReviewContent = (userId,status,state) => {
+  getReviewContent = (userId, status, state) => {
     getReviewContentFromDB(userId, status).onSnapshot(querySnapshot => {
       let content = [];
       querySnapshot.forEach(doc => {
-        console.log(doc.data())
         content.push(doc.data());
       });
-      this.setState({[state]: content});
-    })
-  }
+      this.setState({ [state]: content });
+    });
+  };
 
   render = () => {
-    const { bannerData, myContent, reviewedContent, pendingContent } = this.state;
-   /*  console.log(myContent);
-    console.log(reviewedContent)
-    console.log(pendingContent) */
+    const {
+      bannerData,
+      myContent,
+      reviewedContent,
+      pendingContent
+    } = this.state;
     return (
       <div className="container-fluid">
         <div className="row">

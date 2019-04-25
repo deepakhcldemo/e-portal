@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 //import GLOBAL_VARIABLES from '../../config/config';
 import HeaderHome from '../../../components/layout/header/HeaderHome';
 import Navbar from './../../../shared/components/Navbar';
 import { getTeachersBasedOnCateogy } from './searchTeacherAction';
 // import Navigation from '../Navigation/Navigation';
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 // import Select from 'react-select';
-import { getAllCategory } from '../../../database/dal/firebase/categoryDal';
+import { getAllCategory } from "../../../database/dal/firebase/categoryDal";
 
-import Multiselect from 'multiselect-dropdown-react';
-import './SearchTeacher.css';
+import Multiselect from "multiselect-dropdown-react";
+import "./SearchTeacher.css";
 
-import CalendarModal from '../../../shared/components/calendar-modal/calendarmodal';
-import ListContainer from '../../../components/listContainer/ListContainer';
-import { zipRequestDispatch } from '../../../shared/library/ZipcodesByRadius';
+import CalendarModal from "../../../shared/components/calendar-modal/calendarmodal";
+import ListContainer from "../../../components/listContainer/ListContainer";
+import { zipRequestDispatch } from "../../../shared/library/ZipcodesByRadius";
 
 class SearchTeacher extends Component {
   constructor(props) {
@@ -21,14 +21,15 @@ class SearchTeacher extends Component {
     this.state = {
       selectedOption: null,
       searchParameter: [],
-      placeHolderValue: '',
+      placeHolderValue: "",
       calendarModal: false,
-      searchValue: '',
+      searchValue: "",
       filtredTeacherRecord: [],
-      showValidationMessage: '',
-      noRecordMessage: 'Search for your teacher here',
+      showValidationMessage: "",
+      noRecordMessage: "Search for your teacher here",
       categoryList: [],
-      selectedSubject: ''
+      selectedSubject: "",
+      teacherData: {}
     };
     this.handleChange = this.handleChange.bind(this);
     this.getSerachParameter = this.getSerachParameter.bind(this);
@@ -38,7 +39,7 @@ class SearchTeacher extends Component {
 
   componentDidMount() {
     const self = this;
-    this.props.getTeachersBasedOnZipcode('85001');
+    this.props.getTeachersBasedOnZipcode("85001");
     // console.log(this.props, 'this.porps in componentWill');
     getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
@@ -52,14 +53,14 @@ class SearchTeacher extends Component {
             selectedSubject: self.props.selectedSubjectFromHome
           });
         } else {
-          this.props.getTeachersBasedOnCateogy(subjects['0']);
+          this.props.getTeachersBasedOnCateogy(subjects["0"]);
         }
       });
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getSerachParameter(nextProps, 'defalutSubjectSelected');
+    this.getSerachParameter(nextProps, "defalutSubjectSelected");
   }
 
   handleChange = selectedOption => {
@@ -80,25 +81,25 @@ class SearchTeacher extends Component {
   closeCalendarModal = () => {
     this.setState({ calendarModal: false });
   };
-  
-  wrapperFunction = (data) => {
-        this.openCalendarModal();
-        this.setTeacherData(data);
-    }
-   
-    setTeacherData = (data) => {
-        this.setState({ teacherData: data });
-    }
+
+  wrapperFunction = data => {
+    this.openCalendarModal();
+    this.setTeacherData(data);
+  };
+
+  setTeacherData = data => {
+    this.setState({ teacherData: data });
+  };
 
   getSerachParameter = (searchParameter, defalutSubjectSelected) => {
     // console.log('searchParameter', searchParameter);
-    if (defalutSubjectSelected !== 'defalutSubjectSelected') {
+    if (defalutSubjectSelected !== "defalutSubjectSelected") {
       const lowerCase = this.state.searchValue.toLowerCase();
       const tempArray = [];
       this.props.TeacherList.forEach(teacher => {
         this.state.searchParameter.forEach(searchParameter => {
           if (
-            searchParameter === 'Name' &&
+            searchParameter === "Name" &&
             teacher.subject === this.state.selectedSubject
           ) {
             const teacherFirsnameLower = teacher.firstName.toLowerCase();
@@ -112,7 +113,7 @@ class SearchTeacher extends Component {
           }
 
           if (
-            searchParameter === 'Location' &&
+            searchParameter === "Location" &&
             teacher.subject === this.state.selectedSubject
           ) {
             const teacherCityName = teacher.city.toLowerCase();
@@ -127,7 +128,7 @@ class SearchTeacher extends Component {
             }
           }
           if (
-            searchParameter === 'currency' &&
+            searchParameter === "currency" &&
             teacher.subject === this.state.selectedSubject
           ) {
             if (teacher.currency) {
@@ -148,7 +149,7 @@ class SearchTeacher extends Component {
         filtredTeacherRecord: searchParameter.TeacherList
       });
     }
-    
+
     //this.props.getTeachersBasedOnCateogy(this.state.selectedSubject);
   };
 
@@ -199,20 +200,20 @@ class SearchTeacher extends Component {
     });
     const searctTeacherData = [
       {
-        name: 'Name',
-        value: 'Name'
+        name: "Name",
+        value: "Name"
       },
       {
-        name: 'Location',
-        value: 'Location'
+        name: "Location",
+        value: "Location"
       },
       {
-        name: 'Rating',
-        value: 'rating'
+        name: "Rating",
+        value: "rating"
       },
       {
-        name: 'Nearby location',
-        value: 'nearByLocation'
+        name: "Nearby location",
+        value: "nearByLocation"
       }
     ];
     // console.log(this.state.filtredTeacherRecord,'this.state.filtredTeacherRecord in search teacher');
@@ -255,7 +256,7 @@ class SearchTeacher extends Component {
                     className="form-control"
                     value={this.state.searchValue}
                     onChange={value => this.setSaerchValue(value)}
-                    placeholder={'Search for..' + this.state.placeHolderValue}
+                    placeholder={"Search for.." + this.state.placeHolderValue}
                     name="srch-term"
                     id="srch-term"
                   />
@@ -274,10 +275,18 @@ class SearchTeacher extends Component {
                     </div> */}
           <div>
             {this.state.filtredTeacherRecord && (
-              <ListContainer
-                listType="Teacher"
-                itemList={this.state.filtredTeacherRecord}
-              />
+              <div>
+                <ListContainer
+                  listType="Teacher"
+                  itemList={this.state.filtredTeacherRecord}
+                />
+                <CalendarModal
+                  teacherData={this.state.teacherData}
+                  modalState={this.state.calendarModal}
+                  closeCalendarModal={this.closeCalendarModal}
+                  classes="calendar-modal"
+                />
+              </div>
             )}
             {this.state.filtredTeacherRecord.length === 0 && (
               <div className="col-12 text-center">
@@ -286,15 +295,9 @@ class SearchTeacher extends Component {
             )}
           </div>
         </div>
-        <div>
-          <CalendarModal
-		   teacherData={this.state.teacherData}
-            modalState={this.state.calendarModal}
-            closeCalendarModal={this.closeCalendarModal}
-            classes="calendar-modal"
-          />
-        </div>
+        <div className="col-12">
         <Navbar />
+        </div>
       </div>
     );
   }

@@ -20,8 +20,19 @@
   padding-bottom: 20px;
 }
 
+.panel-title {
+  color: white;
+}
+
+.profile-container--style {
+  margin: auto;
+  padding: 20px;
+  margin-bottom: 20px;
+  background: #4b4e68 !important;
+}
+
 .panel-default {
-  padding-top: 56px;
+  padding-top: 80px;
   height: 100%;
   width: 100%;
 }

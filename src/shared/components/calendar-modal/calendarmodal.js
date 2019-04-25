@@ -1,18 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 //import { connect } from "react-redux"
-import Modal from 'react-responsive-modal';
+import Modal from "react-responsive-modal";
 // import Datetime from 'react-datetime';
 // import Select from 'react-select';
-import Joi from "joi-browser"
+import Joi from "joi-browser";
 import Input from "./helper/input";
 import TextArea from "./helper/textArea";
 //import { getNotification } from './calendarAction';
-import { saveChatNotificationDetails } from '../../../database/dal/firebase/chatNotificationDal';
-
-
+import { saveChatNotificationDetails } from "../../../database/dal/firebase/chatNotificationDal";
 
 class CalendarModal extends Component {
-
   state = {
     data: { datetime: "", duration: "", message: "" },
     errors: {}
@@ -48,7 +45,8 @@ class CalendarModal extends Component {
 
   randomString(length) {
     var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var possible =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     for (var i = 0; i < length; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
@@ -56,7 +54,7 @@ class CalendarModal extends Component {
   }
 
   handleSubmit = e => {
-    const randomString = this.randomString(20)
+    const randomString = this.randomString(20);
     e.preventDefault();
 
     const errors = this.validate();
@@ -66,7 +64,7 @@ class CalendarModal extends Component {
     const { data } = this.state;
 
     const createdAt = new Date();
-    const loggedInUSer = JSON.parse(localStorage.getItem('user'));
+    const loggedInUSer = JSON.parse(localStorage.getItem("user"));
     if (loggedInUSer) {
       const chatNotificationDetails = {
         nId: randomString,
@@ -82,19 +80,19 @@ class CalendarModal extends Component {
         status: -1,
         reqForReSchedule: false,
         // reschedule: false,
-        comment: [{
-          "by": loggedInUSer.user.uid,
-          "date": createdAt,
-          "details": data.message
-        }
-
+        comment: [
+          {
+            by: loggedInUSer.user.uid,
+            date: createdAt,
+            details: data.message
+          }
         ],
         scheduleDate: data.datetime,
         duration: data.duration
-      }
+      };
       saveChatNotificationDetails({
         ...chatNotificationDetails
-      })
+      });
       //this.props.history.push('/dashboard');
       //model close display message success or failure
     }
@@ -123,18 +121,19 @@ class CalendarModal extends Component {
     this.props.closeCalendarModal();
   };
 
-
   // handleChange = e => {
   //   const { name, value } = e.target;
   //   console.log(value)
   //   this.setState({ [name]: value });
   // };firstName
 
-
   render() {
     //console.log("RANDOM GENERATE STRING => ", this.randomString(20));
-    const { /* userId: teacherId, */ firstName, lastName } = this.props.teacherData;
-    console.log("get All Notification => ", this.props.notificationDetails)
+    const {
+      /* userId: teacherId, */ firstName,
+      lastName
+    } = this.props.teacherData;
+    console.log("get All Notification => ", this.props.notificationDetails);
     /* const options = [
       { value: '-1', label: 'Select' },
       { value: '15m', label: '15 Minuts' },
@@ -148,28 +147,31 @@ class CalendarModal extends Component {
       { value: '0', label: 'Rejected' }
     ]; */
 
-
     const openModal = this.props.modalState;
     return (
       <div>
-        <Modal open={openModal} onClose={this.onCloseModal} classNames={{ modal: this.props.classes }}>
+        <Modal
+          open={openModal}
+          onClose={this.onCloseModal}
+          classNames={{ modal: this.props.classes }}
+        >
           <form onSubmit={this.handleSubmit}>
             <div className="modal-content">
               <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 className="modal-title" id="myModalLabel">Send Chat Notification to {firstName} {lastName} </h4>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-hidden="true"
+                />
+                <h4 className="modal-title" id="myModalLabel">
+                  Send Chat Notification to {firstName} {lastName}{" "}
+                </h4>
               </div>
               <div className="modal-body">
-
-
-
                 <div className="row">
-                  <div className="col-md-6 ">
-                    Pick Date and Time
-</div>
-                  <div className="col-md-6">
-                    Select a duration
-</div>
+                  <div className="col-md-6 ">Pick Date and Time</div>
+                  <div className="col-md-6">Select a duration</div>
                 </div>
                 <div className="row">
                   <div className="col-md-6">
@@ -208,11 +210,7 @@ class CalendarModal extends Component {
                   </div>
                 </div>
                 <div className="row">
-
-
-                  <div className="col-md-12">
-                    Message
-</div>
+                  <div className="col-md-12">Message</div>
                   <div className="col-md-12">
                     <TextArea
                       value={this.state.message}
@@ -220,36 +218,31 @@ class CalendarModal extends Component {
                       name="message"
                       className="form-control"
                       errorMessage={this.state.errors.message}
-                      placeHolder="Message" />
-
+                      placeHolder="Message"
+                    />
                   </div>
-
-
-
                 </div>
-
-
-
-
               </div>
               <div className="modal-footer">
+                <button
+                  type="submit"
+                  className="btn btn-success"
+                  data-dismiss="modal"
+                >
+                  Request
+                </button>
 
-                <button type="submit" className="btn btn-success" data-dismiss="modal">Request</button>
-
-                <input onClick={this.onCloseModal} type="button" className="btn btn-success" value="Cancel" />
-
+                <input
+                  onClick={this.onCloseModal}
+                  type="button"
+                  className="btn btn-success"
+                  value="Cancel"
+                />
               </div>
             </div>
-
-
-
-
-
-
-
           </form>
         </Modal>
-      </div >
+      </div>
     );
   }
 }
