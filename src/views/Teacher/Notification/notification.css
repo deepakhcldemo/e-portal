@@ -1,0 +1,15 @@
+.notification-container {
+  background-color: #333546 !important;
+  display: flex !important ;
+  flex-direction: row !important;
+  justify-content: center !important;
+}
+.notification-cardbody {
+  flex: 1 1 auto;
+  padding: 1.25rem;
+  position: relative;
+  max-width: max-content;
+}
+.notification-card {
+  background-color: #4b4e68 !important;
+}
