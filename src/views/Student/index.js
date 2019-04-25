@@ -10,7 +10,7 @@ import RecentVideo from '../../components/recentVideo/RecentVideo';
 import { STUDENT_DASHBOARD_LINKS } from './../../constant/Constant';
 //import Navigation from './Navigation/Navigation';
 // import Slider from "../../components/slider/Slider";
-import { getTeacher, getCurriculum, getNotification } from './action';
+import { getTeacher, getCurriculum, /* getNotification */ } from './action';
 import { getBannerFromDB } from '../../database/dal/firebase/studentDal';
 import { getTeacherFromDB } from './../../database/dal/firebase/homeDal';
 import Banner from '../../components/banner/Banner';

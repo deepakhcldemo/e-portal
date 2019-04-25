@@ -13,6 +13,7 @@ class NotificationsDetails extends Component {
     };
 
     componentDidMount() {
+        console.log('hi');
         const loggedInUSer = JSON.parse(localStorage.getItem('user'));
         //console.log("loggedInUSer deaatatat", loggedInUSer.user.uid)
         this.props.getTeacherNotification(loggedInUSer.user.uid);
@@ -58,10 +59,9 @@ class NotificationsDetails extends Component {
                         <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
                             <div className="card">
                                 <div className="card-body">
-                                    <h4>Notification</h4><hr />
-                                    {Object.keys(notificationDetails).map((notificationDetail) => (
+                                    {Object.keys(notificationDetails).map((notificationDetail, ind) => (
                                         //console.log(notificationDetails[notificationDetail].charge)
-                                        <Link to={`/teacher/notificationsDescription/` + notificationDetails[notificationDetail].nId} activeClassName="active">
+                                        <Link key={ind} to={`/teacher/notificationsDescription/` + notificationDetails[notificationDetail].nId}>
                                             <div className={this.getClassName(notificationDetails[notificationDetail].status)}>
                                                 <div style={{ float: "left" }}><img src="../Assets/hdpi/userProfile.png" name="aboutme" width="70" height="50" border="0" className="img-circle" /></div>
                                                 <div className="container" onClick={this.onOpenModal} style={{ cursor: "pointer" }}>

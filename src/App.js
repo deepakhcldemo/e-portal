@@ -33,7 +33,7 @@ import NotificationFullDetails from './views/Student/NotifyStudent/notificationF
 import Notification from './views/Notification';
 // import TeacherNotificationFulldetails from './views/Teacher/NotifyTeacher/teacherNotificationFulldetails';
 
-import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
+// import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
 
 import ContactUs from './views/ContactUs';
 import AboutUs from './views/AboutUs';

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 //import { connect } from "react-redux"
 import Modal from 'react-responsive-modal';
-import Datetime from 'react-datetime';
-import Select from 'react-select';
+// import Datetime from 'react-datetime';
+// import Select from 'react-select';
 import Joi from "joi-browser"
 import Input from "./helper/input";
 import TextArea from "./helper/textArea";
@@ -81,7 +81,7 @@ class CalendarModal extends Component {
         tStatus: true,
         status: -1,
         reqForReSchedule: false,
-        reschedule: false,
+        // reschedule: false,
         comment: [{
           "by": loggedInUSer.user.uid,
           "date": createdAt,
@@ -115,9 +115,9 @@ class CalendarModal extends Component {
     this.setState({ data, errors });
   };
 
-  constructor(props) {
+  /* constructor(props) {
     super(props);
-  }
+  } */
 
   onCloseModal = () => {
     this.props.closeCalendarModal();
@@ -133,20 +133,20 @@ class CalendarModal extends Component {
 
   render() {
     //console.log("RANDOM GENERATE STRING => ", this.randomString(20));
-    const { userId: teacherId, firstName, lastName } = this.props.teacherData;
+    const { /* userId: teacherId, */ firstName, lastName } = this.props.teacherData;
     console.log("get All Notification => ", this.props.notificationDetails)
-    const options = [
+    /* const options = [
       { value: '-1', label: 'Select' },
       { value: '15m', label: '15 Minuts' },
       { value: '30m', label: '30 Minuts' },
       { value: '1h', label: '1 Hours' }
-    ];
+    ]; */
 
-    const chatStatus = [
+    /* const chatStatus = [
       { value: '-1', label: 'Pending' },
       { value: '1', label: 'Approved' },
       { value: '0', label: 'Rejected' }
-    ];
+    ]; */
 
 
     const openModal = this.props.modalState;
