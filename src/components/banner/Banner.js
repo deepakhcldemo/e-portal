@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import GLOBAL_VARIABLES from "../../config/config";
-import Slider from "react-slick";
+import React, { Component } from 'react';
+import GLOBAL_VARIABLES from '../../config/config';
+import Slider from 'react-slick';
 
 class Banner extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      noOfCarouselImage: ""
+      noOfCarouselImage: ''
     };
   }
 
@@ -22,7 +22,7 @@ class Banner extends Component {
       autoplay: true
     };
 
-    let listAwaitingItems = "";
+    let listAwaitingItems = '';
     if (bannerRows && bannerRows.length > 0) {
       listAwaitingItems = bannerRows.map((bannerRow, index) => (
         <div key={index}>
@@ -33,20 +33,20 @@ class Banner extends Component {
                 src={
                   GLOBAL_VARIABLES.BANNER_PATH +
                   pageName +
-                  "/" +
+                  '/' +
                   bannerRow.banner_image
                 }
                 className="d-block banner"
               />
 
-              <div className="caption-wrapper">
+              {/* <div className="caption-wrapper">
                 <div className="container-fluid">
                   <h1>Free</h1>
                   <h2>Online Courses from experts</h2>
                   <p>We are proud to say that since our opening in 2019</p>
                 </div>
-              </div>
-              </React.Fragment>
+              </div> */}
+            </React.Fragment>
           )}
         </div>
       ));
@@ -57,7 +57,7 @@ class Banner extends Component {
           <div className="col-12 content-container--background col-without--padding">
             <div
               className="banner-container"
-              style={{ background: "#555555", textAlign: "center" }}
+              style={{ background: '#555555', textAlign: 'center' }}
             >
               <Slider {...settingsBanner}>{listAwaitingItems}</Slider>
             </div>
