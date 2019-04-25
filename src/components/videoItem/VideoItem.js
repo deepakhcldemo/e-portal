@@ -31,13 +31,17 @@ class VideoItem extends Component {
           <div className="card">
             <div className="">
               <div className="vd-wrapper col-xs-12">
-                <div onClick={this.handleClick} className="thumb-wrapper">
-                  {videoDetails.thumb && (
-                    <React.Fragment>
-                      <img src={videoDetails.thumb} />
-                      <i className="far fa-play-circle" />
-                    </React.Fragment>
-                  )}
+                <div
+                  onClick={this.handleClick}
+                  className="thumb-wrapper"
+                >
+                {videoDetails.thumb && (
+                  <React.Fragment>
+                    <img src={videoDetails.thumb} alt={videoDetails.title} />
+                    <i className="far fa-play-circle"></i>
+                  </React.Fragment>
+                )}
+                
                 </div>
                 <div className="vd-content user-details--height detail--text">
                   <h6 className="video-title">{videoDetails.title}</h6>

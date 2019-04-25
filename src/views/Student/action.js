@@ -1,6 +1,6 @@
 import {  getTeacherFromDB , getCurriculumFromDB} from '../../database/dal/firebase/homeDal';
 
-import {getNotificationFromDB} from '../../database/dal/firebase/studentDal';
+// import {getNotificationFromDB} from '../../database/dal/firebase/studentDal';
 
 import {getNotificationsFromDB} from '../../database/dal/firebase/studentDal';
 export const getCurriculum = () => {
