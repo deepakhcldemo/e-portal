@@ -14,7 +14,7 @@ class Video extends Component {
     upload: false,
     content: "",
     userDetails: "",
-    filter: "",
+    filter: ""
     //categorySubscriber: ""
   };
 
@@ -34,14 +34,12 @@ class Video extends Component {
         this.setState({ content });
       }
     );
-    getAllCategory().onSnapshot(
-      querySnapshot => {
-        querySnapshot.forEach(doc => {
-          const category = [...doc.data().subjects];
-          this.setState({ category });
-        });
-      }
-    );
+    getAllCategory().onSnapshot(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const category = [...doc.data().subjects];
+        this.setState({ category });
+      });
+    });
   };
 
   /* componentWillUnmount = () => {
@@ -76,60 +74,55 @@ class Video extends Component {
     return (
       <>
         <div className="container-fluid">
-          <div className="row">
-            <div className="col-12">
-              <HeaderHome
-                headeTitle="Teacher Dashboard"
-                dashboardLinks={TEACHER_DASHBOARD_LINKS}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12 main-wrapper">
-              {!this.state.upload && (
-                <>
-                  <Filter
-                    content={this.state.content}
-                    filterContent={this.handleFilter}
-                  />
-                  <TopVideo
-                    heading="My Videos"
-                    videoDetails={
-                      this.state.filter ? this.state.filter : this.state.content
-                    }
-                  >
-                    <button
-                      onClick={this.handleUpload}
-                      className="btn home-header-text-link-status"
-                      title="Upload Video"
-                    >
-                      <i className="fas fa-plus" /> Add Video
-                    </button>
-                  </TopVideo>
-                </>
-              )}
-              {this.state.upload && (
-                <Curriculum
-                  heading="UPLOAD VIDEO"
-                  isUploadThumb={true}
-                  userDetails={this.state.userDetails}
-                  category={this.state.category}
-                  handleError={this.handleError}
-                  handleSuccess={this.handleSuccess}
+          <HeaderHome
+            headeTitle="Teacher Dashboard"
+            dashboardLinks={TEACHER_DASHBOARD_LINKS}
+          />
+
+          <div className="content-container main-wrapper">
+            {!this.state.upload && (
+              <>
+                <Filter
+                  content={this.state.content}
+                  filterContent={this.handleFilter}
+                />
+                <TopVideo
+                  heading="My Videos"
+                  videoDetails={
+                    this.state.filter ? this.state.filter : this.state.content
+                  }
                 >
                   <button
                     onClick={this.handleUpload}
-                    className="btn"
-                    style={{ backgroundColor: "#232838", color: "#fff" }}
-                    title="close"
+                    className="btn home-header-text-link-status"
+                    title="Upload Video"
                   >
-                    Close
+                    <i className="fas fa-plus" /> Add Video
                   </button>
-                </Curriculum>
-              )}
-            </div>
+                </TopVideo>
+              </>
+            )}
+            {this.state.upload && (
+              <Curriculum
+                heading="UPLOAD VIDEO"
+                isUploadThumb={true}
+                userDetails={this.state.userDetails}
+                category={this.state.category}
+                handleError={this.handleError}
+                handleSuccess={this.handleSuccess}
+              >
+                <button
+                  onClick={this.handleUpload}
+                  className="btn"
+                  style={{ backgroundColor: "#232838", color: "#fff" }}
+                  title="close"
+                >
+                  Close
+                </button>
+              </Curriculum>
+            )}
           </div>
-          <div className="row">
+          <div className="col-12">
             <Navbar links={TEACHER_DASHBOARD_LINKS} />
           </div>
         </div>

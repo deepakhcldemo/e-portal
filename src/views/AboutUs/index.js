@@ -3,34 +3,21 @@ import HeaderHome from "../../components/layout/header/HeaderHome";
 import { connect } from "react-redux";
 
 class AboutUs extends Component {
- 
   render() {
     return (
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-12">
-              <HeaderHome headeTitle="AboutUs" />
-            </div>
-            </div>
-            <div className="row">
-              <div className="col-12 content-container">
-                About Us
-            </div>
-          </div>
-        </div>
+      <div className="container-fluid">
+        <HeaderHome headeTitle="AboutUs" />
+        <div className="content-container">About Us</div>
+      </div>
     );
   }
 }
 const mapStateToProps = state => {
-  return {
-    
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-   
-  };
+  return {};
 };
 export default connect(
   mapStateToProps,
