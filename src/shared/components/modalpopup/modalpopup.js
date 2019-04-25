@@ -8,7 +8,6 @@ import Modal from 'react-responsive-modal';
 import { connect } from 'react-redux';
 import { closeModalPopUp } from './modalAction';
 import './modalpopup.css';
-// import { state } from 'fs';
 class ModalPopUp extends Component {
   constructor(props) {
     super(props);

@@ -41,7 +41,6 @@ export const saveFileMetaDataFromDB = (dispatch, fileName, user, doc, fields, ty
                 metaData.src = url
                 db.firestore().collection('curriculum').add(metaData)
                 .then(function(docRef) {
-                    console.log(docRef)
                     dispatch({type: 'SET_DOC_REF', ref: docRef.id})
                 })
                 .catch(function(err) {

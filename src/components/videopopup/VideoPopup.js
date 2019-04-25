@@ -34,7 +34,7 @@ class VideoPopup extends Component {
               <source src={videoDetails.src} type="video/mp4" />
             </video>            
             <div className="video-meta-data">
-                {userDetails && (
+                {(userDetails && videoDetails.rating) && (
                   <span>
                   <small>Your Rating</small>
                     <StarRatingComponent                
@@ -45,19 +45,23 @@ class VideoPopup extends Component {
                     />
                   </span>
                 )}
-                <span>
-                  <small>Overall Rating</small>
-                  <StarRatingComponent
-                    name="rate2"
-                    starCount={5}
-                    value={videoDetails.rating}
-                    editing={false}
-                  />
-                </span>
-                <span>
-                <small>Views</small>
-                  <div className="views">{videoDetails.views}</div>
-                </span>
+                {videoDetails.rating && (
+                  <span>
+                    <small>Overall Rating</small>
+                    <StarRatingComponent
+                      name="rate2"
+                      starCount={5}
+                      value={videoDetails.rating}
+                      editing={false}
+                    />
+                  </span>
+                )}
+                {videoDetails.views && (
+                  <span>
+                  <small>Views</small>
+                    <div className="views">{videoDetails.views}</div>
+                  </span>
+                )}
             </div>
           </Modal>
       )}

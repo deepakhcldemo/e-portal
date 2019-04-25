@@ -8,6 +8,7 @@ export const zipRequestDispatch = (zipcode) => {
             // response => dispatch({type: 'get_jsonp', jsonp: JSON.parse(response.data)})
             response => console.log('---------Data----',response)
         )
+        
             /* if (error) {
                 this.setState({
                     error,

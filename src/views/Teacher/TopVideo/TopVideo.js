@@ -4,6 +4,7 @@ import moment from 'moment';
 import StarRatingComponent from 'react-star-rating-component';
 import VideoPopup from './../../../components/videopopup/VideoPopup'
 import './topvideo.scss'
+import GLOBAL_VARIABLES from "../../../config/config";
 
 class TopVideo extends Component {
 
@@ -39,7 +40,9 @@ class TopVideo extends Component {
 							return (
 								<li className="card" key={index}>
 									<a onClick={() => this.handleClick(videoDetail)} href="#1">
-										<img src={videoDetail.thumb} alt={videoDetail.title} className="img-responsive" height="130px" />
+										<img 
+										src={videoDetail.thumb ? videoDetail.thumb : GLOBAL_VARIABLES.VIDEO_PLACEHOLDER}
+										alt={videoDetail.title} className="img-responsive" height="130px" />
 										<h2>{videoDetail.title}</h2>
 										<i className="fas fa-play-circle"></i>
 										<h6>{videoDetail.date}</h6>

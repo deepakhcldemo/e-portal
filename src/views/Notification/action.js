@@ -6,3 +6,8 @@ export const getNotifications = () => {
     }
 }
 
+
+export const setNotificationDetails = (details) => {
+    return { type: "NOTIFICATIONS_DETAILS", payload: details };
+}
+
