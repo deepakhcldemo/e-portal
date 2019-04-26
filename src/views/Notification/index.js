@@ -16,8 +16,8 @@ import TeacherNotificationDetails from "./../Teacher/Notification/notificationsD
 import NotificationsDetails from "./../Student/Notification/notificationsDetails";
 
 import { setNotificationDetails } from "./action";
-import "./notification.css";
 import { TEACHER_DASHBOARD_LINKS } from "../../constant/Constant";
+import "./notification.css";
 
 // import Modal from 'react-responsive-modal'
 

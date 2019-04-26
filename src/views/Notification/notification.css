@@ -50,3 +50,8 @@
     font-weight: 300;
     color: white;
 }
+
+.alert {
+    width: 100% !important;
+
+}
