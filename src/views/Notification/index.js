@@ -45,6 +45,15 @@ class Notification extends Component {
 
   componentDidMount = () => {
     const { userDetails } = this.state;
+    console.log(
+      "this.props.getNotificationMessage",
+      this.props.getNotificationMessage
+    );
+    if (this.props.getNotificationMessage === "NotificationDetails") {
+      this.setState({
+        key: "notification"
+      });
+    }
     getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(
       querySnapshot => {
         let notificationsList = [];
@@ -137,7 +146,7 @@ class Notification extends Component {
                     {notificationsList &&
                       notificationsList.map((notification, ind) => {
                         return (
-                          <div className="container" key={ind}>
+                          <div className="col-12" key={ind}>
                             <div
                               className={this.notificationStatus(
                                 notification,
@@ -172,8 +181,9 @@ class Notification extends Component {
   };
 }
 const mapStateToProps = state => {
+  console.log("state", state);
   return {
-    //savedNotifications: state.notifyTeacherReducer.notifications
+    getNotificationMessage: state.notificationAcceptREducer.keyForNotification
   };
 };
 const mapDispatchToProps = dispatch => {

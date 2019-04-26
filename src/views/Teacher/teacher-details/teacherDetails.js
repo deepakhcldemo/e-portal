@@ -14,7 +14,8 @@ import { openModalForRequest } from './teacher-details.action';
 import {
   getTeacherDetailFromDB,
   getTeacherRating,
-  saveTeacherRating
+  saveTeacherRating,
+  saveTeacherRatingOnProfile
 } from '../../../database/dal/firebase/teacherDetailDal';
 import { getCurriculumFromDB } from '../../../database/dal/firebase/curriculumDal';
 // import GLOBAL_VARIABLES from '../../../config/config';
@@ -51,61 +52,17 @@ class TeacherDetails extends Component {
     const user = localStorage.getItem('user')
       ? JSON.parse(localStorage.getItem('user'))
       : null;
-
-    /* show rating on the base of existing user has given */
-    getTeacherRating(teacherId).then(doc => {
-      if (doc.exists) {
-        const data = doc.data();
-        const ratings = data.ratings;
-        const nOfUser = ratings.length;
-        // this.setState({totalUser: nOfUser})
-        if (nOfUser > 0) {
-          let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
-
-          if (user) {
-            const userId = user.user.uid;
-            let currentUser = _.filter(
-              ratings,
-              user => user.userId === userId
-            )[0];
-            if (!currentUser) {
-              currentUser = { userId: userId, like: 0, dislike: 0, rating: 0 };
-              ratings.push(currentUser);
-            }
-            data.rating = totalRating;
-            saveTeacherRating(teacherId, data);
-            this.setState({ starRating: Math.round(currentUser.rating) });
-          } else {
-            this.setState({ starRating: totalRating });
-          }
-        } else {
-          if (user) {
-            const userId = user.user.uid;
-            // let currentUser = _.filter(ratings, (user) => user.userId === userId)[0];
-            let newUser = { userId: userId, like: 0, dislike: 0, rating: 0 };
-
-            ratings.push(newUser);
-            let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
-            data.rating = totalRating;
-
-            saveTeacherRating(teacherId, data);
-            this.setState({ starRating: newUser.rating });
-          }
-        }
-      }
-    });
-
-    getTeacherDetailFromDB(teacherId).then(snapshot => {
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        // this.setState({ spinner: false });
-        // Create model
-        this.props.setSpinnerStatus(false);
-        this.setState({ teacherDetails: data });
-        this.getDetails(data);
+      getTeacherDetailFromDB(teacherId).then(snapshot => {
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          // this.setState({ spinner: false });
+          // Create model
+          this.props.setSpinnerStatus(false);
+          this.setState({ teacherDetails: data });
+          this.getDetails(data);
+        });
       });
-    });
-
+      this.handleRating(teacherId, user, 0, 'loadComponent');
     /* Get curriculum videos */
     const userId = user ? user.user.uid : '';
     getCurriculumFromDB(userId).onSnapshot(querySnapshot => {
@@ -138,16 +95,27 @@ class TeacherDetails extends Component {
   getTotalRating(ratings, nOfUser) {
     let rating = 0;
     let totalRating = 0;
+    
     ratings.forEach(user => {
       rating = rating + user.rating;
     });
+    
     if (!rating / nOfUser) {
       totalRating = 0;
     } else {
       totalRating = rating / nOfUser;
     }
+    return Math.round(totalRating);
+  }
 
-    return totalRating;
+  handleNofUserRated(ratings) {
+    let totalRatedUser = 0;
+    ratings.forEach(user => {
+      if (user.rating > 0) {
+        totalRatedUser++;
+      }
+    });
+    return totalRatedUser;
   }
 
   getDetails(data) {
@@ -179,7 +147,9 @@ class TeacherDetails extends Component {
     const user = localStorage.getItem('user')
       ? JSON.parse(localStorage.getItem('user'))
       : null;
-    /* show rating on the base of existing user has given */
+    this.handleRating(teacherId, user, nextValue, null);
+  }
+  handleRating(teacherId, user, nextValue, onComponentLoad) {
     getTeacherRating(teacherId).then(doc => {
       if (doc.exists) {
         const data = doc.data();
@@ -187,24 +157,53 @@ class TeacherDetails extends Component {
         const nOfUser = ratings.length;
 
         if (nOfUser > 0) {
+          let totalRating = this.getTotalRating(ratings, nOfUser);
           if (user) {
             const userId = user.user.uid;
             let currentUser = _.filter(
               ratings,
               user => user.userId === userId
             )[0];
-            let newUser = { userId: '0', like: 0, dislike: 0, rating: 0 };
-            if (currentUser) {
-              currentUser.rating = nextValue;
+            
+            if (onComponentLoad) {
+              if (!currentUser) {
+                currentUser = { userId: userId, like: 0, dislike: 0, rating: 0 };
+                ratings.push(currentUser);
+              }
+              data.rating = totalRating;
+              
+              if (this.state.teacherDetails.hasOwnProperty('rating')) {
+                this.state.teacherDetails.rating = totalRating;
+              }
+              if (this.state.teacherDetails.hasOwnProperty('noOfRatings')) {
+                this.state.teacherDetails.noOfRatings = this.handleNofUserRated(ratings);
+              }
+              
+              saveTeacherRating(teacherId, data);
+              saveTeacherRatingOnProfile(teacherId, this.state.teacherDetails);
+              this.setState({ starRating: Math.round(currentUser.rating) });
+              
             } else {
-              newUser.userId = userId;
-              currentUser = newUser;
-              ratings.push(currentUser);
+              let newUser = { userId: '0', like: 0, dislike: 0, rating: 0 };
+              if (currentUser) {
+                currentUser.rating = nextValue;
+              } else {
+                newUser.userId = userId;
+                currentUser = newUser;
+                ratings.push(currentUser);
+              }
+              data.rating = totalRating;
+              if (this.state.teacherDetails.hasOwnProperty('rating')) {
+                this.state.teacherDetails.rating = totalRating;
+              }
+              if (this.state.teacherDetails.hasOwnProperty('noOfRatings')) {
+                this.state.teacherDetails.noOfRatings = this.handleNofUserRated(ratings);
+              }
+              saveTeacherRating(teacherId, data);
+              saveTeacherRatingOnProfile(teacherId, this.state.teacherDetails);
+              
+              this.setState({ starRating: nextValue });
             }
-            let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
-            data.rating = totalRating;
-            saveTeacherRating(teacherId, data);
-            this.setState({ starRating: nextValue });
           }
         } else {
           if (user) {
@@ -226,7 +225,7 @@ class TeacherDetails extends Component {
               currentUser = newUser;
               ratings.push(currentUser);
             }
-            let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
+            let totalRating = this.getTotalRating(ratings, nOfUser);
             data.rating = totalRating;
 
             saveTeacherRating(teacherId, data);
@@ -237,6 +236,7 @@ class TeacherDetails extends Component {
     });
   }
 
+ 
   openModalForRequest = () => {
     this.props.openModalPopUp();
   };

@@ -13,8 +13,12 @@ export const openModalForAcceptNotification = () => {
     return { type: "OPEN_MODAL_FOR_ACCEPT"};
   };
 
+
+  export const  setKeyForNotificationPage = (notificationDetails) => {
+    return { type: "GO_BACK_TO_NOTIFICATION", payload : notificationDetails};
+  }
+
   export const saveAcceptedNotification = (acceptedNotificationData) => {
-    debugger
     return (dispatch) => {
         saveNotificationAcceptedFromDB(dispatch, acceptedNotificationData);
     }

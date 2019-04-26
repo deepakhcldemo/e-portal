@@ -1,19 +1,47 @@
-.notification-details{
-    margin-top: 72px;
+.notification-details {
+  margin-top: 72px;
 }
 
 .bold {
-    font-weight: bold;
+  font-weight: bold;
 }
 
-.display-upload{
-    display: none;
+.display-upload {
+  display: none;
 }
 
-.teacher-video{
-    text-align : center;
+.teacher-video {
+  text-align: center;
 }
 
-.notification-rejected{
-    text-align: right;
+.notification-rejected {
+  text-align: right;
+}
+
+.adjust-top {
+  position: relative;
+  top: 70px !important;
+  min-height: 100vh;
+  background-color: #fff;
+  color: #000;
+}
+
+.own-progress {
+  display: flex;
+  height: 1rem;
+  overflow: hidden;
+  font-size: 0.75rem;
+  background-color: #e9ecef;
+  border-radius: 0.25rem;
+}
+.own-progress-bar {
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  transition: width 0.6s ease;
 }

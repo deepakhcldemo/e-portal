@@ -1,5 +1,6 @@
 const initialState = {
-    openModal : false
+    openModal: false,
+    keyForNotification: ''
 }
 const notificationAcceptREducer = (state = initialState, action) => {
     switch (action.type) {
@@ -8,11 +9,17 @@ const notificationAcceptREducer = (state = initialState, action) => {
                 ...state,
                 openModal: true
             };
-            case 'CLOSE_NOTIFICATION_POP':
+        case 'CLOSE_NOTIFICATION_POP':
             return {
                 ...state,
                 openModal: false
-            }
+            };
+
+            case 'GO_BACK_TO_NOTIFICATION':
+            return {
+                ...state,
+                keyForNotification: action.payload
+            };
         default:
             return state
     }

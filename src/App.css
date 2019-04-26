@@ -450,18 +450,12 @@
   background-color: #f5f5f5;
 }
 
-.rrt-confirm-holder
-  .rrt-confirm
-  .rrt-buttons-holder
-  .rrt-button.rrt-ok-btn:active {
+.rrt-confirm-holder .rrt-confirm .rrt-buttons-holder .rrt-button.rrt-ok-btn:active {
   background-color: #60bb71;
   color: white;
 }
 
-.rrt-confirm-holder
-  .rrt-confirm
-  .rrt-buttons-holder
-  .rrt-button.rrt-cancel-btn:active {
+.rrt-confirm-holder .rrt-confirm .rrt-buttons-holder .rrt-button.rrt-cancel-btn:active {
   background-color: #db6a64;
   color: white;
 }
@@ -1104,6 +1098,7 @@ li .fa {
   width: 50px;
   float: left;
   cursor: pointer;
+  margin-top: 4px;
 }
 
 .home-header-nav-item {
@@ -1199,6 +1194,24 @@ li .fa {
 
 .popover .arrow {
   margin: 0 0.4rem !important;
+}
+
+.popover .arrow:after {
+  border-bottom-color: #333546 !important;
+}
+
+.popover-header {
+  background-color: #333546 !important;
+  color: white !important;
+}
+
+.popover-header:before {
+  border-bottom: 1px solid #333546 !important;
+}
+
+.popover-body {
+  background-color: #4b4e68 !important;
+  color: white !important;
 }
 
 .slick-next:before,

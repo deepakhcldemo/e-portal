@@ -5,6 +5,7 @@ import * as loginAction from './actions';
 
 import './styles.css';
 import AuthGuard from '../../authguard/AuthGuard';
+import HeaderHome from '../../components/layout/header/HeaderHome';
 import { toastr } from 'react-redux-toastr';
 import * as actionTypes from '../../spinnerStore/actions';
 import { changePassword } from '../../database/dal/firebase/changePasswordDal';
@@ -102,15 +103,23 @@ class ChangePassword extends Component {
 
     const { password, confirmPassword, submitted } = this.state;
     return (
-      <div>
-        <div className="row row-without--margin">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-12">
+            <HeaderHome headeTitle="" />
+          </div>
+        </div>
+        <div className="content-container row-without--margin">
           <div className="col-12 col-sm-8 col-md-8 col-lg-4 content-container content-align--middle">
             <div
               className="card card-border-radius"
               style={{ background: '#4b4e68' }}
             >
-              <div className="col-12 sign-in--text">
-                <span className="sign-in-text--color">Reset Password</span>
+              <div
+                className="col-12 sign-in--text"
+                style={{ marginTop: '5px' }}
+              >
+                <span className="sign-in-text--color">Change Password</span>
               </div>
 
               <form name="form" className="login-form--padding">
@@ -185,6 +194,8 @@ class ChangePassword extends Component {
                   >
                     UPDATE PASSWORD
                   </button>
+                </div>
+                <div className="form-group padding-top-25">
                   <button
                     onClick={() => {
                       this.props.history.push('/home');

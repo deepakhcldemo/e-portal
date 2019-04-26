@@ -9,7 +9,7 @@
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-link:hover {
-    color: #FFF !important;
+    color: #fff !important;
     background-color: #4b4e68 !important;
     border-color: #4b4e68 #4b4e68 #4b4e68 !important;
 }
@@ -17,7 +17,7 @@
 .nav-tabs a:hover,
 .nav-tabs a:active,
 .nav-tabs a {
-    color: #FFF !important;
+    color: #fff !important;
 }
 
 .alert {
@@ -49,4 +49,8 @@
 .notification-heading {
     font-weight: 300;
     color: white;
+}
+
+.alert {
+    width: 100% !important;
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Header from '../../components/layout/header/Header';
+import HeaderHome from '../../components/layout/header/HeaderHome';
 // import axios from 'axios';
 import './styles.css';
 import { toastr } from 'react-redux-toastr';
@@ -299,7 +299,7 @@ class Profile extends Component {
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
-            <Header headeTitle="User Profile" />
+            <HeaderHome headeTitle="User Profile" />
           </div>
         </div>
 
