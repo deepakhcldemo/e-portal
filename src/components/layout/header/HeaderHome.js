@@ -97,7 +97,7 @@ class HeaderHome extends Component {
           }}
           onClick={() => this.navigateTo('/home')}
         />
-        <h3 style={{ lineHeight: '65px' }}>{this.state.headeTitle}</h3>
+        <span className="header-title--font">{this.state.headeTitle}</span>
         <div className="nav-section">
           {userLink}
           {!userLink && (
