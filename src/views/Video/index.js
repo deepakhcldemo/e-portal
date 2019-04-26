@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import Tabs from 'react-bootstrap/Tabs'
-import Tab from 'react-bootstrap/Tab'
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
 
 import HeaderHome from "../../components/layout/header/HeaderHome";
 import Navbar from "../../shared/components/Navbar";
@@ -13,7 +13,7 @@ import Curriculum from "./../Curriculum";
 import { getAllCategory } from "../../database/dal/firebase/categoryDal";
 import { getCurriculumFromDB } from "../../database/dal/firebase/curriculumDal";
 
-import {VIDEO_TABS} from "./../../constant/Constant"
+import { VIDEO_TABS } from "./../../constant/Constant";
 
 class Video extends Component {
   state = {
@@ -22,13 +22,13 @@ class Video extends Component {
     userDetails: "",
     tabs: [],
     upload: false,
-    tabKey: "pendingreview",
+    tabKey: "pendingreview"
   };
 
   componentWillMount = () => {
     this.setState({
-      userDetails: JSON.parse(localStorage.getItem("userProfile")),
-    })
+      userDetails: JSON.parse(localStorage.getItem("userProfile"))
+    });
   };
 
   componentDidMount = () => {
@@ -76,49 +76,51 @@ class Video extends Component {
     });
   };
   handleKey = key => {
-    this.setState({tabKey: key})
-  }
+    this.setState({ tabKey: key });
+  };
 
   render = () => {
-    const {tabKey, tabs, upload, filter, content, userDetails, category} = this.state
+    const {
+      tabKey,
+      tabs,
+      upload,
+      filter,
+      content,
+      userDetails,
+      category
+    } = this.state;
     return (
       <>
         <div className="container-fluid">
-          <HeaderHome
-            headeTitle="Teacher Dashboard"
-          />
+          <HeaderHome headeTitle="Teacher Dashboard" />
           <div className="content-container main-wrapper">
             {!upload && (
               <>
-                <Filter
-                  content={content}
-                  filterContent={this.handleFilter}
-                />
+                <Filter content={content} filterContent={this.handleFilter} />
                 <Tabs
                   id="video-tabs"
                   activeKey={tabKey}
                   onSelect={key => this.handleKey(key)}
                 >
-                  {tabs && tabs.map((tab, ind) => {
-                    return (
-                      <Tab key={ind} eventKey={tab.id} title={tab.name}>
-                        <VideoList
-                          heading={tab.name}
-                          videoDetails={
-                            filter ? filter : content
-                          }
-                        >
-                          <button
-                            onClick={this.handleUpload}
-                            className="btn home-header-text-link-status"
-                            title="Upload Video"
+                  {tabs &&
+                    tabs.map((tab, ind) => {
+                      return (
+                        <Tab key={ind} eventKey={tab.id} title={tab.name}>
+                          <VideoList
+                            heading={tab.name}
+                            videoDetails={filter ? filter : content}
                           >
-                          <i className="fas fa-plus" /> Add Video
-                          </button>
-                        </VideoList>
-                      </Tab>
-                    )
-                  })}
+                            <button
+                              onClick={this.handleUpload}
+                              className="btn home-header-text-link-status"
+                              title="Upload Video"
+                            >
+                              <i className="fas fa-plus" /> Add Video
+                            </button>
+                          </VideoList>
+                        </Tab>
+                      );
+                    })}
                 </Tabs>
               </>
             )}
@@ -134,7 +136,7 @@ class Video extends Component {
                 <button
                   onClick={this.handleUpload}
                   className="btn"
-                  style={{ backgroundColor: '#232838', color: '#fff' }}
+                  style={{ backgroundColor: "#232838", color: "#fff" }}
                   title="close"
                 >
                   Close
