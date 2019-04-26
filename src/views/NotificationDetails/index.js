@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { withRouter } from "react-router";
-import { connect } from "react-redux";
 import FileUploader from "react-firebase-file-uploader";
 import firebase from "firebase";
+import { withRouter } from "react-router";
+import { connect } from "react-redux";
 import NavBar from "../../shared/components/Navbar";
-
+import Progress from "./progress";
+import { getVideoUrl } from "../../database/dal/firebase/notificationdal";
 import HeaderHome from "../../components/layout/header/HeaderHome";
-import { rejectNotification, openModalForAcceptNotification } from "./action";
-import ModalPopUpForNotification from "../../shared/components/modalPopforNotification/modalPopForNotification";
+import {
+  rejectNotification,
+  openModalForAcceptNotification,
+  saveAcceptedNotification,
+  setKeyForNotificationPage
+} from "./action";
 import {
   TEACHER_DASHBOARD_LINKS,
   STUDENT_DASHBOARD_LINKS
@@ -16,20 +21,56 @@ import {
 import "./notificationDetails.css";
 
 class NotificationDetails extends Component {
-  state = {
-    notificationsDetails: [],
-    userDetails: {}
+  constructor(props) {
+    super(props);
+    this.state = {
+      notificationsDetails: [],
+      userDetails: {},
+      applyClass: "display-upload",
+      isUploading: false,
+      videoName: "",
+      validationMessage: ""
+    };
+    this.acceptNotification = this.acceptNotification.bind(this);
+    this.goBackTONotification = this.goBackTONotification.bind(this);
+  }
+  goBackTONotification = () => {
+    this.props.setKeyForNotificationPage("NotificationDetails");
+    this.props.history.goBack();
   };
-
   acceptNotification = () => {
-    this.props.openModalForAcceptNotification();
+    //this.props.openModalForAcceptNotification();
+    this.state.applyClass = "display-upload"
+      ? this.setState({ applyClass: "" })
+      : "";
+    if (this.state.videoName !== "") {
+      const acceptNotification = { ...this.state.notificationsDetails };
+      acceptNotification.tstatus = true;
+      acceptNotification.sstatus = true;
+
+      getVideoUrl(this.state.videoName, acceptNotification.loggedInUserId).then(
+        url => {
+          if (url !== "" && acceptNotification.notificationDesc !== "") {
+            acceptNotification.tvideo = url;
+            acceptNotification.tAccepted = true;
+            this.props.saveAcceptedNotification(acceptNotification);
+            this.setState({
+              validationMessage: ""
+            });
+          }
+        }
+      );
+      this.goBackTONotification();
+    }
   };
 
   rejectNotification = () => {
     const rejectNotification = { ...this.state.notificationsDetails };
     rejectNotification.tstatus = false;
+    rejectNotification.sstatus = false;
+    rejectNotification.tRejected = true;
     this.props.rejectNotification(rejectNotification);
-    this.props.history.goBack();
+    this.goBackTONotification();
   };
   componentWillMount = () => {
     const UserProfile = JSON.parse(localStorage.getItem("userProfile"));
@@ -38,11 +79,32 @@ class NotificationDetails extends Component {
       notificationsDetails: this.props.notificationDetails,
       userDetails: UserProfile
     });
-    console.log(this.state);
+  };
+  handleUploadStart = () =>
+    this.setState({
+      isUploading: true,
+      progress: 0
+    });
+  handleProgress = progress => this.setState({ progress });
+  handleVideoUploadSuccess = fileName => {
+    this.setState({
+      progress: 100,
+      isUploading: false,
+      videoName: fileName
+    });
   };
 
-  backToNotification = () => {};
   render() {
+    let badgeText = "";
+    let classNameBadge = "";
+    if (this.props.notificationDetails.tRejected) {
+      badgeText = "Rejected";
+      classNameBadge = "badge-danger";
+    }
+    if (this.props.notificationDetails.tAccepted) {
+      badgeText = "Success";
+      classNameBadge = "badge-success";
+    }
     return (
       <div className="container-fluid">
         <HeaderHome
@@ -52,6 +114,8 @@ class NotificationDetails extends Component {
 
         <div className="content-container">
           <div className="card col-lg-8" style={{ margin: "auto" }}>
+            <span class={"badge" + " " + classNameBadge}>{badgeText}</span>
+
             <div>
               <span className="bold">
                 Notification Description :{" "}
@@ -59,49 +123,113 @@ class NotificationDetails extends Component {
               </span>
             </div>
             <div>
-              {" "}
-              <span className="bold"> Video upload BY :</span>{" "}
-              {this.state.userDetails.role === "Teacher"
-                ? "Student"
-                : "Teacher"}
+              {this.state.userDetails.Svideo !== "" ? (
+                <span className="bold"> Video Uploaded by Student </span>
+              ) : null}
             </div>
-            <ModalPopUpForNotification
-              teacherNotofication={this.state.notificationsDetails}
-            />
-            <video
-              src={
-                this.state.notificationsDetails.sVideo ||
-                this.state.notificationsDetails.tVideo
-              }
-            />
-            
-              <div className="col-lg-12">
-                <div className="pull-left">
-                  <button
-                    className="btn btn-dark"
-                    onClick={() => this.props.history.goBack()}
-                  >
-                    Back
-                  </button>
+            <div className="teacher-video">
+              <video controls src={this.state.notificationsDetails.sVideo} />
+            </div>
+            {this.props.notificationDetails.tvideo !== "" ? (
+              <div>
+                <div>
+                  <span className="bold"> Video Uploaded by Teacher </span>
                 </div>
-                {(this.state.userDetails.role === "Teacher" && (this.state.userDetails.tstatus || this.state.userDetails.sstatus) )? (
+                <div className="teacher-video">
+                  <video
+                    controls
+                    src={this.state.notificationsDetails.tvideo}
+                  />{" "}
+                </div>
+              </div>
+            ) : null}
+            <div className={this.state.applyClass}>
+              <p>Please Upload you video here : </p>
+              <div className="progressbar-spacing">
+                {this.state.isUploading && (
+                  <>
+                    <br />
+                    <Progress
+                      bgColor="#232838"
+                      progress={this.state.progress}
+                    />
+                    <br />
+                  </>
+                )}
+              </div>
+              <br />
+              <FileUploader
+                accept="video/*"
+                className="upload-video"
+                storageRef={firebase
+                  .storage()
+                  .ref(
+                    `notification/${
+                      this.props.notificationDetails.loggedInUserId
+                    }`
+                  )}
+                onUploadStart={this.handleUploadStart}
+                onUploadError={this.handleUploadError}
+                onUploadSuccess={this.handleVideoUploadSuccess}
+                onProgress={this.handleProgress}
+              />
+              <p>{this.state.validationMessage}</p>
+            </div>
+
+            <div className="col-lg-12">
+              <div className="pull-left">
+                <button
+                  className="btn btn-dark"
+                  onClick={this.goBackTONotification}
+                >
+                  Back
+                </button>
+              </div>
+              {this.state.userDetails.role === "Teacher" &&
+              (!this.state.notificationsDetails.tRejected &&
+                !this.state.notificationsDetails.tAccepted) ? (
                 <div className="pull-right">
                   <button
+                    disabled={this.state.isUploading}
                     className="btn btn-success"
                     onClick={this.acceptNotification}
                   >
                     Accept
                   </button>
                   <button
+                    disabled={this.state.isUploading}
                     className="btn btn-danger"
                     onClick={this.rejectNotification}
                   >
                     Reject
                   </button>
                 </div>
-                 ) : <p className ="reject-notification">Notification Has been Rejected</p>}
-              </div>
-           
+              ) : (
+                ""
+              )}
+
+              {/* {this.state.notificationsDetails.tRejected ? (
+                <p className="notification-rejected">
+                  Notification has been Rejected
+                </p>
+              ) : (
+                ""
+              )} */}
+
+              {this.state.notificationsDetails.tAccepted &&
+              this.state.userDetails.role !== "Teacher" ? (
+                <div>
+                  <button
+                    disabled={true}
+                    className="btn btn-success pull-right"
+                  >
+                    Pay Now
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -118,7 +246,11 @@ const mapDispatchToProps = dispatch => {
     rejectNotification: rejectedNotificationData =>
       dispatch(rejectNotification(rejectedNotificationData)),
     openModalForAcceptNotification: () =>
-      dispatch(openModalForAcceptNotification())
+      dispatch(openModalForAcceptNotification()),
+    saveAcceptedNotification: acceptNotificationData =>
+      dispatch(saveAcceptedNotification(acceptNotificationData)),
+    setKeyForNotificationPage: NotificationDetails =>
+      dispatch(setKeyForNotificationPage(NotificationDetails))
   };
 };
 export default withRouter(

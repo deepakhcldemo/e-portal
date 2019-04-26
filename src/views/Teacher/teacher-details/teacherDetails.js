@@ -14,12 +14,20 @@ import { openModalForRequest } from './teacher-details.action';
 import {
   getTeacherDetailFromDB,
   getTeacherRating,
-  saveTeacherRating
+  saveTeacherRating,
+  saveTeacherRatingOnProfile
 } from '../../../database/dal/firebase/teacherDetailDal';
+import {
+  getFeedbackFromDB,
+  getUserProfileFromDB
+} from '../../../database/dal/firebase/homeDal';
+
 import { getCurriculumFromDB } from '../../../database/dal/firebase/curriculumDal';
 // import GLOBAL_VARIABLES from '../../../config/config';
 import RecentVideo from '../../../components/recentVideo/RecentVideo';
 import bannerImg from '../../../images/detail-banner.jpg';
+import Comment from '../../../components/comment/Comment';
+import { toastr } from 'react-redux-toastr';
 
 class TeacherDetails extends Component {
   constructor(props) {
@@ -40,7 +48,8 @@ class TeacherDetails extends Component {
       starRating: 0,
       totalUser: 0,
       carousellistNewlyItems: [],
-      loggedInUser: {}
+      loggedInUser: {},
+      studentsReview: []
     };
     this.openModalForRequest = this.openModalForRequest.bind(this);
   }
@@ -51,61 +60,17 @@ class TeacherDetails extends Component {
     const user = localStorage.getItem('user')
       ? JSON.parse(localStorage.getItem('user'))
       : null;
-
-    /* show rating on the base of existing user has given */
-    getTeacherRating(teacherId).then(doc => {
-      if (doc.exists) {
-        const data = doc.data();
-        const ratings = data.ratings;
-        const nOfUser = ratings.length;
-        // this.setState({totalUser: nOfUser})
-        if (nOfUser > 0) {
-          let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
-
-          if (user) {
-            const userId = user.user.uid;
-            let currentUser = _.filter(
-              ratings,
-              user => user.userId === userId
-            )[0];
-            if (!currentUser) {
-              currentUser = { userId: userId, like: 0, dislike: 0, rating: 0 };
-              ratings.push(currentUser);
-            }
-            data.rating = totalRating;
-            saveTeacherRating(teacherId, data);
-            this.setState({ starRating: Math.round(currentUser.rating) });
-          } else {
-            this.setState({ starRating: totalRating });
-          }
-        } else {
-          if (user) {
-            const userId = user.user.uid;
-            // let currentUser = _.filter(ratings, (user) => user.userId === userId)[0];
-            let newUser = { userId: userId, like: 0, dislike: 0, rating: 0 };
-
-            ratings.push(newUser);
-            let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
-            data.rating = totalRating;
-
-            saveTeacherRating(teacherId, data);
-            this.setState({ starRating: newUser.rating });
-          }
-        }
-      }
-    });
-
-    getTeacherDetailFromDB(teacherId).then(snapshot => {
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        // this.setState({ spinner: false });
-        // Create model
-        this.props.setSpinnerStatus(false);
-        this.setState({ teacherDetails: data });
-        this.getDetails(data);
+      getTeacherDetailFromDB(teacherId).then(snapshot => {
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          // this.setState({ spinner: false });
+          // Create model
+          this.props.setSpinnerStatus(false);
+          this.setState({ teacherDetails: data });
+          this.getDetails(data);
+        });
       });
-    });
-
+      this.handleRating(teacherId, user, 0, 'loadComponent');
     /* Get curriculum videos */
     const userId = user ? user.user.uid : '';
     getCurriculumFromDB(userId).onSnapshot(querySnapshot => {
@@ -120,6 +85,34 @@ class TeacherDetails extends Component {
       }
       currData = [];
     });
+
+    // For Comment Section
+    getFeedbackFromDB(teacherId).onSnapshot(querySnapshot => {
+      let tempArr = {};
+      let feedbackData = [];
+      querySnapshot.forEach(doc => {
+        getUserProfileFromDB(doc.data().user_id).onSnapshot(
+          querySnapshot => {
+            querySnapshot.forEach(profileData => {
+              tempArr['profileData'] = profileData.data();
+              tempArr['feedback'] = doc.data();
+
+              feedbackData.push(tempArr);
+              this.setState({
+                studentsReview: feedbackData
+              });
+              tempArr = {};
+            });
+            this.props.setSpinnerStatus(false);
+          },
+          error => {
+            this.props.setSpinnerStatus(false);
+            toastr.error(error.message);
+          }
+        );
+      });
+    });
+
   }
   setTeacherData = data => {
     this.setState({ teacherData: data });
@@ -138,16 +131,27 @@ class TeacherDetails extends Component {
   getTotalRating(ratings, nOfUser) {
     let rating = 0;
     let totalRating = 0;
+    
     ratings.forEach(user => {
       rating = rating + user.rating;
     });
+    
     if (!rating / nOfUser) {
       totalRating = 0;
     } else {
       totalRating = rating / nOfUser;
     }
+    return Math.round(totalRating);
+  }
 
-    return totalRating;
+  handleNofUserRated(ratings) {
+    let totalRatedUser = 0;
+    ratings.forEach(user => {
+      if (user.rating > 0) {
+        totalRatedUser++;
+      }
+    });
+    return totalRatedUser;
   }
 
   getDetails(data) {
@@ -179,7 +183,9 @@ class TeacherDetails extends Component {
     const user = localStorage.getItem('user')
       ? JSON.parse(localStorage.getItem('user'))
       : null;
-    /* show rating on the base of existing user has given */
+    this.handleRating(teacherId, user, nextValue, null);
+  }
+  handleRating(teacherId, user, nextValue, onComponentLoad) {
     getTeacherRating(teacherId).then(doc => {
       if (doc.exists) {
         const data = doc.data();
@@ -187,24 +193,53 @@ class TeacherDetails extends Component {
         const nOfUser = ratings.length;
 
         if (nOfUser > 0) {
+          let totalRating = this.getTotalRating(ratings, nOfUser);
           if (user) {
             const userId = user.user.uid;
             let currentUser = _.filter(
               ratings,
               user => user.userId === userId
             )[0];
-            let newUser = { userId: '0', like: 0, dislike: 0, rating: 0 };
-            if (currentUser) {
-              currentUser.rating = nextValue;
+            
+            if (onComponentLoad) {
+              if (!currentUser) {
+                currentUser = { userId: userId, like: 0, dislike: 0, rating: 0 };
+                ratings.push(currentUser);
+              }
+              data.rating = totalRating;
+              
+              if (this.state.teacherDetails.hasOwnProperty('rating')) {
+                this.state.teacherDetails.rating = totalRating;
+              }
+              if (this.state.teacherDetails.hasOwnProperty('noOfRatings')) {
+                this.state.teacherDetails.noOfRatings = this.handleNofUserRated(ratings);
+              }
+              
+              saveTeacherRating(teacherId, data);
+              saveTeacherRatingOnProfile(teacherId, this.state.teacherDetails);
+              this.setState({ starRating: Math.round(currentUser.rating) });
+              
             } else {
-              newUser.userId = userId;
-              currentUser = newUser;
-              ratings.push(currentUser);
+              let newUser = { userId: '0', like: 0, dislike: 0, rating: 0 };
+              if (currentUser) {
+                currentUser.rating = nextValue;
+              } else {
+                newUser.userId = userId;
+                currentUser = newUser;
+                ratings.push(currentUser);
+              }
+              data.rating = totalRating;
+              if (this.state.teacherDetails.hasOwnProperty('rating')) {
+                this.state.teacherDetails.rating = totalRating;
+              }
+              if (this.state.teacherDetails.hasOwnProperty('noOfRatings')) {
+                this.state.teacherDetails.noOfRatings = this.handleNofUserRated(ratings);
+              }
+              saveTeacherRating(teacherId, data);
+              saveTeacherRatingOnProfile(teacherId, this.state.teacherDetails);
+              
+              this.setState({ starRating: nextValue });
             }
-            let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
-            data.rating = totalRating;
-            saveTeacherRating(teacherId, data);
-            this.setState({ starRating: nextValue });
           }
         } else {
           if (user) {
@@ -226,7 +261,7 @@ class TeacherDetails extends Component {
               currentUser = newUser;
               ratings.push(currentUser);
             }
-            let totalRating = Math.round(this.getTotalRating(ratings, nOfUser));
+            let totalRating = this.getTotalRating(ratings, nOfUser);
             data.rating = totalRating;
 
             saveTeacherRating(teacherId, data);
@@ -237,6 +272,7 @@ class TeacherDetails extends Component {
     });
   }
 
+ 
   openModalForRequest = () => {
     this.props.openModalPopUp();
   };
@@ -361,137 +397,8 @@ class TeacherDetails extends Component {
             </div>
           </div>
 
-          <div className="comments-section">
-            <div className="text-field-section">
-              <div className="container">
-                <div className="row">
-                  <div className="col-sm-12">
-                    <div className="comments-hdr-section">
-                      <div className="author-thumbnail">
-                        <img
-                          src="https://cdn.iconscout.com/icon/free/png-256/avatar-369-456321.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="comments-input">
-                        <input
-                          type="text"
-                          className="auto-input form-control"
-                          placeholder="Add a comment"
-                        />
-                      </div>
-                      <div className="total-comments">
-                        <span className="count">1</span>
-                        <span className="count-text">Comments</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="container">
-              <div className="row">
-                <div className="col-sm-12">
-                  <div className="comment-thread-element">
-                    <div className="author-thumbnail">
-                      <img
-                        src="https://cdn.iconscout.com/icon/free/png-256/avatar-372-456324.png"
-                        alt=""
-                      />
-                    </div>
-                    <div className="comment-content">
-                      <i className="fas fa-caret-left" />
-                      <div className="comment-hdr d-flex align-items-center justify-content-between">
-                        <span className="date">23/04/2019</span>
-                        <div className="icon-section d-flex">
-                          <div className="icon">
-                            <button
-                              className="btn btn-transparent"
-                              disabled={!isLogedIn}
-                            >
-                              <i className="fas fa-thumbs-up" />{' '}
-                            </button>
-                          </div>
-                          <div className="icon">
-                            <button
-                              className="btn btn-transparent"
-                              disabled={!isLogedIn}
-                            >
-                              <i className="fas fa-thumbs-down" />
-                            </button>
-                          </div>
-                          <div className="icon">
-                            <button
-                              className="btn btn-transparent"
-                              disabled={!isLogedIn}
-                            >
-                              <i className="fas fa-comment-alt" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
+          <Comment teacherId={this.state.detailModel.teacherId} loggedInUser={loggedInUser} commentRows={this.state.studentsReview} />
 
-                      <p>
-                        Is dolor sit amet long established fact that a reader
-                        will be distracted by the readable content of a page
-                        when looking at its layout. The point of using Lorem
-                        Ipsum is that it has a more-or-less normal. Color sit
-                        amet long established fact that a reader will be
-                        distracted by the readable
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="comment-thread-element">
-                    <div className="author-thumbnail">
-                      <img
-                        src="https://cdn.iconscout.com/icon/free/png-256/avatar-369-456321.png"
-                        alt=""
-                      />
-                    </div>
-                    <div className="comment-content">
-                      <i className="fas fa-caret-left" />
-                      <div className="comment-hdr d-flex align-items-center justify-content-between">
-                        <span className="date">23/04/2019</span>
-                        <div className="icon-section d-flex">
-                          <div className="icon">
-                            <button
-                              className="btn btn-transparent"
-                              disabled={!isLogedIn}
-                            >
-                              <i className="fas fa-thumbs-up" />{' '}
-                            </button>
-                          </div>
-                          <div className="icon">
-                            <button
-                              className="btn btn-transparent"
-                              disabled={!isLogedIn}
-                            >
-                              <i className="fas fa-thumbs-down" />
-                            </button>
-                          </div>
-                          <div className="icon">
-                            <button
-                              className="btn btn-transparent"
-                              disabled={!isLogedIn}
-                            >
-                              <i className="fas fa-comment-alt" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-
-                      <p>
-                        Is dolor sit amet long established fact that a reader
-                        will be distracted by the readable content of a page
-                        when looking at its layout.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <CalendarModal
             teacherData={this.state.teacherData}
             modalState={this.state.calendarModal}

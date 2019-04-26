@@ -54,7 +54,14 @@
 .fileOne {
   padding-right: 10px;
 }
-
+.textarea-detail {
+  margin-top: 15px !important;
+  margin-bottom: 25px !important;
+  padding-top: 15px !important;
+}
+.progressbar-spacing {
+  height: 30px;
+}
 textarea.form-control {
   height: auto;
   margin-top: 15px;
@@ -114,7 +121,4 @@ form {
   text-align: center;
   white-space: nowrap;
   transition: width 0.6s ease;
-}
-.close {
-  bottom: 0;
 }

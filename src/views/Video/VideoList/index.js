@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import moment from "moment";
+import React, { Component } from 'react';
+import moment from 'moment';
 // import { NavLink } from 'react-router-dom'
 import StarRatingComponent from "react-star-rating-component";
 import VideoPopup from "./../../../components/videopopup/VideoPopup";
-import "./topvideo.scss";
+import "./videolist.scss";
 import GLOBAL_VARIABLES from "../../../config/config";
 
-class TopVideo extends Component {
+class VideoList extends Component {
   state = {
     modalOpen: false,
-    userDetails: "",
-    videoData: ""
+    userDetails: '',
+    videoData: ''
   };
 
   handleClick = videoData => {
@@ -22,7 +22,7 @@ class TopVideo extends Component {
 
   componentWillMount = () => {
     this.setState({
-      userDetails: JSON.parse(localStorage.getItem("userProfile"))
+      userDetails: JSON.parse(localStorage.getItem('userProfile'))
     });
   };
 
@@ -30,29 +30,30 @@ class TopVideo extends Component {
     const { heading, videoDetails } = this.props;
     const { modalOpen, userDetails, videoData } = this.state;
     return (
-      <div className="card">
+      <div className="card video-container--background">
         <div className="card-body">
-          <h4>
-            {heading}{" "}
-            {this.props.children && (
-              <span className="link pull-right">{this.props.children}</span>
-            )}
-          </h4>
-          <hr />
+          {this.props.children && (
+            <h4>
+              {this.props.children}
+            </h4>
+          )}
+          {videoDetails.length === 0 && (
+            <h6>No {heading}</h6>
+          )}
           <ul className="list-unstyled video-list-thumbs">
             {videoDetails &&
               videoDetails.map((videoDetail, index) => {
                 videoDetail.date = videoDetail.created
                   ? moment(videoDetail.created.toDate()).fromNow()
-				  : "";
-				  videoDetail.thumb = videoDetail.thumb ? videoDetail.thumb : GLOBAL_VARIABLES.VIDEO_PLACEHOLDER
+                  : '';
+                videoDetail.thumb = videoDetail.thumb
+                  ? videoDetail.thumb
+                  : GLOBAL_VARIABLES.VIDEO_PLACEHOLDER;
                 return (
                   <li className="card" key={index}>
                     <a onClick={() => this.handleClick(videoDetail)} href="#1">
                       <img
-                        src={
-                          videoDetail.thumb
-                            }
+                        src={videoDetail.thumb}
                         alt={videoDetail.title}
                         className="img-responsive"
                         height="130px"
@@ -85,4 +86,4 @@ class TopVideo extends Component {
     );
   };
 }
-export default TopVideo;
+export default VideoList;

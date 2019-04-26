@@ -16,8 +16,8 @@ import TeacherNotificationDetails from "./../Teacher/Notification/notificationsD
 import NotificationsDetails from "./../Student/Notification/notificationsDetails";
 
 import { setNotificationDetails } from "./action";
-import "./notification.css";
 import { TEACHER_DASHBOARD_LINKS } from "../../constant/Constant";
+import "./notification.css";
 
 // import Modal from 'react-responsive-modal'
 
@@ -45,6 +45,15 @@ class Notification extends Component {
 
   componentDidMount = () => {
     const { userDetails } = this.state;
+    console.log(
+      "this.props.getNotificationMessage",
+      this.props.getNotificationMessage
+    );
+    if (this.props.getNotificationMessage === "NotificationDetails") {
+      this.setState({
+        key: "notification"
+      });
+    }
     getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(
       querySnapshot => {
         let notificationsList = [];
@@ -79,12 +88,18 @@ class Notification extends Component {
 
   notificationStatus = (notificationDetails, type) => {
     const { userDetails } = this.state;
-    const classStatus =
-      notificationDetails.sstatus && notificationDetails.tstatus
-        ? "alert alert-success"
-        : notificationDetails.status && !notificationDetails.tstatus
-        ? "alert alert-warning"
-        : "alert alert-danger";
+    let classStatus = "";
+    if (notificationDetails.sstatus && notificationDetails.tstatus) {
+      classStatus = "alert alert-success";
+    }
+
+    if (notificationDetails.sstatus && !notificationDetails.tstatus) {
+      classStatus = "alert alert-warning";
+    }
+
+    if (!notificationDetails.sstatus && !notificationDetails.tstatus) {
+      classStatus = "alert alert-danger";
+    }
     const userWiseStatus =
       userDetails.role === "Teacher"
         ? `Notification from  ${notificationDetails.sname}`
@@ -104,32 +119,34 @@ class Notification extends Component {
     return (
       <div className="container-fluid">
         <HeaderHome
-          headeTitle="Teacher Dashboard"
+          headeTitle="Notification"
           dashboardLinks={TEACHER_DASHBOARD_LINKS}
         />
 
         <div className="content-container">
           <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
-            <div className="card notification-container ">
-              <div className="card-body notification-cardbody">
-                <h4>Notification</h4>
-                <hr />
-                <Tabs
-                  id="tabs"
-                  activeKey={this.state.key}
-                  onSelect={key => this.setState({ key })}
-                >
-                  <Tab eventKey="chatNotification" title="Chat Notification">
+            <Tabs
+              id="tabs"
+              activeKey={this.state.key}
+              onSelect={key => this.setState({ key })}
+            >
+              <Tab eventKey="chatNotification" title="Chat Notification">
+                <div className="card notification-container">
+                  <div className="card-body notification-container">
                     {userDetails.role === "Teacher" && (
                       <TeacherNotificationDetails />
                     )}
                     {userDetails.role === "Student" && <NotificationsDetails />}
-                  </Tab>
-                  <Tab eventKey="notification" title="Notification">
+                  </div>
+                </div>
+              </Tab>
+              <Tab eventKey="notification" title="Notification">
+                <div className="card notification-container">
+                  <div className="card-body notification-container">
                     {notificationsList &&
                       notificationsList.map((notification, ind) => {
                         return (
-                          <div className="row" key={ind}>
+                          <div className="col-12" key={ind}>
                             <div
                               className={this.notificationStatus(
                                 notification,
@@ -150,10 +167,10 @@ class Notification extends Component {
                           </div>
                         );
                       })}
-                  </Tab>
-                </Tabs>
-              </div>
-            </div>
+                  </div>
+                </div>
+              </Tab>
+            </Tabs>
           </div>
         </div>
         <div className="col-12 main-wrapper">
@@ -164,8 +181,9 @@ class Notification extends Component {
   };
 }
 const mapStateToProps = state => {
+  console.log("state", state);
   return {
-    //savedNotifications: state.notifyTeacherReducer.notifications
+    getNotificationMessage: state.notificationAcceptREducer.keyForNotification
   };
 };
 const mapDispatchToProps = dispatch => {

@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 //import GLOBAL_VARIABLES from '../../config/config';
-import HeaderHome from '../../../components/layout/header/HeaderHome';
-import Navbar from './../../../shared/components/Navbar';
-import { getTeachersBasedOnCateogy, zipRequestDispatch } from './searchTeacherAction';
+import HeaderHome from "../../../components/layout/header/HeaderHome";
+import Navbar from "./../../../shared/components/Navbar";
+import {
+  getTeachersBasedOnCateogy,
+  zipRequestDispatch
+} from "./searchTeacherAction";
 // import Navigation from '../Navigation/Navigation';
 import { connect } from "react-redux";
 // import Select from 'react-select';
@@ -10,7 +13,7 @@ import { getAllCategory } from "../../../database/dal/firebase/categoryDal";
 
 import Multiselect from "multiselect-dropdown-react";
 import "./SearchTeacher.css";
-import ListContainer from '../../../components/listContainer/ListContainer';
+import ListContainer from "../../../components/listContainer/ListContainer";
 
 class SearchTeacher extends Component {
   constructor(props) {
@@ -70,9 +73,6 @@ class SearchTeacher extends Component {
       searchValue: event.target.value
     });
   };
-
-
-
 
   getSerachParameter = (searchParameter, defalutSubjectSelected) => {
     // console.log('searchParameter', searchParameter);
@@ -208,9 +208,7 @@ class SearchTeacher extends Component {
     return (
       <div className="teacher-student-search container-fluid">
         <div>
-          <HeaderHome
-            headeTitle="Student Dashboard"
-          />
+          <HeaderHome headeTitle="Find Tutor" />
         </div>
         <div className="filter-search content-container--background">
           <p className="help-block validation-message">
@@ -252,8 +250,6 @@ class SearchTeacher extends Component {
                     className="fa fa-search teacher-search-icon"
                     onClick={this.getSerachParameter}
                   />
-
-
                 </div>
               </div>
             </div>
@@ -300,7 +296,7 @@ const mapStateToProps = state => {
     carouselRows: state.carouselStore.carouselData,
     TeacherList: state.searchTeacher.teacherDetails,
     selectedSubjectFromHome: state.categoryItem.getSelectedSubj,
-    getTeacherZipWise: state.searchTeacher.getTeacherList,
+    getTeacherZipWise: state.searchTeacher.getTeacherList
   };
 };
 

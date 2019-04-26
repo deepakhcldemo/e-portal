@@ -1,4 +1,4 @@
-import { getContentFromDB } from './../../../database/dal/firebase/curriculumDal';
+import { getContentFromDB } from '../../database/dal/firebase/curriculumDal';
 
 export const openModal = () => {
     return {

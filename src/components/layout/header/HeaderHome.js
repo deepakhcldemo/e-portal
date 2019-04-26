@@ -1,29 +1,32 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter, NavLink } from "react-router-dom";
-import "./HomeHeader.css";
-import Avatar from "../avatar/Avatar";
-import {TEACHER_DASHBOARD_LINKS, STUDENT_DASHBOARD_LINKS} from './../../../constant/Constant'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter, NavLink } from 'react-router-dom';
+import './HomeHeader.css';
+import Avatar from '../avatar/Avatar';
+import {
+  TEACHER_DASHBOARD_LINKS,
+  STUDENT_DASHBOARD_LINKS
+} from './../../../constant/Constant';
 
 // import companyLogo from "../../../images/pearson-logo.png";
 
 class HeaderHome extends Component {
   state = {
-    headeTitle: this.props.headeTitle ? this.props.headeTitle : "Default",
-    dashboardLink: "/home"
+    headeTitle: this.props.headeTitle ? this.props.headeTitle : '',
+    dashboardLink: '/home'
   };
   componentDidMount = () => {
-    const user = JSON.parse(localStorage.getItem("userProfile"));
+    const user = JSON.parse(localStorage.getItem('userProfile'));
     if (user) {
-      if (user.role === "Teacher") {
-        this.setState({ dashboardLink: "/teacher" });
-      } else if (user.role === "Student") {
-        this.setState({ dashboardLink: "/student" });
+      if (user.role === 'Teacher') {
+        this.setState({ dashboardLink: '/teacher' });
+      } else if (user.role === 'Student') {
+        this.setState({ dashboardLink: '/student' });
       } else {
-        this.setState({ dashboardLink: "/admin" });
+        this.setState({ dashboardLink: '/admin' });
       }
     } else {
-      this.setState({ dashboardLink: "/login" });
+      this.setState({ dashboardLink: '/login' });
     }
   };
   navigateTo = linkName => {
@@ -33,12 +36,20 @@ class HeaderHome extends Component {
 
   render() {
     let userLink;
-    const user = JSON.parse(localStorage.getItem("userProfile"));
-    const currentUser = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem('userProfile'));
+    const currentUser = JSON.parse(localStorage.getItem('user'));
     if (user) {
       userLink = (
         <div className="home-header-nav-item home-header-nav-item--position">
-          <Avatar dashboardLinks={(user && user.role === 'Teacher') ? TEACHER_DASHBOARD_LINKS : STUDENT_DASHBOARD_LINKS} userProfile={user} currentUser={currentUser} />
+          <Avatar
+            dashboardLinks={
+              user && user.role === 'Teacher'
+                ? TEACHER_DASHBOARD_LINKS
+                : STUDENT_DASHBOARD_LINKS
+            }
+            userProfile={user}
+            currentUser={currentUser}
+          />
         </div>
       );
     } else {
@@ -55,7 +66,7 @@ class HeaderHome extends Component {
             className="home-header-link"
             href="#"
           > */}
-            <i className="fa fa-sign-in home-header-icon--size" />{" "}
+            <i className="fa fa-sign-in home-header-icon--size" />{' '}
             <span className="home-header-text-link-status">SignIn/SignUp</span>
           </NavLink>
         </div>
@@ -79,13 +90,14 @@ class HeaderHome extends Component {
         <div
           className="home-header-nav-item home-header-logo"
           style={{
-            backgroundPosition: "center center",
+            backgroundPosition: 'center center',
             backgroundImage: "url('../../Assets/hdpi/logo.png')",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "contain"
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain'
           }}
-          onClick={() => this.navigateTo("/home")}
+          onClick={() => this.navigateTo('/home')}
         />
+        <span className="header-title--font">{this.state.headeTitle}</span>
         <div className="nav-section">
           {userLink}
           {!userLink && (
@@ -101,7 +113,7 @@ class HeaderHome extends Component {
                   onClick={() => this.navigateTo("/contactus")}
                   className="home-header-link"
                 > */}
-                  <i className="fa fa-phone-square home-header-icon--size" />{" "}
+                  <i className="fa fa-phone-square home-header-icon--size" />{' '}
                   <span className="home-header-text-link-status">
                     Contact Us
                   </span>
@@ -118,12 +130,12 @@ class HeaderHome extends Component {
                   onClick={() => this.navigateTo("/aboutus")}
                   className="home-header-link"
                 > */}
-                  <i className="fa fa-info-circle home-header-icon--size" />{" "}
+                  <i className="fa fa-info-circle home-header-icon--size" />{' '}
                   <span className="home-header-text-link-status">About Us</span>
                 </NavLink>
               </div>
             </>
-          )}          
+          )}
         </div>
       </header>
     );

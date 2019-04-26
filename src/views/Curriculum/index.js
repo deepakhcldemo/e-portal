@@ -5,19 +5,19 @@ mandatory props in this component
 userDetails, heading, isUploadThumb,category
 these are callback function to recieve error or success handleError, handleSuccess 
 */
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import firebase from "firebase";
+import firebase from 'firebase';
 
-import FileUploader from "react-firebase-file-uploader";
-import { toastr } from "react-redux-toastr";
+import FileUploader from 'react-firebase-file-uploader';
+import { toastr } from 'react-redux-toastr';
 
-import Progress from "./progress";
-import { CurriculumModel } from "./model";
-import "./styles.scss";
+import Progress from './progress';
+import { CurriculumModel } from './model';
+import './styles.scss';
 
-import { saveFileMetaData } from "./actions";
+import { saveFileMetaData } from './actions';
 
 class Curriculum extends Component {
   state = CurriculumModel;
@@ -44,9 +44,9 @@ class Curriculum extends Component {
     this.props.saveFileMetaData(
       fileName,
       this.props.userDetails,
-      "",
-      "",
-      "video"
+      '',
+      '',
+      'video'
     );
   };
 
@@ -56,53 +56,69 @@ class Curriculum extends Component {
       fileName,
       this.props.userDetails,
       this.props.updateVideo ? this.state.doc : this.props.docRef,
-      "",
-      "thumb"
+      '',
+      'thumb'
     );
   };
 
-  handleChange = e => {
+  handleChange = async e => {
     this.setState({
       [e.id]: e.value
     });
+    await this.formValidate(false)
   };
 
-  handleSubmit = e => {
+  formValidate = (showWaring) => {
     const fields = {};
     let check = true;
     for (const field of this.state.fields) {
       if (!this.state[field]) {
-        toastr.warning(field, "Please Enter " + field);
+        if(showWaring) {
+          toastr.warning(field, 'Please Enter ' + field);
+        }
         check = false;
         break;
       }
       fields[field] = this.state[field];
     }
-    if (check)
+    this.setState({
+      validate: check
+    })
+    return (!check) ? check : fields
+  }
+  
+  handleSubmit = async e => {
+    const fields = await this.formValidate(true)
+    
+    if (fields){
       this.props.saveFileMetaData(
-        "",
+        '',
         this.props.userDetails,
         this.props.updateVideo ? this.state.doc : this.props.docRef,
         fields,
-        "metadata"
+        'metadata'
       );
-    this.props.handleSuccess(true);
+      this.props.handleSuccess(true);
+    }else{
+      this.props.handleSuccess(false);
+    }
+    this.setState({validate: false})
     e.preventDefault();
   };
 
   render() {
     const style = {
-      backgroundColor: "#232838",
-      color: "white",
+      backgroundColor: '#232838',
+      color: 'white',
       padding: 10,
-      fontSize: "15px",
+      fontSize: '15px',
       borderRadius: 5,
-      pointer: "cursor"
+      pointer: 'cursor'
     };
     const { userDetails, heading, isUploadThumb, category } = this.props;
     return (
       <div className="col-12">
-        <div className="card">
+        <div className="card uplaod-video--background">
           <div className="card-header">
             <h6>{heading}</h6>
           </div>
@@ -121,10 +137,13 @@ class Curriculum extends Component {
                 )}
                 {category && (
                   <div className="form-group row">
-                    <label htmlFor="category" className="col-2 col-form-label">
+                    <label
+                      htmlFor="category"
+                      className="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2 col-form-label"
+                    >
                       Category
                     </label>
-                    <div className="col-4">
+                    <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                       <select
                         className="form-control"
                         id="category"
@@ -143,10 +162,13 @@ class Curriculum extends Component {
                   </div>
                 )}
                 <div className="form-group row">
-                  <label htmlFor="title" className="col-2 col-form-label">
+                  <label
+                    htmlFor="title"
+                    className="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2 col-form-label"
+                  >
                     Title
                   </label>
-                  <div className="col-4">
+                  <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                     <input
                       value={this.state.title}
                       type="text"
@@ -160,10 +182,13 @@ class Curriculum extends Component {
                   </div>
                 </div>
                 <div className="form-group row">
-                  <label htmlFor="tags" className="col-2 col-form-label">
+                  <label
+                    htmlFor="tags"
+                    className="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2 col-form-label"
+                  >
                     Tags
                   </label>
-                  <div className="col-4">
+                  <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                     <input
                       value={this.state.tags}
                       type="text"
@@ -177,10 +202,13 @@ class Curriculum extends Component {
                   </div>
                 </div>
                 <div className="form-group row">
-                  <label htmlFor="desc" className="col-2 col-form-label">
+                  <label
+                    htmlFor="desc"
+                    className="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2 col-form-label"
+                  >
                     Description
                   </label>
-                  <div className="col-4">
+                  <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                     <textarea
                       value={this.state.desc}
                       className="form-control"
@@ -196,11 +224,12 @@ class Curriculum extends Component {
                 </div>
                 {!this.state.video && !this.state.isUploading && (
                   <div className="form-group row">
-                    <label className="col-2" />
-                    <div className="col-2">
-                      <label style={style}>
+                    <label className="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2" />
+                    <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                      <label style={style} disabled={!this.state.validate}>
                         Upload Video
                         <FileUploader
+                          disabled={!this.state.validate}
                           hidden
                           accept="video/*"
                           storageRef={firebase
@@ -220,15 +249,15 @@ class Curriculum extends Component {
                   this.state.thumbnail &&
                   !this.state.isUploading && (
                     <div className="form-group row">
-                      <label className="col-2" />
-                      <div className="col-2">
+                      <label className="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2" />
+                      <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                         <label style={style}>
                           Upload Thumbnail
                           <FileUploader
                             hidden
                             accept="image/*"
                             filename={file =>
-                              "thumb_" + file.name.split(".")[1]
+                              'thumb_' + file.name.split('.')[1]
                             }
                             storageRef={firebase
                               .storage()
@@ -243,15 +272,14 @@ class Curriculum extends Component {
                     </div>
                   )}
                 <div className="form-group row">
-                  <div className="col-2" />
-                  <div className="col-sm-10">
+                  <div className="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2" />
+                  <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                     <button
                       type="submit"
                       disabled={!this.state.video}
-                      className="btn"
-                      style={{ backgroundColor: "#232838", color: "#fff" }}
+                      className="btn btn-success"
                     >
-                      Publish
+                      Save
                     </button>
                     {this.props.children}
                   </div>

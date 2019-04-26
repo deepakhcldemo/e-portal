@@ -27,3 +27,6 @@ export const getTeacherRating = (teacherId) => {
 export const saveTeacherRating = (reacherId, data) => {
   return getDbRef('userRating').doc(reacherId).set(data);
 }
+export const saveTeacherRatingOnProfile = (reacherId, data) => {
+  return getDbRef('userProfiles').doc(reacherId).set(data);
+}

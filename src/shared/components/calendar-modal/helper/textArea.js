@@ -7,7 +7,9 @@ const TextArea = props => {
     onChangeHandle,
     className,
     errorMessage,
-    placeHolder
+    placeHolder,
+    rows,
+    cols
   } = props;
   return (
     <div className="form-group">
@@ -17,7 +19,9 @@ const TextArea = props => {
         className={className}
         id="exampleFormControlTextarea2"
         placeholder={placeHolder}
-        rows="3">{value}</textarea>
+        rows={rows ? rows : "3"} 
+        cols={cols ? cols : "100"}
+        >{value}</textarea>
 
       <div className="c-error">{errorMessage}</div>
     </div>

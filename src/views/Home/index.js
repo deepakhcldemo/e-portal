@@ -15,6 +15,7 @@ import RecentVideo from '../../components/recentVideo/RecentVideo';
 import StudentFeedback from '../../components/studentFeedback/StudentFeedback';
 import Banner from '../../components/banner/Banner';
 import GLOBAL_VARIABLES from '../../config/config';
+import StatusCircle from '../../components/statusCircle/StatusCircle';
 // import { zipRequestDispatch } from '../../shared/library/ZipcodesByRadius';
 
 class Home extends Component {
@@ -79,24 +80,28 @@ class Home extends Component {
       let tempArr = {};
       let feedbackData = [];
       querySnapshot.forEach(doc => {
-        getUserProfileFromDB(doc.data().user_id).onSnapshot(
-          querySnapshot => {
-            querySnapshot.forEach(profileData => {
-              tempArr['profileData'] = profileData.data();
-              tempArr['feedback'] = doc.data();
+        if (doc.exists) {
+          if (doc.data().user_id) {
+            getUserProfileFromDB(doc.data().user_id).onSnapshot(
+              querySnapshot => {
+                querySnapshot.forEach(profileData => {
+                  tempArr['profileData'] = profileData.data();
+                  tempArr['feedback'] = doc.data();
 
-              feedbackData.push(tempArr);
-              this.setState({
-                studentsReview: feedbackData
-              });
-              tempArr = {};
-            });
-            this.props.setSpinnerStatus(false);
-          },
-          error => {
-            this.props.setSpinnerStatus(false);
+                  feedbackData.push(tempArr);
+                  this.setState({
+                    studentsReview: feedbackData
+                  });
+                  tempArr = {};
+                });
+                this.props.setSpinnerStatus(false);
+              },
+              error => {
+                this.props.setSpinnerStatus(false);
+              }
+            );
           }
-        );
+        }
       });
     });
   };
