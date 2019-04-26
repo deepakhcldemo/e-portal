@@ -24,7 +24,7 @@ class NotificationDetails extends Component {
       applyClass: 'display-upload',
       isUploading: false,
       videoName: '',
-      validationMessage : ''
+      validationMessage: ''
     };
     this.acceptNotification = this.acceptNotification.bind(this);
     this.goBackTONotification = this.goBackTONotification.bind(this);
@@ -47,15 +47,15 @@ class NotificationDetails extends Component {
           acceptNotification.tAccepted = true;
           this.props.saveAcceptedNotification(acceptNotification);
           this.setState({
-            validationMessage : ''
+            validationMessage: ''
           })
         }
-        
+
       })
-     this.goBackTONotification();
+      this.goBackTONotification();
     }
 
-   
+
 
   };
 
@@ -79,7 +79,7 @@ class NotificationDetails extends Component {
     debugger
     this.setState({
       isUploading: true,
-     
+
     })
   }
   handleVideoUploadSuccess = fileName => {
@@ -157,13 +157,13 @@ class NotificationDetails extends Component {
               {(this.state.userDetails.role === "Teacher") && (!this.state.notificationsDetails.tRejected && !this.state.notificationsDetails.tAccepted) ? (
                 <div className="pull-right">
                   <button
-                    disabled ={this.state.isUploading}
+                    disabled={this.state.isUploading}
                     className="btn btn-success"
                     onClick={this.acceptNotification}
                   >
                     Accept
                   </button>
-                  <button disabled ={this.state.isUploading}
+                  <button disabled={this.state.isUploading}
                     className="btn btn-danger"
                     onClick={this.rejectNotification}
                   >
@@ -177,8 +177,19 @@ class NotificationDetails extends Component {
               {(this.state.notificationsDetails.tRejected) ? (
                 <p className="notification-rejected">Notification has been Rejected</p>
               ) : ''}
+
+              {(this.state.notificationsDetails.tAccepted && this.state.userDetails.role !== "Teacher") ? (
+                <div>
+                  <button disabled={this.state.isUploading}
+                    className="btn btn-success pull-right"
+                    onClick={true}
+                  >
+                    Pay Now
+               </button>
+                </div>
+              ) : ''}
             </div>
-          
+
           </div>
         </div>
       </div>
