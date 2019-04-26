@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import NavBar from "../../shared/components/Navbar";
 import { getVideoUrl } from '../../database/dal/firebase/notificationdal';
 import HeaderHome from "../../components/layout/header/HeaderHome";
-import { rejectNotification, openModalForAcceptNotification, saveAcceptedNotification } from "./action";
+import { rejectNotification, openModalForAcceptNotification, saveAcceptedNotification, setKeyForNotificationPage } from "./action";
 import ModalPopUpForNotification from "../../shared/components/modalPopforNotification/modalPopForNotification";
 import {
   TEACHER_DASHBOARD_LINKS,
@@ -26,8 +26,12 @@ class NotificationDetails extends Component {
       videoName: '',
     };
     this.acceptNotification = this.acceptNotification.bind(this);
+    this.goBackTONotification = this.goBackTONotification.bind(this);
   }
-
+  goBackTONotification = () => {
+    this.props.setKeyForNotificationPage('NotificationDetails');
+    this.props.history.goBack()
+  }
   acceptNotification = () => {
     debugger
     //this.props.openModalForAcceptNotification();
@@ -103,11 +107,14 @@ class NotificationDetails extends Component {
 
               {this.state.userDetails.Svideo !== '' ? <span className="bold"> Video Uploaded by Student </span> : null}
             </div>
-            <video
-              src={
-                this.state.notificationsDetails.sVideo
-              }
-            />
+            <div className="teacher-video">
+              <video
+                controls
+                src={
+                  this.state.notificationsDetails.sVideo
+                }
+              />
+            </div>
             {this.props.notificationDetails.tvideo !== '' ? (
               <div>
                 <div>
@@ -115,6 +122,7 @@ class NotificationDetails extends Component {
                 </div>
                 <div className="teacher-video">
                   <video
+                    controls
                     src={
                       this.state.notificationsDetails.tvideo
                     }
@@ -137,12 +145,12 @@ class NotificationDetails extends Component {
               <div className="pull-left">
                 <button
                   className="btn btn-dark"
-                  onClick={() => this.props.history.goBack()}
+                  onClick={this.goBackTONotification}
                 >
                   Back
                   </button>
               </div>
-              {(this.state.userDetails.role === "Teacher") &&  (!this.state.notificationsDetails.tRejected && !this.state.notificationsDetails.tAccepted) ? (
+              {(this.state.userDetails.role === "Teacher") && (!this.state.notificationsDetails.tRejected && !this.state.notificationsDetails.tAccepted) ? (
                 <div className="pull-right">
                   <button
                     className="btn btn-success"
@@ -162,7 +170,7 @@ class NotificationDetails extends Component {
 
 
               {(this.state.notificationsDetails.tRejected) ? (
-                <p className ="notification-rejected">Notification has been Rejected</p>
+                <p className="notification-rejected">Notification has been Rejected</p>
               ) : ''}
             </div>
             {/* {(this.state.userDetails.tRejected) ? (
@@ -191,7 +199,8 @@ const mapDispatchToProps = dispatch => {
     openModalForAcceptNotification: () =>
       dispatch(openModalForAcceptNotification()),
     saveAcceptedNotification: (acceptNotificationData) =>
-      dispatch(saveAcceptedNotification(acceptNotificationData))
+      dispatch(saveAcceptedNotification(acceptNotificationData)),
+    setKeyForNotificationPage: (NotificationDetails) => dispatch(setKeyForNotificationPage(NotificationDetails))
   };
 };
 export default withRouter(

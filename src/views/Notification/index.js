@@ -38,6 +38,7 @@ class Notification extends Component {
   };
 
   componentWillMount = () => {
+    
     this.setState({
       userDetails: JSON.parse(localStorage.getItem("userProfile"))
     });
@@ -45,6 +46,12 @@ class Notification extends Component {
 
   componentDidMount = () => {
     const { userDetails } = this.state;
+    console.log('this.props.getNotificationMessage', this.props.getNotificationMessage);
+    if(this.props.getNotificationMessage === "NotificationDetails"){
+        this.setState({
+          key : 'notification'
+        })
+    }
     getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(
       querySnapshot => {
         let notificationsList = [];
@@ -169,8 +176,9 @@ class Notification extends Component {
   };
 }
 const mapStateToProps = state => {
+  console.log('state', state);
   return {
-    //savedNotifications: state.notifyTeacherReducer.notifications
+    getNotificationMessage : state.notificationAcceptREducer.keyForNotification,
   };
 };
 const mapDispatchToProps = dispatch => {
