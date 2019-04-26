@@ -39,8 +39,8 @@ class TeacherItem extends Component {
               <div
                 className={
                   isTrayItem
-                    ? 'col-9 col-sm-9 col-md-7 col-lg-7 col-xl-7 col-without--padding content-container--background'
-                    : 'col-12 col-without--padding content-container--background '
+                    ? 'col-9 col-sm-9 col-md-7 col-lg-7 col-xl-7 col-without--padding '
+                    : 'col-12 col-without--padding  '
                 }
               >
                 <div
@@ -51,7 +51,9 @@ class TeacherItem extends Component {
                   }
                   style={{ border: 'none' }}
                 >
-                  <h6 className="user-title">
+                  <h6
+                    className={isTrayItem ? 'user-list--title' : 'user-title'}
+                  >
                     {userProfile.firstName + ' ' + userProfile.lastName}
                   </h6>
                   <p>

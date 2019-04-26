@@ -1,25 +1,25 @@
-import React, { Component } from "react";
-import HeaderHome from "../../../components/layout/header/HeaderHome";
-import Navbar from "./../../../shared/components/Navbar";
-import Filter from "./../../../shared/components/Filter";
-import TopVideo from "./../TopVideo/TopVideo";
-import Curriculum from "./../../Curriculum/index";
-import { getAllCategory } from "../../../database/dal/firebase/categoryDal";
-import { getCurriculumFromDB } from "../../../database/dal/firebase/curriculumDal";
+import React, { Component } from 'react';
+import HeaderHome from '../../../components/layout/header/HeaderHome';
+import Navbar from './../../../shared/components/Navbar';
+import Filter from './../../../shared/components/Filter';
+import TopVideo from './../TopVideo/TopVideo';
+import Curriculum from './../../Curriculum/index';
+import { getAllCategory } from '../../../database/dal/firebase/categoryDal';
+import { getCurriculumFromDB } from '../../../database/dal/firebase/curriculumDal';
 // Video Item Component
 // import VideoItem from "./../../../components/videoItem/VideoItem";
 class Video extends Component {
   state = {
     upload: false,
-    content: "",
-    userDetails: "",
-    filter: ""
+    content: '',
+    userDetails: '',
+    filter: ''
     //categorySubscriber: ""
   };
 
   componentWillMount = () => {
     this.setState({
-      userDetails: JSON.parse(localStorage.getItem("userProfile"))
+      userDetails: JSON.parse(localStorage.getItem('userProfile'))
     });
   };
 
@@ -73,9 +73,7 @@ class Video extends Component {
     return (
       <>
         <div className="container-fluid">
-          <HeaderHome
-            headeTitle="Teacher Dashboard"
-          />
+          <HeaderHome headeTitle="Teacher Dashboard" />
 
           <div className="content-container main-wrapper">
             {!this.state.upload && (
@@ -94,6 +92,7 @@ class Video extends Component {
                     onClick={this.handleUpload}
                     className="btn home-header-text-link-status"
                     title="Upload Video"
+                    style={{ color: 'white' }}
                   >
                     <i className="fas fa-plus" /> Add Video
                   </button>
@@ -112,7 +111,7 @@ class Video extends Component {
                 <button
                   onClick={this.handleUpload}
                   className="btn"
-                  style={{ backgroundColor: "#232838", color: "#fff" }}
+                  style={{ backgroundColor: '#232838', color: '#fff' }}
                   title="close"
                 >
                   Close
