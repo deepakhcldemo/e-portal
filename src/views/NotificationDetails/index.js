@@ -74,7 +74,7 @@ class NotificationDetails extends Component {
                 this.state.notificationsDetails.tVideo
               }
             />
-            {this.state.userDetails.role === "Teacher" ? (
+            
               <div className="col-lg-12">
                 <div className="pull-left">
                   <button
@@ -84,6 +84,7 @@ class NotificationDetails extends Component {
                     Back
                   </button>
                 </div>
+                {(this.state.userDetails.role === "Teacher" && (this.state.userDetails.tstatus || this.state.userDetails.sstatus) )? (
                 <div className="pull-right">
                   <button
                     className="btn btn-success"
@@ -98,8 +99,9 @@ class NotificationDetails extends Component {
                     Reject
                   </button>
                 </div>
+                 ) : <p className ="reject-notification">Notification Has been Rejected</p>}
               </div>
-            ) : null}
+           
           </div>
         </div>
       </div>

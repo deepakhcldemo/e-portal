@@ -20,26 +20,14 @@ import Carousel from "./components/carousel/Carousel";
 import Category from "./views/Category";
 import Teacher from "./views/Teacher";
 import Video from "./views/Teacher/Video";
-//import NotificationDetails from './views/NotificationDetails/index';
-
-// import Notification from './views/Teacher/Notification';
-/* import NotificationsDetails from './views/Teacher/Notification/notificationsDetails';
-import NotificationsDescription from './views/Teacher/Notification/notificationsDescription';
- */
 import NotificationsDescription from "./views/Teacher/Notification/notificationsDescription";
 
 import Student from "./views/Student/index";
-/* import StudentNotificationsDetails from './views/Student/Notification/notificationsDetails';
-import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription'; */
 import StudentNotificationsDescription from "./views/Student/Notification/notificationsDescription";
 
-/* import NotificationfromTeacher from './views/Student/NotifyStudent/notificationfromTeacher';
-import NotificationFullDetails from './views/Student/NotifyStudent/notificationFullDetails'; */
 import Notification from "./views/Notification";
 
 import NotificationDetails from "./views/NotificationDetails";
-// import TeacherNotificationFulldetails from './views/Teacher/NotifyTeacher/teacherNotificationFulldetails';
-
 import SearchTeacher from "./views/Student/SearchTeacher/SearchTeacher";
 
 import ContactUs from "./views/ContactUs";
@@ -117,6 +105,7 @@ class App extends Component {
           <PrivateRoute path="/category" component={Category} exact />
           <PrivateRoute path="/teacher" component={Teacher} exact />
           <PrivateRoute path="/teacher/videos" component={Video} exact />
+          <PrivateRoute path="/student/notification" component={Notification} exact />
           <PrivateRoute
             path="/notificationDetails"
             component={NotificationDetails}
@@ -151,7 +140,7 @@ class App extends Component {
             component={NotificationFullDetails}
             exact
           /> */}
-          <PrivateRoute path="/notification" component={Notification} exact />
+          
           <PrivateRoute
             path="/student/teacher"
             component={SearchTeacher}

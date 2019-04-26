@@ -4,6 +4,14 @@
   flex-direction: row !important;
   justify-content: center !important; */
 }
+
+.alert {
+  width : 100% !important;
+}
+
+.reject-notification{
+  text-align : right;
+}
 .notification-cardbody {
   flex: 1 1 auto;
   background-color: #4b4e68 !important;
