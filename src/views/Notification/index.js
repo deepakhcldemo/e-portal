@@ -72,7 +72,6 @@ class Notification extends Component {
   };
 
   goToNotificationDetails = notification => {
-    debugger;
     this.props.setNotificationDetails(notification);
     console.log(this.props);
     this.props.history.push("/notificationDetails");
@@ -94,7 +93,6 @@ class Notification extends Component {
   };
 
   goToNotificationDetails = notification => {
-    debugger;
     this.props.setNotificationDetails(notification);
     console.log(this.props);
     this.props.history.push("/notificationDetails");

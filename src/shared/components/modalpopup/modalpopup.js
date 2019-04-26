@@ -83,7 +83,7 @@ class ModalPopUp extends Component {
   createNotification = () => {
     const loggedInUSerDetails = JSON.parse(localStorage.getItem('userProfile'));
     let tId, sId, tname, sname = '';
-    let sstatus = false; let tstatus = false;
+    let sstatus = true; let tstatus = false;
     if (loggedInUSerDetails.role === 'Teacher') {
       tId = loggedInUSerDetails.userId;
       sId = '';
