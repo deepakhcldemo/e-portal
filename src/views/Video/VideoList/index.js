@@ -32,13 +32,14 @@ class VideoList extends Component {
     return (
       <div className="card video-container--background">
         <div className="card-body">
-          <h4>
-            {heading}{' '}
-            {this.props.children && (
-              <span className="link pull-right">{this.props.children}</span>
-            )}
-          </h4>
-          <hr />
+          {this.props.children && (
+            <h4>
+              {this.props.children}
+            </h4>
+          )}
+          {videoDetails.length === 0 && (
+            <h6>No {heading}</h6>
+          )}
           <ul className="list-unstyled video-list-thumbs">
             {videoDetails &&
               videoDetails.map((videoDetail, index) => {

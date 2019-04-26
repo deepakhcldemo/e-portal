@@ -61,24 +61,36 @@ class Curriculum extends Component {
     );
   };
 
-  handleChange = e => {
+  handleChange = async e => {
     this.setState({
       [e.id]: e.value
     });
+    await this.formValidate(false)
   };
 
-  handleSubmit = e => {
+  formValidate = (showWaring) => {
     const fields = {};
     let check = true;
     for (const field of this.state.fields) {
       if (!this.state[field]) {
-        toastr.warning(field, 'Please Enter ' + field);
+        if(showWaring) {
+          toastr.warning(field, 'Please Enter ' + field);
+        }
         check = false;
         break;
       }
       fields[field] = this.state[field];
     }
-    if (check)
+    this.setState({
+      validate: check
+    })
+    return (!check) ? check : fields
+  }
+  
+  handleSubmit = async e => {
+    const fields = await this.formValidate(true)
+    
+    if (fields){
       this.props.saveFileMetaData(
         '',
         this.props.userDetails,
@@ -86,7 +98,11 @@ class Curriculum extends Component {
         fields,
         'metadata'
       );
-    this.props.handleSuccess(true);
+      this.props.handleSuccess(true);
+    }else{
+      this.props.handleSuccess(false);
+    }
+    this.setState({validate: false})
     e.preventDefault();
   };
 
@@ -210,9 +226,10 @@ class Curriculum extends Component {
                   <div className="form-group row">
                     <label className="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2" />
                     <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                      <label style={style}>
+                      <label style={style} disabled={!this.state.validate}>
                         Upload Video
                         <FileUploader
+                          disabled={!this.state.validate}
                           hidden
                           accept="video/*"
                           storageRef={firebase
@@ -263,7 +280,7 @@ class Curriculum extends Component {
                       className="btn btn-success"
                       // style={{ backgroundColor: '#232838', color: '#fff' }}
                     >
-                      Publish
+                      Save
                     </button>
                     {this.props.children}
                   </div>

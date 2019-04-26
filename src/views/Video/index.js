@@ -12,8 +12,10 @@ import Curriculum from "./../Curriculum";
 
 import { getAllCategory } from "../../database/dal/firebase/categoryDal";
 import { getCurriculumFromDB } from "../../database/dal/firebase/curriculumDal";
+import { getNotificationsFromDB } from "../../database/dal/firebase/studentDal";
 
 import { VIDEO_TABS } from "./../../constant/Constant";
+// import notifications from "../Student/Notification/notifications";
 
 class Video extends Component {
   state = {
@@ -35,7 +37,31 @@ class Video extends Component {
     this.setState({
       tabs: VIDEO_TABS[this.state.userDetails.role.toLowerCase()]
     });
-    getCurriculumFromDB(this.state.userDetails.userId).onSnapshot(
+    this.getContent();
+    getAllCategory().onSnapshot(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const category = [...doc.data().subjects];
+        this.setState({ category });
+      });
+    });    
+  };
+
+  /* componentDidUpdate = () => {
+    this.filterAllContent();
+  } */
+
+  getContent = async () => {
+    if(this.state.tabKey === 'myvideo') {
+      await this.getCurriculum() 
+    } else {
+      await this.getNotifications();
+    }
+    await this.filterAllContent();
+  }
+
+  getCurriculum = () => {
+    const {userDetails} = this.state
+    getCurriculumFromDB(userDetails.userId).onSnapshot(
       querySnapshot => {
         let content = [];
         querySnapshot.forEach(doc => {
@@ -44,12 +70,38 @@ class Video extends Component {
         this.setState({ content });
       }
     );
-    getAllCategory().onSnapshot(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        const category = [...doc.data().subjects];
-        this.setState({ category });
-      });
-    });
+  }
+
+  getNotifications = () => {
+    const {userDetails} = this.state
+    getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(
+      querySnapshot => {
+        let content = [];
+        querySnapshot.forEach(doc => {
+          content.push(Object.assign({ id: doc.id }, doc.data()));
+        });
+        this.setState({ content });
+      }
+    );  
+  }
+
+  filterAllContent = () => {
+    const {tabKey} = this.state
+    let content = this.state.content
+    if(tabKey !== 'mycontent' && content.length >0) {
+      content = content.filter( (list) => {
+        if(tabKey === 'reviewed') {
+          return list.sstatus && list.tstatus
+        } else if(tabKey === 'pendingreview'){
+          return list.sstatus && !list.tstatus
+        } else if(tabKey === 'rejected') {
+          return !list.status && !list.tstatus        
+        }else{
+          return list
+        }
+      })
+    }
+    this.setState({content});
   };
 
   handleUpload = () => {
@@ -75,8 +127,10 @@ class Video extends Component {
       filter: content
     });
   };
-  handleKey = key => {
-    this.setState({ tabKey: key });
+
+  handleKey = async (key) => {
+    await this.setState({ tabKey: key });
+    this.getContent();
   };
 
   render = () => {
@@ -89,6 +143,7 @@ class Video extends Component {
       userDetails,
       category
     } = this.state;
+
     return (
       <>
         <div className="container-fluid">
@@ -100,7 +155,7 @@ class Video extends Component {
                 <Tabs
                   id="video-tabs"
                   activeKey={tabKey}
-                  onSelect={key => this.handleKey(key)}
+                  onSelect={(key) => this.handleKey(key)}
                 >
                   {tabs &&
                     tabs.map((tab, ind) => {
@@ -110,13 +165,17 @@ class Video extends Component {
                             heading={tab.name}
                             videoDetails={filter ? filter : content}
                           >
+                          {(tabKey === 'myvideo' && userDetails.role === 'Teacher') && (
                             <button
+                              style={{color: '#fff'}}
                               onClick={this.handleUpload}
-                              className="btn home-header-text-link-status"
+                              className="btn"
                               title="Upload Video"
                             >
-                              <i className="fas fa-plus" /> Add Video
+                              <i className="fas fa-plus" />
+                              <span className="home-header-text-link-status">&nbsp;Add Video</span>
                             </button>
+                          )}
                           </VideoList>
                         </Tab>
                       );
@@ -133,6 +192,7 @@ class Video extends Component {
                 handleError={this.handleError}
                 handleSuccess={this.handleSuccess}
               >
+                {}
                 <button
                   onClick={this.handleUpload}
                   className="btn"

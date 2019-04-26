@@ -19,7 +19,7 @@
   width: 200px;
   height: 200px;
   @media (max-width: $mobileWidth) {
-    width: 260px;
+    width: 100%;
   }
 }
 .video-list-thumbs > li > a {
@@ -38,6 +38,9 @@
   width: 180px;
   height: 140px;
   border: 1px solid #dcd9d9;
+  @media (max-width: $mobileWidth) {
+    width: 80%;
+  }
 }
 .video-list-thumbs > li > a:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
