@@ -17,10 +17,17 @@ import {
   saveTeacherRating,
   saveTeacherRatingOnProfile
 } from '../../../database/dal/firebase/teacherDetailDal';
+import {
+  getFeedbackFromDB,
+  getUserProfileFromDB
+} from '../../../database/dal/firebase/homeDal';
+
 import { getCurriculumFromDB } from '../../../database/dal/firebase/curriculumDal';
 // import GLOBAL_VARIABLES from '../../../config/config';
 import RecentVideo from '../../../components/recentVideo/RecentVideo';
 import bannerImg from '../../../images/detail-banner.jpg';
+import Comment from '../../../components/comment/Comment';
+import { toastr } from 'react-redux-toastr';
 
 class TeacherDetails extends Component {
   constructor(props) {
@@ -41,7 +48,8 @@ class TeacherDetails extends Component {
       starRating: 0,
       totalUser: 0,
       carousellistNewlyItems: [],
-      loggedInUser: {}
+      loggedInUser: {},
+      studentsReview: []
     };
     this.openModalForRequest = this.openModalForRequest.bind(this);
   }
@@ -77,6 +85,34 @@ class TeacherDetails extends Component {
       }
       currData = [];
     });
+
+    // For Comment Section
+    getFeedbackFromDB(teacherId).onSnapshot(querySnapshot => {
+      let tempArr = {};
+      let feedbackData = [];
+      querySnapshot.forEach(doc => {
+        getUserProfileFromDB(doc.data().user_id).onSnapshot(
+          querySnapshot => {
+            querySnapshot.forEach(profileData => {
+              tempArr['profileData'] = profileData.data();
+              tempArr['feedback'] = doc.data();
+
+              feedbackData.push(tempArr);
+              this.setState({
+                studentsReview: feedbackData
+              });
+              tempArr = {};
+            });
+            this.props.setSpinnerStatus(false);
+          },
+          error => {
+            this.props.setSpinnerStatus(false);
+            toastr.error(error.message);
+          }
+        );
+      });
+    });
+
   }
   setTeacherData = data => {
     this.setState({ teacherData: data });
@@ -361,137 +397,8 @@ class TeacherDetails extends Component {
             </div>
           </div>
 
-          <div className="comments-section">
-            <div className="text-field-section">
-              <div className="container">
-                <div className="row">
-                  <div className="col-sm-12">
-                    <div className="comments-hdr-section">
-                      <div className="author-thumbnail">
-                        <img
-                          src="https://cdn.iconscout.com/icon/free/png-256/avatar-369-456321.png"
-                          alt=""
-                        />
-                      </div>
-                      <div className="comments-input">
-                        <input
-                          type="text"
-                          className="auto-input form-control"
-                          placeholder="Add a comment"
-                        />
-                      </div>
-                      <div className="total-comments">
-                        <span className="count">1</span>
-                        <span className="count-text">Comments</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="container">
-              <div className="row">
-                <div className="col-sm-12">
-                  <div className="comment-thread-element">
-                    <div className="author-thumbnail">
-                      <img
-                        src="https://cdn.iconscout.com/icon/free/png-256/avatar-372-456324.png"
-                        alt=""
-                      />
-                    </div>
-                    <div className="comment-content">
-                      <i className="fas fa-caret-left" />
-                      <div className="comment-hdr d-flex align-items-center justify-content-between">
-                        <span className="date">23/04/2019</span>
-                        <div className="icon-section d-flex">
-                          <div className="icon">
-                            <button
-                              className="btn btn-transparent"
-                              disabled={!isLogedIn}
-                            >
-                              <i className="fas fa-thumbs-up" />{' '}
-                            </button>
-                          </div>
-                          <div className="icon">
-                            <button
-                              className="btn btn-transparent"
-                              disabled={!isLogedIn}
-                            >
-                              <i className="fas fa-thumbs-down" />
-                            </button>
-                          </div>
-                          <div className="icon">
-                            <button
-                              className="btn btn-transparent"
-                              disabled={!isLogedIn}
-                            >
-                              <i className="fas fa-comment-alt" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
+          <Comment teacherId={this.state.detailModel.teacherId} loggedInUser={loggedInUser} commentRows={this.state.studentsReview} />
 
-                      <p>
-                        Is dolor sit amet long established fact that a reader
-                        will be distracted by the readable content of a page
-                        when looking at its layout. The point of using Lorem
-                        Ipsum is that it has a more-or-less normal. Color sit
-                        amet long established fact that a reader will be
-                        distracted by the readable
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="comment-thread-element">
-                    <div className="author-thumbnail">
-                      <img
-                        src="https://cdn.iconscout.com/icon/free/png-256/avatar-369-456321.png"
-                        alt=""
-                      />
-                    </div>
-                    <div className="comment-content">
-                      <i className="fas fa-caret-left" />
-                      <div className="comment-hdr d-flex align-items-center justify-content-between">
-                        <span className="date">23/04/2019</span>
-                        <div className="icon-section d-flex">
-                          <div className="icon">
-                            <button
-                              className="btn btn-transparent"
-                              disabled={!isLogedIn}
-                            >
-                              <i className="fas fa-thumbs-up" />{' '}
-                            </button>
-                          </div>
-                          <div className="icon">
-                            <button
-                              className="btn btn-transparent"
-                              disabled={!isLogedIn}
-                            >
-                              <i className="fas fa-thumbs-down" />
-                            </button>
-                          </div>
-                          <div className="icon">
-                            <button
-                              className="btn btn-transparent"
-                              disabled={!isLogedIn}
-                            >
-                              <i className="fas fa-comment-alt" />
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-
-                      <p>
-                        Is dolor sit amet long established fact that a reader
-                        will be distracted by the readable content of a page
-                        when looking at its layout.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <CalendarModal
             teacherData={this.state.teacherData}
             modalState={this.state.calendarModal}

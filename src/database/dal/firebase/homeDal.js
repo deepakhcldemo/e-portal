@@ -18,8 +18,12 @@ export const getTeacherFromDB = () => {
   return getDbRef('userProfiles').where('role', '==', 'Teacher');
 };
 
-export const getFeedbackFromDB = () => {
-  return getDbRef('feedback');
+export const getFeedbackFromDB = (teacherID) => {
+  if(teacherID){
+    return getDbRef("feedback").where("feedback_to", "==", teacherID);
+  } else {
+    return getDbRef("feedback");
+  }
 };
 
 export const getUserProfileFromDB = userId => {
