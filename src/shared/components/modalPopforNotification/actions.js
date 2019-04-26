@@ -8,7 +8,6 @@ export const closePopModalForNotification = () => {
 
 
   export const saveAcceptedNotification = (rejectNotification) => {
-    debugger
     return (dispatch) => {
         saveNotificationAcceptedFromDB(dispatch, rejectNotification);
     }
