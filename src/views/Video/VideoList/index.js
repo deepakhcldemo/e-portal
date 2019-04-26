@@ -3,10 +3,10 @@ import moment from "moment";
 // import { NavLink } from 'react-router-dom'
 import StarRatingComponent from "react-star-rating-component";
 import VideoPopup from "./../../../components/videopopup/VideoPopup";
-import "./topvideo.scss";
+import "./videolist.scss";
 import GLOBAL_VARIABLES from "../../../config/config";
 
-class TopVideo extends Component {
+class VideoList extends Component {
   state = {
     modalOpen: false,
     userDetails: "",
@@ -85,4 +85,4 @@ class TopVideo extends Component {
     );
   };
 }
-export default TopVideo;
+export default VideoList;

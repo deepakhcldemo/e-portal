@@ -1,29 +1,40 @@
 import React, { Component } from "react";
-import HeaderHome from "../../../components/layout/header/HeaderHome";
-import Navbar from "./../../../shared/components/Navbar";
-import Filter from "./../../../shared/components/Filter";
-import TopVideo from "./../TopVideo/TopVideo";
-import Curriculum from "./../../Curriculum/index";
-import { getAllCategory } from "../../../database/dal/firebase/categoryDal";
-import { getCurriculumFromDB } from "../../../database/dal/firebase/curriculumDal";
-// Video Item Component
-// import VideoItem from "./../../../components/videoItem/VideoItem";
+
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
+
+import HeaderHome from "../../components/layout/header/HeaderHome";
+import Navbar from "../../shared/components/Navbar";
+import Filter from "../../shared/components/Filter";
+
+import VideoList from "./VideoList";
+import Curriculum from "./../Curriculum";
+
+import { getAllCategory } from "../../database/dal/firebase/categoryDal";
+import { getCurriculumFromDB } from "../../database/dal/firebase/curriculumDal";
+
+import {VIDEO_TABS} from "./../../constant/Constant"
+
 class Video extends Component {
   state = {
-    upload: false,
+    filter: "",
     content: "",
     userDetails: "",
-    filter: ""
-    //categorySubscriber: ""
+    tabs: [],
+    upload: false,
+    tabKey: "pendingreview",
   };
 
   componentWillMount = () => {
     this.setState({
-      userDetails: JSON.parse(localStorage.getItem("userProfile"))
-    });
+      userDetails: JSON.parse(localStorage.getItem("userProfile")),
+    })
   };
 
   componentDidMount = () => {
+    this.setState({
+      tabs: VIDEO_TABS[this.state.userDetails.role.toLowerCase()]
+    });
     getCurriculumFromDB(this.state.userDetails.userId).onSnapshot(
       querySnapshot => {
         let content = [];
@@ -40,10 +51,6 @@ class Video extends Component {
       });
     });
   };
-
-  /* componentWillUnmount = () => {
-    this.state.categorySubscriber();
-  }; */
 
   handleUpload = () => {
     this.setState({
@@ -68,44 +75,59 @@ class Video extends Component {
       filter: content
     });
   };
+  handleKey = key => {
+    this.setState({tabKey: key})
+  }
 
   render = () => {
+    const {tabKey, tabs, upload, filter, content, userDetails, category} = this.state
     return (
       <>
         <div className="container-fluid">
           <HeaderHome
             headeTitle="Teacher Dashboard"
           />
-
           <div className="content-container main-wrapper">
-            {!this.state.upload && (
+            {!upload && (
               <>
                 <Filter
-                  content={this.state.content}
+                  content={content}
                   filterContent={this.handleFilter}
                 />
-                <TopVideo
-                  heading="My Videos"
-                  videoDetails={
-                    this.state.filter ? this.state.filter : this.state.content
-                  }
+                <Tabs
+                  id="video-tabs"
+                  activeKey={tabKey}
+                  onSelect={key => this.handleKey(key)}
                 >
-                  <button
-                    onClick={this.handleUpload}
-                    className="btn home-header-text-link-status"
-                    title="Upload Video"
-                  >
-                    <i className="fas fa-plus" /> Add Video
-                  </button>
-                </TopVideo>
+                  {tabs && tabs.map((tab, ind) => {
+                    return (
+                      <Tab key={ind} eventKey={tab.id} title={tab.name}>
+                        <VideoList
+                          heading={tab.name}
+                          videoDetails={
+                            filter ? filter : content
+                          }
+                        >
+                          <button
+                            onClick={this.handleUpload}
+                            className="btn home-header-text-link-status"
+                            title="Upload Video"
+                          >
+                          <i className="fas fa-plus" /> Add Video
+                          </button>
+                        </VideoList>
+                      </Tab>
+                    )
+                  })}
+                </Tabs>
               </>
             )}
-            {this.state.upload && (
+            {upload && (
               <Curriculum
                 heading="UPLOAD VIDEO"
                 isUploadThumb={true}
-                userDetails={this.state.userDetails}
-                category={this.state.category}
+                userDetails={userDetails}
+                category={category}
                 handleError={this.handleError}
                 handleSuccess={this.handleSuccess}
               >

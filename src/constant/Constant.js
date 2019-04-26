@@ -33,7 +33,7 @@ export const TEACHER_DASHBOARD_LINKS = [
     },
     {
         name: 'Video',
-        link: '/teacher/videos',
+        link: '/videos',
         icon: 'fa fa-video',
         title: 'Video',
         style: {
@@ -81,4 +81,35 @@ export const STUDENT_DASHBOARD_LINKS = [
         }
     }
 ]
+export const VIDEO_TABS = {
+    teacher: [
+        {
+            id: 'pendingreview',
+            name: 'Pending For Review'
+        },
+        
+        {
+            id: 'reviewed',
+            name: 'Reviewed'
+        },
+        {
+            id: 'myvideo',
+            name: 'My Video'
+        }
+    ],
+    student: [
+        {
+            id: 'pendingreview',
+            name: 'Pending For Review'
+        },
+        {
+            id: 'reviewed',
+            name: 'Reviewed'
+        },
+        {
+            id: 'rejected',
+            name: 'Rejected'
+        }
+    ]
+}
 export default ElearningConst;
