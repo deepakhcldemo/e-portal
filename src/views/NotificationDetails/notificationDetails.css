@@ -5,3 +5,15 @@
 .bold {
     font-weight: bold;
 }
+
+.display-upload{
+    display: none;
+}
+
+.teacher-video{
+    text-align : center;
+}
+
+.notification-rejected{
+    text-align: right;
+}

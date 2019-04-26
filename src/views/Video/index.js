@@ -134,7 +134,7 @@ class Video extends Component {
                 <button
                   onClick={this.handleUpload}
                   className="btn"
-                  style={{ backgroundColor: "#232838", color: "#fff" }}
+                  style={{ backgroundColor: '#232838', color: '#fff' }}
                   title="close"
                 >
                   Close

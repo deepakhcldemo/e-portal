@@ -140,7 +140,7 @@ class App extends Component {
             component={NotificationFullDetails}
             exact
           /> */}
-          
+
           <PrivateRoute
             path="/student/teacher"
             component={SearchTeacher}

@@ -3,13 +3,16 @@ import { connect } from "react-redux";
 import { withRouter, NavLink } from "react-router-dom";
 import "./HomeHeader.css";
 import Avatar from "../avatar/Avatar";
-import {TEACHER_DASHBOARD_LINKS, STUDENT_DASHBOARD_LINKS} from './../../../constant/Constant'
+import {
+  TEACHER_DASHBOARD_LINKS,
+  STUDENT_DASHBOARD_LINKS
+} from "./../../../constant/Constant";
 
 // import companyLogo from "../../../images/pearson-logo.png";
 
 class HeaderHome extends Component {
   state = {
-    headeTitle: this.props.headeTitle ? this.props.headeTitle : "Default",
+    headeTitle: this.props.headeTitle ? this.props.headeTitle : "",
     dashboardLink: "/home"
   };
   componentDidMount = () => {
@@ -38,7 +41,15 @@ class HeaderHome extends Component {
     if (user) {
       userLink = (
         <div className="home-header-nav-item home-header-nav-item--position">
-          <Avatar dashboardLinks={(user && user.role === 'Teacher') ? TEACHER_DASHBOARD_LINKS : STUDENT_DASHBOARD_LINKS} userProfile={user} currentUser={currentUser} />
+          <Avatar
+            dashboardLinks={
+              user && user.role === "Teacher"
+                ? TEACHER_DASHBOARD_LINKS
+                : STUDENT_DASHBOARD_LINKS
+            }
+            userProfile={user}
+            currentUser={currentUser}
+          />
         </div>
       );
     } else {
@@ -86,6 +97,7 @@ class HeaderHome extends Component {
           }}
           onClick={() => this.navigateTo("/home")}
         />
+        <span>{this.state.headeTitle}</span>
         <div className="nav-section">
           {userLink}
           {!userLink && (
@@ -123,7 +135,7 @@ class HeaderHome extends Component {
                 </NavLink>
               </div>
             </>
-          )}          
+          )}
         </div>
       </header>
     );
