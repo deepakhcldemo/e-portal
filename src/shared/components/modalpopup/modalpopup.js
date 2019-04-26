@@ -173,17 +173,19 @@ class ModalPopUp extends Component {
                         placeholder="Please add details here"
                         onChange={this.notoficationDescription}
                       />{" "}
+                      <div className="progressbar-spacing">
+                        {this.state.isUploading && (
+                          <>
+                            <br />
+                            <Progress
+                              bgColor="#232838"
+                              progress={this.state.progress}
+                            />
+                            <br />
+                          </>
+                        )}
+                      </div>
                       <br />
-                      {this.state.isUploading && (
-                        <>
-                          <br />
-                          <Progress
-                            bgColor="#232838"
-                            progress={this.state.progress}
-                          />
-                          <br />
-                        </>
-                      )}
                       <FileUploader
                         accept="video/*"
                         className="upload-video"
