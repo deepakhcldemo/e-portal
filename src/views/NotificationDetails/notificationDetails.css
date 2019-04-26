@@ -5,3 +5,11 @@
 .bold {
     font-weight: bold;
 }
+
+.display-upload{
+    display: none;
+}
+
+.teacher-video, .notification-rejected{
+    text-align : right;
+}
