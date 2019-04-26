@@ -19,24 +19,24 @@ padding: 0 0;
 } */
 
 .avatar-icon {
-    font-size: 26px !important;
-    padding: 10px 0px;
+  font-size: 26px !important;
+  padding: 10px 0px;
 }
 
 .bs-popover-auto[x-placement^="bottom"],
 .bs-popover-bottom {
-    margin-top: 0px !important;
+  margin-top: 0px !important;
 }
 
 .avatar-item {
-    padding: 5px;
-    border-bottom: 1px solid gray;
-    cursor: pointer;
+  padding: 5px;
+  border-bottom: 1px solid #d3d4df;
+  cursor: pointer;
 }
 
 .popover-header {
-    color: black;
+  color: black;
 }
 
-
-@media screen and (min-width: 768px) {}
+@media screen and (min-width: 768px) {
+}

@@ -261,7 +261,6 @@ class Curriculum extends Component {
                       type="submit"
                       disabled={!this.state.video}
                       className="btn btn-success"
-                      // style={{ backgroundColor: '#232838', color: '#fff' }}
                     >
                       Publish
                     </button>
