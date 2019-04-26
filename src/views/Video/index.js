@@ -15,6 +15,7 @@ import { getCurriculumFromDB } from "../../database/dal/firebase/curriculumDal";
 import { getNotificationsFromDB } from "../../database/dal/firebase/studentDal";
 
 import { VIDEO_TABS } from "./../../constant/Constant";
+import { link } from "fs";
 // import notifications from "../Student/Notification/notifications";
 
 class Video extends Component {
@@ -46,17 +47,12 @@ class Video extends Component {
     });    
   };
 
-  /* componentDidUpdate = () => {
-    this.filterAllContent();
-  } */
-
   getContent = async () => {
     if(this.state.tabKey === 'myvideo') {
       await this.getCurriculum() 
     } else {
       await this.getNotifications();
     }
-    await this.filterAllContent();
   }
 
   getCurriculum = () => {
@@ -73,36 +69,28 @@ class Video extends Component {
   }
 
   getNotifications = () => {
-    const {userDetails} = this.state
+    const {userDetails,tabKey} = this.state
     getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(
       querySnapshot => {
         let content = [];
         querySnapshot.forEach(doc => {
           content.push(Object.assign({ id: doc.id }, doc.data()));
         });
+        if(content.length >0) {
+          content = content.filter( (list) => {
+            if(tabKey === 'reviewed') {
+              return list.sstatus && list.tstatus
+            } else if(tabKey === 'pendingreview'){
+              return list.sstatus && !list.tstatus
+            } else if(tabKey === 'rejected') {             
+              return list.sstatus === false       
+            }
+          })
+        }
         this.setState({ content });
       }
     );  
   }
-
-  filterAllContent = () => {
-    const {tabKey} = this.state
-    let content = this.state.content
-    if(tabKey !== 'mycontent' && content.length >0) {
-      content = content.filter( (list) => {
-        if(tabKey === 'reviewed') {
-          return list.sstatus && list.tstatus
-        } else if(tabKey === 'pendingreview'){
-          return list.sstatus && !list.tstatus
-        } else if(tabKey === 'rejected') {
-          return !list.status && !list.tstatus        
-        }else{
-          return list
-        }
-      })
-    }
-    this.setState({content});
-  };
 
   handleUpload = () => {
     this.setState({

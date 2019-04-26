@@ -31,7 +31,7 @@ class VideoPopup extends Component {
             <video width="100%" controls 
             poster={videoDetails.thumb}
             preload="auto" autoPlay={true} className="video-margin">
-              <source src={videoDetails.src} type="video/mp4" />
+              <source src={videoDetails.src ? videoDetails.src : videoDetails.sVideo} type="video/mp4" />
             </video>            
             <div className="video-meta-data">
                 {(userDetails) && (
