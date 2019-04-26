@@ -1,56 +1,57 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import NavBar from '../../../shared/components/Navbar';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import NavBar from "../../../shared/components/Navbar";
+import { connect } from "react-redux";
 import {
   getNotification,
   getTeachers,
   getStudents,
   getTeacherFromStudentIdFromDB,
   getStudentNotification
-} from '../../Teacher/Notification/notificationAction';
-import Notification from './notifications';
+} from "../../Teacher/Notification/notificationAction";
+import Notification from "./notifications";
 
-import { getUserProfile } from '../../../database/dal/firebase/chatNotificationDal';
+import { getUserProfile } from "../../../database/dal/firebase/chatNotificationDal";
 
-import Modal from 'react-responsive-modal';
+import Modal from "react-responsive-modal";
+import HeaderHome from "../../../components/layout/header/HeaderHome";
 
 class NotificationsDetails extends Component {
-  variableName = '';
+  variableName = "";
   state = {
     open: false,
-    gender: '',
-    firstName: '',
-    lastName: '',
-    dob: '',
-    address: '',
-    city: '',
-    country: '',
-    mobile: '',
-    email: '',
-    role: '',
-    subject: '',
-    charge: '',
-    currency: '',
-    summary: '',
+    gender: "",
+    firstName: "",
+    lastName: "",
+    dob: "",
+    address: "",
+    city: "",
+    country: "",
+    mobile: "",
+    email: "",
+    role: "",
+    subject: "",
+    charge: "",
+    currency: "",
+    summary: "",
     isUploading: false,
     profileImage:
-      'https://firebasestorage.googleapis.com/v0/b/e-project-4e023.appspot.com/o/profilepic%2FuserProfile.png?alt=media&token=cfb3e9a8-8508-4acd-8e45-dd97e2ea3dec',
+      "https://firebasestorage.googleapis.com/v0/b/e-project-4e023.appspot.com/o/profilepic%2FuserProfile.png?alt=media&token=cfb3e9a8-8508-4acd-8e45-dd97e2ea3dec",
     submitted: false,
-    errorMessage: '',
+    errorMessage: "",
     userData: {},
     notificationData: {},
-    mName: '',
-    teacherId: ''
+    mName: "",
+    teacherId: ""
   };
 
   componentDidMount() {
     let user;
     let data;
-    const loggedInUSer = JSON.parse(localStorage.getItem('user'));
+    const loggedInUSer = JSON.parse(localStorage.getItem("user"));
     //const loggedInUSer = "sGeyNegb2cZZcq7C76ndjaGUNSk1";
     //loggedInUSer.user.id change this from hardcoding
-    console.log('Logged in details', loggedInUSer);
+    console.log("Logged in details", loggedInUSer);
 
     this.props.getStudentNotification(loggedInUSer.user.uid);
     //if (this.props.notificationDetails != null) {
@@ -85,7 +86,7 @@ class NotificationsDetails extends Component {
     //this.props.getTeachers("55dh2K881oSaWBFn8mZOGiSeTny2");
     //this.props.getStudents("DrFophiJl9PsAZhrhFzd11opaPH2");
 
-    console.log('teacher id', this.state);
+    console.log("teacher id", this.state);
   }
 
   onOpenModal = () => {
@@ -99,19 +100,19 @@ class NotificationsDetails extends Component {
   getClassName(status) {
     let alertClassName;
     if (status === -1) {
-      alertClassName = 'alert alert-warning';
+      alertClassName = "alert alert-warning";
     }
     if (status === 0) {
-      alertClassName = 'alert alert-danger';
+      alertClassName = "alert alert-danger";
     }
     if (status === 1) {
-      alertClassName = 'alert alert-success';
+      alertClassName = "alert alert-success";
     }
     return alertClassName;
   }
 
   render = () => {
-    console.log('Notification data  => ', this.props.notificationDetails);
+    console.log("Notification data  => ", this.props.notificationDetails);
     // this.state.notificationData.comment ?
     //     Object.keys(this.state.notificationData.comment).map(data => {
     //         console.log(this.state.notificationData.comment[data].details)
@@ -128,7 +129,7 @@ class NotificationsDetails extends Component {
     //         teacherName = data.firstName + " " + data.lastName;
     //     })
     // }
-    teacherName = '';
+    teacherName = "";
     // if (this.state.userData) {
 
     //     teacherName = this.state.userData.firstName + this.state.userData.lastName
@@ -140,8 +141,8 @@ class NotificationsDetails extends Component {
     return (
       <>
         <div className="container-fluid">
-          <NavBar />
-          <div className="row margin-bottom">
+          <HeaderHome headeTitle="Chat Notification" />
+          <div className="content-container">
             <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
               {Object.keys(notificationDetails).map(notificationDetail => (
                 <div
@@ -157,7 +158,7 @@ class NotificationsDetails extends Component {
                     activeClassName="active"
                   >
                     <div>
-                      <div style={{ float: 'left' }}>
+                      <div style={{ float: "left" }}>
                         <img
                           src="../Assets/hdpi/avatar.png"
                           name="aboutme"
@@ -170,12 +171,12 @@ class NotificationsDetails extends Component {
                       <div
                         className="container"
                         onClick={this.onOpenModal}
-                        style={{ cursor: 'pointer' }}
+                        style={{ cursor: "pointer" }}
                       >
                         <div className="alert-icon">
                           <i className="material-icons">
-                            Teacher{' '}
-                            {notificationDetails[notificationDetail].tId}{' '}
+                            Teacher{" "}
+                            {notificationDetails[notificationDetail].tId}{" "}
                           </i>
                         </div>
                         <button
@@ -189,10 +190,10 @@ class NotificationsDetails extends Component {
                           </span>
                         </button>
                         {console.log(
-                          'Notification Data Comment : ',
+                          "Notification Data Comment : ",
                           notificationDetails[notificationDetail].comment
                         )}
-                        <b>Message:</b>{' '}
+                        <b>Message:</b>{" "}
                         {notificationDetails[notificationDetail].comment ? (
                           Object.keys(
                             notificationDetails[notificationDetail].comment
@@ -238,7 +239,7 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = dispatch => {
-  console.log('dispatched action');
+  console.log("dispatched action");
   return {
     getStudentNotification: uid => dispatch(getStudentNotification(uid)),
     getTeachers: uid => dispatch(getTeachers(uid)),
