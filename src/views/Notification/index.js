@@ -137,7 +137,7 @@ class Notification extends Component {
                     {notificationsList &&
                       notificationsList.map((notification, ind) => {
                         return (
-                          <div className="container" key={ind}>
+                          <div className="col-12" key={ind}>
                             <div
                               className={this.notificationStatus(
                                 notification,
