@@ -51,8 +51,8 @@ class Comment extends Component {
           <div className="text-field-section">
             <div className="container">
               <div className="row">
-                <div className="col-sm-12">
-                  <div className="comments-hdr-section">
+                <div className="col-12">
+                  <div className="comment-thread-element">
                     <div className="author-thumbnail">
                       {loggedInUser && 
                       <img
@@ -61,8 +61,8 @@ class Comment extends Component {
                       className="profile-img"/>
                       }                      
                     </div>
-                    <form>
-                      <div className="col-12 col-sm-12 comments-input">                        
+                    <form style={{width:"100%"}}>
+                      <div className="comments-input">                        
                         <TextArea
                           value={this.state.message}
                           onChangeHandle={this.handleChange}
@@ -70,22 +70,23 @@ class Comment extends Component {
                           className="auto-input form-control"
                           errorMessage={this.state.errors.message}
                           placeholder="Add a comment"
-                          rows="2"
-                          cols="100"
+                          rows="2"                         
+                          style={{margin: 'auto', width:'100%'}}
                         />
-                      </div>                      
-                    </form>
-                    <div className="total-comments">
-                      <button type="button" className="btn btn-success"
-                        data-dismiss="modal" onClick={this.handleSubmit}>
-                        Submit
-                      </button>                      
-                    </div>
+                      </div>
+                      
+                      <div className="total-comments comment-btn">
+                        <button type="button" className="btn btn-success"
+                          data-dismiss="modal" onClick={this.handleSubmit}>
+                          Submit
+                        </button>                      
+                      </div>                  
+                    </form>                   
                     
                   </div>
                   <div className="comments-hdr-section">
                     <div className="no-thumb">&nbsp;</div>
-                    <div className="comments-input">
+                    <div className="comments-count">
                     <span className="count">{ noOfComment } </span>
                     <span className="count-text">{ noOfComment && 'Comments' }</span>
                     </div>
@@ -97,7 +98,7 @@ class Comment extends Component {
         {noOfComment > 0 && (          
           <div className="container">
             <div className="row">
-              <div className="col-sm-12">
+              <div className="col-12">
                 <CommentItem commentDetails={commentRows} />
               </div>
             </div>

@@ -7,3 +7,16 @@
     height: 40px;
     padding: 0 0 0 34px;
 }
+
+.margin-auto{
+    margin: auto
+}
+.comment-btn{
+    padding: 0 0 0 12px;
+}
+.comments-input {
+    padding: 0 10px;
+}
+.comments-count {
+    padding: 0 10px;
+}
