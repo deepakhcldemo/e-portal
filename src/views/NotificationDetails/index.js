@@ -95,6 +95,16 @@ class NotificationDetails extends Component {
   };
 
   render() {
+    let badgeText = "";
+    let classNameBadge = "";
+    if (this.props.notificationDetails.tRejected) {
+      badgeText = "Rejected";
+      classNameBadge = "badge-danger";
+    }
+    if (this.props.notificationDetails.tAccepted) {
+      badgeText = "Success";
+      classNameBadge = "badge-success";
+    }
     return (
       <div className="container-fluid">
         <HeaderHome
@@ -104,6 +114,8 @@ class NotificationDetails extends Component {
 
         <div className="content-container">
           <div className="card col-lg-8" style={{ margin: "auto" }}>
+            <span class={"badge" + " " + classNameBadge}>{badgeText}</span>
+
             <div>
               <span className="bold">
                 Notification Description :{" "}
@@ -196,21 +208,20 @@ class NotificationDetails extends Component {
                 ""
               )}
 
-              {this.state.notificationsDetails.tRejected ? (
+              {/* {this.state.notificationsDetails.tRejected ? (
                 <p className="notification-rejected">
                   Notification has been Rejected
                 </p>
               ) : (
                 ""
-              )}
+              )} */}
 
               {this.state.notificationsDetails.tAccepted &&
               this.state.userDetails.role !== "Teacher" ? (
                 <div>
                   <button
-                    disabled={this.state.isUploading}
+                    disabled={true}
                     className="btn btn-success pull-right"
-                    onClick={true}
                   >
                     Pay Now
                   </button>
