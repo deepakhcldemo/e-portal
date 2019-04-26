@@ -19,7 +19,7 @@ import  studentReducer from './views/Student/reducer';
 import homeReducer from './views/Home/reducer';
 import teacherDetailsReducer from './views/Teacher/teacher-details/teacher-details.reducer';
 import searchTeacherReducer from './views/Student/SearchTeacher/searchTeacherReducer';
-import videoReducer from './views/Teacher/Video/reducer';
+import videoReducer from './views/Video/reducer';
 import notificationReducer from './views/Teacher/Notification/notificationReducer';
 import notifDetils from './views/Notification/reducer';
 import notificationAcceptREducer from './views/NotificationDetails/reducer';
