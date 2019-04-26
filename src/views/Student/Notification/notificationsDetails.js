@@ -141,8 +141,7 @@ class NotificationsDetails extends Component {
     return (
       <>
         <div className="container-fluid">
-          <HeaderHome headeTitle="Chat Notification" />
-          <div className="content-container">
+          <div>
             <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
               {Object.keys(notificationDetails).map(notificationDetail => (
                 <div
