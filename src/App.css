@@ -1195,6 +1195,10 @@ li .fa {
   margin: 0 0.4rem !important;
 }
 
+.popover .arrow:after {
+  border-bottom-color: #333546 !important;
+}
+
 .popover-header {
   background-color: #333546 !important;
   color: white !important;
