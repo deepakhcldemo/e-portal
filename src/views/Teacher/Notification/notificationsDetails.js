@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import NavBar from "../../../shared/components/Navbar";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import NavBar from '../../../shared/components/Navbar';
+import { connect } from 'react-redux';
 import {
   getNotification,
   getTeachers,
   getStudents,
   getTeacherNotification
-} from "./notificationAction";
+} from './notificationAction';
 
-import Modal from "react-responsive-modal";
+import Modal from 'react-responsive-modal';
 
 class NotificationsDetails extends Component {
   state = {
@@ -17,7 +17,7 @@ class NotificationsDetails extends Component {
   };
 
   componentDidMount() {
-    const loggedInUSer = JSON.parse(localStorage.getItem("user"));
+    const loggedInUSer = JSON.parse(localStorage.getItem('user'));
     //console.log("loggedInUSer deaatatat", loggedInUSer.user.uid)
     this.props.getTeacherNotification(loggedInUSer.user.uid);
   }
@@ -33,20 +33,20 @@ class NotificationsDetails extends Component {
   getClassName(status) {
     let alertClassName;
     if (status === -1) {
-      alertClassName = "alert alert-warning";
+      alertClassName = 'alert alert-warning';
     }
     if (status === 0) {
-      alertClassName = "alert alert-danger";
+      alertClassName = 'alert alert-danger';
     }
     if (status === 1) {
-      alertClassName = "alert alert-success";
+      alertClassName = 'alert alert-success';
     }
     return alertClassName;
   }
   render = () => {
-    console.log("Notification data => ", this.props.notificationDetails);
-    console.log("Teacher data => ", this.props.teacherDetails);
-    console.log("Student data => ", this.props.studentDetails);
+    console.log('Notification data => ', this.props.notificationDetails);
+    console.log('Teacher data => ', this.props.teacherDetails);
+    console.log('Student data => ', this.props.studentDetails);
 
     const { open } = this.state;
     const { notificationDetails } = this.props;
@@ -71,9 +71,9 @@ class NotificationsDetails extends Component {
                         notificationDetails[notificationDetail].status
                       )}
                     >
-                      <div style={{ float: "left" }}>
+                      <div style={{ float: 'left' }}>
                         <img
-                          src="../Assets/hdpi/userProfile.png"
+                          src="../Assets/hdpi/avatar.png"
                           name="aboutme"
                           width="70"
                           height="50"
@@ -84,11 +84,11 @@ class NotificationsDetails extends Component {
                       <div
                         className="container"
                         onClick={this.onOpenModal}
-                        style={{ cursor: "pointer" }}
+                        style={{ cursor: 'pointer' }}
                       >
                         <div className="alert-icon">
                           <i className="material-icons">
-                            Student{" "}
+                            Student{' '}
                             {notificationDetails[notificationDetail].sId}
                           </i>
                         </div>
@@ -102,7 +102,7 @@ class NotificationsDetails extends Component {
                             <i className="material-icons">clear</i>
                           </span>
                         </button>
-                        <b>Message:</b>{" "}
+                        <b>Message:</b>{' '}
                         {notificationDetails[notificationDetail].details}..
                       </div>
                     </div>
@@ -125,7 +125,7 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = dispatch => {
-  console.log("dispatched action");
+  console.log('dispatched action');
   return {
     getTeacherNotification: uid => dispatch(getTeacherNotification(uid)),
     getTeachers: uid => dispatch(getTeachers(uid)),
