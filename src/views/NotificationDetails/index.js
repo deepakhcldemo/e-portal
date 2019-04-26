@@ -24,6 +24,7 @@ class NotificationDetails extends Component {
       applyClass: 'display-upload',
       isUploading: false,
       videoName: '',
+      validationMessage : ''
     };
     this.acceptNotification = this.acceptNotification.bind(this);
     this.goBackTONotification = this.goBackTONotification.bind(this);
@@ -33,7 +34,6 @@ class NotificationDetails extends Component {
     this.props.history.goBack()
   }
   acceptNotification = () => {
-    debugger
     //this.props.openModalForAcceptNotification();
     this.state.applyClass = 'display-upload' ? this.setState({ applyClass: '' }) : "";
     if (this.state.videoName !== '') {
@@ -46,17 +46,16 @@ class NotificationDetails extends Component {
           acceptNotification.tvideo = url;
           acceptNotification.tAccepted = true;
           this.props.saveAcceptedNotification(acceptNotification);
-
+          this.setState({
+            validationMessage : ''
+          })
         }
-        else {
-          // self.setState({
-          //     validationMessage: 'Description or Video can not be empty'
-          // })
-        }
-
+        
       })
-      this.props.history.goBack();
+     this.goBackTONotification();
     }
+
+   
 
   };
 
@@ -66,19 +65,23 @@ class NotificationDetails extends Component {
     rejectNotification.sstatus = false;
     rejectNotification.tRejected = true;
     this.props.rejectNotification(rejectNotification);
-    this.props.history.goBack();
+    this.goBackTONotification();
   };
   componentWillMount = () => {
-    debugger
     const UserProfile = JSON.parse(localStorage.getItem("userProfile"));
     console.log(this.props.notificationDetails, "inComponentDidMout");
     this.setState({
       notificationsDetails: this.props.notificationDetails,
       userDetails: UserProfile
     });
-    console.log('in NotificationDetails', this.state);
   };
-
+  handleUploadStart = () => {
+    debugger
+    this.setState({
+      isUploading: true,
+     
+    })
+  }
   handleVideoUploadSuccess = fileName => {
     this.setState({
       isUploading: false,
@@ -139,6 +142,7 @@ class NotificationDetails extends Component {
                 onUploadSuccess={this.handleVideoUploadSuccess}
                 onProgress={this.handleProgress}
               />
+              <p>{this.state.validationMessage}</p>
             </div>
 
             <div className="col-lg-12">
@@ -153,12 +157,13 @@ class NotificationDetails extends Component {
               {(this.state.userDetails.role === "Teacher") && (!this.state.notificationsDetails.tRejected && !this.state.notificationsDetails.tAccepted) ? (
                 <div className="pull-right">
                   <button
+                    disabled ={this.state.isUploading}
                     className="btn btn-success"
                     onClick={this.acceptNotification}
                   >
                     Accept
                   </button>
-                  <button
+                  <button disabled ={this.state.isUploading}
                     className="btn btn-danger"
                     onClick={this.rejectNotification}
                   >
@@ -173,14 +178,7 @@ class NotificationDetails extends Component {
                 <p className="notification-rejected">Notification has been Rejected</p>
               ) : ''}
             </div>
-            {/* {(this.state.userDetails.tRejected) ? (
-                      <div>
-                        <p>Notification Has been Rejected</p>
-                      </div>
-                    ) : ''} */}
-
-
-
+          
           </div>
         </div>
       </div>

@@ -42,7 +42,7 @@ export const TEACHER_DASHBOARD_LINKS = [
     },
     {
         name: 'Notification',
-        link: '/student/notification',
+        link: '/notification',
         icon: 'fa fa-bell',
         title: 'Notification',
         style: {
