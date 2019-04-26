@@ -116,26 +116,30 @@ class ModalPopUp extends Component {
       sstatus,
       tstatus
     };
-    getVideoUrl(this.state.videoName).then(url => {
-      let sVideo = "",
-        tVideo = "";
-      loggedInUSerDetails.role === "Teacher" ? (tVideo = url) : (sVideo = url);
-      notificationDetails.tvideo = tVideo;
-      //notificationDetails.status = false;
-      notificationDetails.sVideo = sVideo;
-      notificationDetails.comments = [];
-      if (url !== "" && notificationDetails.notificationDesc !== "") {
-        this.setState({
-          validationMessage: ""
-        });
-        saveNotification(notificationDetails);
-        this.onCloseModal();
-      } else {
-        this.setState({
-          validationMessage: "Description or Video can not be empty"
-        });
+    getVideoUrl(this.state.videoName, notificationDetails.loggedInUserId).then(
+      url => {
+        let sVideo = "",
+          tVideo = "";
+        loggedInUSerDetails.role === "Teacher"
+          ? (tVideo = url)
+          : (sVideo = url);
+        notificationDetails.tvideo = tVideo;
+        //notificationDetails.status = false;
+        notificationDetails.sVideo = sVideo;
+        notificationDetails.comments = [];
+        if (url !== "" && notificationDetails.notificationDesc !== "") {
+          this.setState({
+            validationMessage: ""
+          });
+          saveNotification(notificationDetails);
+          this.onCloseModal();
+        } else {
+          this.setState({
+            validationMessage: "Description or Video can not be empty"
+          });
+        }
       }
-    });
+    );
   };
   render() {
     const studentDetails = localStorage.getItem("userProfile")

@@ -48,16 +48,18 @@ class NotificationDetails extends Component {
       acceptNotification.tstatus = true;
       acceptNotification.sstatus = true;
 
-      getVideoUrl(this.state.videoName).then(url => {
-        if (url !== "" && acceptNotification.notificationDesc !== "") {
-          acceptNotification.tvideo = url;
-          acceptNotification.tAccepted = true;
-          this.props.saveAcceptedNotification(acceptNotification);
-          this.setState({
-            validationMessage: ""
-          });
+      getVideoUrl(this.state.videoName, acceptNotification.loggedInUserId).then(
+        url => {
+          if (url !== "" && acceptNotification.notificationDesc !== "") {
+            acceptNotification.tvideo = url;
+            acceptNotification.tAccepted = true;
+            this.props.saveAcceptedNotification(acceptNotification);
+            this.setState({
+              validationMessage: ""
+            });
+          }
         }
-      });
+      );
       this.goBackTONotification();
     }
   };
