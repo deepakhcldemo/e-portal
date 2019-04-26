@@ -16,7 +16,7 @@ import TeacherNotificationDetails from "./../Teacher/Notification/notificationsD
 import NotificationsDetails from "./../Student/Notification/notificationsDetails";
 
 import { setNotificationDetails } from "./action";
-import "./Notification.css";
+import "./notification.css";
 import { TEACHER_DASHBOARD_LINKS } from "../../constant/Constant";
 
 // import Modal from 'react-responsive-modal'
@@ -79,16 +79,16 @@ class Notification extends Component {
 
   notificationStatus = (notificationDetails, type) => {
     const { userDetails } = this.state;
-    let classStatus = '' 
-    if(notificationDetails.sstatus && notificationDetails.tstatus) {
+    let classStatus = "";
+    if (notificationDetails.sstatus && notificationDetails.tstatus) {
       classStatus = "alert alert-success";
     }
 
-    if(notificationDetails.sstatus && !notificationDetails.tstatus) {
+    if (notificationDetails.sstatus && !notificationDetails.tstatus) {
       classStatus = "alert alert-warning";
     }
 
-    if(!notificationDetails.sstatus && !notificationDetails.tstatus) {
+    if (!notificationDetails.sstatus && !notificationDetails.tstatus) {
       classStatus = "alert alert-danger";
     }
     const userWiseStatus =
