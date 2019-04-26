@@ -8,7 +8,6 @@ import NavBar from "../../shared/components/Navbar";
 import { getVideoUrl } from '../../database/dal/firebase/notificationdal';
 import HeaderHome from "../../components/layout/header/HeaderHome";
 import { rejectNotification, openModalForAcceptNotification, saveAcceptedNotification, setKeyForNotificationPage } from "./action";
-import ModalPopUpForNotification from "../../shared/components/modalPopforNotification/modalPopForNotification";
 import {
   TEACHER_DASHBOARD_LINKS,
   STUDENT_DASHBOARD_LINKS
