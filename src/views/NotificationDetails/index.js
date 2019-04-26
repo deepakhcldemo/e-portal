@@ -142,7 +142,7 @@ class NotificationDetails extends Component {
                   Back
                   </button>
               </div>
-              {(!this.state.notificationsDetails.tRejected && (!this.state.notificationsDetails.tAccepted)) ? (
+              {(this.state.userDetails.role === "Teacher") &&  (!this.state.notificationsDetails.tRejected && !this.state.notificationsDetails.tAccepted) ? (
                 <div className="pull-right">
                   <button
                     className="btn btn-success"

@@ -10,6 +10,10 @@
     display: none;
 }
 
-.teacher-video, .notification-rejected{
-    text-align : right;
+.teacher-video{
+    text-align : center;
+}
+
+.notification-rejected{
+    text-align: right;
 }

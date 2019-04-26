@@ -16,7 +16,7 @@ import TeacherNotificationDetails from "./../Teacher/Notification/notificationsD
 import NotificationsDetails from "./../Student/Notification/notificationsDetails";
 
 import { setNotificationDetails } from "./action";
-import "./notification.css";
+import "./Notification.css";
 import { TEACHER_DASHBOARD_LINKS } from "../../constant/Constant";
 
 // import Modal from 'react-responsive-modal'
@@ -79,12 +79,6 @@ class Notification extends Component {
 
   notificationStatus = (notificationDetails, type) => {
     const { userDetails } = this.state;
-    // const classStatus =
-    //   notificationDetails.sstatus && notificationDetails.tstatus
-    //     ? "alert alert-success"
-    //     : notificationDetails.status && !notificationDetails.tstatus
-    //     ? "alert alert-warning"
-    //     : "alert alert-danger";
     let classStatus = '' 
     if(notificationDetails.sstatus && notificationDetails.tstatus) {
       classStatus = "alert alert-success";
@@ -136,7 +130,7 @@ class Notification extends Component {
                     )}
                     {userDetails.role === "Student" && <NotificationsDetails />}
                   </Tab>
-                  <Tab eventKey="notification" title="Notification">
+                  <Tab eventKey="notification" title=" Review Notification">
                     {notificationsList &&
                       notificationsList.map((notification, ind) => {
                         return (
