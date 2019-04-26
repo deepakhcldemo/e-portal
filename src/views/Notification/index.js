@@ -79,12 +79,24 @@ class Notification extends Component {
 
   notificationStatus = (notificationDetails, type) => {
     const { userDetails } = this.state;
-    const classStatus =
-      notificationDetails.sstatus && notificationDetails.tstatus
-        ? "alert alert-success"
-        : notificationDetails.status && !notificationDetails.tstatus
-        ? "alert alert-warning"
-        : "alert alert-danger";
+    // const classStatus =
+    //   notificationDetails.sstatus && notificationDetails.tstatus
+    //     ? "alert alert-success"
+    //     : notificationDetails.status && !notificationDetails.tstatus
+    //     ? "alert alert-warning"
+    //     : "alert alert-danger";
+    let classStatus = '' 
+    if(notificationDetails.sstatus && notificationDetails.tstatus) {
+      classStatus = "alert alert-success";
+    }
+
+    if(notificationDetails.sstatus && !notificationDetails.tstatus) {
+      classStatus = "alert alert-warning";
+    }
+
+    if(!notificationDetails.sstatus && !notificationDetails.tstatus) {
+      classStatus = "alert alert-danger";
+    }
     const userWiseStatus =
       userDetails.role === "Teacher"
         ? `Notification from  ${notificationDetails.sname}`
