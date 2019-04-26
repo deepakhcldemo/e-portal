@@ -97,6 +97,13 @@ class NotificationDetails extends Component {
   render() {
     let badgeText = "";
     let classNameBadge = "";
+    if (
+      this.props.notificationDetails.sstatus &&
+      !this.props.notificationDetails.tstatus
+    ) {
+      badgeText = "Pending";
+      classNameBadge = "badge-warning";
+    }
     if (this.props.notificationDetails.tRejected) {
       badgeText = "Rejected";
       classNameBadge = "badge-danger";
@@ -113,102 +120,115 @@ class NotificationDetails extends Component {
         />
 
         <div className="content-container">
-          <div className="card col-lg-8" style={{ margin: "auto" }}>
-            <span class={"badge" + " " + classNameBadge}>{badgeText}</span>
-
-            <div>
-              <span className="bold">
-                Notification Description :{" "}
-                {this.state.notificationsDetails.notificationDesc}
-              </span>
-            </div>
-            <div>
-              {this.state.userDetails.Svideo !== "" ? (
-                <span className="bold"> Video Uploaded by Student </span>
-              ) : null}
-            </div>
-            <div className="teacher-video">
-              <video controls src={this.state.notificationsDetails.sVideo} />
-            </div>
-            {this.props.notificationDetails.tvideo !== "" ? (
-              <div>
-                <div>
-                  <span className="bold"> Video Uploaded by Teacher </span>
+          <div
+            className="card request-notification-container col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10"
+            style={{ margin: "auto" }}
+          >
+            <div className="card-body request-notification-container">
+              <div className="row">
+                <div className="col-12">
+                  <span className="bold">
+                    Notification Description :{" "}
+                    {this.state.notificationsDetails.notificationDesc}
+                  </span>
                 </div>
-                <div className="teacher-video">
+              </div>
+              <div className="row">
+                <div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                  {this.state.userDetails.Svideo !== "" ? (
+                    <span className="bold"> Video Uploaded by Student </span>
+                  ) : null}
+                </div>
+                <div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 teacher-video">
                   <video
                     controls
-                    src={this.state.notificationsDetails.tvideo}
-                  />{" "}
+                    src={this.state.notificationsDetails.sVideo}
+                    className="video-style"
+                  />
+                </div>
+                <div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 badge-container">
+                  <div class={"badge" + " " + classNameBadge}>{badgeText}</div>
                 </div>
               </div>
-            ) : null}
-            <div className={this.state.applyClass}>
-              <p>Please Upload you video here : </p>
-              <div className="progressbar-spacing">
-                {this.state.isUploading && (
-                  <>
-                    <br />
-                    <Progress
-                      bgColor="#232838"
-                      progress={this.state.progress}
-                    />
-                    <br />
-                  </>
-                )}
+              {this.props.notificationDetails.tvideo !== "" ? (
+                <div className="row">
+                  <div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                    <span className="bold"> Video Uploaded by Teacher </span>
+                  </div>
+                  <div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 teacher-video">
+                    <video
+                      controls
+                      src={this.state.notificationsDetails.tvideo}
+                      className="video-style"
+                    />{" "}
+                  </div>
+                  <div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4" />
+                </div>
+              ) : null}
+              <div className={"row " + this.state.applyClass}>
+                <div className="col-12">
+                  <p>Please Upload you video here : </p>
+
+                  <FileUploader
+                    accept="video/*"
+                    className="upload-video"
+                    storageRef={firebase
+                      .storage()
+                      .ref(
+                        `notification/${
+                          this.props.notificationDetails.loggedInUserId
+                        }`
+                      )}
+                    onUploadStart={this.handleUploadStart}
+                    onUploadError={this.handleUploadError}
+                    onUploadSuccess={this.handleVideoUploadSuccess}
+                    onProgress={this.handleProgress}
+                  />
+                  <div className="progressbar-spacing">
+                    {this.state.isUploading && (
+                      <Progress
+                        bgColor="#232838"
+                        progress={this.state.progress}
+                      />
+                    )}
+                  </div>
+                  <p>{this.state.validationMessage}</p>
+                </div>
               </div>
-              <br />
-              <FileUploader
-                accept="video/*"
-                className="upload-video"
-                storageRef={firebase
-                  .storage()
-                  .ref(
-                    `notification/${
-                      this.props.notificationDetails.loggedInUserId
-                    }`
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="pull-left">
+                    <button
+                      className="btn btn-dark"
+                      onClick={this.goBackTONotification}
+                    >
+                      Back
+                    </button>
+                  </div>
+                  {this.state.userDetails.role === "Teacher" &&
+                  (!this.state.notificationsDetails.tRejected &&
+                    !this.state.notificationsDetails.tAccepted) ? (
+                    <div className="pull-right">
+                      <button
+                        disabled={this.state.isUploading}
+                        className="btn btn-success"
+                        onClick={this.acceptNotification}
+                      >
+                        Accept
+                      </button>
+                      <button
+                        disabled={this.state.isUploading}
+                        className="btn btn-danger"
+                        onClick={this.rejectNotification}
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  ) : (
+                    ""
                   )}
-                onUploadStart={this.handleUploadStart}
-                onUploadError={this.handleUploadError}
-                onUploadSuccess={this.handleVideoUploadSuccess}
-                onProgress={this.handleProgress}
-              />
-              <p>{this.state.validationMessage}</p>
-            </div>
 
-            <div className="col-lg-12">
-              <div className="pull-left">
-                <button
-                  className="btn btn-dark"
-                  onClick={this.goBackTONotification}
-                >
-                  Back
-                </button>
-              </div>
-              {this.state.userDetails.role === "Teacher" &&
-              (!this.state.notificationsDetails.tRejected &&
-                !this.state.notificationsDetails.tAccepted) ? (
-                <div className="pull-right">
-                  <button
-                    disabled={this.state.isUploading}
-                    className="btn btn-success"
-                    onClick={this.acceptNotification}
-                  >
-                    Accept
-                  </button>
-                  <button
-                    disabled={this.state.isUploading}
-                    className="btn btn-danger"
-                    onClick={this.rejectNotification}
-                  >
-                    Reject
-                  </button>
-                </div>
-              ) : (
-                ""
-              )}
-
-              {/* {this.state.notificationsDetails.tRejected ? (
+                  {/* {this.state.notificationsDetails.tRejected ? (
                 <p className="notification-rejected">
                   Notification has been Rejected
                 </p>
@@ -216,19 +236,21 @@ class NotificationDetails extends Component {
                 ""
               )} */}
 
-              {this.state.notificationsDetails.tAccepted &&
-              this.state.userDetails.role !== "Teacher" ? (
-                <div>
-                  <button
-                    disabled={true}
-                    className="btn btn-success pull-right"
-                  >
-                    Pay Now
-                  </button>
+                  {this.state.notificationsDetails.tAccepted &&
+                  this.state.userDetails.role !== "Teacher" ? (
+                    <div>
+                      <button
+                        disabled={true}
+                        className="btn btn-success pull-right"
+                      >
+                        Pay Now
+                      </button>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
-              ) : (
-                ""
-              )}
+              </div>
             </div>
           </div>
         </div>
