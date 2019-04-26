@@ -104,7 +104,7 @@ class Notification extends Component {
     return (
       <div className="container-fluid">
         <HeaderHome
-          headeTitle="Teacher Dashboard"
+          headeTitle="Notification"
           dashboardLinks={TEACHER_DASHBOARD_LINKS}
         />
 
@@ -112,7 +112,6 @@ class Notification extends Component {
           <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
             <div className="card notification-container ">
               <div className="card-body notification-cardbody">
-                <h4>Notification</h4>
                 <hr />
                 <Tabs
                   id="tabs"
