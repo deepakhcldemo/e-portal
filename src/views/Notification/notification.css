@@ -1,33 +1,52 @@
 .notification-container {
-  background-color: #4b4e68 !important;
-  /* display: flex !important ;
-  flex-direction: row !important;
-  justify-content: center !important; */
+    border-radius: 0px;
+    margin: 0;
+    box-shadow: unset !important;
+    background: #4b4e68;
+    min-height: 200px;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-link:hover {
+    color: #FFF !important;
+    background-color: #4b4e68 !important;
+    border-color: #4b4e68 #4b4e68 #4b4e68 !important;
+}
+
+.nav-tabs a:hover,
+.nav-tabs a:active,
+.nav-tabs a {
+    color: #FFF !important;
 }
 
 .alert {
-  width : 100% !important;
+    width: 100% !important;
 }
 
-.reject-notification{
-  text-align : right;
+.reject-notification {
+    text-align: right;
 }
+
 .notification-cardbody {
-  flex: 1 1 auto;
-  background-color: #4b4e68 !important;
-  padding: 1.25rem;
-  position: relative;
+    flex: 1 1 auto;
+    background-color: #4b4e68 !important;
+    padding: 1.25rem;
+    position: relative;
 }
+
 .notification-button {
-  background-color: black !important;
+    background-color: black !important;
 }
+
 .notify {
-  background-color: white !important;
+    background-color: white !important;
 }
+
 /* .notification--Link {
   background-color: white !important;
 } */
 .notification-heading {
-  font-weight: 300;
-  color: white;
+    font-weight: 300;
+    color: white;
 }

@@ -116,25 +116,28 @@ class Notification extends Component {
 
         <div className="content-container">
           <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
-            <div className="card notification-container ">
-              <div className="card-body notification-cardbody">
-                <hr />
-                <Tabs
-                  id="tabs"
-                  activeKey={this.state.key}
-                  onSelect={key => this.setState({ key })}
-                >
-                  <Tab eventKey="chatNotification" title="Chat Notification">
+            <Tabs
+              id="tabs"
+              activeKey={this.state.key}
+              onSelect={key => this.setState({ key })}
+            >
+              <Tab eventKey="chatNotification" title="Chat Notification">
+                <div className="card notification-container">
+                  <div className="card-body notification-container">
                     {userDetails.role === "Teacher" && (
                       <TeacherNotificationDetails />
                     )}
                     {userDetails.role === "Student" && <NotificationsDetails />}
-                  </Tab>
-                  <Tab eventKey="notification" title=" Review Notification">
+                  </div>
+                </div>
+              </Tab>
+              <Tab eventKey="notification" title="Notification">
+                <div className="card notification-container">
+                  <div className="card-body notification-container">
                     {notificationsList &&
                       notificationsList.map((notification, ind) => {
                         return (
-                          <div className="row" key={ind}>
+                          <div className="container" key={ind}>
                             <div
                               className={this.notificationStatus(
                                 notification,
@@ -155,10 +158,10 @@ class Notification extends Component {
                           </div>
                         );
                       })}
-                  </Tab>
-                </Tabs>
-              </div>
-            </div>
+                  </div>
+                </div>
+              </Tab>
+            </Tabs>
           </div>
         </div>
         <div className="col-12 main-wrapper">
