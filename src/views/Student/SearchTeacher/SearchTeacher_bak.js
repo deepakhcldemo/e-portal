@@ -11,6 +11,7 @@ import { getAllCategory } from "../../../database/dal/firebase/categoryDal";
 import Multiselect from "multiselect-dropdown-react";
 import "./SearchTeacher.css";
 import ListContainer from '../../../components/listContainer/ListContainer';
+// import { zipRequestDispatch } from '../../../shared/library/ZipcodesByRadius';
 
 class SearchTeacher extends Component {
   constructor(props) {
@@ -35,7 +36,7 @@ class SearchTeacher extends Component {
   componentDidMount() {
     let self = this;
     // const zipcode = this.state.searchValue;
-    // this.props.getTeachersBasedOnZipcode('99501');
+    this.props.getTeachersBasedOnZipcode('99501');
 
     getAllCategory().onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
@@ -152,9 +153,9 @@ class SearchTeacher extends Component {
   render() {
     const { getTeacherZipWise } = this.props;
 
-    // if (getTeacherZipWise.zip_codes && getTeacherZipWise.zip_codes.length > 0) {
-    //   console.log('--getTeachersBasedOnZipcode--', getTeacherZipWise.zip_codes);
-    // }
+    if (getTeacherZipWise.zip_codes && getTeacherZipWise.zip_codes.length > 0) {
+      console.log('--getTeachersBasedOnZipcode--', getTeacherZipWise.zip_codes);
+    }
 
     this.state.filtredTeacherRecord.map((teacher, index) => {
       return (
