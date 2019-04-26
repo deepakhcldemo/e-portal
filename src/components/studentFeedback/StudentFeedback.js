@@ -34,7 +34,7 @@ class StudentFeedback extends Component {
       : (title = 'Feedback');
 
     const settingsStudentsReview = {
-      dots: true,
+      dots: false,
       infinite: true,
       speed: 500,
       slidesToShow: studentsReview.length >= 6 ? 6 : studentsReview.length,
