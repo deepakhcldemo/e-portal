@@ -13,7 +13,9 @@ class Like extends Component {
     }
     componentWillReceiveProps(nextProps) {
         // Load new data when the dataSource property changes.
+        console.log('like receive props', nextProps)
         if (nextProps.userLike != this.props.userLike) {
+            
             this.setState({isActive: (nextProps.userLike ? true: false)});
         }
     }
@@ -34,6 +36,7 @@ class Like extends Component {
 Like.propTypes = {
     isDisabled: PropTypes.bool.isRequired,
     onLike: PropTypes.func.isRequired,
-    totalLikeL: PropTypes.number.isRequired
+    totalLike: PropTypes.number,
+    userLike: PropTypes.number
 };
 export default Like;

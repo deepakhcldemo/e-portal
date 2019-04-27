@@ -30,6 +30,7 @@ import bannerImg from '../../../images/detail-banner.jpg';
 import Comment from '../../../components/comment/Comment';
 import { toastr } from 'react-redux-toastr';
 import Like from '../../../shared/components/like/Like';
+import Dislike from '../../../shared/components/dislike/Dislike';
 
 class TeacherDetails extends Component {
   constructor(props) {
@@ -54,6 +55,7 @@ class TeacherDetails extends Component {
       like: 0,
       dislike: 0,
       userLike: 0,
+      userDislike: 0,
       carousellistNewlyItems: [],
       loggedInUser: {},
       studentsReview: []
@@ -227,11 +229,13 @@ class TeacherDetails extends Component {
               saveTeacherRating(teacherId, data);
               saveTeacherRatingOnProfile(teacherId, this.state.teacherDetails);
               
-              
+              console.log('this.state.userRating.ratings', this.state.userRating.ratings)
               this.setState({ 
                 starRating: Math.round(currentUser.rating), 
                 like: this.getTotalLike(this.state.userRating.ratings),
-                userLike: currentUser.like
+                dislike: this.getTotalDislike(this.state.userRating.ratings),
+                userLike: currentUser.like,
+                userDislike: currentUser.dislike
                });
               
               
@@ -292,30 +296,61 @@ class TeacherDetails extends Component {
     this.props.openModalPopUp();
   };
 
-  /* Like */
-  handleLike() {
+  /* Like Dislike */
+  handleLikeDislike(currentButton) {
     if (this.user) {
       const userId = this.user.user.uid;
       const teacherId = this.props.match.params.id;
       const { userRating } = this.state;
-    
       let currentUser = _.filter(
         userRating.ratings,
         user => user.userId === userId
       )[0];
-      
-      currentUser.like = currentUser.like ? 0: 1;
-      saveLike(teacherId, userRating).then(success=>{
-        this.setState({like: this.getTotalLike(userRating.ratings), userLike: currentUser.like});
-       
-      });
-      
+      if (currentButton === 'like') {
+        // toggle like
+        currentUser.like = currentUser.like ? 0 : 1;
+        if (currentUser.dislike > 0) {
+          currentUser.dislike = currentUser.dislike - 1;
+        }
+        
+        saveLike(teacherId, userRating).then(success=>{
+          this.setState({
+            like: this.getTotalLike(userRating.ratings), 
+            dislike: this.getTotalDislike(userRating.ratings),
+            userLike: currentUser.like,
+            userDislike: currentUser.dislike
+          });
+        });
+      } else if (currentButton === 'dislike') {
+        
+        currentUser.dislike = currentUser.dislike ? 0: 1;
+        // currentUser.like = currentUser.like ? 0 : 1;
+        if (currentUser.like > 0) {
+          currentUser.like = currentUser.like - 1;
+        }
+        
+
+        // console.log('dislike', currentUser);
+        saveLike(teacherId, userRating).then(success=>{
+          this.setState({
+            like: this.getTotalLike(userRating.ratings),
+            dislike: this.getTotalDislike(userRating.ratings),
+            userLike: currentUser.like,
+            userDislike: currentUser.dislike,
+          });
+        });
+      }
     } 
   }
+
   getTotalLike(ratings) {
     // console.log('userRating', ratings);
     const totalLikedObj = _.filter(ratings, user => user.like === 1);
     return totalLikedObj.length;
+  }
+  getTotalDislike(ratings) {
+    const totalDislikeObj = _.filter(ratings, user => user.dislike === 1);
+    return totalDislikeObj.length;
   }
 
   render() {
@@ -326,7 +361,7 @@ class TeacherDetails extends Component {
       subject,
       imgPath,
     } = this.state.detailModel;
-    const { carousellistNewlyItems, like, userLike } = this.state;
+    const { carousellistNewlyItems, like, userLike, userDislike, dislike } = this.state;
     const isLogedIn = localStorage.getItem('user');
     const loggedInUser = JSON.parse(localStorage.getItem('userProfile'));
     
@@ -355,15 +390,16 @@ class TeacherDetails extends Component {
                       >
                         <i className="fas fa-thumbs-up" /> <span>1000</span>
                       </button> */}
-                      <Like isDisabled={!isLogedIn} userLike={userLike} totalLike={like} onLike={(e)=> this.handleLike()}/>
+                      <Like isDisabled={!isLogedIn} userLike={userLike} totalLike={like} onLike={(e)=> this.handleLikeDislike('like')}/>
                     </div>
                     <div className="icon">
-                      <button
+                      {/* <button
                         className="btn btn-transparent"
                         disabled={!isLogedIn}
                       >
                         <i className="fas fa-thumbs-down" /> <span>1000</span>
-                      </button>
+                      </button> */}
+                      <Dislike isDisabled={!isLogedIn} userDislike={userDislike} totalDislike={dislike} onDislike={(e)=> this.handleLikeDislike('dislike')}/>
                     </div>
                     <div className="icon">
                       <button
@@ -413,7 +449,7 @@ class TeacherDetails extends Component {
                       >
                         Request For Chat
                       </button>
-                      {loggedInUser.role === 'Student' ? (
+                      { loggedInUser ? (loggedInUser === 'Student') && (
                         <button
                           className="btn btn-outline-primary"
                           onClick={this.openModalForRequest}
@@ -421,6 +457,15 @@ class TeacherDetails extends Component {
                           Request For Review
                         </button>
                       ) : null}
+
+                      {/* {loggedInUser.role === 'Student' ? (
+                        <button
+                          className="btn btn-outline-primary"
+                          onClick={this.openModalForRequest}
+                        >
+                          Request For Review
+                        </button>
+                      ) : null} */}
                     </div>
                   )}
                 </div>
