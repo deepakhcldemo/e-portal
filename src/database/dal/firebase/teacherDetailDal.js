@@ -30,3 +30,7 @@ export const saveTeacherRating = (reacherId, data) => {
 export const saveTeacherRatingOnProfile = (reacherId, data) => {
   return getDbRef('userProfiles').doc(reacherId).set(data);
 }
+
+export const saveLike = (reacherId, data) => {
+  return getDbRef('userRating').doc(reacherId).set(data);
+}

@@ -80,28 +80,28 @@ class Home extends Component {
       let tempArr = {};
       let feedbackData = [];
       querySnapshot.forEach(doc => {
-        if (doc.exists) {
-          if (doc.data().user_id) {
-            getUserProfileFromDB(doc.data().user_id).onSnapshot(
-              querySnapshot => {
-                querySnapshot.forEach(profileData => {
-                  tempArr["profileData"] = profileData.data();
-                  tempArr["feedback"] = doc.data();
-
-                  feedbackData.push(tempArr);
-                  this.setState({
-                    studentsReview: feedbackData
-                  });
-                  tempArr = {};
+        const user_id = doc.data().user_id;
+        if (user_id) {
+          getUserProfileFromDB(doc.data().user_id).onSnapshot(
+            querySnapshot => {
+              querySnapshot.forEach(profileData => {
+                tempArr['profileData'] = profileData.data();
+                tempArr['feedback'] = doc.data();
+  
+                feedbackData.push(tempArr);
+                this.setState({
+                  studentsReview: feedbackData
                 });
-                this.props.setSpinnerStatus(false);
-              },
-              error => {
-                this.props.setSpinnerStatus(false);
-              }
-            );
-          }
+                tempArr = {};
+              });
+              this.props.setSpinnerStatus(false);
+            },
+            error => {
+              this.props.setSpinnerStatus(false);
+            }
+          );
         }
+        
       });
     });
   };

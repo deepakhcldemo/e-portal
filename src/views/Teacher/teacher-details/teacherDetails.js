@@ -15,7 +15,8 @@ import {
   getTeacherDetailFromDB,
   getTeacherRating,
   saveTeacherRating,
-  saveTeacherRatingOnProfile
+  saveTeacherRatingOnProfile,
+  saveLike
 } from '../../../database/dal/firebase/teacherDetailDal';
 import {
   getFeedbackFromDB,
@@ -28,6 +29,7 @@ import RecentVideo from '../../../components/recentVideo/RecentVideo';
 import bannerImg from '../../../images/detail-banner.jpg';
 import Comment from '../../../components/comment/Comment';
 import { toastr } from 'react-redux-toastr';
+import Like from '../../../shared/components/like/Like';
 
 class TeacherDetails extends Component {
   constructor(props) {
@@ -41,12 +43,17 @@ class TeacherDetails extends Component {
         gender: '',
         subject: '',
         imgPath: ''
+        
       },
       teacherDetails: {},
+      userRating: {},
       calendarModal: false,
       teacherData: {},
       starRating: 0,
       totalUser: 0,
+      like: 0,
+      dislike: 0,
+      userLike: 0,
       carousellistNewlyItems: [],
       loggedInUser: {},
       studentsReview: []
@@ -60,6 +67,7 @@ class TeacherDetails extends Component {
     const user = localStorage.getItem('user')
       ? JSON.parse(localStorage.getItem('user'))
       : null;
+    this.user = user;
       getTeacherDetailFromDB(teacherId).then(snapshot => {
         snapshot.forEach(doc => {
           const data = doc.data();
@@ -70,6 +78,7 @@ class TeacherDetails extends Component {
           this.getDetails(data);
         });
       });
+
       this.handleRating(teacherId, user, 0, 'loadComponent');
     /* Get curriculum videos */
     const userId = user ? user.user.uid : '';
@@ -164,7 +173,6 @@ class TeacherDetails extends Component {
       detailModel.gender = data.gender;
       detailModel.subject = data.subject;
       detailModel.imgPath = data.profileImage;
-
       this.setState({ detailModel });
     }
   }
@@ -191,6 +199,7 @@ class TeacherDetails extends Component {
         const data = doc.data();
         const ratings = data.ratings;
         const nOfUser = ratings.length;
+        this.setState({userRating: data});
 
         if (nOfUser > 0) {
           let totalRating = this.getTotalRating(ratings, nOfUser);
@@ -217,7 +226,14 @@ class TeacherDetails extends Component {
               
               saveTeacherRating(teacherId, data);
               saveTeacherRatingOnProfile(teacherId, this.state.teacherDetails);
-              this.setState({ starRating: Math.round(currentUser.rating) });
+              
+              
+              this.setState({ 
+                starRating: Math.round(currentUser.rating), 
+                like: this.getTotalLike(this.state.userRating.ratings),
+                userLike: currentUser.like
+               });
+              
               
             } else {
               let newUser = { userId: '0', like: 0, dislike: 0, rating: 0 };
@@ -271,22 +287,49 @@ class TeacherDetails extends Component {
       }
     });
   }
-
  
   openModalForRequest = () => {
     this.props.openModalPopUp();
   };
+
+  /* Like */
+  handleLike() {
+    if (this.user) {
+      const userId = this.user.user.uid;
+      const teacherId = this.props.match.params.id;
+      const { userRating } = this.state;
+    
+      let currentUser = _.filter(
+        userRating.ratings,
+        user => user.userId === userId
+      )[0];
+      
+      currentUser.like = currentUser.like ? 0: 1;
+      saveLike(teacherId, userRating).then(success=>{
+        this.setState({like: this.getTotalLike(userRating.ratings), userLike: currentUser.like});
+       
+      });
+      
+    } 
+  }
+  getTotalLike(ratings) {
+    // console.log('userRating', ratings);
+    const totalLikedObj = _.filter(ratings, user => user.like === 1);
+    return totalLikedObj.length;
+  }
+
   render() {
     const {
       title,
       description,
       /* rating, */
       subject,
-      imgPath
+      imgPath,
     } = this.state.detailModel;
-    const { carousellistNewlyItems } = this.state;
+    const { carousellistNewlyItems, like, userLike } = this.state;
     const isLogedIn = localStorage.getItem('user');
     const loggedInUser = JSON.parse(localStorage.getItem('userProfile'));
+    
     return (
       <React.Fragment>
         <div className="details-wrapper">
@@ -306,12 +349,13 @@ class TeacherDetails extends Component {
                   </div>
                   <div className="icon-section d-flex">
                     <div className="icon">
-                      <button
+                      {/* <button
                         className="btn btn-transparent"
                         disabled={!isLogedIn}
                       >
                         <i className="fas fa-thumbs-up" /> <span>1000</span>
-                      </button>
+                      </button> */}
+                      <Like isDisabled={!isLogedIn} userLike={userLike} totalLike={like} onLike={(e)=> this.handleLike()}/>
                     </div>
                     <div className="icon">
                       <button
