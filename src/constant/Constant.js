@@ -48,16 +48,7 @@ export const TEACHER_DASHBOARD_LINKS = [
         style: {
             marginLeft: '5px'
         }
-    },
-    {
-      name: "Video",
-      link: "/videos",
-      icon: "fa fa-play",
-      title: "Videos",
-      style: {
-        marginLeft: "5px"
-      }
-    }
+    }    
 ];
 
 export const STUDENT_DASHBOARD_LINKS = [
