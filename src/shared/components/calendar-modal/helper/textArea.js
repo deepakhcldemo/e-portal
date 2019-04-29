@@ -9,8 +9,20 @@ const TextArea = props => {
     errorMessage,
     placeHolder,
     rows,
-    style
+    style,
+    isFocus
   } = props;
+  let textArea = React.createRef();
+  
+  function setFocusTextArea() {
+    textArea.current.focus();
+  }
+  if (isFocus) {
+    setTimeout(()=> {
+      setFocusTextArea()
+    });
+  }
+  // setTimeout(handleClick, 1)
   return (
     <div className="form-group">
       <textarea
@@ -22,6 +34,7 @@ const TextArea = props => {
         rows={rows ? rows : '3'}
         style={style ? style : {}}
         value={value ? value : ''}
+        ref={textArea}
       />
 
       <div className="c-error">{errorMessage}</div>
