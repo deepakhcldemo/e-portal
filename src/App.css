@@ -1221,6 +1221,7 @@ li .fa {
 .slick-next:before,
 .slick-prev:before {
   font-size: 40px !important;
+  color: #ccc !important;
 }
 .notification-card {
   background-color: #4b4e68 !important;
