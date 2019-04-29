@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import Slider from 'react-slick';
+import Slider from "react-slick";
 // import GLOBAL_VARIABLES from '../../config/config';
-import CommentItem from '../../components/commentItem/CommentItem';
+import CommentItem from "../../components/commentItem/CommentItem";
 
 class StudentFeedback extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      noOfCarouselImage: ''
+      noOfCarouselImage: ""
     };
   }
 
@@ -28,10 +28,10 @@ class StudentFeedback extends Component {
 
   render() {
     const { studentsReview } = this.props;
-    let title = '';
+    let title = "";
     this.props.headeTitle
       ? (title = this.props.headeTitle)
-      : (title = 'Feedback');
+      : (title = "Feedback");
 
     const settingsStudentsReview = {
       dots: false,
@@ -40,6 +40,7 @@ class StudentFeedback extends Component {
       slidesToShow: studentsReview.length >= 6 ? 6 : studentsReview.length,
       slidesToScroll: 1,
       autoplay: false,
+      swipeToSlide: true,
       responsive: [
         {
           breakpoint: 1024,

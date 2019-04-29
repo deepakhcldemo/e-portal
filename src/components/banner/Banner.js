@@ -19,6 +19,7 @@ class Banner extends Component {
       speed: 500,
       slidesToShow: 1,
       slidesToScroll: 1,
+      swipeToSlide: true,
       autoplay: true
     };
 

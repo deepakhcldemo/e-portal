@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // Date format Plugin
-import moment from 'moment';
+import moment from "moment";
 // Slider Component Plugin
-import Slider from 'react-slick';
-import './RecentVideo.scss';
+import Slider from "react-slick";
+import "./RecentVideo.scss";
 
 // Video Item Component
-import VideoItem from '../../components/videoItem/VideoItem';
-import GLOBAL_VARIABLES from '../../config/config';
+import VideoItem from "../../components/videoItem/VideoItem";
+import GLOBAL_VARIABLES from "../../config/config";
 
 class RecentVideo extends Component {
   createChildren = records => {
     return records.map((carouselRecord, index) => {
       carouselRecord.date = carouselRecord.created
         ? moment(carouselRecord.created.toDate()).fromNow()
-        : '';
+        : "";
       carouselRecord.thumb = carouselRecord.thumb
         ? carouselRecord.thumb
         : GLOBAL_VARIABLES.VIDEO_PLACEHOLDER;
@@ -32,7 +32,7 @@ class RecentVideo extends Component {
 
   render() {
     const { headeTitle, carousellistNewlyItems } = this.props;
-    const title = headeTitle ? headeTitle : 'Recent Videos';
+    const title = headeTitle ? headeTitle : "Recent Videos";
     const settingsNewlyItems = {
       dots: false,
       infinite: true,
@@ -41,6 +41,7 @@ class RecentVideo extends Component {
         carousellistNewlyItems.length >= 7 ? 7 : carousellistNewlyItems.length,
       slidesToScroll: 1,
       autoplay: true,
+      swipeToSlide: true,
       responsive: [
         {
           breakpoint: 1024,
