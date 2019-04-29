@@ -1,22 +1,21 @@
-import React, { Component } from "react";
-import HeaderHome from "../../components/layout/header/HeaderHome";
-import { connect } from "react-redux";
-import CategoryItem from "../CategoryItem";
+import React, { Component } from 'react';
+import HeaderHome from '../../components/layout/header/HeaderHome';
+import { connect } from 'react-redux';
+import CategoryItem from '../CategoryItem';
 import {
   getBannerFromDB,
   getCurriculumFromDB,
   getTeacherFromDB,
   getFeedbackFromDB,
   getUserProfileFromDB
-} from "./../../database/dal/firebase/homeDal";
-import TopTutor from "../../components/topTutor/TopTutor";
-import * as actionTypes from "../../spinnerStore/actions";
-import RecentVideo from "../../components/recentVideo/RecentVideo";
-import StudentFeedback from "../../components/studentFeedback/StudentFeedback";
-import Banner from "../../components/banner/Banner";
-import GLOBAL_VARIABLES from "../../config/config";
-import StatusCircle from "../../components/statusCircle/StatusCircle";
-// import { zipRequestDispatch } from '../../shared/library/ZipcodesByRadius';
+} from './../../database/dal/firebase/homeDal';
+import TopTutor from '../../components/topTutor/TopTutor';
+import * as actionTypes from '../../spinnerStore/actions';
+import RecentVideo from '../../components/recentVideo/RecentVideo';
+import StudentFeedback from '../../components/studentFeedback/StudentFeedback';
+import Banner from '../../components/banner/Banner';
+import GLOBAL_VARIABLES from '../../config/config';
+import StatusCircle from '../../components/statusCircle/StatusCircle';
 
 class Home extends Component {
   constructor(props) {
@@ -87,7 +86,7 @@ class Home extends Component {
               querySnapshot.forEach(profileData => {
                 tempArr['profileData'] = profileData.data();
                 tempArr['feedback'] = doc.data();
-  
+
                 feedbackData.push(tempArr);
                 this.setState({
                   studentsReview: feedbackData
@@ -101,7 +100,6 @@ class Home extends Component {
             }
           );
         }
-        
       });
     });
   };
