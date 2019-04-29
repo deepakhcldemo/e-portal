@@ -178,7 +178,7 @@ class Notification extends Component {
                             >
                               <div className="container">
                                 <div className="delete-notification">
-                                  <i className="fa fa-trash" aria-hidden="true"  title ="Delete"onClick ={() =>this.deleteNotification(notification, 'deleteNotification')}></i>
+                                  <i className="fa fa-trash delete-icon" aria-hidden="true"  title ="Delete"onClick ={() =>this.deleteNotification(notification, 'deleteNotification')}></i>
                                 </div>
                                 <div className="delete-notification" onClick={() =>
                                 this.deleteNotification(notification,'navigateNotification')
