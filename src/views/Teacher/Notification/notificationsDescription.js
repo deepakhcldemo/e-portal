@@ -171,7 +171,7 @@ class notificationsDescription extends Component {
                       </span>
                       <span className="label label-warning">
                         {notificationData.scheduleDate}
-                      </span>{' '}
+                      </span>
                       &nbsp;
                       <p className="text-left">
                         <strong>Message: </strong>

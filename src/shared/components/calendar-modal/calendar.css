@@ -17,3 +17,14 @@
 .c-error {
   color: #ff704d;
 }
+.rdt.rdtOpen .rdtPicker .rdtDays, .rdtTime {
+  background: #4b4d68 !important;
+}
+
+.rdtPicker td.rdtDay:hover, .rdtPicker td.rdtTime:hover, .rdtPicker td.rdtHour:hover, .rdtPicker td.rdtMinute:hover, .rdtPicker td.rdtSecond:hover, .rdtPicker .rdtTimeToggle:hover {
+  background: #2f304a !important;
+}
+
+.rdtCounter .rdtBtn:hover {
+  background: #2f304a !important;
+}

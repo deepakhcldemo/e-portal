@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 //import { connect } from "react-redux"
 import Modal from 'react-responsive-modal';
-// import Datetime from 'react-datetime';
+import Datetime from 'react-datetime';
 // import Select from 'react-select';
 import Joi from 'joi-browser';
 import Input from './helper/input';
 import TextArea from './helper/textArea';
+import SelectCustom from "./helper/select";
 //import { getNotification } from './calendarAction';
 import { saveChatNotificationDetails } from '../../../database/dal/firebase/chatNotificationDal';
 import './calendar.css';
@@ -107,6 +108,8 @@ class CalendarModal extends Component {
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
 
+
+
     if (errorMessage) errors[input.name] = errorMessage;
     else delete errors[input.name];
 
@@ -151,38 +154,41 @@ class CalendarModal extends Component {
                 </div>
                 <div className="row">
                   <div className="col-md-6">
-                    {/* <Datetime /> */}
-                    <Input
+                    <Datetime
+                      value={this.state.datetime}
+                      onChangeHandle={this.handleChange}
+                      name="datetime"
+                      inputProps={{ placeholder: 'Please choose date and time' }}
+
+                    />
+                    <div className="c-error">{this.state.errors.datetime}</div>
+                    {/* <Input
                       value={this.state.datetime}
                       onChangeHandle={this.handleChange}
                       name="datetime"
                       className="form-control"
                       errorMessage={this.state.errors.datetime}
                       placeHolder="04/20/2019 12:00 AM"
-                    />
+                    /> */}
                   </div>
                   <div className="col-md-6">
-                    {/* <Select
-      className="form-control"
-      onChange={this.handleChange}
-      options={options}
-    /> */}
-                    {/* <select className="form-control" onChange={this.handleChange} name="duration">
-      <option value={-1}>Select</option>
-      <option value={"15m"}> 15 minutes</option>
-      <option value={"30m"}> 30 minutes</option>
-      <option value={"1h"}> 1 hour</option>
-      <option value={"2h"}> 2 hours</option>
-    </select> */}
+                    <SelectCustom
+                      value={this.state.duration}
+                      onChangeHandle={this.handleChange}
+                      name="duration"
+                      className="form-control"
+                      errorMessage={this.state.errors.duration}
+                      placeHolder="Duration"></SelectCustom>
 
-                    <Input
+
+                    {/* <Input
                       value={this.state.duration}
                       onChangeHandle={this.handleChange}
                       name="duration"
                       className="form-control"
                       errorMessage={this.state.errors.duration}
                       placeHolder="Duration"
-                    />
+                    /> */}
                   </div>
                 </div>
                 <div className="row">

@@ -3,7 +3,6 @@ import React from "react";
 const Select = props => {
     const {
         name,
-        value,
         onChangeHandle,
         className,
         errorMessage,
@@ -11,8 +10,8 @@ const Select = props => {
     } = props;
     return (
         <div className="form-group">
-            <select className="form-control" onChange={this.handleChange} name="duration">
-                <option value={-1}>Select</option>
+            <select className={className} onChange={onChangeHandle} name={name}>
+                <option value="">Select</option>
                 <option value={"15m"}> 15 minutes</option>
                 <option value={"30m"}> 30 minutes</option>
                 <option value={"1h"}> 1 hour</option>

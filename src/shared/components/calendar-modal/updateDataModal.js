@@ -6,9 +6,11 @@ import Select from 'react-select';
 import Joi from "joi-browser"
 import Input from "./helper/input";
 import TextArea from "./helper/textArea";
+import SelectCustom from "./helper/select";
 //import { getNotification } from './calendarAction';
-import { saveChatNotificationDetails, udpateChatNotificationDetails } from '../../../database/dal/firebase/chatNotificationDal';
 
+import { saveChatNotificationDetails, udpateChatNotificationDetails } from '../../../database/dal/firebase/chatNotificationDal';
+import './calendar.css';
 
 
 class CalendarModal extends Component {
@@ -40,10 +42,12 @@ class CalendarModal extends Component {
   };
 
   validateProperty = ({ name, value }) => {
-    const obj = { [name]: value };
-    const schema = { [name]: this.schema[name] };
-    const { error } = Joi.validate(obj, schema);
-    return error ? error.details[0].message : null;
+    console.log("Name: ", name)
+    console.log("Value: ", value)
+    // const obj = { [name]: value };
+    // const schema = { [name]: this.schema[name] };
+    // const { error } = Joi.validate(obj, schema);
+    // return error ? error.details[0].message : null;
   };
 
   handleSubmit = e => {
@@ -85,6 +89,8 @@ class CalendarModal extends Component {
   handleChange = ({ currentTarget: input }) => {
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
+
+    console.log("Handle Change")
 
     if (errorMessage) errors[input.name] = errorMessage;
     else delete errors[input.name];
@@ -138,32 +144,45 @@ class CalendarModal extends Component {
                     Pick Date and Time
 </div>
                   <div className="col-md-6">
-                    Select a duration
+                    Select a duration2
 </div>
 
                 </div>
                 <div className="row">
                   <div className="col-md-6">
-                    {/* <Datetime /> */}
-                    <Input
+                    <Datetime
+
+                      value={this.state.datetime}
+                      onChange={this.handleChange}
+                      inputProps={{ placeholder: 'Please choose date and time', name: "datetime" }}
+                    />
+                    <div className="c-error">{this.state.errors.datetime}</div>
+                    {/* <Input
                       value={this.state.datetime}
                       onChangeHandle={this.handleChange}
                       name="datetime"
                       className="form-control"
                       errorMessage={this.state.errors.datetime}
                       placeHolder="04/20/2019 12:00 AM"
-                    />
+                    /> */}
                   </div>
 
                   <div className="col-md-6">
-                    <Input
+                    <SelectCustom
+                      value={this.state.duration}
+                      onChangeHandle={this.handleChange}
+                      name="duration"
+                      className="form-control"
+                      errorMessage={this.state.errors.duration}
+                      placeHolder="Duration"></SelectCustom>
+                    {/* <Input
                       value={this.state.duration}
                       onChangeHandle={this.handleChange}
                       name="duration"
                       className="form-control"
                       errorMessage={this.state.errors.duration}
                       placeHolder="Duration"
-                    />
+                    /> */}
                   </div>
 
                 </div>
