@@ -9,6 +9,10 @@
 #notification-wrapper{
   color: #4b4e68;
 }
+
+.delete-icon{
+  color: #000 !important;
+}
 .delete-notification{
   display: inline-block;
   padding-right: 20px;
