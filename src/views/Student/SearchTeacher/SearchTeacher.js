@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 //import GLOBAL_VARIABLES from '../../config/config';
 import HeaderHome from "../../../components/layout/header/HeaderHome";
-import Navbar from "./../../../shared/components/Navbar";
 import {
   getTeachersBasedOnCateogy,
   zipRequestDispatch

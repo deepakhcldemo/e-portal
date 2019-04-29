@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import NavBar from '../../../shared/components/Navbar';
 import {
   udpateChatNotificationDetails,
-  getNotificationDataFromNid
+  getNotificationDataFromNid,
+  getUserProfile
 } from '../../../database/dal/firebase/chatNotificationDal';
 import {
   getNotification,
@@ -17,24 +18,43 @@ class notificationsDescription extends Component {
   state = {
     calendarModal: false,
     teacherData: '',
-    notificationData: ''
+    notificationData: '',
+    studentDataFromDB: ''
   };
 
   componentDidMount() {
     let user;
+    let notification;
     getNotificationDataFromNid(this.props.match.params.nid).then(
       querySnapshot => {
         querySnapshot.forEach(doc => {
-          user = doc.data();
-
+          notification = doc.data();
+          //console.log("Notification Data information: ", notification)
           if (doc.exists) {
             this.setState({
-              notificationData: user
+              notificationData: notification
             });
           }
         });
+        console.log("UserID get : ", notification.sId)
+        getUserProfile(notification.sId).then(
+          querySnapshot => {
+            querySnapshot.forEach(doc => {
+              user = doc.data();
+              //console.log("User Data information: ", user)
+              if (doc.exists) {
+                this.setState({
+                  studentDataFromDB: user
+                });
+              }
+            });
+          }
+        );
       }
     );
+
+
+
   }
 
   wrapperFunction = data => {
@@ -105,7 +125,9 @@ class notificationsDescription extends Component {
   };
 
   render() {
-    const { notificationData } = this.state;
+
+    const { notificationData, studentDataFromDB } = this.state;
+
     const { open } = this.state;
 
     return (
@@ -115,7 +137,7 @@ class notificationsDescription extends Component {
           <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
             <div className="card">
               <div className="card-body" style={{ background: ' #333546' }}>
-                {notificationData != null ? (
+                {notificationData !== null && studentDataFromDB !== null ? (
                   <div className="modal-content">
                     <div className="modal-header">
                       <button
@@ -125,7 +147,7 @@ class notificationsDescription extends Component {
                         aria-hidden="true"
                       />
                       <h4 className="modal-title" id="myModalLabel">
-                        More About Student {notificationData.nid} Notification
+                        More About Student {studentDataFromDB.firstName} {studentDataFromDB.lastName} Notification
                       </h4>
                     </div>
                     <div className="modal-body">
@@ -139,6 +161,7 @@ class notificationsDescription extends Component {
                           border="0"
                           className="img-circle"
                         />
+                        <p>{studentDataFromDB.firstName} {studentDataFromDB.lastName}</p>
                         <h3 className="media-heading">
                           {notificationData.nid}
                         </h3>
@@ -166,46 +189,46 @@ class notificationsDescription extends Component {
                       </button>
 
                       {notificationData.paymentStatus === false &&
-                      notificationData.status === -1 ? (
-                        <button
-                          onClick={() =>
-                            this.handleAccept(notificationData.nId)
-                          }
-                          type="button"
-                          className="btn btn-success"
-                          data-dismiss="modal"
-                        >
-                          Accept
+                        notificationData.status === -1 ? (
+                          <button
+                            onClick={() =>
+                              this.handleAccept(notificationData.nId)
+                            }
+                            type="button"
+                            className="btn btn-success"
+                            data-dismiss="modal"
+                          >
+                            Accept
                         </button>
-                      ) : null}
+                        ) : null}
 
                       {notificationData.paymentStatus === false &&
-                      notificationData.status === -1 ? (
-                        <button
-                          onClick={() =>
-                            this.handleReject(notificationData.nId)
-                          }
-                          type="button"
-                          className="btn btn-danger"
-                          data-dismiss="modal"
-                        >
-                          Reject
+                        notificationData.status === -1 ? (
+                          <button
+                            onClick={() =>
+                              this.handleReject(notificationData.nId)
+                            }
+                            type="button"
+                            className="btn btn-danger"
+                            data-dismiss="modal"
+                          >
+                            Reject
                         </button>
-                      ) : null}
+                        ) : null}
 
                       {notificationData.paymentStatus === false &&
-                      notificationData.status === -1 ? (
-                        <button
-                          onClick={() =>
-                            this.wrapperFunction(notificationData.nId)
-                          }
-                          type="button"
-                          className="btn btn-warning"
-                          data-dismiss="modal"
-                        >
-                          Discuss on Time
+                        notificationData.status === -1 ? (
+                          <button
+                            onClick={() =>
+                              this.wrapperFunction(notificationData.nId)
+                            }
+                            type="button"
+                            className="btn btn-warning"
+                            data-dismiss="modal"
+                          >
+                            Discuss on Time
                         </button>
-                      ) : null}
+                        ) : null}
                     </div>
 
                     <div>
@@ -218,8 +241,8 @@ class notificationsDescription extends Component {
                     </div>
                   </div>
                 ) : (
-                  <div>Loading....</div>
-                )}
+                    <div>Loading....</div>
+                  )}
               </div>
             </div>
           </div>

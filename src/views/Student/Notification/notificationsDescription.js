@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import NavBar from "../../../shared/components/Navbar";
 import {
   saveChatNotificationDetails,
   udpateChatNotificationDetails,

@@ -19,7 +19,7 @@ class Comment extends Component {
   handleSubmit = e => {
     e.preventDefault();  
     
-    if(this.state.message){    
+    if(this.state.message.trim()){    
       const loggedInUSer = JSON.parse(localStorage.getItem('user'));
       if (loggedInUSer) {
         const commentDetails = {
@@ -58,8 +58,9 @@ class Comment extends Component {
                       <img
                         src={loggedInUser.profileImage}
                         alt={loggedInUser.firstName + ' ' + loggedInUser.lastName}
+                        title={loggedInUser.firstName + ' ' + loggedInUser.lastName}
                       className="profile-img"/>
-                      }                      
+                      } 
                     </div>
                     <form style={{width:"100%"}}>
                       <div className="comments-input">                        

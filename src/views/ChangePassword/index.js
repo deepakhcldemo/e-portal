@@ -115,98 +115,101 @@ class ChangePassword extends Component {
               className="card card-border-radius"
               style={{ background: '#4b4e68' }}
             >
-              <div
-                className="col-12 sign-in--text"
-                style={{ marginTop: '5px' }}
-              >
-                <span className="sign-in-text--color">Change Password</span>
-              </div>
-
-              <form name="form" className="login-form--padding">
-                <span className="help-block">
-                  {this.state.errorMessage ? this.state.errorMessage : ''}
-                </span>
+              <div>
                 <div
-                  className={
-                    'form-group' + (submitted && !password ? ' has-error' : '')
-                  }
+                  className="col-12 sign-in--text"
+                  style={{ marginTop: '5px' }}
                 >
-                  <label className="label-color" htmlFor="password">
-                    Enter New Password
-                  </label>
-                  <div className="input-group">
-                    <input
-                      type="password"
-                      id="password"
-                      className="form-control input-field--style form-input-icon--padding"
-                      name="password"
-                      value={password}
-                      onChange={this.handleChange}
-                    />
-                    <span
-                      id="passwordIcon"
-                      className="input-group-addon"
-                      style={passwordIcon}
-                      onClick={() => this.togglePassword('password')}
-                    />
-                  </div>
-                  {submitted && !password && (
-                    <div className="help-block">Password is required</div>
-                  )}
+                  <span className="sign-in-text--color">Change Password</span>
                 </div>
-                <div
-                  className={
-                    'form-group' +
-                    (submitted && !confirmPassword ? ' has-error' : '')
-                  }
-                >
-                  <label className="label-color" htmlFor="confirmPassword">
-                    Confirm Password
-                  </label>
-                  <div className="input-group">
-                    <input
-                      type="password"
-                      id="confirmPassword"
-                      className="form-control input-field--style form-input-icon--padding"
-                      name="confirmPassword"
-                      value={confirmPassword}
-                      onChange={this.handleChange}
-                    />
-                    <span
-                      id="passwordIcon"
-                      className="input-group-addon"
-                      style={passwordIcon}
-                      onClick={() => this.togglePassword('confirmPassword')}
-                    />
-                  </div>
-                  {submitted && !confirmPassword && (
-                    <div className="help-block">
-                      Confirm Password is required
+
+                <form name="form" className="login-form--padding">
+                  <span className="help-block">
+                    {this.state.errorMessage ? this.state.errorMessage : ''}
+                  </span>
+                  <div
+                    className={
+                      'form-group' +
+                      (submitted && !password ? ' has-error' : '')
+                    }
+                  >
+                    <label className="label-color" htmlFor="password">
+                      Enter New Password
+                    </label>
+                    <div className="input-group">
+                      <input
+                        type="password"
+                        id="password"
+                        className="form-control input-field--style form-input-icon--padding"
+                        name="password"
+                        value={password}
+                        onChange={this.handleChange}
+                      />
+                      <span
+                        id="passwordIcon"
+                        className="input-group-addon"
+                        style={passwordIcon}
+                        onClick={() => this.togglePassword('password')}
+                      />
                     </div>
-                  )}
-                </div>
+                    {submitted && !password && (
+                      <div className="help-block">Password is required</div>
+                    )}
+                  </div>
+                  <div
+                    className={
+                      'form-group' +
+                      (submitted && !confirmPassword ? ' has-error' : '')
+                    }
+                  >
+                    <label className="label-color" htmlFor="confirmPassword">
+                      Confirm Password
+                    </label>
+                    <div className="input-group">
+                      <input
+                        type="password"
+                        id="confirmPassword"
+                        className="form-control input-field--style form-input-icon--padding"
+                        name="confirmPassword"
+                        value={confirmPassword}
+                        onChange={this.handleChange}
+                      />
+                      <span
+                        id="passwordIcon"
+                        className="input-group-addon"
+                        style={passwordIcon}
+                        onClick={() => this.togglePassword('confirmPassword')}
+                      />
+                    </div>
+                    {submitted && !confirmPassword && (
+                      <div className="help-block">
+                        Confirm Password is required
+                      </div>
+                    )}
+                  </div>
 
-                <div className="form-group padding-top-25">
-                  <button
-                    onClick={this.updatePassword}
-                    type="button"
-                    className="btn btn-success btn-block"
-                  >
-                    UPDATE PASSWORD
-                  </button>
-                </div>
-                <div className="form-group padding-top-25">
-                  <button
-                    onClick={() => {
-                      this.props.history.push('/home');
-                    }}
-                    type="button"
-                    className="btn btn-dark btn-block"
-                  >
-                    CANCEL
-                  </button>
-                </div>
-              </form>
+                  <div className="form-group padding-top-25">
+                    <button
+                      onClick={this.updatePassword}
+                      type="button"
+                      className="btn btn-success btn-block"
+                    >
+                      UPDATE PASSWORD
+                    </button>
+                  </div>
+                  <div className="form-group padding-top-25">
+                    <button
+                      onClick={() => {
+                        this.props.history.push('/home');
+                      }}
+                      type="button"
+                      className="btn btn-dark btn-block"
+                    >
+                      CANCEL
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>

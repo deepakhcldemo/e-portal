@@ -6,6 +6,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import AuthGuard from "./authguard/AuthGuard";
 // import { withRouter } from 'react-router';
 import { Spinner } from "react-bootstrap";
+
 import GLOBAL_VARIABLES from "./config/config";
 import "./App.css";
 import CreateEvent from "./views/Events/events";

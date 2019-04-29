@@ -106,6 +106,8 @@ class ModalPopUp extends Component {
     tId = this.state.tid;
     tname = this.state.teacherName;
     sname = this.state.studentName;
+   const  tAccepted  = false;
+   const  tRejected = false;
     const notificationDetails = {
       notificationDesc: this.state.notificationDescription,
       tId,
@@ -114,7 +116,9 @@ class ModalPopUp extends Component {
       tname,
       sname,
       sstatus,
-      tstatus
+      tstatus,
+      tAccepted,
+      tRejected
     };
     getVideoUrl(this.state.videoName, notificationDetails.loggedInUserId).then(
       url => {

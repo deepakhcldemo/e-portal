@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const TextArea = props => {
   const {
@@ -19,10 +19,10 @@ const TextArea = props => {
         className={className}
         id="exampleFormControlTextarea2"
         placeholder={placeHolder}
-        rows={rows ? rows : "3"} 
-        style={style? style : ''}
-        value=''
-        >{value? value: ''}</textarea>
+        rows={rows ? rows : '3'}
+        style={style ? style : {}}
+        value={value ? value : ''}
+      />
 
       <div className="c-error">{errorMessage}</div>
     </div>
