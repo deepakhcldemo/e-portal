@@ -1,27 +1,26 @@
-import React, { Component } from 'react';
-import { toastr } from 'react-redux-toastr';
+import React, { Component } from "react";
+import { toastr } from "react-redux-toastr";
 import CommentItem from "./CommentItem";
-import TextArea from '../../shared/components/calendar-modal/helper/textArea';
-import { saveCommentDetails } from '../../database/dal/firebase/commentDal';
-import './CommentItem.css'
+import TextArea from "../../shared/components/calendar-modal/helper/textArea";
+import { saveCommentDetails } from "../../database/dal/firebase/commentDal";
+import "./CommentItem.css";
 
 class Comment extends Component {
   state = {
-    message: '',
+    message: "",
     errors: {},
     isFocus: false
   };
- 
 
   handleChange = ({ currentTarget: input }) => {
     this.setState({ [input.name]: input.value });
   };
 
   handleSubmit = e => {
-    e.preventDefault();  
-    
-    if(this.state.message.trim()){    
-      const loggedInUSer = JSON.parse(localStorage.getItem('user'));
+    e.preventDefault();
+
+    if (this.state.message.trim()) {
+      const loggedInUSer = JSON.parse(localStorage.getItem("user"));
       if (loggedInUSer) {
         const commentDetails = {
           created_date: new Date(),
@@ -33,12 +32,15 @@ class Comment extends Component {
         };
         saveCommentDetails({
           ...commentDetails
-        }).then(() => {
-          this.setState({ message:'' });
-          toastr.success('Comment saved successfully.');
-      },error=>{
-        toastr.error(error.message);
-      });
+        }).then(
+          () => {
+            this.setState({ message: "" });
+            toastr.success("Comment saved successfully.");
+          },
+          error => {
+            toastr.error(error.message);
+          }
+        );
       }
     }
   };
@@ -55,16 +57,21 @@ class Comment extends Component {
                 <div className="col-12">
                   <div className="comment-thread-element">
                     <div className="author-thumbnail">
-                      {loggedInUser && 
-                      <img
-                        src={loggedInUser.profileImage}
-                        alt={loggedInUser.firstName + ' ' + loggedInUser.lastName}
-                        title={loggedInUser.firstName + ' ' + loggedInUser.lastName}
-                      className="profile-img"/>
-                      } 
+                      {loggedInUser && (
+                        <img
+                          src={loggedInUser.profileImage}
+                          alt={
+                            loggedInUser.firstName + " " + loggedInUser.lastName
+                          }
+                          title={
+                            loggedInUser.firstName + " " + loggedInUser.lastName
+                          }
+                          className="profile-img"
+                        />
+                      )}
                     </div>
-                    <form style={{width:"100%"}}>
-                      <div className="comments-input">                        
+                    <form style={{ width: "100%" }}>
+                      <div className="comments-input">
                         <TextArea
                           value={this.state.message}
                           onChangeHandle={this.handleChange}
@@ -73,40 +80,46 @@ class Comment extends Component {
                           errorMessage={this.state.errors.message}
                           placeholder="Add a comment"
                           rows="2"
-                          style={{margin: 'auto', width:'100%'}}
+                          style={{ margin: "auto", width: "100%" }}
                           isFocus={isFocus}
-                          ref={this.textInput}/>
+                          ref={this.textInput}
+                        />
                       </div>
-                      
+
                       <div className="total-comments comment-btn">
-                        <button type="button" className="btn btn-success"
-                          data-dismiss="modal" onClick={this.handleSubmit}>
+                        <button
+                          type="button"
+                          className="btn btn-success"
+                          data-dismiss="modal"
+                          onClick={this.handleSubmit}
+                        >
                           Submit
-                        </button>                      
-                      </div>                  
-                    </form>                   
-                    
+                        </button>
+                      </div>
+                    </form>
                   </div>
                   <div className="comments-hdr-section">
                     <div className="no-thumb">&nbsp;</div>
                     <div className="comments-count">
-                    <span className="count">{ noOfComment } </span>
-                    <span className="count-text">{ noOfComment && 'Comments' }</span>
+                      <span className="count">{noOfComment} </span>
+                      <span className="count-text">
+                        {noOfComment && "Comments"}
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>          
-        {noOfComment > 0 && (          
-          <div className="container">
-            <div className="row">
-              <div className="col-12">
-                <CommentItem commentDetails={commentRows} />
+          </div>
+          {noOfComment > 0 && (
+            <div className="container">
+              <div className="row">
+                <div className="col-12">
+                  <CommentItem commentDetails={commentRows} />
+                </div>
               </div>
             </div>
-          </div>          
-        )}
+          )}
         </div>
       </React.Fragment>
     );

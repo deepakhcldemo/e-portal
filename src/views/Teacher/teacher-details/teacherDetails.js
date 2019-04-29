@@ -1,49 +1,49 @@
-import React, { Component } from 'react';
-import './teacherDetails.scss';
-import { connect } from 'react-redux';
-import _ from 'lodash';
+import React, { Component } from "react";
+import "./teacherDetails.scss";
+import { connect } from "react-redux";
+import _ from "lodash";
 
-import RatingComponent from 'react-star-rating-component';
-import classnames from 'classnames';
-import * as actionTypes from '../../../spinnerStore/actions';
-import ModalPopUp from '../../../shared/components/modalpopup/modalpopup';
-import HeaderHome from '../../../components/layout/header/HeaderHome';
+import RatingComponent from "react-star-rating-component";
+import classnames from "classnames";
+import * as actionTypes from "../../../spinnerStore/actions";
+import ModalPopUp from "../../../shared/components/modalpopup/modalpopup";
+import HeaderHome from "../../../components/layout/header/HeaderHome";
 // import profileImgs from '../../../images/profile-imgs.png';
-import CalendarModal from '../../../shared/components/calendar-modal/calendarmodal';
-import { openModalForRequest } from './teacher-details.action';
+import CalendarModal from "../../../shared/components/calendar-modal/calendarmodal";
+import { openModalForRequest } from "./teacher-details.action";
 import {
   getTeacherDetailFromDB,
   getTeacherRating,
   saveTeacherRating,
   saveTeacherRatingOnProfile,
   saveLike
-} from '../../../database/dal/firebase/teacherDetailDal';
+} from "../../../database/dal/firebase/teacherDetailDal";
 import {
   getFeedbackFromDB,
   getUserProfileFromDB
-} from '../../../database/dal/firebase/homeDal';
+} from "../../../database/dal/firebase/homeDal";
 
-import { getCurriculumFromDB } from '../../../database/dal/firebase/curriculumDal';
+import { getCurriculumFromDB } from "../../../database/dal/firebase/curriculumDal";
 // import GLOBAL_VARIABLES from '../../../config/config';
-import RecentVideo from '../../../components/recentVideo/RecentVideo';
-import bannerImg from '../../../images/detail-banner.jpg';
-import Comment from '../../../components/comment/Comment';
-import { toastr } from 'react-redux-toastr';
-import Like from '../../../shared/components/like/Like';
-import Dislike from '../../../shared/components/dislike/Dislike';
+import RecentVideo from "../../../components/recentVideo/RecentVideo";
+import bannerImg from "../../../images/detail-banner.jpg";
+import Comment from "../../../components/comment/Comment";
+import { toastr } from "react-redux-toastr";
+import Like from "../../../shared/components/like/Like";
+import Dislike from "../../../shared/components/dislike/Dislike";
 
 class TeacherDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
       detailModel: {
-        teacherId: '',
-        title: 'title',
-        description: 'this is demo',
+        teacherId: "",
+        title: "title",
+        description: "this is demo",
         rating: 7,
-        gender: '',
-        subject: '',
-        imgPath: ''
+        gender: "",
+        subject: "",
+        imgPath: ""
       },
       teacherDetails: {},
       userRating: {},
@@ -66,8 +66,8 @@ class TeacherDetails extends Component {
   componentDidMount() {
     this.props.setSpinnerStatus(true);
     const teacherId = this.props.match.params.id;
-    const user = localStorage.getItem('user')
-      ? JSON.parse(localStorage.getItem('user'))
+    const user = localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user"))
       : null;
     this.user = user;
     getTeacherDetailFromDB(teacherId).then(snapshot => {
@@ -79,11 +79,11 @@ class TeacherDetails extends Component {
         this.setState({ teacherDetails: data });
         this.getDetails(data);
       });
-      this.handleRating(teacherId, user, 0, 'loadComponent');
+      this.handleRating(teacherId, user, 0, "loadComponent");
     });
 
     /* Get curriculum videos */
-    const userId = user ? user.user.uid : '';
+    const userId = user ? user.user.uid : "";
     getCurriculumFromDB(userId).onSnapshot(querySnapshot => {
       let currData = [];
       querySnapshot.forEach(doc => {
@@ -105,8 +105,8 @@ class TeacherDetails extends Component {
         getUserProfileFromDB(doc.data().user_id).onSnapshot(
           querySnapshot => {
             querySnapshot.forEach(profileData => {
-              tempArr['profileData'] = profileData.data();
-              tempArr['feedback'] = doc.data();
+              tempArr["profileData"] = profileData.data();
+              tempArr["feedback"] = doc.data();
 
               feedbackData.push(tempArr);
               this.setState({
@@ -123,7 +123,7 @@ class TeacherDetails extends Component {
         );
       });
     });
-    console.log('this.state.studentsReview', this.state.studentsReview);
+    console.log("this.state.studentsReview", this.state.studentsReview);
   }
   setTeacherData = data => {
     this.setState({ teacherData: data });
@@ -169,7 +169,7 @@ class TeacherDetails extends Component {
     if (data) {
       const detailModel = { ...this.state.detailModel };
       detailModel.teacherId = data.userId;
-      detailModel.title = data.firstName + ' ' + data.lastName;
+      detailModel.title = data.firstName + " " + data.lastName;
       detailModel.description = data.summary;
       detailModel.rating = data.rating;
       detailModel.gender = data.gender;
@@ -181,8 +181,8 @@ class TeacherDetails extends Component {
 
   navigateToLogin() {
     const currentId = this.props.match.params.id;
-    localStorage.setItem('teacherDetailId', currentId);
-    this.props.history.push('/login');
+    localStorage.setItem("teacherDetailId", currentId);
+    this.props.history.push("/login");
   }
 
   onStarClick(nextValue, prevValue, name) {
@@ -190,8 +190,8 @@ class TeacherDetails extends Component {
     // console.log('nextValue', nextValue)
 
     const teacherId = this.props.match.params.id;
-    const user = localStorage.getItem('user')
-      ? JSON.parse(localStorage.getItem('user'))
+    const user = localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user"))
       : null;
     this.handleRating(teacherId, user, nextValue, null);
   }
@@ -225,10 +225,10 @@ class TeacherDetails extends Component {
               }
               data.rating = totalRating;
 
-              if (this.state.teacherDetails.hasOwnProperty('rating')) {
+              if (this.state.teacherDetails.hasOwnProperty("rating")) {
                 this.state.teacherDetails.rating = totalRating;
               }
-              if (this.state.teacherDetails.hasOwnProperty('noOfRatings')) {
+              if (this.state.teacherDetails.hasOwnProperty("noOfRatings")) {
                 this.state.teacherDetails.noOfRatings = this.handleNofUserRated(
                   ratings
                 );
@@ -244,7 +244,7 @@ class TeacherDetails extends Component {
                 userDislike: currentUser.dislike
               });
             } else {
-              let newUser = { userId: '0', like: 0, dislike: 0, rating: 0 };
+              let newUser = { userId: "0", like: 0, dislike: 0, rating: 0 };
               if (currentUser) {
                 currentUser.rating = nextValue;
               } else {
@@ -253,17 +253,17 @@ class TeacherDetails extends Component {
                 ratings.push(currentUser);
               }
               data.rating = totalRating;
-              if (this.state.teacherDetails.hasOwnProperty('rating')) {
+              if (this.state.teacherDetails.hasOwnProperty("rating")) {
                 this.state.teacherDetails.rating = totalRating;
               }
-              if (this.state.teacherDetails.hasOwnProperty('noOfRatings')) {
+              if (this.state.teacherDetails.hasOwnProperty("noOfRatings")) {
                 this.state.teacherDetails.noOfRatings = this.handleNofUserRated(
                   ratings
                 );
               }
 
               saveTeacherRating(teacherId, data);
-              console.log('---------------', this.state.teacherDetails);
+              console.log("---------------", this.state.teacherDetails);
               saveTeacherRatingOnProfile(teacherId, this.state.teacherDetails);
 
               this.setState({ starRating: nextValue });
@@ -314,7 +314,7 @@ class TeacherDetails extends Component {
         userRating.ratings,
         user => user.userId === userId
       )[0];
-      if (currentButton === 'like') {
+      if (currentButton === "like") {
         // toggle like
         currentUser.like = currentUser.like ? 0 : 1;
         if (currentUser.dislike > 0) {
@@ -329,7 +329,7 @@ class TeacherDetails extends Component {
             userDislike: currentUser.dislike
           });
         });
-      } else if (currentButton === 'dislike') {
+      } else if (currentButton === "dislike") {
         currentUser.dislike = currentUser.dislike ? 0 : 1;
         // currentUser.like = currentUser.like ? 0 : 1;
         if (currentUser.like > 0) {
@@ -363,7 +363,7 @@ class TeacherDetails extends Component {
     this.setState({ isFocus: true });
   }
   updateTotalComments(noOfComment) {
-    console.log('noOfComment', noOfComment);
+    console.log("noOfComment", noOfComment);
     // this.setState({noOfComment: noOfComment});
   }
 
@@ -384,8 +384,8 @@ class TeacherDetails extends Component {
       isFocus,
       noOfComment
     } = this.state;
-    const isLogedIn = localStorage.getItem('user');
-    const loggedInUser = JSON.parse(localStorage.getItem('userProfile'));
+    const isLogedIn = localStorage.getItem("user");
+    const loggedInUser = JSON.parse(localStorage.getItem("userProfile"));
 
     return (
       <React.Fragment>
@@ -410,7 +410,7 @@ class TeacherDetails extends Component {
                         isDisabled={!isLogedIn}
                         userLike={userLike}
                         totalLike={like}
-                        onLike={e => this.handleLikeDislike('like')}
+                        onLike={e => this.handleLikeDislike("like")}
                       />
                     </div>
                     <div className="icon">
@@ -418,7 +418,7 @@ class TeacherDetails extends Component {
                         isDisabled={!isLogedIn}
                         userDislike={userDislike}
                         totalDislike={dislike}
-                        onDislike={e => this.handleLikeDislike('dislike')}
+                        onDislike={e => this.handleLikeDislike("dislike")}
                       />
                     </div>
                     <div className="icon">
@@ -445,8 +445,8 @@ class TeacherDetails extends Component {
                     <span className="sub-title">Subject: {subject}</span>
                     <div
                       className={classnames({
-                        'disbaled-stars': !isLogedIn,
-                        'ratings-wrpr': true
+                        "disbaled-stars": !isLogedIn,
+                        "ratings-wrpr": true
                       })}
                     >
                       <RatingComponent
@@ -470,7 +470,7 @@ class TeacherDetails extends Component {
                   {isLogedIn && (
                     <div>
                       {loggedInUser
-                        ? loggedInUser.role === 'Student' && (
+                        ? loggedInUser.role === "Student" && (
                             <button
                               className="btn btn-outline-primary"
                               onClick={() =>
@@ -482,7 +482,7 @@ class TeacherDetails extends Component {
                           )
                         : null}
                       {loggedInUser
-                        ? loggedInUser.role === 'Student' && (
+                        ? loggedInUser.role === "Student" && (
                             <button
                               className="btn btn-outline-primary"
                               onClick={this.openModalForRequest}
