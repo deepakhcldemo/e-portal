@@ -432,9 +432,15 @@ class TeacherDetails extends Component {
                         disabled={!isLogedIn}
                         onClick={() => this.setFocusOnArea()}
                       >
-                        <i className="fas fa-comment-alt" /> {this.state.studentsReview.length && (
-                          <span> {this.state.studentsReview.length} </span>
-                        )}
+                        <i className="fas fa-comment-alt" /> 
+                        <span>
+                          {this.state.studentsReview.length && (
+                            <React.Fragment>
+                              {this.state.studentsReview.length}
+                            </React.Fragment>
+                          )}
+                          
+                        </span>
                       </button>
                     </div>
                   </div>
