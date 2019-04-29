@@ -452,12 +452,18 @@
   background-color: #f5f5f5;
 }
 
-.rrt-confirm-holder .rrt-confirm .rrt-buttons-holder .rrt-button.rrt-ok-btn:active {
+.rrt-confirm-holder
+  .rrt-confirm
+  .rrt-buttons-holder
+  .rrt-button.rrt-ok-btn:active {
   background-color: #60bb71;
   color: white;
 }
 
-.rrt-confirm-holder .rrt-confirm .rrt-buttons-holder .rrt-button.rrt-cancel-btn:active {
+.rrt-confirm-holder
+  .rrt-confirm
+  .rrt-buttons-holder
+  .rrt-button.rrt-cancel-btn:active {
   background-color: #db6a64;
   color: white;
 }
@@ -1174,10 +1180,6 @@ li .fa {
 
 .tray-background--color {
   background-color: #333546;
-}
-
-.slick-slide {
-  max-width: 200px !important;
 }
 
 .slick-next,
