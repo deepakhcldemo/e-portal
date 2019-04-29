@@ -58,8 +58,9 @@ class Comment extends Component {
                       <img
                         src={loggedInUser.profileImage}
                         alt={loggedInUser.firstName + ' ' + loggedInUser.lastName}
+                        title={loggedInUser.firstName + ' ' + loggedInUser.lastName}
                       className="profile-img"/>
-                      }                      
+                      } 
                     </div>
                     <form style={{width:"100%"}}>
                       <div className="comments-input">                        

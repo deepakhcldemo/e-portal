@@ -13,7 +13,9 @@ class CommentItem extends Component {
                 <div className="author-thumbnail">
                 {commentDetail.profileData && 
                     <img src={commentDetail.profileData.profileImage} 
-                    alt={commentDetail.profileData.firstName + ' ' + commentDetail.profileData.lastName} className="profile-img"/>
+                    alt={commentDetail.profileData.firstName + ' ' + commentDetail.profileData.lastName}
+                    title={commentDetail.profileData.firstName + ' ' + commentDetail.profileData.lastName}
+                    className="profile-img"/>
                 }
                 </div>
                 <div className="comment-content">

@@ -26,6 +26,10 @@ export const getFeedbackFromDB = (teacherID) => {
   }
 };
 
-export const getUserProfileFromDB = userId => {
-  return getDbRef('userProfiles').where('userId', '==', userId);
+export const getUserProfileFromDB = (userId) => {
+  if(userId){
+    return getDbRef('userProfiles').where('userId', '==', userId);
+  } else {
+    return getDbRef('userProfiles');
+  }
 };
