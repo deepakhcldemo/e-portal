@@ -9,3 +9,24 @@ const getDbRef = collectionName => {
 export const saveCommentDetails = commentDetails => {
     return getDbRef('feedback').doc().set(commentDetails);
 };
+
+
+// export const getTeacherRating = (teacherId) => {
+//     return getDbRef('userRating').doc(teacherId).get();
+// }
+
+export const getCommentRating = (commentId) => {
+    return getDbRef('feedback').doc(commentId).get();
+}
+
+export const saveTeacherRating = (reacherId, data) => {
+    return getDbRef('userRating').doc(reacherId).set(data);
+}
+
+// export const saveTeacherRatingOnProfile = (reacherId, data) => {
+//     return getDbRef('userProfiles').doc(reacherId).set(data);
+// }
+
+export const saveLike = (commentId, data) => {
+    return getDbRef('feedback').doc(commentId).set(data);
+}

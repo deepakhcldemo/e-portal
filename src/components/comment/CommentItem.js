@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from "moment";
 import './CommentItem.css';
+import CommentLikeUnlike from './CommentLikeUnlike';
 
 class CommentItem extends Component {
   render() {
@@ -53,6 +54,7 @@ class CommentItem extends Component {
                         </button>
                     </div>
                     </div>
+                    {/* <CommentLikeUnlike feedbackId={commentDetails.feedbackId}/> */}
                 </div>
 
                 <p>{commentDetail.feedback.comment}</p>

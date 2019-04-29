@@ -107,6 +107,7 @@ class TeacherDetails extends Component {
             querySnapshot.forEach(profileData => {
               tempArr["profileData"] = profileData.data();
               tempArr["feedback"] = doc.data();
+              tempArr["feedbackId"] = doc.id;
 
               feedbackData.push(tempArr);
               this.setState({

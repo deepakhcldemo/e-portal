@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { toastr } from "react-redux-toastr";
 import CommentItem from "./CommentItem";
-import TextArea from "../../shared/components/calendar-modal/helper/textArea";
-import { saveCommentDetails } from "../../database/dal/firebase/commentDal";
-import "./CommentItem.css";
+import TextArea from '../../shared/components/calendar-modal/helper/textArea';
+import { saveCommentDetails, saveLike } from '../../database/dal/firebase/commentDal';
+import './CommentItem.css'
 
 class Comment extends Component {
   state = {
@@ -110,15 +110,15 @@ class Comment extends Component {
                 </div>
               </div>
             </div>
-          </div>
-          {noOfComment > 0 && (
-            <div className="container">
-              <div className="row">
-                <div className="col-12">
-                  <CommentItem commentDetails={commentRows} />
-                </div>
+          </div>          
+        {noOfComment > 0 && (          
+          <div className="container">
+            <div className="row">
+              <div className="col-12 col-without--padding">
+                <CommentItem commentDetails={commentRows} />
               </div>
             </div>
+          </div>
           )}
         </div>
       </React.Fragment>
