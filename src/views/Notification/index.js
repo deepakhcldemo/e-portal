@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { toastr } from 'react-redux-toastr';
-// import { connect } from "react-redux";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import { connect } from "react-redux";
-import Notifications, {notify} from 'react-notify-toast';
+
 import { withRouter } from "react-router";
 import Navbar from "./../../shared/components/Navbar";
 
@@ -144,7 +143,6 @@ class Notification extends Component {
         />
 
         <div className="content-container">
-        <Notifications className ='custom-notification' />
           <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
             <Tabs
               id="tabs"
