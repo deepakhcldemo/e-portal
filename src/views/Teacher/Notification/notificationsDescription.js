@@ -13,6 +13,7 @@ import {
 } from './notificationAction';
 
 import UpdateDataModal from '../../../shared/components/calendar-modal/updateDataModal';
+import StatusCircle from "../../../components/statusCircle/StatusCircle"
 
 class notificationsDescription extends Component {
   state = {
@@ -52,9 +53,6 @@ class notificationsDescription extends Component {
         );
       }
     );
-
-
-
   }
 
   wrapperFunction = data => {
@@ -124,6 +122,34 @@ class notificationsDescription extends Component {
     this.props.history.push('/notification');
   };
 
+  getMessageText(status) {
+    let message;
+    if (status === -1) {
+      message = "Pending";
+    }
+    if (status === 0) {
+      message = "Rejected";
+    }
+    if (status === 1) {
+      message = "Approved";
+    }
+    return message;
+  }
+
+  getColorCode(status) {
+    let color;
+    if (status === -1) {
+      color = "#fff3cd";
+    }
+    if (status === 0) {
+      color = "#f8d7da";
+    }
+    if (status === 1) {
+      color = "#d4edda";
+    }
+    return color;
+  }
+
   render() {
 
     const { notificationData, studentDataFromDB } = this.state;
@@ -166,6 +192,8 @@ class notificationsDescription extends Component {
                           {notificationData.nid}
                         </h3>
                       </center>
+                      <StatusCircle backgroundColor={this.getColorCode(notificationData.status)} foregroundColor="#000" height="80px" width="80px" payload={this.getMessageText(notificationData.status)}
+                      />
                       <span>
                         <strong>Date & Timing: </strong>
                       </span>
