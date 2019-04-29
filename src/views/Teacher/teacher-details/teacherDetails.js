@@ -401,7 +401,7 @@ class TeacherDetails extends Component {
           <div className="profile-section">
             <div className="container">
               <div className="row">
-                <div className="col-sm-3">
+                <div className="col-sm-12 col-md-3">
                   <div className="profile-img-section">
                     <img className="profile-img" src={imgPath} alt="..." />
                   </div>
@@ -440,7 +440,7 @@ class TeacherDetails extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="col-sm-9">
+                <div className="col-sm-12 col-md-9 profile-content">
                   <div>
                     <h3>{title}</h3>
                     <span className="sub-title">Subject: {subject}</span>

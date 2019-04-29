@@ -13,9 +13,12 @@
 }
 .comment-btn{
     padding: 0 0 0 12px;
+    align-items: center;
+    font-weight: 600;
 }
 .comments-input {
-    padding: 0 10px;
+    /* padding: 0 10px; */
+    margin-left: 15px;
 }
 .comments-count {
     padding: 0 10px;

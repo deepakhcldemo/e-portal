@@ -20,9 +20,11 @@ class CommentItem extends Component {
                 }
                 </div>
                 <div className="comment-content">
-                <i className="fas fa-caret-left" />
+                
                 <div className="comment-hdr d-flex align-items-center justify-content-between">
+                    
                     <span className="date">
+                        <strong>John Stever</strong> 
                     {   
                         commentDetail.feedback.created_date &&
                         moment(commentDetail.feedback.created_date.toDate()).format("MM/DD/YYYY") 

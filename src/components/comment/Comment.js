@@ -86,10 +86,14 @@ class Comment extends Component {
                         />
                       </div>
 
-                      <div className="total-comments comment-btn">
+                      <div className="total-comments comment-btn d-flex justify-content-between">
+                        <p className="count">{noOfComment} <span className="count-text">
+                          {noOfComment && "Comments"}
+                        </span></p>
+                        
                         <button
                           type="button"
-                          className="btn btn-success"
+                          className="btn btn-primary"
                           data-dismiss="modal"
                           onClick={this.handleSubmit}
                         >
@@ -114,7 +118,7 @@ class Comment extends Component {
         {noOfComment > 0 && (          
           <div className="container">
             <div className="row">
-              <div className="col-12 col-without--padding">
+              <div className="col-12">
                 <CommentItem commentDetails={commentRows} />
               </div>
             </div>

@@ -3,16 +3,18 @@
     // padding-top: 56px;
     .profile-img-section {
         background: #ffffff;
-        width: 70%;
-        min-width: 200px;
-        min-height: 200px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
         overflow: hidden;
         position: relative;
         margin: -130px auto 10px auto;
         border: 2px solid rgba(3, 97, 121, 1);
     }
-
+    .form-group {
+        margin-bottom: 5px;
+        background-color: #f7f7f7;
+    }
     .btn-outline-primary {
         color: #ffb400;
         border-color: #ffb400;
@@ -144,6 +146,7 @@
     }
 
     .comment-thread-element {
+        margin-bottom: 15px;
         .comment-content {
             .icon-section {
                 margin-bottom: 0;
@@ -175,10 +178,20 @@
             background-color: transparent;
         }
     }
+    .comments-count {
+        color: #000000;
+    }
+    .count {
+        color: #000000;
+    }
 }
 
 .comments-section {
     padding: 30px 0;
+    background-color: #fff;
+    .form-control {
+        padding: 6px 12px;
+    }
 }
 
 .comments-hdr-section {
@@ -199,7 +212,7 @@
     .comments-input {
         flex: 1;
         margin: 0 15px;
-
+        
         .auto-input {
             border: 0;
             padding: 0 15px;
@@ -225,20 +238,22 @@
     }
 
     .comment-content {
-        flex: 1;
+        -webkit-flex: 1 1;
+        flex: 1 1;
         margin: 0 15px;
         font-size: 14px;
-        background-color: #f9f9f9;
         color: #000000;
         padding: 15px;
         position: relative;
-        border-radius: 3px;
+        border-radius: 0;
+        border-bottom: 1px solid #c4c4c4;
+        padding: 0;
 
         .comment-hdr {
-            background: #e5e5e5;
-            margin: -15px -15px 0;
-            border-radius: 3px 3px 0 0;
-            padding: 2px 15px;
+            // border-radius: 3px 3px 0 0;
+            .btn {
+                font-size: 13px;
+            }
         }
 
         .fa-caret-left {
@@ -252,10 +267,46 @@
 
         .date {
             color: gray;
+            strong {
+                margin-right: 5px;
+            }
         }
+        
 
-        p {
+        p + p {
             margin-top: 5px;
+        }
+        
+    }
+}
+
+@media (max-width: 768px) {
+    .details-wrapper{
+        .profile-img-section {
+            // width: 100px;
+            width: 100px;
+            height: 100px;
+            margin-top: -64px;
+        }
+    }
+}
+@media (max-width: 640px) {
+    .details-wrapper{
+        .profile-img-section {
+            margin-top: -125px;
+        }
+        .profile-content {
+            text-align: center;
+        }
+    }
+}
+@media (max-width: 420px) {
+    .details-wrapper{
+        .profile-img-section {
+            margin-top: -92px;
+        }
+        .top-courses-section h4 {
+            font-size: 18px;
         }
     }
 }
