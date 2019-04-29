@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import HeaderHome from '../../components/layout/header/HeaderHome';
-import { connect } from 'react-redux';
-import CategoryItem from '../CategoryItem';
+import React, { Component } from "react";
+import HeaderHome from "../../components/layout/header/HeaderHome";
+import { connect } from "react-redux";
+import CategoryItem from "../CategoryItem";
 import {
   getBannerFromDB,
   getCurriculumFromDB,
   getTeacherFromDB,
   getFeedbackFromDB,
   getUserProfileFromDB
-} from './../../database/dal/firebase/homeDal';
-import TopTutor from '../../components/topTutor/TopTutor';
-import * as actionTypes from '../../spinnerStore/actions';
-import RecentVideo from '../../components/recentVideo/RecentVideo';
-import StudentFeedback from '../../components/studentFeedback/StudentFeedback';
-import Banner from '../../components/banner/Banner';
-import GLOBAL_VARIABLES from '../../config/config';
-import StatusCircle from '../../components/statusCircle/StatusCircle';
+} from "./../../database/dal/firebase/homeDal";
+import TopTutor from "../../components/topTutor/TopTutor";
+import * as actionTypes from "../../spinnerStore/actions";
+import RecentVideo from "../../components/recentVideo/RecentVideo";
+import StudentFeedback from "../../components/studentFeedback/StudentFeedback";
+import Banner from "../../components/banner/Banner";
+import GLOBAL_VARIABLES from "../../config/config";
+import StatusCircle from "../../components/statusCircle/StatusCircle";
 // import { zipRequestDispatch } from '../../shared/library/ZipcodesByRadius';
 
 class Home extends Component {
@@ -80,28 +80,28 @@ class Home extends Component {
       let tempArr = {};
       let feedbackData = [];
       querySnapshot.forEach(doc => {
-        if (doc.exists) {
-          if (doc.data().user_id) {
-            getUserProfileFromDB(doc.data().user_id).onSnapshot(
-              querySnapshot => {
-                querySnapshot.forEach(profileData => {
-                  tempArr['profileData'] = profileData.data();
-                  tempArr['feedback'] = doc.data();
-
-                  feedbackData.push(tempArr);
-                  this.setState({
-                    studentsReview: feedbackData
-                  });
-                  tempArr = {};
+        const user_id = doc.data().user_id;
+        if (user_id) {
+          getUserProfileFromDB(doc.data().user_id).onSnapshot(
+            querySnapshot => {
+              querySnapshot.forEach(profileData => {
+                tempArr['profileData'] = profileData.data();
+                tempArr['feedback'] = doc.data();
+  
+                feedbackData.push(tempArr);
+                this.setState({
+                  studentsReview: feedbackData
                 });
-                this.props.setSpinnerStatus(false);
-              },
-              error => {
-                this.props.setSpinnerStatus(false);
-              }
-            );
-          }
+                tempArr = {};
+              });
+              this.props.setSpinnerStatus(false);
+            },
+            error => {
+              this.props.setSpinnerStatus(false);
+            }
+          );
         }
+        
       });
     });
   };
@@ -117,11 +117,7 @@ class Home extends Component {
     return (
       <React.Fragment>
         <div className="container-fluid">
-          <div className="row">
-            <div className="col-12">
-              <HeaderHome headeTitle="Dashboard" />
-            </div>
-          </div>
+          <HeaderHome headeTitle="Dashboard" />
           <div className="content-container">
             {bannerRows.length > 0 && (
               <Banner bannerRows={bannerRows} pageName="home" />

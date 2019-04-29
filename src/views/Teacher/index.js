@@ -13,6 +13,7 @@ import {
   getCurriculumFromDB,
   getReviewContentFromDB
 } from "./../../database/dal/firebase/curriculumDal";
+import { getNotificationsFromDB } from "../../database/dal/firebase/studentDal";
 
 import "./teacher.scss";
 
@@ -48,28 +49,54 @@ class Teacher extends Component {
         this.setState({ myContent });
       }
     );
-    this.getReviewContent(
+    getNotificationsFromDB(this.state.userDetails.userId, this.state.userDetails.role).onSnapshot(
+      querySnapshot => {
+        let content = [];
+        querySnapshot.forEach(doc => {
+          content.push(Object.assign({ id: doc.id }, doc.data()));
+        });
+        if(content.length >0) {
+          this.setState({
+            pendingContent: content.filter(item => !item.tstatus && item.sstatus),
+            reviewedContent: content.filter(item => item.tstatus)
+          })
+          /* content = content.filter( (list) => {
+            if(tabKey === 'reviewed') {
+              return list.sstatus && list.tstatus
+            } else if(tabKey === 'pendingreview'){
+              return list.sstatus && !list.tstatus
+            } else if(tabKey === 'rejected') {             
+              return list.sstatus === false       
+            }
+          }) */
+        }
+      })
+        // this.setState({ content });
+    
+    /* this.getReviewContent(
       this.state.userDetails.userId,
       true,
       "reviewedContent"
     );
     this.getReviewContent(
       this.state.userDetails.userId,
-      true,
+      false,
       "pendingContent"
-    );
+    ); */
   };
 
-  getReviewContent = (userId, status, state) => {
+  /* getReviewContent = (userId, status, state) => {
+    console.log(userId, status,state)
     getReviewContentFromDB(userId, status).onSnapshot(querySnapshot => {
       let content = [];
       querySnapshot.forEach(doc => {
         content.push(doc.data());
       });
+      console.log(content)
       this.setState({ [state]: content });
     });
   };
-
+ */
   render = () => {
     const {
       bannerData,

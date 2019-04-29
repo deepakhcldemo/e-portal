@@ -1,57 +1,110 @@
 import React, { Component } from 'react';
-import GLOBAL_VARIABLES from '../../config/config';
-import Slider from 'react-slick';
+import { toastr } from 'react-redux-toastr';
+import CommentItem from "./CommentItem";
+import TextArea from '../../shared/components/calendar-modal/helper/textArea';
+import { saveCommentDetails } from '../../database/dal/firebase/commentDal';
+import './CommentItem.css'
 
 class Comment extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    message: '',
+    errors: {}
+  };
 
-    this.state = {
-      noOfCarouselImage: ''
-    };
-  }
+  handleChange = ({ currentTarget: input }) => {
+      
+    this.setState({ [input.name]: input.value });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();  
+    
+    if(this.state.message){    
+      const loggedInUSer = JSON.parse(localStorage.getItem('user'));
+      if (loggedInUSer) {
+        const commentDetails = {
+          created_date: new Date(),
+          comment: this.state.message,
+          user_id: loggedInUSer.user.uid,
+          feedback_to: this.props.teacherId,
+          like: 0,
+          unlike: 0
+        };
+        saveCommentDetails({
+          ...commentDetails
+        }).then(() => {
+          this.setState({ message:'' });
+          toastr.success('Comment saved successfully.');
+      },error=>{
+        toastr.error(error.message);
+      });
+      }
+    }
+  };
 
   render() {
-    const { commentRows, pageName } = this.props;
-    const settingsComment = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true
-    };
-
-    let listAwaitingItems = '';
-    if (commentRows && commentRows.length > 0) {
-      listAwaitingItems = commentRows.map((commentRow, index) => (
-        <div key={index}>
-          {commentRow.comment_image && (
-            <React.Fragment>
-              <img
-                alt=""
-                src={
-                  GLOBAL_VARIABLES.BANNER_PATH +
-                  pageName +
-                  '/' +
-                  commentRow.comment_image
-                }
-                className="d-block comment"
-              />
-            </React.Fragment>
-          )}
-        </div>
-      ));
-    }
+    const { commentRows, loggedInUser } = this.props;
+    const noOfComment = commentRows.length;
     return (
       <React.Fragment>
-        {listAwaitingItems.length > 0 && (
-          <div className="col-12 content-container--background col-without--padding">
-            <div className="comment-container" style={{ textAlign: 'center' }}>
-              <Slider {...settingsComment}>{listAwaitingItems}</Slider>
+        <div className="comments-section">
+          <div className="text-field-section">
+            <div className="container">
+              <div className="row">
+                <div className="col-12">
+                  <div className="comment-thread-element">
+                    <div className="author-thumbnail">
+                      {loggedInUser && 
+                      <img
+                        src={loggedInUser.profileImage}
+                        alt={loggedInUser.firstName + ' ' + loggedInUser.lastName}
+                      className="profile-img"/>
+                      }                      
+                    </div>
+                    <form style={{width:"100%"}}>
+                      <div className="comments-input">                        
+                        <TextArea
+                          value={this.state.message}
+                          onChangeHandle={this.handleChange}
+                          name="message"
+                          className="auto-input form-control"
+                          errorMessage={this.state.errors.message}
+                          placeholder="Add a comment"
+                          rows="2"                         
+                          style={{margin: 'auto', width:'100%'}}
+                        />
+                      </div>
+                      
+                      <div className="total-comments comment-btn">
+                        <button type="button" className="btn btn-success"
+                          data-dismiss="modal" onClick={this.handleSubmit}>
+                          Submit
+                        </button>                      
+                      </div>                  
+                    </form>                   
+                    
+                  </div>
+                  <div className="comments-hdr-section">
+                    <div className="no-thumb">&nbsp;</div>
+                    <div className="comments-count">
+                    <span className="count">{ noOfComment } </span>
+                    <span className="count-text">{ noOfComment && 'Comments' }</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          </div>          
+        {noOfComment > 0 && (          
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+                <CommentItem commentDetails={commentRows} />
+              </div>
+            </div>
+          </div>          
         )}
+        </div>
       </React.Fragment>
     );
   }
