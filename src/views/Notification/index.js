@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { toastr } from 'react-redux-toastr';
 // import { connect } from "react-redux";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
@@ -95,8 +96,7 @@ class Notification extends Component {
           this.props.deleteNotificationDetails(notification)
       }
       else {
-        let myColor = { background: '#0E1717', text: "#FFFFFF" };
-        notify.show('Notification can not be deleted as status is pending', myColor);
+        toastr.info('Notification can not be deleted as its is in pending state');
       }
     }
 
@@ -178,7 +178,7 @@ class Notification extends Component {
                             >
                               <div className="container">
                                 <div className="delete-notification">
-                                  <i className="fa fa-trash" aria-hidden="true" onClick ={() =>this.deleteNotification(notification, 'deleteNotification')}></i>
+                                  <i className="fa fa-trash" aria-hidden="true"  title ="Delete"onClick ={() =>this.deleteNotification(notification, 'deleteNotification')}></i>
                                 </div>
                                 <div className="delete-notification" onClick={() =>
                                 this.deleteNotification(notification,'navigateNotification')
@@ -194,6 +194,8 @@ class Notification extends Component {
                           </div>
                         );
                       })}
+
+                  {notificationsList.length == 0 ? (<p>No Record</p>) : ''}
                   </div>
                 </div>
               </Tab>
