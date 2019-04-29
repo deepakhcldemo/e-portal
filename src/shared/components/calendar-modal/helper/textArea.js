@@ -21,7 +21,8 @@ const TextArea = props => {
         placeholder={placeHolder}
         rows={rows ? rows : "3"} 
         style={style? style : ''}
-        >{value? value: ''}</textarea>
+        value={value? value: ''}
+        ></textarea>
 
       <div className="c-error">{errorMessage}</div>
     </div>

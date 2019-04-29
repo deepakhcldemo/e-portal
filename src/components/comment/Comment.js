@@ -19,7 +19,7 @@ class Comment extends Component {
   handleSubmit = e => {
     e.preventDefault();  
     
-    if(this.state.message){    
+    if(this.state.message.trim()){    
       const loggedInUSer = JSON.parse(localStorage.getItem('user'));
       if (loggedInUSer) {
         const commentDetails = {
