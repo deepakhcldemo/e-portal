@@ -58,7 +58,7 @@ class VideoList extends Component {
                         className="img-responsive"
                         height="130px"
                       />
-                      <h2>{videoDetail.title}</h2>
+                      <h2>{videoDetail.title ? videoDetail.title : videoDetail.notificationDesc}</h2>
                       <i className="fas fa-play-circle" />
                       <h6>{videoDetail.date}</h6>
                     </a>

@@ -22,17 +22,17 @@ class VideoPopup extends Component {
 
   render() {
     const { videoDetails, userDetails } = this.props;  
-    const styles = {
+    const modal = {
       closeIcon:{
-        top: '0',
-        right: '0'
+        top: '0px!important',
+        right: '0px!important'
       } 
     } 
 
     return (
       <>
       {videoDetails && (
-          <Modal styles={styles} open={this.state.open} onClose={this.handleClick} center 
+          <Modal styles={modal} open={this.state.open} onClose={this.handleClick} center 
           closeOnEsc={false} 
           closeOnOverlayClick={false}>
           <div className="row">
