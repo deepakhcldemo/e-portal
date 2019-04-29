@@ -1,73 +1,75 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import {
   ButtonToolbar,
   OverlayTrigger,
   Popover,
   Button
-} from 'react-bootstrap';
-import './index.css';
-import AuthGuard from '../../../authguard/AuthGuard';
+} from "react-bootstrap";
+import "./index.css";
+import AuthGuard from "../../../authguard/AuthGuard";
 class Avatar extends Component {
   navigateTo = linkName => {
     this.props.history.push(linkName);
   };
 
   render() {
-    const {dashboardLinks } = this.props
+    const { dashboardLinks } = this.props;
     return (
       <ButtonToolbar>
         <OverlayTrigger
           trigger="click"
           key="bottom"
           placement="bottom"
+          rootClose
           overlay={
             <Popover
               id="popover-positioned-bottom"
               title={
                 this.props.userProfile.firstName +
-                ' ' +
+                " " +
                 this.props.userProfile.lastName
               }
             >
-            {dashboardLinks &&
-            dashboardLinks.map((link, index) => {
-              const href = link.link
-              return (
-                <div key={index}
-                className="avatar-item"
-                onClick={() => this.navigateTo(href)}
-                >
-                  <i className={link.icon}> {link.name}</i>{' '}
-                </div>                  
-              );
-            })}
-              
+              {dashboardLinks &&
+                dashboardLinks.map((link, index) => {
+                  const href = link.link;
+                  return (
+                    <div
+                      key={index}
+                      className="avatar-item"
+                      onClick={() => this.navigateTo(href)}
+                    >
+                      <i className={link.icon}> {link.name}</i>{" "}
+                    </div>
+                  );
+                })}
+
               <div
                 className="avatar-item"
-                onClick={() => this.navigateTo('/profile')}
+                onClick={() => this.navigateTo("/profile")}
               >
-                <i className="fa fa-user"> Profile</i>{' '}
+                <i className="fa fa-user"> Profile</i>{" "}
               </div>
               {this.props.currentUser.additionalUserInfo.providerId ===
-                'password' && (
+                "password" && (
                 <div
                   className="avatar-item"
-                  onClick={() => this.navigateTo('/changePassword')}
+                  onClick={() => this.navigateTo("/changePassword")}
                 >
-                  <i className="fa fa-refresh"> Change Password</i>{' '}
+                  <i className="fa fa-refresh"> Change Password</i>{" "}
                 </div>
               )}
               <div
                 className="avatar-item"
                 onClick={() =>
                   AuthGuard.signout(() => {
-                    this.navigateTo('/home');
+                    this.navigateTo("/home");
                   })
                 }
               >
-                <i className="fa fa-sign-out"> Sign Out</i>{' '}
+                <i className="fa fa-sign-out"> Sign Out</i>{" "}
               </div>
             </Popover>
           }
