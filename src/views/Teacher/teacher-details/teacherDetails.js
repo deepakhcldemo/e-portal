@@ -57,9 +57,11 @@ class TeacherDetails extends Component {
       userDislike: 0,
       carousellistNewlyItems: [],
       loggedInUser: {},
-      studentsReview: []
+      studentsReview: [],
+      isFocus: false
     };
     this.openModalForRequest = this.openModalForRequest.bind(this);
+    
   }
 
   componentDidMount() {
@@ -122,6 +124,7 @@ class TeacherDetails extends Component {
         );
       });
     });
+    console.log('this.state.studentsReview', this.state.studentsReview)
   }
   setTeacherData = data => {
     this.setState({ teacherData: data });
@@ -359,6 +362,14 @@ class TeacherDetails extends Component {
     return totalDislikeObj.length;
   }
 
+  setFocusOnArea() {
+    this.setState({isFocus: true})
+  }
+  updateTotalComments(noOfComment) {
+    console.log('noOfComment', noOfComment)
+    // this.setState({noOfComment: noOfComment});
+  }
+
   render() {
     const {
       title,
@@ -372,7 +383,9 @@ class TeacherDetails extends Component {
       like,
       userLike,
       userDislike,
-      dislike
+      dislike,
+      isFocus,
+      noOfComment
     } = this.state;
     const isLogedIn = localStorage.getItem("user");
     const loggedInUser = JSON.parse(localStorage.getItem("userProfile"));
@@ -395,13 +408,7 @@ class TeacherDetails extends Component {
                     <img className="profile-img" src={imgPath} alt="..." />
                   </div>
                   <div className="icon-section d-flex">
-                    <div className="icon">
-                      {/* <button
-                        className="btn btn-transparent"
-                        disabled={!isLogedIn}
-                      >
-                        <i className="fas fa-thumbs-up" /> <span>1000</span>
-                      </button> */}
+                    <div className="icon">                      
                       <Like
                         isDisabled={!isLogedIn}
                         userLike={userLike}
@@ -410,12 +417,6 @@ class TeacherDetails extends Component {
                       />
                     </div>
                     <div className="icon">
-                      {/* <button
-                        className="btn btn-transparent"
-                        disabled={!isLogedIn}
-                      >
-                        <i className="fas fa-thumbs-down" /> <span>1000</span>
-                      </button> */}
                       <Dislike
                         isDisabled={!isLogedIn}
                         userDislike={userDislike}
@@ -427,8 +428,11 @@ class TeacherDetails extends Component {
                       <button
                         className="btn btn-transparent"
                         disabled={!isLogedIn}
+                        onClick={() => this.setFocusOnArea()}
                       >
-                        <i className="fas fa-comment-alt" /> <span>1000</span>
+                        <i className="fas fa-comment-alt" /> {this.state.studentsReview.length && (
+                          <span> {this.state.studentsReview.length} </span>
+                        )}
                       </button>
                     </div>
                   </div>
@@ -518,8 +522,11 @@ class TeacherDetails extends Component {
             teacherId={this.state.detailModel.teacherId}
             loggedInUser={loggedInUser}
             commentRows={this.state.studentsReview}
+            isFocus={isFocus}
+            updateTotalComments={this.updateTotalComments}
           />
-
+          {/* <input type="text" ref={this.exampleRef}/> */}
+         
           <CalendarModal
             teacherData={this.state.teacherData}
             modalState={this.state.calendarModal}

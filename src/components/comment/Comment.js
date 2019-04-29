@@ -8,11 +8,12 @@ import './CommentItem.css'
 class Comment extends Component {
   state = {
     message: '',
-    errors: {}
+    errors: {},
+    isFocus: false
   };
+ 
 
   handleChange = ({ currentTarget: input }) => {
-      
     this.setState({ [input.name]: input.value });
   };
 
@@ -43,7 +44,7 @@ class Comment extends Component {
   };
 
   render() {
-    const { commentRows, loggedInUser } = this.props;
+    const { commentRows, loggedInUser, isFocus } = this.props;
     const noOfComment = commentRows.length;
     return (
       <React.Fragment>
@@ -71,9 +72,10 @@ class Comment extends Component {
                           className="auto-input form-control"
                           errorMessage={this.state.errors.message}
                           placeholder="Add a comment"
-                          rows="2"                         
+                          rows="2"
                           style={{margin: 'auto', width:'100%'}}
-                        />
+                          isFocus={isFocus}
+                          ref={this.textInput}/>
                       </div>
                       
                       <div className="total-comments comment-btn">
