@@ -24,6 +24,7 @@
     "popmotion": "^8.6.8",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-app-polyfill": "^1.0.0",
     "react-bootstrap": "^1.0.0-beta.6",
     "react-bootstrap-time-picker": "^1.0.3",
     "react-calendar": "^2.18.1",
