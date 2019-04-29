@@ -23,16 +23,16 @@
 .right {
   float: right;
 }
-
+/* 
 .video-margin {
   margin-top: 25px;
 }
-
-.views {
+ */
+/* .views {
   color: #868383;
-}
+} */
 
-.video-meta-data {
+/* video-meta-data {
   display: flex;
   flex-direction: row;
   flex-flow: row;
@@ -41,7 +41,7 @@
 
 .video-meta-data span small {
   display: block;
-}
+} */
 
 .video-title {
   width: 160px;
@@ -50,7 +50,9 @@
   white-space: nowrap;
   overflow: hidden;
 }
-
+.thumb-wrapper {
+  cursor: pointer;
+}
 .detail--text {
   color: #000 !important;
 }

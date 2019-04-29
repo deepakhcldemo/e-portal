@@ -37,7 +37,7 @@
 /*For the Whole Body of Modal*/
 .styles_modal__gNwvD {
   min-width: 50%;
-  height: 75% !important;
+  /* height: 75% !important; */
   position: relative;
   padding: 1.2rem;
   background: #ffffff;
