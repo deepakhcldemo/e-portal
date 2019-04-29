@@ -4,16 +4,22 @@
 .video-margin {
   margin-top: 25px
 }
-.views {
+/* .views {
   color: #868383;  
-}
+} */
 .video-meta-data {
   display: flex;
   flex-direction: row;
   flex-flow: row;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 .video-meta-data span small {
   display: block;
-  color: #141414
+  /* color: #141414 */
+}
+.video-meta-data span {
+  margin-right: 10px;
+}
+.video-title{
+  width:100%!important
 }

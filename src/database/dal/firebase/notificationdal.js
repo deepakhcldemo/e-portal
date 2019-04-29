@@ -34,7 +34,7 @@ export const rejectNotificationFromDB = (
   dispatch,
   rejectedNotificationsDetails
 ) => {
-  let query = getDbRef("notifications")
+  getDbRef("notifications")
     .doc(rejectedNotificationsDetails.id)
     .set(rejectedNotificationsDetails)
     .then(() => {
@@ -47,7 +47,7 @@ export const deleteNotificationFromDB = (
   dispatch,
   deleteNotificationsDetails
 ) => {
-  let query = getDbRef("notifications")
+getDbRef("notifications")
     .doc(deleteNotificationsDetails.id)
     .delete()
     .then(() => {
@@ -59,7 +59,7 @@ export const saveNotificationAcceptedFromDB = (
   dispatch,
   acceptedNotificationsDetails
 ) => {
-  let query = getDbRef("notifications")
+ getDbRef("notifications")
     .doc(acceptedNotificationsDetails.id)
     .set(acceptedNotificationsDetails)
     .then(() => {

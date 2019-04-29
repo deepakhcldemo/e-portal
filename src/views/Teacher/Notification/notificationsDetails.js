@@ -1,20 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import NavBar from "../../../shared/components/Navbar";
 import { connect } from "react-redux";
 import {
-  getNotification,
   getTeachers,
   getStudents,
   getTeacherNotification
 } from "./notificationAction";
-
-import Modal from "react-responsive-modal";
 import HeaderHome from "../../../components/layout/header/HeaderHome";
 
 class NotificationsDetails extends Component {
   state = {
-    open: false
+   // open: false
   };
 
   componentDidMount() {
@@ -74,6 +70,7 @@ class NotificationsDetails extends Component {
                     >
                       <div style={{ float: "left" }}>
                         <img
+                        alt ="image"
                           src="../Assets/hdpi/avatar.png"
                           name="aboutme"
                           width="70"
