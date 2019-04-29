@@ -42,6 +42,19 @@ export const rejectNotificationFromDB = (
     });
 };
 
+
+export const deleteNotificationFromDB = (
+  dispatch,
+  deleteNotificationsDetails
+) => {
+  let query = getDbRef("notifications")
+    .doc(deleteNotificationsDetails.id)
+    .delete()
+    .then(() => {
+      dispatch({ type: "DELETE_NOTIFICATION" });
+    });
+};
+
 export const saveNotificationAcceptedFromDB = (
   dispatch,
   acceptedNotificationsDetails
