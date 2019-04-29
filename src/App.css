@@ -452,18 +452,12 @@
   background-color: #f5f5f5;
 }
 
-.rrt-confirm-holder
-  .rrt-confirm
-  .rrt-buttons-holder
-  .rrt-button.rrt-ok-btn:active {
+.rrt-confirm-holder .rrt-confirm .rrt-buttons-holder .rrt-button.rrt-ok-btn:active {
   background-color: #60bb71;
   color: white;
 }
 
-.rrt-confirm-holder
-  .rrt-confirm
-  .rrt-buttons-holder
-  .rrt-button.rrt-cancel-btn:active {
+.rrt-confirm-holder .rrt-confirm .rrt-buttons-holder .rrt-button.rrt-cancel-btn:active {
   background-color: #db6a64;
   color: white;
 }
@@ -1233,6 +1227,11 @@ li .fa {
   color: white;
   background-color: #4b4e68;
 }
+
+.slick-slide {
+  max-width: 200px;
+}
+
 @media screen and (min-width: 768px) {
   .home-header-icon--size {
     font-size: inherit !important;

@@ -3,33 +3,34 @@ import React, { Component } from 'react';
 import Modal from 'react-responsive-modal';
 import Datetime from 'react-datetime';
 import Select from 'react-select';
-import Joi from "joi-browser"
-import Input from "./helper/input";
-import TextArea from "./helper/textArea";
-import SelectCustom from "./helper/select";
+import Joi from 'joi-browser';
+import Input from './helper/input';
+import TextArea from './helper/textArea';
+import SelectCustom from './helper/select';
 //import { getNotification } from './calendarAction';
 
-import { saveChatNotificationDetails, udpateChatNotificationDetails } from '../../../database/dal/firebase/chatNotificationDal';
+import {
+  saveChatNotificationDetails,
+  udpateChatNotificationDetails
+} from '../../../database/dal/firebase/chatNotificationDal';
 import './calendar.css';
 
-
 class CalendarModal extends Component {
-
   state = {
-    data: { datetime: "", duration: "", message: "" },
+    data: { datetime: '', duration: '', message: '' },
     errors: {}
   };
 
   schema = {
     datetime: Joi.string()
       .required()
-      .label("Date Time"),
+      .label('Date Time'),
     duration: Joi.string()
       .required()
-      .label("Duration"),
+      .label('Duration'),
     message: Joi.string()
       .required()
-      .label("Message")
+      .label('Message')
   };
   validate = () => {
     const options = { abortEarly: false };
@@ -42,8 +43,8 @@ class CalendarModal extends Component {
   };
 
   validateProperty = ({ name, value }) => {
-    console.log("Name: ", name)
-    console.log("Value: ", value)
+    console.log('Name: ', name);
+    console.log('Value: ', value);
     // const obj = { [name]: value };
     // const schema = { [name]: this.schema[name] };
     // const { error } = Joi.validate(obj, schema);
@@ -69,18 +70,17 @@ class CalendarModal extends Component {
         status: -1,
         reqForReSchedule: true,
         reschedule: false,
-        comment: [{
-          "by": loggedInUSer.user.uid,
-          "date": createdAt,
-          "details": data.message
-        }
-
+        comment: [
+          {
+            by: loggedInUSer.user.uid,
+            date: createdAt,
+            details: data.message
+          }
         ]
-      }
+      };
       udpateChatNotificationDetails({
         ...chatNotificationDetails
-      })
-
+      });
     }
 
     //console.log(data)
@@ -90,7 +90,7 @@ class CalendarModal extends Component {
     const errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(input);
 
-    console.log("Handle Change")
+    console.log('Handle Change');
 
     if (errorMessage) errors[input.name] = errorMessage;
     else delete errors[input.name];
@@ -98,7 +98,7 @@ class CalendarModal extends Component {
     const data = { ...this.state.data };
     data[input.name] = input.value;
 
-    this.setState({ data, errors });
+    this.setState({ [input.name]: input.value, errors });
   };
 
   constructor(props) {
@@ -110,8 +110,6 @@ class CalendarModal extends Component {
   };
 
   render() {
-
-
     const options = [
       { value: '-1', label: 'Select' },
       { value: '15m', label: '15 Minuts' },
@@ -125,36 +123,41 @@ class CalendarModal extends Component {
       { value: '0', label: 'Rejected' }
     ];
 
-
     const openModal = this.props.modalState;
     return (
       <div>
-        <Modal open={openModal} onClose={this.onCloseModal} classNames={{ modal: this.props.classes }}>
-
+        <Modal
+          open={openModal}
+          onClose={this.onCloseModal}
+          classNames={{ modal: this.props.classes }}
+        >
           <form onSubmit={this.handleSubmit}>
             <div className="modal-content">
               <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal" aria-hidden="true"></button>
-                <h4 className="modal-title" id="myModalLabel">Discuss on Time with NotifyId:{this.props.notificationId}</h4>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-hidden="true"
+                />
+                <h4 className="modal-title" id="myModalLabel">
+                  Discuss on Time with NotifyId:{this.props.notificationId}
+                </h4>
               </div>
               <div className="modal-body">
-
                 <div className="row">
-                  <div className="col-md-6 ">
-                    Pick Date and Time
-</div>
-                  <div className="col-md-6">
-                    Select a duration2
-</div>
-
+                  <div className="col-md-6 ">Pick Date and Time</div>
+                  <div className="col-md-6">Select a duration2</div>
                 </div>
                 <div className="row">
                   <div className="col-md-6">
                     <Datetime
-
                       value={this.state.datetime}
                       onChange={this.handleChange}
-                      inputProps={{ placeholder: 'Please choose date and time', name: "datetime" }}
+                      inputProps={{
+                        placeholder: 'Please choose date and time',
+                        name: 'datetime'
+                      }}
                     />
                     <div className="c-error">{this.state.errors.datetime}</div>
                     {/* <Input
@@ -174,7 +177,8 @@ class CalendarModal extends Component {
                       name="duration"
                       className="form-control"
                       errorMessage={this.state.errors.duration}
-                      placeHolder="Duration"></SelectCustom>
+                      placeHolder="Duration"
+                    />
                     {/* <Input
                       value={this.state.duration}
                       onChangeHandle={this.handleChange}
@@ -184,14 +188,9 @@ class CalendarModal extends Component {
                       placeHolder="Duration"
                     /> */}
                   </div>
-
                 </div>
                 <div className="row">
-
-
-                  <div className="col-md-12">
-                    Message
-</div>
+                  <div className="col-md-12">Message</div>
                   <div className="col-md-12">
                     <TextArea
                       value={this.state.message}
@@ -199,41 +198,33 @@ class CalendarModal extends Component {
                       name="message"
                       className="form-control"
                       errorMessage={this.state.errors.message}
-                      placeHolder="Message" />
-
+                      placeHolder="Message"
+                    />
                   </div>
-
-
-
                 </div>
-
-
-
-
               </div>
               <div className="modal-footer">
+                <button
+                  type="submit"
+                  className="btn btn-success"
+                  data-dismiss="modal"
+                >
+                  Request
+                </button>
 
-                <button type="submit" className="btn btn-success" data-dismiss="modal">Request</button>
-
-                <input onClick={this.onCloseModal} type="button" className="btn btn-success" value="Cancel" />
-
+                <input
+                  onClick={this.onCloseModal}
+                  type="button"
+                  className="btn btn-success"
+                  value="Cancel"
+                />
               </div>
             </div>
-
-
-
-
-
-
-
           </form>
-
-
         </Modal>
-      </div >
+      </div>
     );
   }
 }
-
 
 export default CalendarModal;
