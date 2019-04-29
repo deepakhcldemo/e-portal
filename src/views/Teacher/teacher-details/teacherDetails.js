@@ -80,9 +80,10 @@ class TeacherDetails extends Component {
         this.setState({ teacherDetails: data });
         this.getDetails(data);
       });
+      this.handleRating(teacherId, user, 0, "loadComponent");
     });
 
-    this.handleRating(teacherId, user, 0, "loadComponent");
+    
     /* Get curriculum videos */
     const userId = user ? user.user.uid : "";
     getCurriculumFromDB(userId).onSnapshot(querySnapshot => {
@@ -203,9 +204,13 @@ class TeacherDetails extends Component {
         const ratings = data.ratings;
         const nOfUser = ratings.length;
         this.setState({ userRating: data });
+        const nOfUserRated = _.filter(
+          ratings,
+          user => user.rating > 0
+        ).length;
 
         if (nOfUser > 0) {
-          let totalRating = this.getTotalRating(ratings, nOfUser);
+          let totalRating = this.getTotalRating(ratings, nOfUserRated);
           if (user) {
             const userId = user.user.uid;
             let currentUser = _.filter(
@@ -233,14 +238,10 @@ class TeacherDetails extends Component {
                   ratings
                 );
               }
-
               saveTeacherRating(teacherId, data);
               saveTeacherRatingOnProfile(teacherId, this.state.teacherDetails);
 
-              console.log(
-                "this.state.userRating.ratings",
-                this.state.userRating.ratings
-              );
+              
               this.setState({
                 starRating: Math.round(currentUser.rating),
                 like: this.getTotalLike(this.state.userRating.ratings),
@@ -266,6 +267,7 @@ class TeacherDetails extends Component {
                   ratings
                 );
               }
+              
               saveTeacherRating(teacherId, data);
               saveTeacherRatingOnProfile(teacherId, this.state.teacherDetails);
 
@@ -292,7 +294,7 @@ class TeacherDetails extends Component {
               currentUser = newUser;
               ratings.push(currentUser);
             }
-            let totalRating = this.getTotalRating(ratings, nOfUser);
+            let totalRating = this.getTotalRating(ratings, nOfUserRated);
             data.rating = totalRating;
 
             saveTeacherRating(teacherId, data);
