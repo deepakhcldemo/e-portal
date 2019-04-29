@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { toastr } from 'react-redux-toastr';
+import { toastr } from "react-redux-toastr";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import { connect } from "react-redux";
@@ -16,7 +16,7 @@ import TeacherNotificationDetails from "./../Teacher/Notification/notificationsD
 
 import NotificationsDetails from "./../Student/Notification/notificationsDetails";
 
-import { setNotificationDetails, deleteNotificationDetails} from "./action";
+import { setNotificationDetails, deleteNotificationDetails } from "./action";
 import { TEACHER_DASHBOARD_LINKS } from "../../constant/Constant";
 import "./style.css";
 
@@ -72,8 +72,8 @@ class Notification extends Component {
       notificationDetails.sstatus && notificationDetails.tstatus
         ? "alert alert-success"
         : notificationDetails.status && !notificationDetails.tstatus
-          ? "alert alert-warning"
-          : "alert alert-danger";
+        ? "alert alert-warning"
+        : "alert alert-danger";
     const userWiseStatus =
       userDetails.role === "Teacher"
         ? `Notification from  ${notificationDetails.sname}`
@@ -87,22 +87,18 @@ class Notification extends Component {
     this.props.history.push("/notificationDetails");
   };
 
-
-
   deleteNotification = (notification, parameter) => {
-    if(parameter === 'deleteNotification'){
-      if( notification.tRejected || notification.tAccepted ){
-          this.props.deleteNotificationDetails(notification)
+    if (parameter === "deleteNotification") {
+      if (notification.tRejected || notification.tAccepted) {
+        this.props.deleteNotificationDetails(notification);
+      } else {
+        toastr.info(
+          "Notification can not be deleted as its is in pending state"
+        );
       }
-      else {
-        toastr.info('Notification can not be deleted as its is in pending state');
-      }
+    } else {
+      this.goToNotificationDetails(notification);
     }
-
-    else{
-      this.goToNotificationDetails(notification)
-    }
-   
   };
 
   notificationStatus = (notificationDetails, type) => {
@@ -165,27 +161,44 @@ class Notification extends Component {
                     {notificationsList &&
                       notificationsList.map((notification, ind) => {
                         return (
-                          <div className="col-12" key={ind}>
-
+                          <div
+                            className="col-12 col-without--padding"
+                            key={ind}
+                          >
                             <div
                               className={this.notificationStatus(
                                 notification,
                                 "classes"
                               )}
-                              
                             >
                               <div className="container">
                                 <div className="delete-notification">
-                                  <i className="fa fa-trash delete-icon" aria-hidden="true"  title ="Delete"onClick ={() =>this.deleteNotification(notification, 'deleteNotification')}></i>
+                                  <i
+                                    className="fa fa-trash delete-icon"
+                                    aria-hidden="true"
+                                    title="Delete"
+                                    onClick={() =>
+                                      this.deleteNotification(
+                                        notification,
+                                        "deleteNotification"
+                                      )
+                                    }
+                                  />
                                 </div>
-                                <div className="delete-notification" onClick={() =>
-                                this.deleteNotification(notification,'navigateNotification')
-                              }>
-                                <b>Message: </b>{" "}
-                                {this.notificationStatus(
-                                  notification,
-                                  "message"
-                                )}
+                                <div
+                                  className="delete-notification"
+                                  onClick={() =>
+                                    this.deleteNotification(
+                                      notification,
+                                      "navigateNotification"
+                                    )
+                                  }
+                                >
+                                  <b>Message: </b>{" "}
+                                  {this.notificationStatus(
+                                    notification,
+                                    "message"
+                                  )}
                                 </div>
                               </div>
                             </div>
@@ -193,7 +206,7 @@ class Notification extends Component {
                         );
                       })}
 
-                  {notificationsList.length == 0 ? (<p>No Record</p>) : ''}
+                    {notificationsList.length == 0 ? <p>No Record</p> : ""}
                   </div>
                 </div>
               </Tab>
@@ -215,8 +228,10 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    setNotificationDetails: details => dispatch(setNotificationDetails(details)),
-    deleteNotificationDetails: details => dispatch(deleteNotificationDetails(details))
+    setNotificationDetails: details =>
+      dispatch(setNotificationDetails(details)),
+    deleteNotificationDetails: details =>
+      dispatch(deleteNotificationDetails(details))
   };
 };
 export default withRouter(

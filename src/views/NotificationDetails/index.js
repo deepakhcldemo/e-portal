@@ -126,21 +126,21 @@ class NotificationDetails extends Component {
           >
             <div className="card-body request-notification-container">
               <div className="row">
-                <div className="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                <div className="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 col-without--padding heading--padding">
                   <span className="bold">Notification Description :</span>
                   {this.state.notificationsDetails.notificationDesc}
                 </div>
-                <div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 badge-container">
+                <div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 col-without--padding badge-container">
                   <div class={"badge" + " " + classNameBadge}>{badgeText}</div>
                 </div>
               </div>
               <div className="row">
-                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding heading--padding">
                   {this.state.userDetails.Svideo !== "" ? (
                     <span className="bold"> Video Uploaded by Student </span>
                   ) : null}
                 </div>
-                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 teacher-video">
+                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding teacher-video">
                   <video
                     controls
                     src={this.state.notificationsDetails.sVideo}
@@ -149,10 +149,10 @@ class NotificationDetails extends Component {
                 </div>
                 {this.props.notificationDetails.tvideo !== "" ? (
                   <>
-                    <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding heading--padding">
                       <span className="bold"> Video Uploaded by Teacher </span>
                     </div>
-                    <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 teacher-video">
+                    <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding teacher-video">
                       <video
                         controls
                         src={this.state.notificationsDetails.tvideo}
@@ -164,7 +164,7 @@ class NotificationDetails extends Component {
               </div>
 
               <div className={"row " + this.state.applyClass}>
-                <div className="col-12">
+                <div className="col-12 heading--padding">
                   <p>Please Upload you video here : </p>
 
                   <FileUploader

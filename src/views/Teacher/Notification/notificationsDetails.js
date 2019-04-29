@@ -10,7 +10,7 @@ import HeaderHome from "../../../components/layout/header/HeaderHome";
 
 class NotificationsDetails extends Component {
   state = {
-   // open: false
+    // open: false
   };
 
   componentDidMount() {
@@ -52,7 +52,7 @@ class NotificationsDetails extends Component {
         <div className="container-fluid">
           <HeaderHome headeTitle="Notification" />
           <div className="content-container">
-            <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12">
+            <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12 col-without--padding">
               <div className=" notification-card">
                 {Object.keys(notificationDetails).map(notificationDetail => (
                   //console.log(notificationDetails[notificationDetail].charge)
@@ -70,7 +70,7 @@ class NotificationsDetails extends Component {
                     >
                       <div style={{ float: "left" }}>
                         <img
-                        alt ="image"
+                          alt="image"
                           src="../Assets/hdpi/avatar.png"
                           name="aboutme"
                           width="70"
