@@ -5,19 +5,19 @@ mandatory props in this component
 userDetails, heading, isUploadThumb,category
 these are callback function to recieve error or success handleError, handleSuccess 
 */
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import firebase from 'firebase';
+import firebase from "firebase";
 
-import FileUploader from 'react-firebase-file-uploader';
-import { toastr } from 'react-redux-toastr';
+import FileUploader from "react-firebase-file-uploader";
+import { toastr } from "react-redux-toastr";
 
-import Progress from './progress';
-import { CurriculumModel } from './model';
-import './styles.scss';
+import Progress from "./progress";
+import { CurriculumModel } from "./model";
+import "./styles.scss";
 
-import { saveFileMetaData } from './actions';
+import { saveFileMetaData } from "./actions";
 
 class Curriculum extends Component {
   state = CurriculumModel;
@@ -44,9 +44,9 @@ class Curriculum extends Component {
     this.props.saveFileMetaData(
       fileName,
       this.props.userDetails,
-      '',
-      '',
-      'video'
+      "",
+      "",
+      "video"
     );
   };
 
@@ -56,8 +56,8 @@ class Curriculum extends Component {
       fileName,
       this.props.userDetails,
       this.props.updateVideo ? this.state.doc : this.props.docRef,
-      '',
-      'thumb'
+      "",
+      "thumb"
     );
   };
 
@@ -65,16 +65,16 @@ class Curriculum extends Component {
     this.setState({
       [e.id]: e.value
     });
-    await this.formValidate(false)
+    await this.formValidate(false);
   };
 
-  formValidate = (showWaring) => {
+  formValidate = showWaring => {
     const fields = {};
     let check = true;
     for (const field of this.state.fields) {
       if (!this.state[field]) {
-        if(showWaring) {
-          toastr.warning(field, 'Please Enter ' + field);
+        if (showWaring) {
+          toastr.warning(field, "Please Enter " + field);
         }
         check = false;
         break;
@@ -83,37 +83,37 @@ class Curriculum extends Component {
     }
     this.setState({
       validate: check
-    })
-    return (!check) ? check : fields
-  }
-  
+    });
+    return !check ? check : fields;
+  };
+
   handleSubmit = async e => {
-    const fields = await this.formValidate(true)
-    
-    if (fields){
+    const fields = await this.formValidate(true);
+
+    if (fields) {
       this.props.saveFileMetaData(
-        '',
+        "",
         this.props.userDetails,
         this.props.updateVideo ? this.state.doc : this.props.docRef,
         fields,
-        'metadata'
+        "metadata"
       );
       this.props.handleSuccess(true);
-    }else{
+    } else {
       this.props.handleSuccess(false);
     }
-    this.setState({validate: false})
+    this.setState({ validate: false });
     e.preventDefault();
   };
 
   render() {
     const style = {
-      backgroundColor: '#232838',
-      color: 'white',
+      backgroundColor: "#232838",
+      color: "white",
       padding: 10,
-      fontSize: '15px',
+      fontSize: "15px",
       borderRadius: 5,
-      pointer: 'cursor'
+      pointer: "cursor"
     };
     const { userDetails, heading, isUploadThumb, category } = this.props;
     return (
@@ -125,16 +125,18 @@ class Curriculum extends Component {
           <div className="card-body">
             {userDetails && (
               <form onSubmit={e => this.handleSubmit(e)}>
-                {this.state.isUploading && (
-                  <>
-                    <br />
-                    <Progress
-                      bgColor="#232838"
-                      progress={this.state.progress}
-                    />
-                    <br />
-                  </>
-                )}
+                <div className="progressbar-spacing">
+                  {this.state.isUploading && (
+                    <>
+                      <br />
+                      <Progress
+                        bgColor="#232838"
+                        progress={this.state.progress}
+                      />
+                      <br />
+                    </>
+                  )}
+                </div>
                 {category && (
                   <div className="form-group row">
                     <label
@@ -257,7 +259,7 @@ class Curriculum extends Component {
                             hidden
                             accept="image/*"
                             filename={file =>
-                              'thumb_' + file.name.split('.')[1]
+                              "thumb_" + file.name.split(".")[1]
                             }
                             storageRef={firebase
                               .storage()
