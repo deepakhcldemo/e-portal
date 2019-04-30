@@ -102,6 +102,7 @@ class CalendarModal extends Component {
       //this.props.history.push('/dashboard');
       //model close display message success or failure
     }
+    this.props.closeCalendarModal();
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -117,6 +118,7 @@ class CalendarModal extends Component {
     data[input.name] = input.value;
 
     this.setState({ data, errors });
+
   };
 
   onCloseModal = () => {
@@ -154,22 +156,21 @@ class CalendarModal extends Component {
                 </div>
                 <div className="row">
                   <div className="col-md-6">
-                    <Datetime
+                    {/* <Datetime
                       value={this.state.datetime}
-                      onChangeHandle={this.handleChange}
-                      name="datetime"
-                      inputProps={{ placeholder: 'Please choose date and time' }}
+                      onChange={this.handleChange}
+                      inputProps={{ placeholder: 'Please choose date and time', name: 'datetime', id: 'datetime' }}
 
                     />
-                    <div className="c-error">{this.state.errors.datetime}</div>
-                    {/* <Input
+                    <div className="c-error">{this.state.errors.datetime}</div> */}
+                    <Input
                       value={this.state.datetime}
                       onChangeHandle={this.handleChange}
                       name="datetime"
                       className="form-control"
                       errorMessage={this.state.errors.datetime}
                       placeHolder="04/20/2019 12:00 AM"
-                    /> */}
+                    />
                   </div>
                   <div className="col-md-6">
                     <SelectCustom

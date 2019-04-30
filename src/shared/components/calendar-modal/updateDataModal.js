@@ -82,7 +82,7 @@ class CalendarModal extends Component {
         ...chatNotificationDetails
       });
     }
-
+    this.props.closeCalendarModal();
     //console.log(data)
   };
 
