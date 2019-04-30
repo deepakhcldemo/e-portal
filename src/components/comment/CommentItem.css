@@ -23,3 +23,6 @@
 .comments-count {
     padding: 0 10px;
 }
+.total-comments {
+    align-items: baseline;
+}
