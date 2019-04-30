@@ -181,13 +181,13 @@ class notificationsDescription extends Component {
                         <button
                           onClick={this.handleBack}
                           type="button"
-                          className="btn btn-dark"
+                          className="btn btn-dark fa fa-arrow-circle-left"
                           data-dismiss="modal"
                         >
-                          Back
+
                         </button>{" "}
                         &nbsp; More About Student {studentDataFromDB.firstName}{" "}
-                        {studentDataFromDB.lastName} Notification
+                        {studentDataFromDB.lastName} Review
                       </h4>
                     </div>
                     <div className="modal-body">
@@ -241,49 +241,49 @@ class notificationsDescription extends Component {
                       </button> */}
 
                       {notificationData.paymentStatus === false &&
-                      notificationData.status === -1 ? (
-                        <button
-                          onClick={() =>
-                            this.handleAccept(notificationData.nId)
-                          }
-                          type="button"
-                          className="btn btn-success"
-                          data-dismiss="modal"
-                        >
-                          Accept
+                        notificationData.status === -1 ? (
+                          <button
+                            onClick={() =>
+                              this.handleAccept(notificationData.nId)
+                            }
+                            type="button"
+                            className="btn btn-success"
+                            data-dismiss="modal"
+                          >
+                            Accept
                         </button>
-                      ) : null}
+                        ) : null}
 
                       {notificationData.paymentStatus === false &&
-                      notificationData.status === -1 ? (
-                        <button
-                          onClick={() =>
-                            this.handleReject(notificationData.nId)
-                          }
-                          type="button"
-                          className="btn btn-danger"
-                          data-dismiss="modal"
-                        >
-                          Reject
+                        notificationData.status === -1 ? (
+                          <button
+                            onClick={() =>
+                              this.handleReject(notificationData.nId)
+                            }
+                            type="button"
+                            className="btn btn-danger"
+                            data-dismiss="modal"
+                          >
+                            Reject
                         </button>
-                      ) : null}
+                        ) : null}
 
                       {notificationData.paymentStatus === false &&
-                      notificationData.status === -1 ? (
-                        <button
-                          onClick={() =>
-                            this.wrapperFunction(
-                              notificationData,
-                              studentDataFromDB
-                            )
-                          }
-                          type="button"
-                          className="btn btn-warning"
-                          data-dismiss="modal"
-                        >
-                          Discuss on Time
+                        notificationData.status === -1 ? (
+                          <button
+                            onClick={() =>
+                              this.wrapperFunction(
+                                notificationData,
+                                studentDataFromDB
+                              )
+                            }
+                            type="button"
+                            className="btn btn-warning"
+                            data-dismiss="modal"
+                          >
+                            Discuss on Time
                         </button>
-                      ) : null}
+                        ) : null}
                     </div>
 
                     <div>
@@ -297,8 +297,8 @@ class notificationsDescription extends Component {
                     </div>
                   </div>
                 ) : (
-                  <div>Loading....</div>
-                )}
+                    <div>Loading....</div>
+                  )}
               </div>
             </div>
           </div>

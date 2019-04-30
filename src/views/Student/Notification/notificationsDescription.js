@@ -157,7 +157,7 @@ class notificationsDescription extends Component {
     const { open } = this.state;
     return (
       <div className="container-fluid">
-        <HeaderHome headeTitle="Chat Notification" />
+        <HeaderHome headeTitle="Chat Request" />
         <div className="content-container  col-12">
           {studentDataFromDB != null && notificationData != null ? (
             <div className="modal-content">
@@ -170,15 +170,16 @@ class notificationsDescription extends Component {
                 />
 
                 <h4 className="modal-title" id="myModalLabel">
+                  <span ></span>
                   <button
                     onClick={this.handleBack}
                     type="button"
-                    className="btn btn-dark"
+                    className="btn btn-dark fa fa-arrow-circle-left"
                     data-dismiss="modal"
                   >
-                    Back
-                </button> &nbsp;
-                  More About Teacher {studentDataFromDB.firstName} {studentDataFromDB.lastName} Notification
+
+                  </button> &nbsp;
+                  More About Teacher {studentDataFromDB.firstName} {studentDataFromDB.lastName} Request
 
                 </h4>
               </div>
@@ -203,7 +204,7 @@ class notificationsDescription extends Component {
                 </span>
                 <span className="label label-warning">
                   {notificationData.scheduleDate}
-                </span>{" "}
+                </span>
                 &nbsp;
                 <p className="text-left">
                   <strong>Message: </strong>
