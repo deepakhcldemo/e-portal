@@ -224,56 +224,60 @@ class Curriculum extends Component {
                     </div>
                   </div>
                 </div>
-                {!this.state.video && !this.state.isUploading && (
-                  <div className="form-group row">
-                    <label className="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2" />
-                    <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                      <label style={style} disabled={!this.state.validate}>
-                        Upload Video
-                        <FileUploader
-                          disabled={!this.state.validate}
-                          hidden
-                          accept="video/*"
-                          storageRef={firebase
-                            .storage()
-                            .ref(`curriculum/${userDetails.userId}`)}
-                          onUploadStart={this.handleUploadStart}
-                          onUploadError={this.handleUploadError}
-                          onUploadSuccess={this.handleVideoUploadSuccess}
-                          onProgress={this.handleProgress}
-                        />
-                      </label>
-                    </div>
-                  </div>
-                )}
-                {isUploadThumb &&
-                  this.state.video &&
-                  this.state.thumbnail &&
-                  !this.state.isUploading && (
+                <div className="progressbar-uploadspacing">
+                  {!this.state.video && !this.state.isUploading && (
                     <div className="form-group row">
                       <label className="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2" />
                       <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
-                        <label style={style}>
-                          Upload Thumbnail
+                        <label style={style} disabled={!this.state.validate}>
+                          Upload Video
                           <FileUploader
+                            disabled={!this.state.validate}
                             hidden
-                            accept="image/*"
-                            filename={file =>
-                              "thumb_" + file.name.split(".")[1]
-                            }
+                            accept="video/*"
                             storageRef={firebase
                               .storage()
                               .ref(`curriculum/${userDetails.userId}`)}
                             onUploadStart={this.handleUploadStart}
                             onUploadError={this.handleUploadError}
-                            onUploadSuccess={this.handleThumbUploadSuccess}
+                            onUploadSuccess={this.handleVideoUploadSuccess}
                             onProgress={this.handleProgress}
                           />
                         </label>
                       </div>
                     </div>
                   )}
-                <div className="form-group row">
+                </div>
+                <div className="progressbar-uploadthumbnail">
+                  {isUploadThumb &&
+                    this.state.video &&
+                    this.state.thumbnail &&
+                    !this.state.isUploading && (
+                      <div className="form-group row">
+                        <label className="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2" />
+                        <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                          <label style={style}>
+                            Upload Thumbnail
+                            <FileUploader
+                              hidden
+                              accept="image/*"
+                              filename={file =>
+                                "thumb_" + file.name.split(".")[1]
+                              }
+                              storageRef={firebase
+                                .storage()
+                                .ref(`curriculum/${userDetails.userId}`)}
+                              onUploadStart={this.handleUploadStart}
+                              onUploadError={this.handleUploadError}
+                              onUploadSuccess={this.handleThumbUploadSuccess}
+                              onProgress={this.handleProgress}
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    )}
+                </div>
+                <div className="form-group row ">
                   <div className="col-5 col-sm-5 col-md-2 col-lg-2 col-xl-2" />
                   <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                     <button
