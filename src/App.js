@@ -1,39 +1,40 @@
-import React, { Component } from 'react';
-import ReduxToastr from 'react-redux-toastr';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import AuthGuard from './authguard/AuthGuard';
+import React, { Component } from "react";
+import ReduxToastr from "react-redux-toastr";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { Route, Switch, Redirect } from "react-router-dom";
+import AuthGuard from "./authguard/AuthGuard";
 // import { withRouter } from 'react-router';
-import { Spinner } from 'react-bootstrap';
+import { Spinner } from "react-bootstrap";
 
-import GLOBAL_VARIABLES from './config/config';
-import './App.css';
-import CreateEvent from './views/Events/events';
-import Home from './views/Home';
-import Login from './views/Login';
-import Dashboard from './views/Dashboard';
-import Curriculum from './views/Curriculum';
-import PasswordReset from './views/PasswordReset';
-import ChangePassword from './views/ChangePassword';
-import Profile from './views/Profile';
-import Carousel from './components/carousel/Carousel';
-import Category from './views/Category';
-import Teacher from './views/Teacher';
-import Video from './views/Video';
-import NotificationsDescription from './views/Teacher/Notification/notificationsDescription';
+import GLOBAL_VARIABLES from "./config/config";
+import "./App.css";
+import CreateEvent from "./views/Events/events";
+import Home from "./views/Home";
+import Login from "./views/Login";
+import Dashboard from "./views/Dashboard";
+import Curriculum from "./views/Curriculum";
+import PasswordReset from "./views/PasswordReset";
+import ChangePassword from "./views/ChangePassword";
+import Profile from "./views/Profile";
+import Carousel from "./components/carousel/Carousel";
+import Category from "./views/Category";
+import Teacher from "./views/Teacher";
+import Video from "./views/Video";
+import NotificationsDescription from "./views/Teacher/Notification/notificationsDescription";
 
-import Student from './views/Student/index';
-import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription';
+import Student from "./views/Student/index";
+import StudentNotificationsDescription from "./views/Student/Notification/notificationsDescription";
 
-import Notification from './views/Notification';
+import Notification from "./views/Notification";
 
-import NotificationDetails from './views/NotificationDetails';
-import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
+import NotificationDetails from "./views/NotificationDetails";
+import SearchTeacher from "./views/Student/SearchTeacher/SearchTeacher";
 
-import ContactUs from './views/ContactUs';
-import AboutUs from './views/AboutUs';
-import TeacherDetails from './views/Teacher/teacher-details/teacherDetails';
+import ContactUs from "./views/ContactUs";
+import AboutUs from "./views/AboutUs";
+import TeacherDetails from "./views/Teacher/teacher-details/teacherDetails";
+import Footer from "./components/layout/footer/Footer";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -53,11 +54,11 @@ class App extends Component {
   };
   componentWillMount() {
     // console.log('-----------------------------------------------------------');
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user && this.props.location) {
       GLOBAL_VARIABLES.BASEROUTE = this.props.location.pathname;
-      this.props.history.push('/home');
+      this.props.history.push("/home");
     }
   }
   render() {
@@ -154,6 +155,7 @@ class App extends Component {
           /> */}
           <Redirect to="/home" />
         </Switch>
+        <Footer />
       </div>
     );
   }
@@ -179,7 +181,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    openModal: () => dispatch({ type: 'open' })
+    openModal: () => dispatch({ type: "open" })
   };
 };
 export default connect(

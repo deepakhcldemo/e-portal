@@ -194,9 +194,6 @@ class Video extends Component {
               </Curriculum>
             )}
           </div>
-          <div className="col-12">
-            <Navbar />
-          </div>
         </div>
       </>
     );

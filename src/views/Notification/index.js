@@ -213,9 +213,6 @@ class Notification extends Component {
             </Tabs>
           </div>
         </div>
-        <div className="col-12 main-wrapper">
-          <Navbar />
-        </div>
       </div>
     );
   };

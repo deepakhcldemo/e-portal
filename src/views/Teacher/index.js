@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import HeaderHome from "../../components/layout/header/HeaderHome";
-import Navbar from "./../../shared/components/Navbar";
 // import NavBar from './../../shared/components/Navbar/index'
 // import UserList from "./UserList/UserList";
 // import TopVideo from "./TopVideo/TopVideo";
@@ -49,18 +48,20 @@ class Teacher extends Component {
         this.setState({ myContent });
       }
     );
-    getNotificationsFromDB(this.state.userDetails.userId, this.state.userDetails.role).onSnapshot(
-      querySnapshot => {
-        let content = [];
-        querySnapshot.forEach(doc => {
-          content.push(Object.assign({ id: doc.id }, doc.data()));
+    getNotificationsFromDB(
+      this.state.userDetails.userId,
+      this.state.userDetails.role
+    ).onSnapshot(querySnapshot => {
+      let content = [];
+      querySnapshot.forEach(doc => {
+        content.push(Object.assign({ id: doc.id }, doc.data()));
+      });
+      if (content.length > 0) {
+        this.setState({
+          pendingContent: content.filter(item => !item.tstatus && item.sstatus),
+          reviewedContent: content.filter(item => item.tstatus)
         });
-        if(content.length >0) {
-          this.setState({
-            pendingContent: content.filter(item => !item.tstatus && item.sstatus),
-            reviewedContent: content.filter(item => item.tstatus)
-          })
-          /* content = content.filter( (list) => {
+        /* content = content.filter( (list) => {
             if(tabKey === 'reviewed') {
               return list.sstatus && list.tstatus
             } else if(tabKey === 'pendingreview'){
@@ -69,10 +70,10 @@ class Teacher extends Component {
               return list.sstatus === false       
             }
           }) */
-        }
-      })
-        // this.setState({ content });
-    
+      }
+    });
+    // this.setState({ content });
+
     /* this.getReviewContent(
       this.state.userDetails.userId,
       true,
@@ -124,9 +125,6 @@ class Teacher extends Component {
             carousellistNewlyItems={myContent}
             headeTitle="My Video"
           />
-        </div>
-        <div className="col-12 main-wrapper">
-          <Navbar />
         </div>
       </div>
     );
