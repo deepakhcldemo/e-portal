@@ -66,6 +66,9 @@ class TeacherItem extends Component {
                     value={userProfile.rating}
                     emptyStarColor={'gray'}
                   />
+                  {/* <span className="rating-position">
+                    ({userProfile.noOfRatings})
+                  </span> */}
                 </div>
               </div>
               {isTrayItem && userProfile.currency && (
