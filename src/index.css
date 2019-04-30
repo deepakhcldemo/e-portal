@@ -76,6 +76,10 @@ code {
 
 }
 
+.back-btn {
+    border-radius: 50%;
+}
+
 @media only screen and (min-width: 768px) {
     /* .container-fluid {
         width: unset !important;
