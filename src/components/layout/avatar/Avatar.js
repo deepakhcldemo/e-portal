@@ -9,6 +9,7 @@ import {
 } from "react-bootstrap";
 import "./index.css";
 import AuthGuard from "../../../authguard/AuthGuard";
+import * as actionTypesAuth from "../../../authguard/actions";
 class Avatar extends Component {
   navigateTo = linkName => {
     this.props.history.push(linkName);
@@ -65,6 +66,7 @@ class Avatar extends Component {
                 className="avatar-item"
                 onClick={() =>
                   AuthGuard.signout(() => {
+                    this.props.setAuthenticationStatus(false);
                     this.navigateTo("/home");
                   })
                 }
@@ -82,10 +84,16 @@ class Avatar extends Component {
     );
   }
 }
-
+const mapDispatchToProps = dispatch => {
+  return {
+    setAuthenticationStatus: value => {
+      dispatch({ type: actionTypesAuth.AUTHENTICATION_STATUS, payload: value });
+    }
+  };
+};
 export default withRouter(
   connect(
     null,
-    null
+    mapDispatchToProps
   )(Avatar)
 );

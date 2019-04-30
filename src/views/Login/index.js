@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 // import * as loginAction from './actions';
-import './styles.css';
-import { toastr } from 'react-redux-toastr';
+import "./styles.css";
+import { toastr } from "react-redux-toastr";
 // import * as actionTypes from '../../spinnerStore/actions';
 import {
   fetchProviders,
@@ -16,79 +16,80 @@ import {
   saveRecord,
   getUserProfile,
   createRatingRecord
-} from '../../database/dal/firebase/registrationDal';
-import GLOBAL_VARIABLES from '../../config/config';
-import * as actionTypes from '../../spinnerStore/actions';
-import AuthGuard from '../../authguard/AuthGuard';
+} from "../../database/dal/firebase/registrationDal";
+import GLOBAL_VARIABLES from "../../config/config";
+import * as actionTypes from "../../spinnerStore/actions";
+import * as actionTypesAuth from "../../authguard/actions";
+import AuthGuard from "../../authguard/AuthGuard";
 
 let userIcon = {
-  width: '20px',
-  height: '20px',
-  position: 'absolute',
-  right: '12px',
-  top: '12px',
-  zIndex: '10',
+  width: "20px",
+  height: "20px",
+  position: "absolute",
+  right: "12px",
+  top: "12px",
+  zIndex: "10",
   backgroundImage: "url('../../Assets/hdpi/login_disable.png')",
-  backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat'
+  backgroundPosition: "center",
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat"
 };
 let passwordIcon = {
-  width: '20px',
-  height: '15px',
-  position: 'absolute',
-  right: '10px',
-  top: '15px',
-  zIndex: '10',
+  width: "20px",
+  height: "15px",
+  position: "absolute",
+  right: "10px",
+  top: "15px",
+  zIndex: "10",
   backgroundImage: "url('../../Assets/hdpi/password_disable.png')",
-  backgroundPosition: 'center',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'no-repeat'
+  backgroundPosition: "center",
+  backgroundSize: "cover",
+  backgroundRepeat: "no-repeat"
 };
 
 class Login extends Component {
   state = {
-    username: '',
-    password: '',
+    username: "",
+    password: "",
     submitted: false,
     loggedInStatus: false,
-    errorMessage: ''
+    errorMessage: ""
   };
 
   componentDidMount = () => {
-    const user = JSON.parse(localStorage.getItem('userProfile'));
+    const user = JSON.parse(localStorage.getItem("userProfile"));
     if (user) {
-      if (user.role === 'Teacher') {
-        this.props.history.push('/teacher');
+      if (user.role === "Teacher") {
+        this.props.history.push("/teacher");
       } else {
-        this.props.history.push('/student');
+        this.props.history.push("/student");
       }
     }
   };
 
   userIconStyle() {
-    document.getElementById('userIcon').style.backgroundImage =
+    document.getElementById("userIcon").style.backgroundImage =
       "url('../../Assets/hdpi/login_oragnge.png')";
   }
   userIconDisableStyle() {
-    document.getElementById('userIcon').style.backgroundImage =
+    document.getElementById("userIcon").style.backgroundImage =
       "url('../../Assets/hdpi/login_disable.png')";
   }
 
   passwordIconStyle() {
-    document.getElementById('passwordIcon').style.backgroundImage =
+    document.getElementById("passwordIcon").style.backgroundImage =
       "url('../../Assets/hdpi/password_orange.png')";
   }
   passwordIconDisableStyle() {
-    document.getElementById('passwordIcon').style.backgroundImage =
+    document.getElementById("passwordIcon").style.backgroundImage =
       "url('../../Assets/hdpi/password_disable.png')";
   }
   togglePassword = () => {
-    var x = document.getElementById('password');
-    if (x.type === 'password') {
-      x.type = 'text';
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+      x.type = "text";
     } else {
-      x.type = 'password';
+      x.type = "password";
     }
     x.focus();
     this.passwordIconStyle();
@@ -107,37 +108,37 @@ class Login extends Component {
             getUserProfile(userDetails.user.uid).then(querySnapshot => {
               querySnapshot.forEach(doc => {
                 const user = doc.data();
-                localStorage.setItem('userProfile', JSON.stringify(user));
+                localStorage.setItem("userProfile", JSON.stringify(user));
                 if (doc.exists) {
-                  if (user.role === 'Teacher') {
+                  if (user.role === "Teacher") {
                     const teacherDetailId = localStorage.getItem(
-                      'teacherDetailId'
+                      "teacherDetailId"
                     );
 
                     if (teacherDetailId) {
-                      console.log('logic');
+                      console.log("logic");
                       this.props.history.push(
                         `/home/teacher/${teacherDetailId}`
                       );
-                      localStorage.removeItem('teacherDetailsId');
+                      localStorage.removeItem("teacherDetailsId");
                     } else {
-                      console.log('else');
-                      this.props.history.push('/teacher');
+                      console.log("else");
+                      this.props.history.push("/teacher");
                     }
                   } else {
-                    this.props.history.push('/student');
+                    this.props.history.push("/student");
                   }
                 }
               });
             });
           } else {
-            this.props.history.push('/profile');
+            this.props.history.push("/profile");
           }
         });
       })
       .catch(error => {
         this.props.setSpinnerStatus(false);
-        console.log('error.message', error.message);
+        console.log("error.message", error.message);
       });
   }
 
@@ -149,11 +150,12 @@ class Login extends Component {
   setLoginStatus(userDetails, isNewUser) {
     this.props.setSpinnerStatus(false);
     AuthGuard.authenticate(() => {
-      if (GLOBAL_VARIABLES.BASEROUTE !== '/home') {
+      this.props.setAuthenticationStatus(true);
+      if (GLOBAL_VARIABLES.BASEROUTE !== "/home") {
         this.props.history.push(GLOBAL_VARIABLES.BASEROUTE);
       } else {
         if (isNewUser) {
-          this.props.history.push('/profile');
+          this.props.history.push("/profile");
         } else {
           this.redirectBasedOnProfileStatus(userDetails);
         }
@@ -167,13 +169,13 @@ class Login extends Component {
     const { username, password } = this.state;
     this.setState({ submitted: true });
     const userDetails = { username, password };
-    if (username !== '' && password !== '') {
+    if (username !== "" && password !== "") {
       fetchProviders(userDetails).then(providers => {
         if (providers.length === 0) {
           // create user
           createUserWithEmail(userDetails).then(
             loginResponse => {
-              localStorage.setItem('user', JSON.stringify(loginResponse));
+              localStorage.setItem("user", JSON.stringify(loginResponse));
               if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
                 saveRecord({
                   username: username,
@@ -192,7 +194,7 @@ class Login extends Component {
         } else {
           signInUserWithEmail(userDetails).then(
             loginResponse => {
-              localStorage.setItem('user', JSON.stringify(loginResponse));
+              localStorage.setItem("user", JSON.stringify(loginResponse));
               this.setLoginStatus(loginResponse, false);
             },
             error => {
@@ -210,7 +212,7 @@ class Login extends Component {
     this.props.setSpinnerStatus(true);
     loginWithGoogle()
       .then(loginResponse => {
-        localStorage.setItem('user', JSON.stringify(loginResponse));
+        localStorage.setItem("user", JSON.stringify(loginResponse));
         if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
           saveRecord({
             username: loginResponse.additionalUserInfo.profile.email,
@@ -235,7 +237,7 @@ class Login extends Component {
     this.props.setSpinnerStatus(true);
     loginWithFacebook()
       .then(loginResponse => {
-        localStorage.setItem('user', JSON.stringify(loginResponse));
+        localStorage.setItem("user", JSON.stringify(loginResponse));
         if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
           saveRecord({
             username: loginResponse.additionalUserInfo.profile.email,
@@ -260,7 +262,7 @@ class Login extends Component {
     this.props.setSpinnerStatus(true);
     loginWithTwitter()
       .then(loginResponse => {
-        localStorage.setItem('user', JSON.stringify(loginResponse));
+        localStorage.setItem("user", JSON.stringify(loginResponse));
         if (loginResponse && loginResponse.additionalUserInfo.isNewUser) {
           saveRecord({
             username: loginResponse.additionalUserInfo.username,
@@ -281,7 +283,7 @@ class Login extends Component {
   };
 
   handlePasswordReset = () => {
-    this.props.history.push('/resetPassword');
+    this.props.history.push("/resetPassword");
   };
 
   render() {
@@ -304,11 +306,11 @@ class Login extends Component {
                     you!
                   </div>
                   <span className="help-block">
-                    {this.state.errorMessage ? this.state.errorMessage : ''}
+                    {this.state.errorMessage ? this.state.errorMessage : ""}
                   </span>
                   <div
                     className={
-                      'form-group' + (submitted && !username ? 'has-error' : '')
+                      "form-group" + (submitted && !username ? "has-error" : "")
                     }
                   >
                     <label className="label-color" htmlFor="username">
@@ -336,8 +338,8 @@ class Login extends Component {
                   </div>
                   <div
                     className={
-                      'form-group' +
-                      (submitted && !password ? ' has-error' : '')
+                      "form-group" +
+                      (submitted && !password ? " has-error" : "")
                     }
                   >
                     <label className="label-color" htmlFor="password">
@@ -369,7 +371,7 @@ class Login extends Component {
                   <div>
                     <label
                       className="label-color"
-                      style={{ cursor: 'pointer' }}
+                      style={{ cursor: "pointer" }}
                       onClick={this.handlePasswordReset}
                     >
                       <u>FORGOT PASSWORD</u>
@@ -391,29 +393,29 @@ class Login extends Component {
                     <button
                       className="btn social-login--size"
                       style={{
-                        backgroundPosition: 'center center',
+                        backgroundPosition: "center center",
                         backgroundImage:
                           "url('../../Assets/hdpi/google_logo.ico')",
-                        backgroundRepeat: 'no-repeat'
+                        backgroundRepeat: "no-repeat"
                       }}
                       onClick={e => this.loginWithGoogle(e)}
                     />
                     <button
                       className="btn social-login--size"
                       style={{
-                        backgroundPosition: 'center center',
+                        backgroundPosition: "center center",
                         backgroundImage: "url('../../Assets/hdpi/fb_logo.ico')",
-                        backgroundRepeat: 'no-repeat'
+                        backgroundRepeat: "no-repeat"
                       }}
                       onClick={e => this.loginWithFacebook(e)}
                     />
                     <button
                       className="btn social-login--size"
                       style={{
-                        backgroundPosition: 'center center',
+                        backgroundPosition: "center center",
                         backgroundImage:
                           "url('../../Assets/hdpi/twitter_logo.ico')",
-                        backgroundRepeat: 'no-repeat'
+                        backgroundRepeat: "no-repeat"
                       }}
                       onClick={e => this.loginWithTwitter(e)}
                     />
@@ -428,7 +430,7 @@ class Login extends Component {
   }
 }
 const mapStateToProps = state => {
-  console.log('global state', state);
+  console.log("global state", state);
   return {
     loggedInStatus: state.login.loggedInStatus
   };
@@ -438,6 +440,9 @@ const mapDispatchToProps = dispatch => {
   return {
     setSpinnerStatus: value => {
       dispatch({ type: actionTypes.SPINNER_STATUS, payload: value });
+    },
+    setAuthenticationStatus: value => {
+      dispatch({ type: actionTypesAuth.AUTHENTICATION_STATUS, payload: value });
     }
   };
 };

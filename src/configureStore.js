@@ -23,6 +23,7 @@ import videoReducer from "./views/Video/reducer";
 import notificationReducer from "./views/Teacher/Notification/notificationReducer";
 import notifDetils from "./views/Notification/reducer";
 import notificationAcceptREducer from "./views/NotificationDetails/reducer";
+import authenticationReducer from "./authguard/reducer";
 const rootPersistConfig = {
   key: "root",
   storage,
@@ -48,7 +49,8 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   video: videoReducer,
   teacherDetailsReducer: teacherDetailsReducer,
   categoryItem: categoryReducerForSubject,
-  notificationAcceptREducer: notificationAcceptREducer
+  notificationAcceptREducer: notificationAcceptREducer,
+  authStatus: authenticationReducer
 });
 
 const history = createBrowserHistory();

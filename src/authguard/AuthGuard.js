@@ -1,10 +1,10 @@
-import dbFactory from '../../src/database/dbFactory';
+import dbFactory from "../../src/database/dbFactory";
 
 const AuthGuard = {
   isAuthenticated: false,
   authenticate(cb) {
-    const userDetails = JSON.parse(localStorage.getItem('user'));
-    if (userDetails && userDetails.user && userDetails.user.uid !== '') {
+    const userDetails = JSON.parse(localStorage.getItem("user"));
+    if (userDetails && userDetails.user && userDetails.user.uid !== "") {
       this.isAuthenticated = true;
     } else {
       this.isAuthenticated = false;
@@ -14,7 +14,7 @@ const AuthGuard = {
   signout(cb) {
     this.isAuthenticated = false;
     localStorage.clear();
-    const db = dbFactory.create('firebase');
+    const db = dbFactory.create("firebase");
     db.auth().signOut();
     setTimeout(cb, 100); // fake async
   }

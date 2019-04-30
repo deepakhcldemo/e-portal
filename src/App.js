@@ -34,7 +34,7 @@ import ContactUs from "./views/ContactUs";
 import AboutUs from "./views/AboutUs";
 import TeacherDetails from "./views/Teacher/teacher-details/teacherDetails";
 import Footer from "./components/layout/footer/Footer";
-
+import * as actionTypesAuth from "./authguard/actions";
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
@@ -55,7 +55,11 @@ class App extends Component {
   componentWillMount() {
     // console.log('-----------------------------------------------------------');
     const user = JSON.parse(localStorage.getItem("user"));
-    this.setState({ user: user });
+    if (user) {
+      this.props.setAuthenticationStatus(true);
+    } else {
+      this.props.setAuthenticationStatus(false);
+    }
     if (!user && this.props.location) {
       GLOBAL_VARIABLES.BASEROUTE = this.props.location.pathname;
       this.props.history.push("/home");
@@ -154,7 +158,7 @@ class App extends Component {
           /> */}
           <Redirect to="/home" />
         </Switch>
-        {this.state.user && <Footer />}
+        {this.props.authenticationStatus && <Footer />}
       </div>
     );
   }
@@ -172,7 +176,7 @@ const mapStateToProps = state => {
   // const loginResponse = JSON.parse(localStorage.getItem('user'));
   // console.log('app state', state)
   return {
-    auth: true,
+    authenticationStatus: state.authStatus.authenticationStatus,
     spinnerStatus: state.spinnerStatus.spinnerStatus,
     modalState: state.openModal
   };
@@ -180,7 +184,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    openModal: () => dispatch({ type: "open" })
+    openModal: () => dispatch({ type: "open" }),
+    setAuthenticationStatus: value => {
+      dispatch({ type: actionTypesAuth.AUTHENTICATION_STATUS, payload: value });
+    }
   };
 };
 export default connect(
