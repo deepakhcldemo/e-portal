@@ -20,7 +20,8 @@ class notificationsDescription extends Component {
     calendarModal: false,
     teacherData: '',
     notificationData: '',
-    studentDataFromDB: ''
+    studentDataFromDB: '',
+    notificationData: ''
   };
 
   componentDidMount() {
@@ -55,12 +56,16 @@ class notificationsDescription extends Component {
     );
   }
 
-  wrapperFunction = data => {
+  wrapperFunction = (notificationData, studentData) => {
     this.openCalendarModal();
-    this.setStudentData(data);
+    this.setNotificationData(notificationData);
+    this.setStudentData(studentData);
   };
   openCalendarModal = () => {
     this.setState({ calendarModal: true });
+  };
+  setNotificationData = data => {
+    this.setState({ notificationData: data });
   };
   setStudentData = data => {
     this.setState({ studentData: data });
@@ -248,7 +253,7 @@ class notificationsDescription extends Component {
                         notificationData.status === -1 ? (
                           <button
                             onClick={() =>
-                              this.wrapperFunction(notificationData.nId)
+                              this.wrapperFunction(notificationData, studentDataFromDB)
                             }
                             type="button"
                             className="btn btn-warning"
@@ -261,7 +266,8 @@ class notificationsDescription extends Component {
 
                     <div>
                       <UpdateDataModal
-                        notificationId={this.state.studentData}
+                        studentData={this.state.studentData}
+                        notificationData={this.state.notificationData}
                         modalState={this.state.calendarModal}
                         closeCalendarModal={this.closeCalendarModal}
                         classes="calendar-modal"

@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import {
   saveChatNotificationDetails,
   udpateChatNotificationDetails,
-  getNotificationDataFromNid
+  getNotificationDataFromNid,
+  getUserProfile
 } from "../../../database/dal/firebase/chatNotificationDal";
 
 import {
@@ -14,6 +15,7 @@ import {
 
 import UpdateDataModal from "../../../shared/components/calendar-modal/updateDataModal";
 import HeaderHome from "../../../components/layout/header/HeaderHome";
+import StatusCircle from "../../../components/statusCircle/StatusCircle"
 
 class notificationsDescription extends Component {
   state = {
@@ -24,18 +26,32 @@ class notificationsDescription extends Component {
 
   componentDidMount() {
     let user;
-
+    let notification;
     getNotificationDataFromNid(this.props.match.params.sid).then(
       querySnapshot => {
         querySnapshot.forEach(doc => {
-          user = doc.data();
-
+          notification = doc.data();
+          //console.log("Notification Data information: ", notification)
           if (doc.exists) {
             this.setState({
-              notificationData: user
+              notificationData: notification
             });
           }
         });
+
+        getUserProfile(notification.tId).then(
+          querySnapshot => {
+            querySnapshot.forEach(doc => {
+              user = doc.data();
+              //console.log("User Data information: ", user)
+              if (doc.exists) {
+                this.setState({
+                  studentDataFromDB: user
+                });
+              }
+            });
+          }
+        );
       }
     );
   }
@@ -102,15 +118,48 @@ class notificationsDescription extends Component {
     this.props.history.push("/notification");
   };
 
+  getMessageText(status) {
+    let message;
+    if (status === -1) {
+      message = "Pending";
+    }
+    if (status === 0) {
+      message = "Rejected";
+    }
+    if (status === 1) {
+      message = "Approved";
+    }
+    return message;
+  }
+
+  getColorCode(status) {
+    let color;
+    if (status === -1) {
+      color = "#fff3cd";
+    }
+    if (status === 0) {
+      color = "#f8d7da";
+    }
+    if (status === 1) {
+      color = "#d4edda";
+    }
+    return color;
+  }
+
   render() {
-    const { notificationData } = this.state;
+
+    const { notificationData, studentDataFromDB } = this.state;
+
+    if (studentDataFromDB != null && notificationData != null) {
+      console.log("studentDataFromDB  => ", studentDataFromDB.firstName)
+    }
 
     const { open } = this.state;
     return (
       <div className="container-fluid">
         <HeaderHome headeTitle="Chat Notification" />
         <div className="content-container  col-12">
-          {this.props.notificationDetails != null ? (
+          {studentDataFromDB != null && notificationData != null ? (
             <div className="modal-content">
               <div className="modal-header">
                 <button
@@ -120,22 +169,25 @@ class notificationsDescription extends Component {
                   aria-hidden="true"
                 />
                 <h4 className="modal-title" id="myModalLabel">
-                  More About Student {notificationData.nId} Notification{" "}
-                  {this.props.notificationDetails["scheduleDate"]}
+                  More About Teacher {studentDataFromDB.firstName} {studentDataFromDB.lastName} Notification
+
                 </h4>
               </div>
               <div className="modal-body">
                 <center>
                   <img
-                    src="../Assets/hdpi/avatar.png"
+                    src="../../Assets/hdpi/avatar.png"
                     name="aboutme"
                     width="140"
                     height="140"
                     border="0"
                     className="img-circle"
                   />
+                  <p> {studentDataFromDB.firstName} {studentDataFromDB.lastName}</p>
                   <h3 className="media-heading" />
                 </center>
+                <StatusCircle backgroundColor={this.getColorCode(notificationData.status)} foregroundColor="#000" height="80px" width="80px" payload={this.getMessageText(notificationData.status)}
+                />
                 <span>
                   <strong>Date & Timing: </strong>
                 </span>
@@ -150,8 +202,8 @@ class notificationsDescription extends Component {
                       notifyData => notificationData.comment[notifyData].details
                     )
                   ) : (
-                    <span>Loading...</span>
-                  )}
+                      <span>Loading...</span>
+                    )}
                 </p>
               </div>
               <div className="modal-footer">
@@ -164,35 +216,35 @@ class notificationsDescription extends Component {
                   Back
                 </button>
                 {notificationData.status == -1 &&
-                notificationData.reqForReSchedule === true ? (
-                  <button
-                    onClick={() => this.handleReject(notificationData.nId)}
-                    type="button"
-                    className="btn btn-danger"
-                    data-dismiss="modal"
-                  >
-                    Reject
+                  notificationData.reqForReSchedule === true ? (
+                    <button
+                      onClick={() => this.handleReject(notificationData.nId)}
+                      type="button"
+                      className="btn btn-danger"
+                      data-dismiss="modal"
+                    >
+                      Reject
                   </button>
-                ) : null}
+                  ) : null}
                 {(notificationData.paymentStatus == false &&
                   notificationData.status == 1) ||
-                (notificationData.status == -1 &&
-                  notificationData.reqForReSchedule === true &&
-                  notificationData.paymentStatus == false) ? (
-                  <button
-                    onClick={() => this.handlePay(notificationData.nId)}
-                    type="button"
-                    className="btn btn-success"
-                    data-dismiss="modal"
-                  >
-                    Pay
+                  (notificationData.status == -1 &&
+                    notificationData.reqForReSchedule === true &&
+                    notificationData.paymentStatus == false) ? (
+                    <button
+                      onClick={() => this.handlePay(notificationData.nId)}
+                      type="button"
+                      className="btn btn-success"
+                      data-dismiss="modal"
+                    >
+                      Pay
                   </button>
-                ) : null}
+                  ) : null}
               </div>
             </div>
           ) : (
-            <div>Loading....</div>
-          )}
+              <div>Loading....</div>
+            )}
         </div>
       </div>
     );

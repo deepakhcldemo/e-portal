@@ -32,6 +32,7 @@ class CalendarModal extends Component {
       .required()
       .label('Message')
   };
+
   validate = () => {
     const options = { abortEarly: false };
     const { error } = Joi.validate(this.state.data, this.schema, options);
@@ -43,12 +44,11 @@ class CalendarModal extends Component {
   };
 
   validateProperty = ({ name, value }) => {
-    console.log('Name: ', name);
-    console.log('Value: ', value);
-    // const obj = { [name]: value };
-    // const schema = { [name]: this.schema[name] };
-    // const { error } = Joi.validate(obj, schema);
-    // return error ? error.details[0].message : null;
+
+    const obj = { [name]: value };
+    const schema = { [name]: this.schema[name] };
+    const { error } = Joi.validate(obj, schema);
+    return error ? error.details[0].message : null;
   };
 
   handleSubmit = e => {
@@ -64,7 +64,7 @@ class CalendarModal extends Component {
     const loggedInUSer = JSON.parse(localStorage.getItem('user'));
     if (loggedInUSer) {
       const chatNotificationDetails = {
-        nId: this.props.notificationId,
+        nId: this.props.notificationData.nId,
         scheduleDate: data.datetime,
         duration: data.duration,
         status: -1,
@@ -98,7 +98,7 @@ class CalendarModal extends Component {
     const data = { ...this.state.data };
     data[input.name] = input.value;
 
-    this.setState({ [input.name]: input.value, errors });
+    this.setState({ data, errors });
   };
 
   constructor(props) {
@@ -110,6 +110,9 @@ class CalendarModal extends Component {
   };
 
   render() {
+    const { notificationData, studentData } = this.props;
+    console.log("notificationData ", notificationData.nId);
+    console.log("studentData ", studentData);
     const options = [
       { value: '-1', label: 'Select' },
       { value: '15m', label: '15 Minuts' },
@@ -141,17 +144,17 @@ class CalendarModal extends Component {
                   aria-hidden="true"
                 />
                 <h4 className="modal-title" id="myModalLabel">
-                  Discuss on Time with NotifyId:{this.props.notificationId}
+                  Discuss on Time with {studentData != null ? studentData.firstName + " " + studentData.lastName : null}
                 </h4>
               </div>
               <div className="modal-body">
                 <div className="row">
                   <div className="col-md-6 ">Pick Date and Time</div>
-                  <div className="col-md-6">Select a duration2</div>
+                  <div className="col-md-6">Select a duration</div>
                 </div>
                 <div className="row">
                   <div className="col-md-6">
-                    <Datetime
+                    {/* <Datetime
                       value={this.state.datetime}
                       onChange={this.handleChange}
                       inputProps={{
@@ -159,15 +162,15 @@ class CalendarModal extends Component {
                         name: 'datetime'
                       }}
                     />
-                    <div className="c-error">{this.state.errors.datetime}</div>
-                    {/* <Input
+                    <div className="c-error">{this.state.errors.datetime}</div> */}
+                    <Input
                       value={this.state.datetime}
                       onChangeHandle={this.handleChange}
                       name="datetime"
                       className="form-control"
                       errorMessage={this.state.errors.datetime}
                       placeHolder="04/20/2019 12:00 AM"
-                    /> */}
+                    />
                   </div>
 
                   <div className="col-md-6">
