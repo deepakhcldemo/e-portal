@@ -46,7 +46,7 @@ class NotificationsDetails extends Component {
     return (
       <>
         <div className="container-fluid">
-          <HeaderHome headeTitle="Notification" />
+          <HeaderHome headeTitle="My Request\Review" />
           <div className="content-container tab--container">
             <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12 col-without--padding">
               <div className=" notification-card">

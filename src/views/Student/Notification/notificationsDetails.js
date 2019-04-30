@@ -143,72 +143,74 @@ class NotificationsDetails extends Component {
         <div className="container-fluid">
           <div>
             <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12 col-without--padding">
-              {Object.keys(notificationDetails).map((notificationDetail, index) => (
-                <div key={index}
-                  className={this.getClassName(
-                    notificationDetails[notificationDetail].status
-                  )}
-                >
-                  <Link
-                    to={
-                      `/student/notificationsDescription/` +
-                      notificationDetails[notificationDetail].nId
-                    }
-                    className="active"
+              {Object.keys(notificationDetails).map(
+                (notificationDetail, index) => (
+                  <div
+                    key={index}
+                    className={this.getClassName(
+                      notificationDetails[notificationDetail].status
+                    )}
                   >
-                    <div>
-                      <div style={{ float: "left" }}>
-                        <img
-                          src="../Assets/hdpi/avatar.png"
-                          name="aboutme"
-                          width="70"
-                          height="50"
-                          border="0"
-                          className="img-circle"
-                        />
-                      </div>
-                      <div
-                        className="container"
-                        onClick={this.onOpenModal}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <div className="alert-icon">
-                          <i className="material-icons">
-                            Teacher{" "}
-                            {notificationDetails[notificationDetail].tId}{" "}
-                          </i>
+                    <Link
+                      to={
+                        `/student/notificationsDescription/` +
+                        notificationDetails[notificationDetail].nId
+                      }
+                      className="active"
+                    >
+                      <div>
+                        <div style={{ float: "left" }}>
+                          <img
+                            src="../Assets/hdpi/avatar.png"
+                            name="aboutme"
+                            width="70"
+                            height="50"
+                            border="0"
+                            className="img-circle"
+                          />
                         </div>
-                        <button
-                          type="button"
-                          className="close"
-                          data-dismiss="alert"
-                          aria-label="Close"
+                        <div
+                          className="container"
+                          onClick={this.onOpenModal}
+                          style={{ cursor: "pointer" }}
                         >
-                          <span aria-hidden="true">
-                            <i className="material-icons">clear</i>
-                          </span>
-                        </button>
-                        {console.log(
-                          "Notification Data Comment : ",
-                          notificationDetails[notificationDetail].comment
-                        )}
-                        <b>Message:</b>{" "}
-                        {notificationDetails[notificationDetail].comment ? (
-                          Object.keys(
+                          <div className="alert-icon">
+                            <i className="material-icons">
+                              Teacher{" "}
+                              {notificationDetails[notificationDetail].tId}{" "}
+                            </i>
+                          </div>
+                          <button
+                            type="button"
+                            className="close"
+                            data-dismiss="alert"
+                            aria-label="Close"
+                          >
+                            <span aria-hidden="true">
+                              <i className="material-icons">clear</i>
+                            </span>
+                          </button>
+                          {console.log(
+                            "Request Details : ",
                             notificationDetails[notificationDetail].comment
-                          ).map(
-                            data =>
-                              notificationDetails[notificationDetail].comment[
-                                data
-                              ].details
-                          )
-                        ) : (
+                          )}
+                          <b>Message:</b>{" "}
+                          {notificationDetails[notificationDetail].comment ? (
+                            Object.keys(
+                              notificationDetails[notificationDetail].comment
+                            ).map(
+                              data =>
+                                notificationDetails[notificationDetail].comment[
+                                  data
+                                ].details
+                            )
+                          ) : (
                             <span>Loading...</span>
                           )}
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                  {notificationDetails[notificationDetail].paymentStatus !=
+                    </Link>
+                    {notificationDetails[notificationDetail].paymentStatus !=
                     false ? (
                       <button
                         type="button"
@@ -216,12 +218,13 @@ class NotificationsDetails extends Component {
                         data-dismiss="modal"
                       >
                         Start Chat
-                    </button>
+                      </button>
                     ) : (
                       <div />
                     )}
-                </div>
-              ))}
+                  </div>
+                )
+              )}
             </div>
           </div>
         </div>

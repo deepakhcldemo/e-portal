@@ -92,9 +92,7 @@ class Notification extends Component {
       if (notification.tRejected || notification.tAccepted) {
         this.props.deleteNotificationDetails(notification);
       } else {
-        toastr.info(
-          "Notification can not be deleted as its is in pending state"
-        );
+        toastr.info("Request can not be deleted as its is in pending state");
       }
     } else {
       this.goToNotificationDetails(notification);
