@@ -44,53 +44,51 @@ class Video extends Component {
         const category = [...doc.data().subjects];
         this.setState({ category });
       });
-    });    
+    });
   };
 
   getContent = async () => {
-    if(this.state.tabKey === 'myvideo') {
-      await this.getCurriculum() 
+    if (this.state.tabKey === "myvideo") {
+      await this.getCurriculum();
     } else {
       await this.getNotifications();
     }
-  }
+  };
 
   getCurriculum = () => {
-    const {userDetails} = this.state
-    getCurriculumFromDB(userDetails.userId).onSnapshot(
-      querySnapshot => {
-        let content = [];
-        querySnapshot.forEach(doc => {
-          content.push(Object.assign({ id: doc.id }, doc.data()));
-        });
-        this.setState({ content });
-      }
-    );
-  }
+    const { userDetails } = this.state;
+    getCurriculumFromDB(userDetails.userId).onSnapshot(querySnapshot => {
+      let content = [];
+      querySnapshot.forEach(doc => {
+        content.push(Object.assign({ id: doc.id }, doc.data()));
+      });
+      this.setState({ content });
+    });
+  };
 
   getNotifications = () => {
-    const {userDetails,tabKey} = this.state
+    const { userDetails, tabKey } = this.state;
     getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(
       querySnapshot => {
         let content = [];
         querySnapshot.forEach(doc => {
           content.push(Object.assign({ id: doc.id }, doc.data()));
         });
-        if(content.length >0) {
-          content = content.filter( (list) => {
-            if(tabKey === 'reviewed') {
-              return list.sstatus && list.tstatus
-            } else if(tabKey === 'pendingreview'){
-              return list.sstatus && !list.tstatus
-            } else if(tabKey === 'rejected') {             
-              return list.sstatus === false       
+        if (content.length > 0) {
+          content = content.filter(list => {
+            if (tabKey === "reviewed") {
+              return list.sstatus && list.tstatus;
+            } else if (tabKey === "pendingreview") {
+              return list.sstatus && !list.tstatus;
+            } else if (tabKey === "rejected") {
+              return list.sstatus === false;
             }
-          })
+          });
         }
         this.setState({ content });
       }
-    );  
-  }
+    );
+  };
 
   handleUpload = () => {
     this.setState({
@@ -116,7 +114,7 @@ class Video extends Component {
     });
   };
 
-  handleKey = async (key) => {
+  handleKey = async key => {
     await this.setState({ tabKey: key });
     this.getContent();
   };
@@ -135,7 +133,7 @@ class Video extends Component {
     return (
       <>
         <div className="container-fluid">
-          <HeaderHome headeTitle="Teacher Dashboard" />
+          <HeaderHome headeTitle="My Video(s)" />
           <div className="content-container main-wrapper">
             {!upload && (
               <>
@@ -143,7 +141,7 @@ class Video extends Component {
                 <Tabs
                   id="video-tabs"
                   activeKey={tabKey}
-                  onSelect={(key) => this.handleKey(key)}
+                  onSelect={key => this.handleKey(key)}
                 >
                   {tabs &&
                     tabs.map((tab, ind) => {
@@ -153,17 +151,20 @@ class Video extends Component {
                             heading={tab.name}
                             videoDetails={filter ? filter : content}
                           >
-                          {(tabKey === 'myvideo' && userDetails.role === 'Teacher') && (
-                            <button
-                              style={{color: '#fff'}}
-                              onClick={this.handleUpload}
-                              className="btn"
-                              title="Upload Video"
-                            >
-                              <i className="fas fa-plus" />
-                              <span className="home-header-text-link-status">&nbsp;Add Video</span>
-                            </button>
-                          )}
+                            {tabKey === "myvideo" &&
+                              userDetails.role === "Teacher" && (
+                                <button
+                                  style={{ color: "#fff" }}
+                                  onClick={this.handleUpload}
+                                  className="btn"
+                                  title="Upload Video"
+                                >
+                                  <i className="fas fa-plus" />
+                                  <span className="home-header-text-link-status">
+                                    &nbsp;Add Video
+                                  </span>
+                                </button>
+                              )}
                           </VideoList>
                         </Tab>
                       );

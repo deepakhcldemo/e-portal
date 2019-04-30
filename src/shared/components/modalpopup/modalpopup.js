@@ -106,8 +106,8 @@ class ModalPopUp extends Component {
     tId = this.state.tid;
     tname = this.state.teacherName;
     sname = this.state.studentName;
-   const  tAccepted  = false;
-   const  tRejected = false;
+    const tAccepted = false;
+    const tRejected = false;
     const notificationDetails = {
       notificationDesc: this.state.notificationDescription,
       tId,
@@ -159,7 +159,7 @@ class ModalPopUp extends Component {
           {this.state.notificationPermission ? (
             <div>
               <div className="header">
-                <h2>Create Notification</h2>
+                <h3>New Request for Review</h3>
               </div>
               <div className="body">
                 <form>
@@ -215,7 +215,7 @@ class ModalPopUp extends Component {
                     className="btn btn-dark submit"
                     onClick={this.createNotification}
                   >
-                    Create Notification
+                    New Request
                   </button>
                 </form>
               </div>
@@ -223,7 +223,7 @@ class ModalPopUp extends Component {
           ) : (
             <div>
               <div className="header">
-                <h2>Create Notification</h2>
+                <h3>New Request for Review</h3>
               </div>
               <div className="body">
                 <p className="already-notified">

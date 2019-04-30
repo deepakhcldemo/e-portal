@@ -22,33 +22,33 @@ export const CATEGORY = {
   }
 };
 export const TEACHER_DASHBOARD_LINKS = [
-    {
-        name: 'Dashboard',
-        link: '/teacher',        
-        icon: 'fa fa-tachometer',
-        title: 'Dashboard',
-        style: {
-            marginLeft: '5px'
-        }
-    },
-    {
-        name: 'Video',
-        link: '/videos',
-        icon: 'fa fa-video',
-        title: 'Video',
-        style: {
-            marginLeft: '5px'
-        }
-    },
-    {
-        name: 'Notification',
-        link: '/notification',
-        icon: 'fa fa-bell',
-        title: 'Notification',
-        style: {
-            marginLeft: '5px'
-        }
-    }    
+  {
+    name: "Dashboard",
+    link: "/teacher",
+    icon: "fa fa-tachometer",
+    title: "Dashboard",
+    style: {
+      marginLeft: "5px"
+    }
+  },
+  {
+    name: "Video",
+    link: "/videos",
+    icon: "fa fa-video",
+    title: "Video",
+    style: {
+      marginLeft: "5px"
+    }
+  },
+  {
+    name: "My Request",
+    link: "/notification",
+    icon: "fa fa-bell",
+    title: "My Request",
+    style: {
+      marginLeft: "5px"
+    }
+  }
 ];
 
 export const STUDENT_DASHBOARD_LINKS = [
@@ -71,10 +71,10 @@ export const STUDENT_DASHBOARD_LINKS = [
     }
   },
   {
-    name: "Notification",
+    name: "My Request",
     link: "/notification",
     icon: "fa fa-bell",
-    title: "Notification",
+    title: "My Request",
     style: {
       marginLeft: "5px"
     }
@@ -88,36 +88,36 @@ export const STUDENT_DASHBOARD_LINKS = [
       marginLeft: "5px"
     }
   }
-]
+];
 export const VIDEO_TABS = {
-    teacher: [
-        {
-            id: 'pendingreview',
-            name: 'Pending For Review'
-        },
-        
-        {
-            id: 'reviewed',
-            name: 'Reviewed'
-        },
-        {
-            id: 'myvideo',
-            name: 'My Video'
-        }
-    ],
-    student: [
-        {
-            id: 'pendingreview',
-            name: 'Pending For Review'
-        },
-        {
-            id: 'reviewed',
-            name: 'Reviewed'
-        },
-        {
-            id: 'rejected',
-            name: 'Rejected'
-        }
-    ]
-}
+  teacher: [
+    {
+      id: "pendingreview",
+      name: "Pending"
+    },
+
+    {
+      id: "reviewed",
+      name: "Reviewed"
+    },
+    {
+      id: "myvideo",
+      name: "My Video"
+    }
+  ],
+  student: [
+    {
+      id: "pendingreview",
+      name: "Pending"
+    },
+    {
+      id: "reviewed",
+      name: "Reviewed"
+    },
+    {
+      id: "rejected",
+      name: "Rejected"
+    }
+  ]
+};
 export default ElearningConst;
