@@ -13,7 +13,8 @@ import {
   rejectNotification,
   openModalForAcceptNotification,
   saveAcceptedNotification,
-  setKeyForNotificationPage
+  setKeyForNotificationPage,
+  setIDForNotification
 } from "./action";
 import {
   TEACHER_DASHBOARD_LINKS,
@@ -34,6 +35,14 @@ class NotificationDetails extends Component {
     };
     this.acceptNotification = this.acceptNotification.bind(this);
     this.goBackTONotification = this.goBackTONotification.bind(this);
+  }
+
+  componentDidMount () {
+
+   
+   
+    console.log(this.state);
+
   }
   goBackTONotification = () => {
     this.props.setKeyForNotificationPage("NotificationDetails");
@@ -74,10 +83,11 @@ class NotificationDetails extends Component {
     this.goBackTONotification();
   };
   componentWillMount = () => {
+    const notificationId = this.props.match.params.id;
+    this.props.setIDForNotification(notificationId);
     const UserProfile = JSON.parse(localStorage.getItem("userProfile"));
-    console.log(this.props.notificationDetails, "inComponentDidMout");
     this.setState({
-      notificationsDetails: this.props.notificationDetails,
+     notificationsDetails: this.props.notificationDetails,
       userDetails: UserProfile
     });
   };
@@ -98,57 +108,71 @@ class NotificationDetails extends Component {
   render() {
     let badgeText = "";
     let classNameBadge = "";
-    if (
+    if (this.props.notificationDetails &&
       this.props.notificationDetails.sstatus &&
       !this.props.notificationDetails.tstatus
     ) {
       badgeText = "Pending";
       classNameBadge = "badge-warning";
     }
-    if (this.props.notificationDetails.tRejected) {
+    if (this.props.notificationDetails && 
+      this.props.notificationDetails.tRejected) {
       badgeText = "Rejected";
       classNameBadge = "badge-danger";
     }
-    if (this.props.notificationDetails.tAccepted) {
+    if (this.state.notificationDetails &&
+      this.state.notificationDetails.tAccepted) {
       badgeText = "Success";
       classNameBadge = "badge-success";
     }
     return (
       <div className="container-fluid">
         <HeaderHome
-          headeTitle="Teacher Dashboard"
+          headeTitle="My Request"
           dashboardLinks={TEACHER_DASHBOARD_LINKS}
         />
 
         <div className="content-container">
+        <div className ="col-lg-12">
+              <div className="pull-left">
+                <button
+                  className="btn btn-light"
+                  onClick={this.goBackTONotification}
+                >
+                  <i class="fa fa-arrow-left"></i>
+                    </button>
+              </div>
+            </div>
           <div
             className="card request-notification-container col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10"
             style={{ margin: "auto" }}
           >
+            
             <div className="card-body request-notification-container">
               <div className="row">
-                <div className="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 col-without--padding heading--padding">
+                {this.props.notificationDetails ?<div className="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 col-without--padding heading--padding">
                   <span className="bold">Notification Description :</span>
-                  {this.state.notificationsDetails.notificationDesc}
-                </div>
+                  {this.props.notificationDetails.notificationDesc}
+                </div> : null}
                 <div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 col-without--padding badge-container">
-                  <div class={"badge" + " " + classNameBadge}>{badgeText}</div>
+                  <div className={"badge" + " " + classNameBadge}>{badgeText}</div>
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding heading--padding">
-                  {this.state.userDetails.Svideo !== "" ? (
+                  {this.props.notificationDetails && this.props.notificationDetails.Svideo !== "" ? (
                     <span className="bold"> Video Uploaded by Student </span>
                   ) : null}
                 </div>
                 <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding teacher-video">
-                  <video
+                 {this.props.notificationDetails && this.props.notificationDetails? ( <video
                     controls
-                    src={this.state.notificationsDetails.sVideo}
+                    src={this.props.notificationDetails.sVideo}
                     className="video-style"
                   />
+                ) : null}
                 </div>
-                {this.props.notificationDetails.tvideo !== "" ? (
+                {this.props.notificationDetails && this.props.notificationDetails.tvideo !== "" ? (
                   <>
                     <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding heading--padding">
                       <span className="bold"> Video Uploaded by Teacher </span>
@@ -156,7 +180,7 @@ class NotificationDetails extends Component {
                     <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding teacher-video">
                       <video
                         controls
-                        src={this.state.notificationsDetails.tvideo}
+                        src={this.props.notificationDetails.tvideo}
                         className="video-style"
                       />{" "}
                     </div>
@@ -168,7 +192,7 @@ class NotificationDetails extends Component {
                 <div className="col-12 heading--padding">
                   <p>Please Upload you video here : </p>
 
-                  <FileUploader
+                {this.props.notificationDetails ?  <FileUploader
                     accept="video/*"
                     className="upload-video"
                     storageRef={firebase
@@ -182,7 +206,7 @@ class NotificationDetails extends Component {
                     onUploadError={this.handleUploadError}
                     onUploadSuccess={this.handleVideoUploadSuccess}
                     onProgress={this.handleProgress}
-                  />
+                  /> : null}
                   <div className="progressbar-spacing">
                     {this.state.isUploading && (
                       <Progress
@@ -196,36 +220,29 @@ class NotificationDetails extends Component {
               </div>
               <div className="row">
                 <div className="col-lg-12">
-                  <div className="pull-left">
-                    <button
-                      className="btn btn-dark"
-                      onClick={this.goBackTONotification}
-                    >
-                      Back
-                    </button>
-                  </div>
+
                   {this.state.userDetails.role === "Teacher" &&
-                  (!this.state.notificationsDetails.tRejected &&
-                    !this.state.notificationsDetails.tAccepted) ? (
-                    <div className="pull-right">
-                      <button
-                        disabled={this.state.isUploading}
-                        className="btn btn-success"
-                        onClick={this.acceptNotification}
-                      >
-                        Accept
+                    (!( this.props.notificationDetails && this.props.notificationDetails.tRejected) &&
+                      !(this.props.notificationDetails && this.props.notificationDetails.tAccepted) )? (
+                      <div className="pull-right">
+                        <button
+                          disabled={this.state.isUploading}
+                          className="btn btn-success"
+                          onClick={this.acceptNotification}
+                        >
+                          Accept
                       </button>
-                      <button
-                        disabled={this.state.isUploading}
-                        className="btn btn-danger"
-                        onClick={this.rejectNotification}
-                      >
-                        Reject
+                        <button
+                          disabled={this.state.isUploading}
+                          className="btn btn-danger"
+                          onClick={this.rejectNotification}
+                        >
+                          Reject
                       </button>
-                    </div>
-                  ) : (
-                    ""
-                  )}
+                      </div>
+                    ) : (
+                      ""
+                    )}
 
                   {/* {this.state.notificationsDetails.tRejected ? (
                 <p className="notification-rejected">
@@ -235,19 +252,19 @@ class NotificationDetails extends Component {
                 ""
               )} */}
 
-                  {this.state.notificationsDetails.tAccepted &&
-                  this.state.userDetails.role !== "Teacher" ? (
-                    <div>
-                      <button
-                        disabled={true}
-                        className="btn btn-success pull-right"
-                      >
-                        Pay Now
+                  {this.props.notificationDetails && this.props.notificationDetails.tAccepted &&
+                    this.state.userDetails.role !== "Teacher" ? (
+                      <div>
+                        <button
+                          disabled={true}
+                          className="btn btn-success pull-right"
+                        >
+                          Pay Now
                       </button>
-                    </div>
-                  ) : (
-                    ""
-                  )}
+                      </div>
+                    ) : (
+                      ""
+                    )}
                 </div>
               </div>
             </div>
@@ -262,7 +279,7 @@ class NotificationDetails extends Component {
 }
 const mapStateToProps = state => {
   return {
-    notificationDetails: state.notificationDetials.notificationDetails
+    notificationDetails: state.notificationAcceptREducer.notificationDetailsByID[0]
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -274,7 +291,9 @@ const mapDispatchToProps = dispatch => {
     saveAcceptedNotification: acceptNotificationData =>
       dispatch(saveAcceptedNotification(acceptNotificationData)),
     setKeyForNotificationPage: NotificationDetails =>
-      dispatch(setKeyForNotificationPage(NotificationDetails))
+      dispatch(setKeyForNotificationPage(NotificationDetails)),
+      setIDForNotification: Id =>
+      dispatch(setIDForNotification(Id))
   };
 };
 export default withRouter(

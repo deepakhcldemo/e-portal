@@ -21,7 +21,6 @@ export const getNotificationFromDB = dispatch => {
     .then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
         data.push(doc.data());
-        console.log("data in notification", data);
       });
       dispatch({ type: "GET_NOTIFICATIONS", notifications: data });
     })
@@ -67,6 +66,8 @@ export const saveNotificationAcceptedFromDB = (
     });
 };
 
+
+
 export const getVideoUrl = (name, id) => {
   // let studentDetails = [];
   // const studentDetails = JSON.parse(localStorage.getItem("userProfile"));
@@ -76,4 +77,30 @@ export const getVideoUrl = (name, id) => {
     .ref("notification/" + id)
     .child(name)
     .getDownloadURL();
+};
+
+
+
+
+
+export const setIDForNotificationFromDB =  (
+  dispatch,
+  id
+)  => {
+  const db = dbFactory.create("firebase");
+  let data = [];
+  db.firestore()
+    .collection("notifications")
+    .where("loggedInUserId", "==", id)
+    .get()
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        data.push(doc.data());
+        console.log("data in notification", data);
+      });
+      dispatch({ type: "GET_NOTIFICATION_BY_ID", notificationDetailsByID: data });
+    })
+    .catch(err => {
+      dispatch({ type: "ERROR", err });
+    });
 };

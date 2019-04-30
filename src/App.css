@@ -1,3 +1,7 @@
+
+@import "./views/Home/styles.css";
+
+
 #app {
   height: 100vh;
 }

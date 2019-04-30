@@ -112,7 +112,7 @@ class App extends Component {
           <PrivateRoute path="/videos" component={Video} exact />
           <PrivateRoute path="/notification" component={Notification} exact />
           <PrivateRoute
-            path="/notificationDetails"
+            path="/notificationdetails/:id"
             component={NotificationDetails}
             exact
           />

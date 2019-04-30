@@ -128,8 +128,7 @@ class Notification extends Component {
 
   goToNotificationDetails = notification => {
     this.props.setNotificationDetails(notification);
-    console.log(this.props);
-    this.props.history.push("/notificationDetails");
+    this.props.history.push("/notificationdetails/" + notification.loggedInUserId);
   };
 
   render = () => {

@@ -1,5 +1,5 @@
 
-import { rejectNotificationFromDB, saveNotificationAcceptedFromDB } from "../../database/dal/firebase/notificationdal";
+import { rejectNotificationFromDB, saveNotificationAcceptedFromDB, setIDForNotificationFromDB } from "../../database/dal/firebase/notificationdal";
 
 
 export const rejectNotification = (rejectNotification) => {
@@ -7,6 +7,14 @@ export const rejectNotification = (rejectNotification) => {
         rejectNotificationFromDB(dispatch, rejectNotification);
     }
 }
+
+
+export const setIDForNotification = (id) => {
+  return (dispatch) => {
+    setIDForNotificationFromDB(dispatch, id);
+  }
+}
+
 
 
 export const openModalForAcceptNotification = () => {
