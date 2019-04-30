@@ -1,19 +1,30 @@
-import {  getTeacherFromDB , getCurriculumFromDB} from '../../database/dal/firebase/homeDal';
+import {
+  getTeacherFromDB,
+  getCurriculumFromDB
+} from "../../database/dal/firebase/homeDal";
 
 // import {getNotificationFromDB} from '../../database/dal/firebase/studentDal';
 
-import {getNotificationsFromDB} from '../../database/dal/firebase/studentDal';
+import {
+  getNotificationForStudentBasedFromDB,
+  getNotificationFromDB
+} from "../../database/dal/firebase/notificationdal";
 export const getCurriculum = () => {
-    return (dispatch) => {
-        getCurriculumFromDB(dispatch);
-    }
-}
+  return dispatch => {
+    getCurriculumFromDB(dispatch);
+  };
+};
 export const getTeacher = () => {
-    return (dispatch) => {
-        getTeacherFromDB(dispatch);
-    }
-}
+  return dispatch => {
+    getTeacherFromDB(dispatch);
+  };
+};
 
+export const getNotificationsBasedOnStudentID = id => {
+  return dispatch => {
+    getNotificationForStudentBasedFromDB(dispatch, id);
+  };
+};
 
 // export const getNotification = () => {
 //     return (dispatch) => {
@@ -21,7 +32,7 @@ export const getTeacher = () => {
 //     }
 // }
 export const getNotification = () => {
-    return (dispatch) => {
-        getNotificationsFromDB(dispatch);
-    }
-}
+  return dispatch => {
+    getNotificationFromDB(dispatch);
+  };
+};

@@ -9,6 +9,7 @@ import { getTeacherFromDB } from "./../../database/dal/firebase/homeDal";
 import Banner from "../../components/banner/Banner";
 import TopTutor from "../../components/topTutor/TopTutor";
 import GLOBAL_VARIABLES from "../../config/config";
+import { getNotificationsBasedOnStudentID } from "./action";
 import "./Student.css";
 class Student extends Component {
   constructor(props) {
@@ -22,7 +23,8 @@ class Student extends Component {
   }
 
   componentDidMount() {
-    // this.props.getNotification();
+    const loggedUserId = JSON.parse(localStorage.getItem("userProfile"));
+    this.props.getNotificationsBasedOnStudentID(loggedUserId.userId);
     getBannerFromDB().then(querySnapshot => {
       let bannerData = [];
       querySnapshot.forEach(doc => {
@@ -45,12 +47,24 @@ class Student extends Component {
   }
 
   render() {
+    const pendingReviev = [];
+    const reviewDone = [];
     const { bannerRows, carouselTop10Items } = this.state;
     const { teacherCarouselRows, notifications } = this.props;
     console.log("notifications", notifications);
     const listTop10Items = teacherCarouselRows;
     console.log("listTop10Items", listTop10Items);
-
+    {
+      notifications.length > 0 &&
+        notifications.forEach(notification => {
+          if (notification.tRejected || notification.tAccepted) {
+            reviewDone.push(notification);
+          } else {
+            pendingReviev.push(notification);
+          }
+        });
+    }
+    console.log(reviewDone, pendingReviev);
     return (
       <div className="container-fluid">
         <HeaderHome headeTitle="Student Dashboard" />
@@ -101,8 +115,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getCurriculum: () => dispatch(getCurriculum()),
-    getTeacher: () => dispatch(getTeacher())
-    //getNotification: () => dispatch(getNotification())
+    getTeacher: () => dispatch(getTeacher()),
+    getNotificationsBasedOnStudentID: id =>
+      dispatch(getNotificationsBasedOnStudentID(id))
   };
 };
 export default connect(

@@ -134,6 +134,7 @@ class NotificationDetails extends Component {
         />
 
         <div className="content-container">
+<<<<<<< Updated upstream
           <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <div
               className="card request-notification-container "
@@ -156,6 +157,58 @@ class NotificationDetails extends Component {
                   <div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 col-without--padding badge-container">
                     <div className={"badge" + " " + classNameBadge}>
                       {badgeText}
+=======
+          <div className="col-lg-12">
+            <div className="pull-left">
+              <button
+                className="btn btn-light"
+                onClick={this.goBackTONotification}
+              >
+                <i class="fa fa-arrow-left" />
+              </button>
+            </div>
+          </div>
+          <div
+            className="card request-notification-container col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10"
+            style={{ margin: "auto" }}
+          >
+            <div className="card-body request-notification-container">
+              <div className="row">
+                {this.props.notificationDetails ? (
+                  <div className="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 col-without--padding heading--padding">
+                    <span className="bold">Notification Description :</span>
+                    {this.props.notificationDetails.notificationDesc}
+                  </div>
+                ) : null}
+                <div className="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 col-without--padding badge-container">
+                  <div className={"badge" + " " + classNameBadge}>
+                    {badgeText}
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding heading--padding">
+                  {this.props.notificationDetails &&
+                  this.props.notificationDetails.Svideo !== "" ? (
+                    <span className="bold"> Video Uploaded by Student </span>
+                  ) : null}
+                </div>
+                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding teacher-video">
+                  {this.props.notificationDetails &&
+                  this.props.notificationDetails ? (
+                    <video
+                      controls
+                      src={this.props.notificationDetails.sVideo}
+                      className="video-style"
+                    />
+                  ) : null}
+                </div>
+                {this.props.notificationDetails &&
+                this.props.notificationDetails.tvideo !== "" ? (
+                  <>
+                    <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding heading--padding">
+                      <span className="bold"> Video Uploaded by Teacher </span>
+>>>>>>> Stashed changes
                     </div>
                   </div>
                 </div>
@@ -200,6 +253,7 @@ class NotificationDetails extends Component {
                   <div className="col-12 heading--padding">
                     <p>Please Upload you video here : </p>
 
+<<<<<<< Updated upstream
                     {this.props.notificationDetails ? (
                       <FileUploader
                         accept="video/*"
@@ -215,6 +269,30 @@ class NotificationDetails extends Component {
                         onUploadError={this.handleUploadError}
                         onUploadSuccess={this.handleVideoUploadSuccess}
                         onProgress={this.handleProgress}
+=======
+                  {this.props.notificationDetails ? (
+                    <FileUploader
+                      accept="video/*"
+                      className="upload-video"
+                      storageRef={firebase
+                        .storage()
+                        .ref(
+                          `notification/${
+                            this.props.notificationDetails.loggedInUserId
+                          }`
+                        )}
+                      onUploadStart={this.handleUploadStart}
+                      onUploadError={this.handleUploadError}
+                      onUploadSuccess={this.handleVideoUploadSuccess}
+                      onProgress={this.handleProgress}
+                    />
+                  ) : null}
+                  <div className="progressbar-spacing">
+                    {this.state.isUploading && (
+                      <Progress
+                        bgColor="#232838"
+                        progress={this.state.progress}
+>>>>>>> Stashed changes
                       />
                     ) : null}
                     <div className="progressbar-spacing">
@@ -228,6 +306,7 @@ class NotificationDetails extends Component {
                     <p>{this.state.validationMessage}</p>
                   </div>
                 </div>
+<<<<<<< Updated upstream
                 <div className="row">
                   <div className="col-12">
                     {this.state.userDetails.role === "Teacher" &&
@@ -258,6 +337,39 @@ class NotificationDetails extends Component {
                     ) : (
                       ""
                     )}
+=======
+              </div>
+              <div className="row">
+                <div className="col-lg-12">
+                  {this.state.userDetails.role === "Teacher" &&
+                  (!(
+                    this.props.notificationDetails &&
+                    this.props.notificationDetails.tRejected
+                  ) &&
+                    !(
+                      this.props.notificationDetails &&
+                      this.props.notificationDetails.tAccepted
+                    )) ? (
+                    <div className="pull-right">
+                      <button
+                        disabled={this.state.isUploading}
+                        className="btn btn-success"
+                        onClick={this.acceptNotification}
+                      >
+                        Accept
+                      </button>
+                      <button
+                        disabled={this.state.isUploading}
+                        className="btn btn-danger"
+                        onClick={this.rejectNotification}
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+>>>>>>> Stashed changes
 
                     {/* {this.state.notificationsDetails.tRejected ? (
                 <p className="notification-rejected">
@@ -267,6 +379,7 @@ class NotificationDetails extends Component {
                 ""
               )} */}
 
+<<<<<<< Updated upstream
                     {this.props.notificationDetails &&
                     this.props.notificationDetails.tAccepted &&
                     this.state.userDetails.role !== "Teacher" ? (
@@ -282,6 +395,22 @@ class NotificationDetails extends Component {
                       ""
                     )}
                   </div>
+=======
+                  {this.props.notificationDetails &&
+                  this.props.notificationDetails.tAccepted &&
+                  this.state.userDetails.role !== "Teacher" ? (
+                    <div>
+                      <button
+                        disabled={true}
+                        className="btn btn-success pull-right"
+                      >
+                        Pay Now
+                      </button>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+>>>>>>> Stashed changes
                 </div>
               </div>
             </div>

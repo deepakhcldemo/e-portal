@@ -29,6 +29,27 @@ export const getNotificationFromDB = dispatch => {
     });
 };
 
+export const getNotificationForStudentBasedFromDB = (dispatch, id) => {
+  const db = dbFactory.create("firebase");
+  let data = [];
+  db.firestore()
+    .collection("notifications")
+    .where("loggedInUserId", "==", id)
+    .get()
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        data.push(doc.data());
+      });
+      dispatch({
+        type: "GET_NOTIFICATIONS_STUDENT_ID",
+        notificationsBasedOnStudent: data
+      });
+    })
+    .catch(err => {
+      dispatch({ type: "ERROR", err });
+    });
+};
+
 export const rejectNotificationFromDB = (
   dispatch,
   rejectedNotificationsDetails
@@ -41,12 +62,11 @@ export const rejectNotificationFromDB = (
     });
 };
 
-
 export const deleteNotificationFromDB = (
   dispatch,
   deleteNotificationsDetails
 ) => {
-getDbRef("notifications")
+  getDbRef("notifications")
     .doc(deleteNotificationsDetails.id)
     .delete()
     .then(() => {
@@ -58,15 +78,13 @@ export const saveNotificationAcceptedFromDB = (
   dispatch,
   acceptedNotificationsDetails
 ) => {
- getDbRef("notifications")
+  getDbRef("notifications")
     .doc(acceptedNotificationsDetails.id)
     .set(acceptedNotificationsDetails)
     .then(() => {
       dispatch({ type: "REJECT_NOTIFICATION" });
     });
 };
-
-
 
 export const getVideoUrl = (name, id) => {
   // let studentDetails = [];
@@ -79,14 +97,7 @@ export const getVideoUrl = (name, id) => {
     .getDownloadURL();
 };
 
-
-
-
-
-export const setIDForNotificationFromDB =  (
-  dispatch,
-  id
-)  => {
+export const setIDForNotificationFromDB = (dispatch, id) => {
   const db = dbFactory.create("firebase");
   let data = [];
   db.firestore()
@@ -98,7 +109,10 @@ export const setIDForNotificationFromDB =  (
         data.push(doc.data());
         console.log("data in notification", data);
       });
-      dispatch({ type: "GET_NOTIFICATION_BY_ID", notificationDetailsByID: data });
+      dispatch({
+        type: "GET_NOTIFICATION_BY_ID",
+        notificationDetailsByID: data
+      });
     })
     .catch(err => {
       dispatch({ type: "ERROR", err });
