@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './TeacherItem.css';
+import './TeacherItem.scss';
 import StarRatingComponent from 'react-star-rating-component';
 
 class TeacherItem extends Component {
@@ -33,7 +33,7 @@ class TeacherItem extends Component {
                     isTrayItem ? 'profile-pic-list' : 'profile-pic-block'
                   }
                 >
-                  <img src={userProfile.profileImage} alt="" />
+                  <img src={userProfile.profileImage} alt="profile pic" />
                 </div>
               </div>
               <div
