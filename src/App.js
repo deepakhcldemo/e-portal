@@ -49,12 +49,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 );
 class App extends Component {
   state = {
-    auth: true
+    auth: true,
+    user: {}
   };
   componentWillMount() {
     // console.log('-----------------------------------------------------------');
     const user = JSON.parse(localStorage.getItem("user"));
-
+    this.setState({ user: user });
     if (!user && this.props.location) {
       GLOBAL_VARIABLES.BASEROUTE = this.props.location.pathname;
       this.props.history.push("/home");
@@ -153,7 +154,7 @@ class App extends Component {
           /> */}
           <Redirect to="/home" />
         </Switch>
-        <Footer />
+        {this.state.user && <Footer />}
       </div>
     );
   }
