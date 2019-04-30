@@ -168,6 +168,7 @@ form label {
   height: 200px;
   width: 200px;
   border: 1px solid #dee2e6 !important;
+  margin: auto;
 }
 
 .file-margin {
