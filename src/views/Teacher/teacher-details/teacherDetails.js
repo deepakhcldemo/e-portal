@@ -105,9 +105,9 @@ class TeacherDetails extends Component {
         getUserProfileFromDB(doc.data().user_id).onSnapshot(
           querySnapshot => {
             querySnapshot.forEach(profileData => {
-              tempArr['profileData'] = profileData.data();
-              tempArr['feedback'] = doc.data();
-              tempArr['feedbackId'] = doc.id;
+              tempArr["feedbackId"] = doc.id;
+              tempArr["profileData"] = profileData.data();
+              tempArr["feedback"] = doc.data();              
 
               feedbackData.push(tempArr);
               this.setState({
@@ -124,7 +124,7 @@ class TeacherDetails extends Component {
         );
       });
     });
-    console.log('this.state.studentsReview', this.state.studentsReview);
+    // console.log("this.state.studentsReview", this.state.studentsReview);
   }
   setTeacherData = data => {
     this.setState({ teacherData: data });
@@ -264,7 +264,7 @@ class TeacherDetails extends Component {
               }
 
               saveTeacherRating(teacherId, data);
-              console.log('---------------', this.state.teacherDetails);
+              // console.log("---------------", this.state.teacherDetails);
               saveTeacherRatingOnProfile(teacherId, this.state.teacherDetails);
 
               this.setState({ starRating: nextValue });
@@ -364,7 +364,7 @@ class TeacherDetails extends Component {
     this.setState({ isFocus: true });
   }
   updateTotalComments(noOfComment) {
-    console.log('noOfComment', noOfComment);
+    // console.log("noOfComment", noOfComment);
     // this.setState({noOfComment: noOfComment});
   }
 

@@ -49,6 +49,7 @@ class Student extends Component {
   render() {
     const pendingReviev = [];
     const reviewDone = [];
+    
     const { bannerRows, carouselTop10Items } = this.state;
     const { teacherCarouselRows, notifications } = this.props;
     console.log('notifications', notifications);
@@ -57,10 +58,15 @@ class Student extends Component {
     {
       notifications.length > 0 &&
         notifications.forEach(notification => {
+          const mapData = {};
           if (notification.tRejected || notification.tAccepted) {
-            reviewDone.push(notification);
+            mapData.src = notification.sVideo;
+            mapData.title = notification.notificationDesc;
+            reviewDone.push(mapData);
           } else {
-            pendingReviev.push(notification);
+            mapData.src = notification.sVideo;
+            mapData.title = notification.notificationDesc;
+            pendingReviev.push(mapData);
           }
         });
     }
@@ -68,7 +74,6 @@ class Student extends Component {
     return (
       <div className="container-fluid">
         <HeaderHome headeTitle="Student Dashboard" />
-
         <div className="content-container">
           {bannerRows.length > 0 && (
             <Banner bannerRows={bannerRows} pageName="student" />
@@ -89,16 +94,15 @@ class Student extends Component {
           <div className="col-12 content-container--background">&nbsp;</div>
           <RecentVideo
             isNotVisibleVideoMeta={true}
-            carousellistNewlyItems={notifications}
+            carousellistNewlyItems={reviewDone}
             headeTitle="Video Reviewed"
           />
         </div>
-        {/* <RecentVideo
-          carousellistNewlyItems={notifications}
+        <RecentVideo
+          carousellistNewlyItems={pendingReviev}
           title="Video Reviewed"
         />
-
-        <Navbar links={STUDENT_DASHBOARD_LINKS} /> */}
+        {/* <Navbar links={STUDENT_DASHBOARD_LINKS} /> */} 
       </div>
     );
   }

@@ -9,12 +9,12 @@ class Dislike extends Component {
     }
     componentDidMount() {
         const userDislike = this.props.userDislike;
-        console.log('dislike component')
+        // console.log('dislike component')
         this.setState({isActive: (userDislike ? true: false)});
     }
     componentWillReceiveProps(nextProps) {
         // Load new data when the dataSource property changes.
-        console.log('dislike receive props', nextProps)
+        // console.log('dislike receive props', nextProps)
         if (nextProps.userDislike != this.props.userDislike) {
             this.setState({isActive: (nextProps.userDislike ? true: false)});
             

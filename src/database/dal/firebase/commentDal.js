@@ -16,7 +16,7 @@ export const saveCommentDetails = commentDetails => {
 // }
 
 export const getCommentRating = (commentId) => {
-    return getDbRef('feedback').doc(commentId).get();
+    return getDbRef('feedback').doc(commentId);
 }
 
 export const saveTeacherRating = (reacherId, data) => {
@@ -28,5 +28,7 @@ export const saveTeacherRating = (reacherId, data) => {
 // }
 
 export const saveLike = (commentId, data) => {
-    return getDbRef('feedback').doc(commentId).set(data);
+    // return getDbRef('feedback').doc(commentId).set(data);
+    // return getDbRef('feedback').doc(commentId).update({foo: "bar"});
+    return getDbRef('feedback').doc(commentId).update(data);
 }

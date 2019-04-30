@@ -35,12 +35,19 @@ class VideoItem extends Component {
                   onClick={this.handleClick}
                   className="thumb-wrapper"
                 >
-                {videoDetails.thumb && (
+                {videoDetails.thumb? (
                   <React.Fragment>
                     <img src={videoDetails.thumb} alt={videoDetails.title} />
                     <i className="far fa-play-circle"></i>
                   </React.Fragment>
-                )}
+                )
+                : 
+                <React.Fragment>
+                    <video controls src={videoDetails.src} alt={videoDetails.title} />
+                    <i className="far fa-play-circle"></i>
+                  </React.Fragment>
+                } 
+
                 
                 </div>
                 <div className="vd-content user-details--height detail--text">

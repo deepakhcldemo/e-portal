@@ -46,7 +46,7 @@ class Comment extends Component {
   };
 
   render() {
-    const { commentRows, loggedInUser, isFocus } = this.props;
+    const { commentRows, loggedInUser, isFocus, teacherId } = this.props;
     const noOfComment = commentRows.length;
     return (
       <React.Fragment>
@@ -55,6 +55,7 @@ class Comment extends Component {
             <div className="container">
               <div className="row">
                 <div className="col-12">
+                {loggedInUser.userId !== teacherId &&
                   <div className="comment-thread-element">
                     <div className="author-thumbnail">
                       {loggedInUser && (
@@ -102,6 +103,7 @@ class Comment extends Component {
                       </div>
                     </form>
                   </div>
+                }
                   {/* <div className="comments-hdr-section">
                     <div className="no-thumb">&nbsp;</div>
                     <div className="comments-count">
