@@ -143,8 +143,8 @@ class NotificationsDetails extends Component {
         <div className="container-fluid">
           <div>
             <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12 col-without--padding">
-              {Object.keys(notificationDetails).map(notificationDetail => (
-                <div
+              {Object.keys(notificationDetails).map((notificationDetail, index) => (
+                <div key={index}
                   className={this.getClassName(
                     notificationDetails[notificationDetail].status
                   )}
@@ -154,7 +154,7 @@ class NotificationsDetails extends Component {
                       `/student/notificationsDescription/` +
                       notificationDetails[notificationDetail].nId
                     }
-                    activeClassName="active"
+                    className="active"
                   >
                     <div>
                       <div style={{ float: "left" }}>
@@ -203,23 +203,23 @@ class NotificationsDetails extends Component {
                               ].details
                           )
                         ) : (
-                          <span>Loading...</span>
-                        )}
+                            <span>Loading...</span>
+                          )}
                       </div>
                     </div>
                   </Link>
                   {notificationDetails[notificationDetail].paymentStatus !=
-                  false ? (
-                    <button
-                      type="button"
-                      className="btn btn-success"
-                      data-dismiss="modal"
-                    >
-                      Start Chat
+                    false ? (
+                      <button
+                        type="button"
+                        className="btn btn-success"
+                        data-dismiss="modal"
+                      >
+                        Start Chat
                     </button>
-                  ) : (
-                    <div />
-                  )}
+                    ) : (
+                      <div />
+                    )}
                 </div>
               ))}
             </div>

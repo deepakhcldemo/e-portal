@@ -168,7 +168,16 @@ class notificationsDescription extends Component {
                   data-dismiss="modal"
                   aria-hidden="true"
                 />
+
                 <h4 className="modal-title" id="myModalLabel">
+                  <button
+                    onClick={this.handleBack}
+                    type="button"
+                    className="btn btn-dark"
+                    data-dismiss="modal"
+                  >
+                    Back
+                </button> &nbsp;
                   More About Teacher {studentDataFromDB.firstName} {studentDataFromDB.lastName} Notification
 
                 </h4>
@@ -185,9 +194,10 @@ class notificationsDescription extends Component {
                   />
                   <p> {studentDataFromDB.firstName} {studentDataFromDB.lastName}</p>
                   <h3 className="media-heading" />
+                  <StatusCircle backgroundColor={this.getColorCode(notificationData.status)} foregroundColor="#000" height="80px" width="80px" payload={this.getMessageText(notificationData.status)}
+                  />
                 </center>
-                <StatusCircle backgroundColor={this.getColorCode(notificationData.status)} foregroundColor="#000" height="80px" width="80px" payload={this.getMessageText(notificationData.status)}
-                />
+
                 <span>
                   <strong>Date & Timing: </strong>
                 </span>
@@ -207,14 +217,14 @@ class notificationsDescription extends Component {
                 </p>
               </div>
               <div className="modal-footer">
-                <button
+                {/* <button
                   onClick={this.handleBack}
                   type="button"
                   className="btn btn-primary"
                   data-dismiss="modal"
                 >
                   Back
-                </button>
+                </button> */}
                 {notificationData.status == -1 &&
                   notificationData.reqForReSchedule === true ? (
                     <button

@@ -41,9 +41,6 @@ class NotificationsDetails extends Component {
     return alertClassName;
   }
   render = () => {
-    console.log("Notification data => ", this.props.notificationDetails);
-    console.log("Teacher data => ", this.props.teacherDetails);
-    console.log("Student data => ", this.props.studentDetails);
 
     const { open } = this.state;
     const { notificationDetails } = this.props;
@@ -54,14 +51,14 @@ class NotificationsDetails extends Component {
           <div className="content-container">
             <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12 col-without--padding">
               <div className=" notification-card">
-                {Object.keys(notificationDetails).map(notificationDetail => (
+                {Object.keys(notificationDetails).map((notificationDetail, index) => (
                   //console.log(notificationDetails[notificationDetail].charge)
-                  <Link
+                  <Link key={index}
                     to={
                       `/teacher/notificationsDescription/` +
                       notificationDetails[notificationDetail].nId
                     }
-                    activeClassName="active"
+                    className="active"
                   >
                     <div
                       className={this.getClassName(

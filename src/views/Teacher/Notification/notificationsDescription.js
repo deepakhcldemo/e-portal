@@ -178,6 +178,14 @@ class notificationsDescription extends Component {
                         aria-hidden="true"
                       />
                       <h4 className="modal-title" id="myModalLabel">
+                        <button
+                          onClick={this.handleBack}
+                          type="button"
+                          className="btn btn-dark"
+                          data-dismiss="modal"
+                        >
+                          Back
+                </button> &nbsp;
                         More About Student {studentDataFromDB.firstName} {studentDataFromDB.lastName} Notification
                       </h4>
                     </div>
@@ -196,9 +204,10 @@ class notificationsDescription extends Component {
                         <h3 className="media-heading">
                           {notificationData.nid}
                         </h3>
+                        <StatusCircle backgroundColor={this.getColorCode(notificationData.status)} foregroundColor="#000" height="80px" width="80px" payload={this.getMessageText(notificationData.status)}
+                        />
                       </center>
-                      <StatusCircle backgroundColor={this.getColorCode(notificationData.status)} foregroundColor="#000" height="80px" width="80px" payload={this.getMessageText(notificationData.status)}
-                      />
+
                       <span>
                         <strong>Date & Timing: </strong>
                       </span>
@@ -212,14 +221,14 @@ class notificationsDescription extends Component {
                       </p>
                     </div>
                     <div className="modal-footer">
-                      <button
+                      {/* <button
                         onClick={this.handleBack}
                         type="button"
                         className="btn btn-dark"
                         data-dismiss="modal"
                       >
                         Back
-                      </button>
+                      </button> */}
 
                       {notificationData.paymentStatus === false &&
                         notificationData.status === -1 ? (
