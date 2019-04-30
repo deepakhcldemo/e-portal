@@ -135,7 +135,7 @@ class Notification extends Component {
     return (
       <div className="container-fluid">
         <HeaderHome
-          headeTitle="Notification"
+          headeTitle="My Request\Review"
           dashboardLinks={TEACHER_DASHBOARD_LINKS}
         />
 
@@ -146,7 +146,7 @@ class Notification extends Component {
               activeKey={this.state.key}
               onSelect={key => this.setState({ key })}
             >
-              <Tab eventKey="chatNotification" title="Chat Notification">
+              <Tab eventKey="chatNotification" title="Chat Request">
                 <div className="card notification-container">
                   <div className="card-body notification-container">
                     {userDetails.role === "Teacher" && (
@@ -156,7 +156,7 @@ class Notification extends Component {
                   </div>
                 </div>
               </Tab>
-              <Tab eventKey="notification" title="Notification">
+              <Tab eventKey="notification" title="Review Request">
                 <div className="card notification-container">
                   <div className="card-body notification-container">
                     {notificationsList &&
