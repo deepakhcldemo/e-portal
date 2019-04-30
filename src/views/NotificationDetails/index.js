@@ -149,7 +149,7 @@ class NotificationDetails extends Component {
                   </button>
                   {this.props.notificationDetails ? (
                     <div className="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 col-without--padding heading--padding">
-                      <span className="bold"> Request Detail :</span>
+                      <span className="bold">&nbsp; Request Detail :</span>
                       {this.props.notificationDetails.notificationDesc}
                     </div>
                   ) : null}
