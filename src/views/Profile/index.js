@@ -321,12 +321,13 @@ class Profile extends Component {
                           width="240"
                           height="200"
                         />
+                        {isUploading && (
+                          <div className="text-block ">
+                            <span className="blink-text">Uploading...</span>
+                          </div>
+                        )}
                       </div>
-                      {isUploading && (
-                        <div className="text-block ">
-                          <span className="blink-text">Uploading...</span>
-                        </div>
-                      )}
+
                       <div className="custom-file file-margin">
                         <input
                           type="file"
