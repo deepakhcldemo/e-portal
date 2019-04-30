@@ -12,7 +12,7 @@ const config = {
   messagingSenderId: '994953111174'
 };
 firebase.initializeApp(config);
-
+firebase.firestore().enablePersistence();
 //firebase.firestore().settings(settings);
 
 export default firebase;

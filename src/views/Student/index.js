@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import CategoryItem from "../CategoryItem";
-import HeaderHome from "../../components/layout/header/HeaderHome";
-import { connect } from "react-redux";
-import RecentVideo from "../../components/recentVideo/RecentVideo";
-import { getTeacher, getCurriculum /* getNotification */ } from "./action";
-import { getBannerFromDB } from "../../database/dal/firebase/studentDal";
-import { getTeacherFromDB } from "./../../database/dal/firebase/homeDal";
-import Banner from "../../components/banner/Banner";
-import TopTutor from "../../components/topTutor/TopTutor";
-import GLOBAL_VARIABLES from "../../config/config";
-import { getNotificationsBasedOnStudentID } from "./action";
-import "./Student.css";
+import React, { Component } from 'react';
+import CategoryItem from '../CategoryItem';
+import HeaderHome from '../../components/layout/header/HeaderHome';
+import { connect } from 'react-redux';
+import RecentVideo from '../../components/recentVideo/RecentVideo';
+import { getTeacher, getCurriculum /* getNotification */ } from './action';
+import { getBannerFromDB } from '../../database/dal/firebase/studentDal';
+import { getTeacherFromDB } from './../../database/dal/firebase/homeDal';
+import Banner from '../../components/banner/Banner';
+import TopTutor from '../../components/topTutor/TopTutor';
+import GLOBAL_VARIABLES from '../../config/config';
+import { getNotificationsBasedOnStudentID } from './action';
+import './Student.css';
 class Student extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +23,7 @@ class Student extends Component {
   }
 
   componentDidMount() {
-    const loggedUserId = JSON.parse(localStorage.getItem("userProfile"));
+    const loggedUserId = JSON.parse(localStorage.getItem('userProfile'));
     this.props.getNotificationsBasedOnStudentID(loggedUserId.userId);
     getBannerFromDB().then(querySnapshot => {
       let bannerData = [];
@@ -51,9 +51,9 @@ class Student extends Component {
     const reviewDone = [];
     const { bannerRows, carouselTop10Items } = this.state;
     const { teacherCarouselRows, notifications } = this.props;
-    console.log("notifications", notifications);
+    console.log('notifications', notifications);
     const listTop10Items = teacherCarouselRows;
-    console.log("listTop10Items", listTop10Items);
+    console.log('listTop10Items', listTop10Items);
     {
       notifications.length > 0 &&
         notifications.forEach(notification => {

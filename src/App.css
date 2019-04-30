@@ -1,6 +1,4 @@
-
 @import "./views/Home/styles.css";
-
 
 #app {
   height: 100vh;
@@ -452,18 +450,12 @@
   background-color: #f5f5f5;
 }
 
-.rrt-confirm-holder
-  .rrt-confirm
-  .rrt-buttons-holder
-  .rrt-button.rrt-ok-btn:active {
+.rrt-confirm-holder .rrt-confirm .rrt-buttons-holder .rrt-button.rrt-ok-btn:active {
   background-color: #60bb71;
   color: white;
 }
 
-.rrt-confirm-holder
-  .rrt-confirm
-  .rrt-buttons-holder
-  .rrt-button.rrt-cancel-btn:active {
+.rrt-confirm-holder .rrt-confirm .rrt-buttons-holder .rrt-button.rrt-cancel-btn:active {
   background-color: #db6a64;
   color: white;
 }
@@ -1237,9 +1229,9 @@ li .fa {
   background-color: #4b4e68;
 }
 
-/* .slick-slide {
+.slick-slide {
   max-width: 200px;
-} */
+}
 
 .banner-container .slick-slide {
   max-width: unset !important;
