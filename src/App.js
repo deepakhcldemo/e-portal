@@ -12,7 +12,6 @@ import "./App.css";
 import CreateEvent from "./views/Events/events";
 import Home from "./views/Home";
 import Login from "./views/Login";
-import Dashboard from "./views/Dashboard";
 import Curriculum from "./views/Curriculum";
 import PasswordReset from "./views/PasswordReset";
 import ChangePassword from "./views/ChangePassword";
@@ -97,7 +96,6 @@ class App extends Component {
           <Route exact path="/aboutus" component={AboutUs} />
           <Route exact path="/resetPassword" component={PasswordReset} />
           <Route exact path="/student/teacher" component={SearchTeacher} />
-          <PrivateRoute path="/dashboard" component={Dashboard} />
           <PrivateRoute path="/profile" component={Profile} />
           <PrivateRoute path="/curriculum" component={Curriculum} />
           <PrivateRoute path="/student" component={Student} exact />
