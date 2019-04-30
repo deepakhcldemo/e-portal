@@ -66,3 +66,12 @@ background-color: white !important;
 .alert {
   width: 100% !important;
 }
+
+
+@media only screen and (max-width: 620px) {
+  .delete-notification-icon {
+    position: relative;
+    top: 25px;
+    right: 20px;
+  }
+}
