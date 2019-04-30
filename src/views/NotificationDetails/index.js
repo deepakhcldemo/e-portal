@@ -4,7 +4,8 @@ import FileUploader from "react-firebase-file-uploader";
 import firebase from "firebase";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
-import NavBar from "../../shared/components/Navbar";
+
+import Navbar from "./../../shared/components/Navbar";
 import Progress from "./progress";
 import { getVideoUrl } from "../../database/dal/firebase/notificationdal";
 import HeaderHome from "../../components/layout/header/HeaderHome";
@@ -251,6 +252,9 @@ class NotificationDetails extends Component {
               </div>
             </div>
           </div>
+        </div>
+        <div className="col-12 main-wrapper">
+          <Navbar />
         </div>
       </div>
     );
