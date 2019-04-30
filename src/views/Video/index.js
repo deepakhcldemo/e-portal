@@ -16,6 +16,7 @@ import { getNotificationsFromDB } from "../../database/dal/firebase/studentDal";
 
 import { VIDEO_TABS } from "./../../constant/Constant";
 import { link } from "fs";
+import "./video.scss";
 // import notifications from "../Student/Notification/notifications";
 
 class Video extends Component {
@@ -134,7 +135,7 @@ class Video extends Component {
       <>
         <div className="container-fluid">
           <HeaderHome headeTitle="My Video(s)" />
-          <div className="content-container main-wrapper">
+          <div className="content-container main-wrapper col-12">
             {!upload && (
               <>
                 <Filter content={content} filterContent={this.handleFilter} />

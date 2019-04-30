@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import moment from 'moment';
+import React, { Component } from "react";
+import moment from "moment";
 // import { NavLink } from 'react-router-dom'
 import StarRatingComponent from "react-star-rating-component";
 import VideoPopup from "./../../../components/videopopup/VideoPopup";
@@ -9,8 +9,8 @@ import GLOBAL_VARIABLES from "../../../config/config";
 class VideoList extends Component {
   state = {
     modalOpen: false,
-    userDetails: '',
-    videoData: ''
+    userDetails: "",
+    videoData: ""
   };
 
   handleClick = videoData => {
@@ -22,7 +22,7 @@ class VideoList extends Component {
 
   componentWillMount = () => {
     this.setState({
-      userDetails: JSON.parse(localStorage.getItem('userProfile'))
+      userDetails: JSON.parse(localStorage.getItem("userProfile"))
     });
   };
 
@@ -30,22 +30,16 @@ class VideoList extends Component {
     const { heading, videoDetails } = this.props;
     const { modalOpen, userDetails, videoData } = this.state;
     return (
-      <div className="card video-container--background">
-        <div className="card-body">
-          {this.props.children && (
-            <h4>
-              {this.props.children}
-            </h4>
-          )}
-          {videoDetails.length === 0 && (
-            <h6>No {heading}</h6>
-          )}
+      <div className="card video-container--background video-container">
+        <div className="card-body video-container">
+          {this.props.children && <h4>{this.props.children}</h4>}
+          {videoDetails.length === 0 && <h6>No {heading}</h6>}
           <ul className="list-unstyled video-list-thumbs">
             {videoDetails &&
               videoDetails.map((videoDetail, index) => {
                 videoDetail.date = videoDetail.created
                   ? moment(videoDetail.created.toDate()).fromNow()
-                  : '';
+                  : "";
                 videoDetail.thumb = videoDetail.thumb
                   ? videoDetail.thumb
                   : GLOBAL_VARIABLES.VIDEO_PLACEHOLDER;
@@ -58,7 +52,11 @@ class VideoList extends Component {
                         className="img-responsive"
                         height="130px"
                       />
-                      <h2>{videoDetail.title ? videoDetail.title : videoDetail.notificationDesc}</h2>
+                      <h2>
+                        {videoDetail.title
+                          ? videoDetail.title
+                          : videoDetail.notificationDesc}
+                      </h2>
                       <i className="fas fa-play-circle" />
                       <h6>{videoDetail.date}</h6>
                     </a>
