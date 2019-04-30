@@ -1,16 +1,25 @@
 import React, { Component } from "react";
 import { withRouter, NavLink } from "react-router-dom";
 import "./navbar.scss";
-import {TEACHER_DASHBOARD_LINKS, STUDENT_DASHBOARD_LINKS} from './../../../constant/Constant'
+import {
+  TEACHER_DASHBOARD_LINKS,
+  STUDENT_DASHBOARD_LINKS
+} from "./../../../constant/Constant";
 
 class Navbar extends Component {
-  
   render = () => {
     const user = JSON.parse(localStorage.getItem("userProfile"));
-    const links = (user && user.role === 'Teacher') ? TEACHER_DASHBOARD_LINKS : STUDENT_DASHBOARD_LINKS
+    const links =
+      user && user.role === "Teacher"
+        ? TEACHER_DASHBOARD_LINKS
+        : STUDENT_DASHBOARD_LINKS;
     return (
-      <footer className="header-container" style={{top: 'unset', bottom:'0px'}}>
-        {links &&
+      <footer
+        className="header-container"
+        style={{ top: "unset", bottom: "0px" }}
+      >
+        {user &&
+          links &&
           links.map((link, index) => {
             return (
               <div
