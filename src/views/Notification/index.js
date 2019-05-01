@@ -82,9 +82,9 @@ class Notification extends Component {
   };
 
   goToNotificationDetails = notification => {
-    this.props.setNotificationDetails(notification);
+    
     console.log(this.props);
-    this.props.history.push("/notificationDetails");
+    this.props.history.push("/notificationdetails/" +  notification.id);
   };
 
   deleteNotification = (notification, parameter) => {
@@ -121,9 +121,9 @@ class Notification extends Component {
   };
 
   goToNotificationDetails = notification => {
-    this.props.setNotificationDetails(notification);
+    this.props.setNotificationDetails(notification.id);
     this.props.history.push(
-      "/notificationdetails/" + notification.loggedInUserId
+      "/notificationdetails/" + notification.id
     );
   };
 

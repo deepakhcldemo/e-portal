@@ -46,6 +46,16 @@ class ModalPopUp extends Component {
     }
   }
 
+
+  randomString(length) {
+    var text = '';
+    var possible =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (var i = 0; i < length; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+  }
   componentWillReceiveProps(nextProps) {
     this.setState({
       teacherName: nextProps.teacherDeatils.title,
@@ -89,6 +99,8 @@ class ModalPopUp extends Component {
   };
 
   createNotification = () => {
+    const id = this.randomString(20);
+    console.log(id);
     const loggedInUSerDetails = JSON.parse(localStorage.getItem("userProfile"));
     let tId,
       sId,
@@ -110,6 +122,7 @@ class ModalPopUp extends Component {
     const tRejected = false;
     const notificationDetails = {
       notificationDesc: this.state.notificationDescription,
+      id,
       tId,
       sId,
       loggedInUserId: loggedInUSerDetails.userId,
@@ -156,7 +169,7 @@ class ModalPopUp extends Component {
     return (
       <div>
         <Modal open={openModal} onClose={this.onCloseModal} center>
-          {this.state.notificationPermission ? (
+          
             <div>
               <div className="header">
                 <h3>New Request for Review</h3>
@@ -220,18 +233,7 @@ class ModalPopUp extends Component {
                 </form>
               </div>
             </div>
-          ) : (
-            <div>
-              <div className="header">
-                <h3>New Request for Review</h3>
-              </div>
-              <div className="body">
-                <p className="already-notified">
-                  Already created Notification for this Teacher!
-                </p>
-              </div>
-            </div>
-          )}
+         
         </Modal>
       </div>
     );

@@ -7,10 +7,26 @@ const getDbRef = collectionName => {
 };
 
 export const saveNotification = notificationDetails => {
-  return getDbRef("notifications").add({
+ 
+  
+  
+  
+  return getDbRef("notifications").doc(notificationDetails.id).set({
     ...notificationDetails
-  });
+   
+  })
+  
 };
+
+const randomString = (length) =>  {
+  var text = '';
+  var possible =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (var i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
 
 export const getNotificationFromDB = dispatch => {
   const db = dbFactory.create("firebase");
@@ -78,6 +94,7 @@ export const saveNotificationAcceptedFromDB = (
   dispatch,
   acceptedNotificationsDetails
 ) => {
+
   getDbRef("notifications")
     .doc(acceptedNotificationsDetails.id)
     .set(acceptedNotificationsDetails)
@@ -102,7 +119,7 @@ export const setIDForNotificationFromDB = (dispatch, id) => {
   let data = [];
   db.firestore()
     .collection("notifications")
-    .where("loggedInUserId", "==", id)
+    .where("id", "==", id)
     .get()
     .then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {

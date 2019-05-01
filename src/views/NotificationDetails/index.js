@@ -4,7 +4,7 @@ import FileUploader from 'react-firebase-file-uploader';
 import firebase from 'firebase';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-
+import * as actionTypes from '../../spinnerStore/actions';
 import Navbar from './../../shared/components/Navbar';
 import Progress from './progress';
 import { getVideoUrl } from '../../database/dal/firebase/notificationdal';
@@ -35,10 +35,16 @@ class NotificationDetails extends Component {
     };
     this.acceptNotification = this.acceptNotification.bind(this);
     this.goBackTONotification = this.goBackTONotification.bind(this);
+    this.rejectNotification = this.rejectNotification.bind(this);
   }
 
   componentDidMount() {
-    console.log(this.state);
+    const notificationId = this.props.match.params.id;
+    this.props.setSpinnerStatus(true);
+    this.props.setIDForNotification(notificationId);
+    if(this.props.notificationDetails){
+      this.props.setSpinnerStatus(false);
+    }
   }
   goBackTONotification = () => {
     this.props.setKeyForNotificationPage('NotificationDetails');
@@ -50,7 +56,7 @@ class NotificationDetails extends Component {
       ? this.setState({ applyClass: '' })
       : '';
     if (this.state.videoName !== '') {
-      const acceptNotification = { ...this.state.notificationsDetails };
+      const acceptNotification = { ...this.props.notificationDetails };
       acceptNotification.tstatus = true;
       acceptNotification.sstatus = true;
 
@@ -71,7 +77,7 @@ class NotificationDetails extends Component {
   };
 
   rejectNotification = () => {
-    const rejectNotification = { ...this.state.notificationsDetails };
+    const rejectNotification = { ...this.props.notificationDetails };
     rejectNotification.tstatus = false;
     rejectNotification.sstatus = false;
     rejectNotification.tRejected = true;
@@ -79,8 +85,8 @@ class NotificationDetails extends Component {
     this.goBackTONotification();
   };
   componentWillMount = () => {
-    const notificationId = this.props.match.params.id;
-    this.props.setIDForNotification(notificationId);
+    
+    
     const UserProfile = JSON.parse(localStorage.getItem('userProfile'));
     this.setState({
       notificationsDetails: this.props.notificationDetails,
@@ -104,6 +110,7 @@ class NotificationDetails extends Component {
   render() {
     let badgeText = '';
     let classNameBadge = '';
+    
     if (
       this.props.notificationDetails &&
       this.props.notificationDetails.sstatus &&
@@ -120,8 +127,8 @@ class NotificationDetails extends Component {
       classNameBadge = 'badge-danger';
     }
     if (
-      this.state.notificationDetails &&
-      this.state.notificationDetails.tAccepted
+      this.props.notificationDetails &&
+      this.props.notificationDetails.tAccepted
     ) {
       badgeText = 'Success';
       classNameBadge = 'badge-success';
@@ -310,7 +317,10 @@ const mapDispatchToProps = dispatch => {
       dispatch(saveAcceptedNotification(acceptNotificationData)),
     setKeyForNotificationPage: NotificationDetails =>
       dispatch(setKeyForNotificationPage(NotificationDetails)),
-    setIDForNotification: Id => dispatch(setIDForNotification(Id))
+    setIDForNotification: Id => dispatch(setIDForNotification(Id)),
+    setSpinnerStatus: value => {
+      dispatch({ type: actionTypes.SPINNER_STATUS, payload: value });
+    }
   };
 };
 export default withRouter(
