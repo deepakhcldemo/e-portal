@@ -2,32 +2,13 @@ import dbFactory from "../../dbFactory";
 
 const getDbRef = collectionName => {
   const db = dbFactory.create("firebase");
-  const ref = db.firestore().collection(collectionName);
-  return ref;
+  const ref = db.firestore().collection(collectionName) 
+ return ref;
 };
 
 export const saveNotification = notificationDetails => {
- 
-  
-  
-  
-  return getDbRef("notifications").doc(notificationDetails.id).set({
-    ...notificationDetails
-   
-  })
-  
+  getDbRef("notifications").doc(notificationDetails.id).set(notificationDetails, {merge: true})
 };
-
-const randomString = (length) =>  {
-  var text = '';
-  var possible =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-}
-
 export const getNotificationFromDB = dispatch => {
   const db = dbFactory.create("firebase");
   let data = [];
@@ -36,7 +17,10 @@ export const getNotificationFromDB = dispatch => {
     .get()
     .then(function(querySnapshot) {
       querySnapshot.forEach(function(doc) {
-        data.push(doc.data());
+        if(doc.exit){
+          data.push(doc.data());
+        }
+        
       });
       dispatch({ type: "GET_NOTIFICATIONS", notifications: data });
     })
