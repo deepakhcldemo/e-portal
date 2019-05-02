@@ -9,6 +9,7 @@ import Navbar from './../../shared/components/Navbar';
 import Progress from './progress';
 import { getVideoUrl } from '../../database/dal/firebase/notificationdal';
 import HeaderHome from '../../components/layout/header/HeaderHome';
+
 import {
   rejectNotification,
   openModalForAcceptNotification,
@@ -39,12 +40,17 @@ class NotificationDetails extends Component {
   }
 
   componentDidMount() {
+    this.props.setSpinnerStatus(true)
     const notificationId = this.props.match.params.id;
-   // this.props.setSpinnerStatus(true);
     this.props.setIDForNotification(notificationId);
-    // if(this.props.notificationDetails){
-    //   this.props.setSpinnerStatus(false);
-    // }
+    
+  }
+
+  componentWillReceiveProps(nextProps){
+    
+    if(nextProps.notificationDetails){
+        this.props.setSpinnerStatus(false);
+    }
   }
   goBackTONotification = () => {
     this.props.setKeyForNotificationPage('NotificationDetails');
