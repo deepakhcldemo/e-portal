@@ -40,11 +40,11 @@ class NotificationDetails extends Component {
 
   componentDidMount() {
     const notificationId = this.props.match.params.id;
-    this.props.setSpinnerStatus(true);
+   // this.props.setSpinnerStatus(true);
     this.props.setIDForNotification(notificationId);
-    if(this.props.notificationDetails){
-      this.props.setSpinnerStatus(false);
-    }
+    // if(this.props.notificationDetails){
+    //   this.props.setSpinnerStatus(false);
+    // }
   }
   goBackTONotification = () => {
     this.props.setKeyForNotificationPage('NotificationDetails');
@@ -173,7 +173,7 @@ class NotificationDetails extends Component {
                       <span className="bold"> Video Uploaded by Student </span>
                     ) : null}
                   </div>
-                  <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding teacher-video">
+                  <div className="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-without--padding teacher-video">
                     {this.props.notificationDetails &&
                     this.props.notificationDetails ? (
                       <video
@@ -192,7 +192,7 @@ class NotificationDetails extends Component {
                           Video Uploaded by Teacher{' '}
                         </span>
                       </div>
-                      <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding teacher-video">
+                      <div className="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-without--padding teacher-video">
                         <video
                           controls
                           src={this.props.notificationDetails.tvideo}
