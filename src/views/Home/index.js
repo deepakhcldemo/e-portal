@@ -39,9 +39,8 @@ class Home extends Component {
   }
 
   componentDidMount = () => {
-    
     const online = window.navigator.onLine;
-    if(online){
+    if (online) {
       getBannerFromDB().onSnapshot(querySnapshot => {
         let bannerData = [];
         querySnapshot.forEach(doc => {
@@ -53,8 +52,9 @@ class Home extends Component {
       });
     } else {
       const bannerData = [
-        {banner_image: "business-banner-1600x300.jpg", page: "home"}, 
-        {banner_image: "student_banner.jpg", page: "home"}];
+        { banner_image: 'business-banner-1600x300.jpg', page: 'home' },
+        { banner_image: 'student_banner.jpg', page: 'home' }
+      ];
 
       this.setState({
         bannerRows: bannerData
@@ -62,6 +62,10 @@ class Home extends Component {
     }
 
     getTeacherFromDB().onSnapshot(querySnapshot => {
+      if (querySnapshot.empty) {
+        this.props.setSpinnerStatus(false);
+        return;
+      }
       let teacherData = [];
       querySnapshot.forEach(doc => {
         teacherData.push(doc.data());
@@ -73,6 +77,10 @@ class Home extends Component {
     });
 
     getCurriculumFromDB().onSnapshot(querySnapshot => {
+      if (querySnapshot.empty) {
+        this.props.setSpinnerStatus(false);
+        return;
+      }
       let currData = [];
       querySnapshot.forEach(doc => {
         currData.push(doc.data());
@@ -90,6 +98,10 @@ class Home extends Component {
       // let profileData = [];
       let tempArr = {};
       let feedbackData = [];
+      if (querySnapshot.empty) {
+        this.props.setSpinnerStatus(false);
+        return;
+      }
       querySnapshot.forEach(doc => {
         const user_id = doc.data().user_id;
         if (user_id) {
@@ -111,6 +123,8 @@ class Home extends Component {
               this.props.setSpinnerStatus(false);
             }
           );
+        } else {
+          this.props.setSpinnerStatus(false);
         }
       });
     });
