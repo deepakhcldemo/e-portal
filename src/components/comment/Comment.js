@@ -58,7 +58,7 @@ class Comment extends Component {
             <div className="container">
               <div className="row">
                 <div className="col-12">
-                  {loggedInUser.userId !== teacherId && (
+                  {loggedInUser && loggedInUser.userId !== teacherId && (
                     <div className="comment-thread-element">
                       <div className="author-thumbnail">
                         {loggedInUser && (
