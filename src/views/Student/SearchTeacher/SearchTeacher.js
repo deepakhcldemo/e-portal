@@ -5,6 +5,7 @@ import {
   getTeachersBasedOnCateogy,
   zipRequestDispatch
 } from "./searchTeacherAction";
+import * as actionTypes from '../../../spinnerStore/actions';
 // import Navigation from '../Navigation/Navigation';
 import { connect } from "react-redux";
 // import Select from 'react-select';
@@ -36,22 +37,27 @@ class SearchTeacher extends Component {
 
   componentDidMount() {
     let self = this;
-    // const zipcode = this.state.searchValue;
-    // this.props.getTeachersBasedOnZipcode('99501');
-
+    this.props.setSpinnerStatus(true)
     getAllCategory().onSnapshot(querySnapshot => {
+      
+      const self = this;
+      
       querySnapshot.forEach(doc => {
-        const subjects = [...doc.data().subjects];
-        this.setState({ categoryList: subjects });
-        if (self.props.selectedSubjectFromHome) {
-          self.props.getTeachersBasedOnCateogy(
-            self.props.selectedSubjectFromHome
-          );
-          this.setState({
-            selectedSubject: self.props.selectedSubjectFromHome
-          });
-        } else {
-          this.props.getTeachersBasedOnCateogy(subjects["0"]);
+        if (doc.exists) {
+          self.props.setSpinnerStatus(false)
+          const subjects = [...doc.data().subjects];
+          this.setState({ categoryList: subjects });
+          if (self.props.selectedSubjectFromHome) {
+            self.props.getTeachersBasedOnCateogy(
+              self.props.selectedSubjectFromHome
+            );
+            this.setState({
+              selectedSubject: self.props.selectedSubjectFromHome
+            });
+          } else {
+            this.props.getTeachersBasedOnCateogy(subjects["0"]);
+          }
+          
         }
       });
     });
@@ -120,7 +126,7 @@ class SearchTeacher extends Component {
               }
             }
           }
-          
+
           if (
             searchParameter === "rating"
           ) {
@@ -313,7 +319,10 @@ const mapDispatchToProps = dispatch => {
   return {
     getTeachersBasedOnCateogy: selectedSubject =>
       dispatch(getTeachersBasedOnCateogy(selectedSubject)),
-    getTeachersBasedOnZipcode: zipcode => dispatch(zipRequestDispatch(zipcode))
+    getTeachersBasedOnZipcode: zipcode => dispatch(zipRequestDispatch(zipcode)), 
+    setSpinnerStatus: value => {
+      dispatch({ type: actionTypes.SPINNER_STATUS, payload: value });
+    }
   };
 };
 

@@ -2,12 +2,12 @@ import dbFactory from "../../dbFactory";
 
 const getDbRef = collectionName => {
   const db = dbFactory.create("firebase");
-  const ref = db.firestore().collection(collectionName) 
- return ref;
+  const ref = db.firestore().collection(collectionName)
+  return ref;
 };
 
 export const saveNotification = notificationDetails => {
-  getDbRef("notifications").doc(notificationDetails.id).set(notificationDetails, {merge: true})
+  getDbRef("notifications").doc(notificationDetails.id).set(notificationDetails, { merge: true })
 };
 export const getNotificationFromDB = dispatch => {
   const db = dbFactory.create("firebase");
@@ -15,12 +15,12 @@ export const getNotificationFromDB = dispatch => {
   db.firestore()
     .collection("notifications")
     .get()
-    .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        if(doc.exit){
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        if (doc.exit) {
           data.push(doc.data());
         }
-        
+
       });
       dispatch({ type: "GET_NOTIFICATIONS", notifications: data });
     })
@@ -36,9 +36,11 @@ export const getNotificationForStudentBasedFromDB = (dispatch, id) => {
     .collection("notifications")
     .where("loggedInUserId", "==", id)
     .get()
-    .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
-        data.push(doc.data());
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        if (doc.exists) {
+          data.push(doc.data());
+        }
       });
       dispatch({
         type: "GET_NOTIFICATIONS_STUDENT_ID",
@@ -105,8 +107,8 @@ export const setIDForNotificationFromDB = (dispatch, id) => {
     .collection("notifications")
     .where("id", "==", id)
     .get()
-    .then(function(querySnapshot) {
-      querySnapshot.forEach(function(doc) {
+    .then(function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
         data.push(doc.data());
         console.log("data in notification", data);
       });
