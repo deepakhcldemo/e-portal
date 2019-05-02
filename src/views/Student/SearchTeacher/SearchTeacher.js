@@ -120,6 +120,16 @@ class SearchTeacher extends Component {
               }
             }
           }
+          
+          if (
+            searchParameter === "rating"
+          ) {
+            if (teacher.rating) {
+              if (teacher.rating === +lowerCase) {
+                tempArray.push(teacher);
+              }
+            }
+          }
         });
       });
       this.setState({
