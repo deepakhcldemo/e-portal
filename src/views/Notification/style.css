@@ -6,14 +6,16 @@
   min-height: 200px;
 }
 
-#notification-wrapper{
+#notification-wrapper {
   color: #4b4e68;
 }
-
-.delete-icon{
+.no-Record {
+  color: white;
+}
+.delete-icon {
   color: #000 !important;
 }
-.delete-notification{
+.delete-notification {
   display: inline-block;
   padding-right: 20px;
   cursor: pointer;
@@ -66,7 +68,6 @@ background-color: white !important;
 .alert {
   width: 100% !important;
 }
-
 
 @media only screen and (max-width: 620px) {
   .delete-notification-icon {

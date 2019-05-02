@@ -82,9 +82,8 @@ class Notification extends Component {
   };
 
   goToNotificationDetails = notification => {
-    
     console.log(this.props);
-    this.props.history.push("/notificationdetails/" +  notification.id);
+    this.props.history.push("/notificationdetails/" + notification.id);
   };
 
   deleteNotification = (notification, parameter) => {
@@ -122,9 +121,7 @@ class Notification extends Component {
 
   goToNotificationDetails = notification => {
     this.props.setNotificationDetails(notification.id);
-    this.props.history.push(
-      "/notificationdetails/" + notification.id
-    );
+    this.props.history.push("/notificationdetails/" + notification.id);
   };
 
   render = () => {
@@ -202,7 +199,11 @@ class Notification extends Component {
                         );
                       })}
 
-                    {notificationsList.length == 0 ? <p>No Record</p> : ""}
+                    {notificationsList.length == 0 ? (
+                      <p className="no-Record">No Record</p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </Tab>
