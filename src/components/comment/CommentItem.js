@@ -12,15 +12,6 @@ class CommentItem extends Component {
       totalUnLike: 0,		
       feedbackby:''		
     };		
-  }		
-  getTotalCommentLikeUnlike(commentId) {		
-      getCommentRating(commentId).onSnapshot(querySnapshot => {		
-          this.setState({		
-              totalLike: querySnapshot.data().like? querySnapshot.data().like : 0,		
-              totalUnLike: querySnapshot.data().unlike ? querySnapshot.data().unlike : 0,		
-              feedbackby: querySnapshot.data().feedbackby,		
-          });           		
-      });		
   }
 
   render() {
