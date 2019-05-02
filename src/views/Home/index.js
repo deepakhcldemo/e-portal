@@ -52,7 +52,6 @@ class Home extends Component {
         });
       });
     } else {
-
       const bannerData = [
         {banner_image: "business-banner-1600x300.jpg", page: "home"}, 
         {banner_image: "student_banner.jpg", page: "home"}];
