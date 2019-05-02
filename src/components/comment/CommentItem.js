@@ -45,7 +45,7 @@ class CommentItem extends Component {
             }
           </div> 
           <div className="comment-content">
-            <div className="comment-hdr d-flex align-items-center justify-content-between">
+            <div className="comment-hdr d-flex align-items-start justify-content-between">
               <span className="date">
                     <strong>{name.trim()}</strong> 
                     {   
