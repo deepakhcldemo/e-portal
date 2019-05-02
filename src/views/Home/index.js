@@ -39,15 +39,28 @@ class Home extends Component {
   }
 
   componentDidMount = () => {
-    getBannerFromDB().onSnapshot(querySnapshot => {
-      let bannerData = [];
-      querySnapshot.forEach(doc => {
-        bannerData.push(doc.data());
+    
+    const online = window.navigator.onLine;
+    if(online){
+      getBannerFromDB().onSnapshot(querySnapshot => {
+        let bannerData = [];
+        querySnapshot.forEach(doc => {
+          bannerData.push(doc.data());
+        });
+        this.setState({
+          bannerRows: bannerData
+        });
       });
+    } else {
+
+      const bannerData = [
+        {banner_image: "business-banner-1600x300.jpg", page: "home"}, 
+        {banner_image: "student_banner.jpg", page: "home"}];
+
       this.setState({
         bannerRows: bannerData
       });
-    });
+    }
 
     getTeacherFromDB().onSnapshot(querySnapshot => {
       let teacherData = [];
@@ -112,6 +125,7 @@ class Home extends Component {
       studentsReview
     } = this.state;
 
+    // console.log('--bannerData--', bannerRows, '-----', window.navigator.onLine);
     return (
       <React.Fragment>
         <div className="container-fluid">
