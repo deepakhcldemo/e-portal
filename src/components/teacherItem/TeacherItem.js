@@ -32,8 +32,15 @@ class TeacherItem extends Component {
                   className={
                     isTrayItem ? 'profile-pic-list' : 'profile-pic-block'
                   }
+                  style={{
+                    backgroundImage:
+                      'url(' + '../../../Assets/hdpi/placeholder.png ' + ')',
+                    backgroundPosition: 'top center',
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat'
+                  }}
                 >
-                  <img src={userProfile.profileImage} alt="profile pic" />
+                  <img src={userProfile.profileImage} alt="profile" />
                 </div>
               </div>
               <div

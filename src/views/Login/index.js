@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-// import * as loginAction from './actions';
 import './styles.css';
 import { toastr } from 'react-redux-toastr';
-// import * as actionTypes from '../../spinnerStore/actions';
+
 import {
   fetchProviders,
   createUserWithEmail,

@@ -105,9 +105,9 @@ class TeacherDetails extends Component {
         getUserProfileFromDB(doc.data().user_id).onSnapshot(
           querySnapshot => {
             querySnapshot.forEach(profileData => {
-              tempArr["feedbackId"] = doc.id;
-              tempArr["profileData"] = profileData.data();
-              tempArr["feedback"] = doc.data();              
+              tempArr['feedbackId'] = doc.id;
+              tempArr['profileData'] = profileData.data();
+              tempArr['feedback'] = doc.data();
 
               feedbackData.push(tempArr);
               this.setState({
@@ -406,7 +406,18 @@ class TeacherDetails extends Component {
             <div className="container">
               <div className="row">
                 <div className="col-sm-12 col-md-3">
-                  <div className="profile-img-section">
+                  <div
+                    className="profile-img-section"
+                    style={{
+                      backgroundImage:
+                        'url(' +
+                        '../../../../Assets/hdpi/placeholder.png ' +
+                        ')',
+                      backgroundPosition: 'top center',
+                      backgroundSize: 'cover',
+                      backgroundRepeat: 'no-repeat'
+                    }}
+                  >
                     <img className="profile-img" src={imgPath} alt="..." />
                   </div>
                   <div className="icon-section d-flex">
