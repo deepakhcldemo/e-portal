@@ -22,8 +22,12 @@
 .header {
   padding: 0px 0px 25px 0px;
   color: white;
+  font-size: 20px !important;
 }
-
+.h3,
+h3 {
+  font-size: 20px !important;
+}
 .margn-top {
   margin-top: 20px;
 }
