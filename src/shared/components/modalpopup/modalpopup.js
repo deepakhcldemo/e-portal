@@ -182,11 +182,11 @@ class ModalPopUp extends Component {
                 <div className="form-group">
                   <div className="teacher-student">
                     <div className="btn btn-sm btn-info small-btn">
-                      Student: {this.state.studentName}
+                      <span className ="hide-teacher-student">Student :</span>  {this.state.studentName}
                     </div>
                     {/* <div className ="student-teacher-notifying"><b><i className="fa fa-angle-right">Notifying to </i></b></div> */}
                     <div className="btn btn-sm btn-info teacher small-btn">
-                      Teacher: {this.state.teacherName}
+                    <span className ="hide-teacher-student"> Teacher :</span> {this.state.teacherName}
                     </div>
                   </div>
                   <div>

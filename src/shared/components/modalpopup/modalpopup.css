@@ -135,7 +135,7 @@ form {
     top: 8px;
 }
 @media only screen and (max-width: 600px) {
-  .small-btn {
-   width: 40%;
-  }
+  .hide-teacher-student {
+   display: none;
+}
 }
