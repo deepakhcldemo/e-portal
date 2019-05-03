@@ -31,7 +31,7 @@ class Comment extends Component {
           user_id: loggedInUSer.user.uid,
           feedback_to: this.props.teacherId,
           like: 0,
-          unlike: 0
+          dislike: 0
         };
         saveCommentDetails({
           ...commentDetails
@@ -96,9 +96,9 @@ class Comment extends Component {
 
                         <div className="total-comments comment-btn d-flex justify-content-between">
                           <p className="count">
-                            {noOfComment}{' '}
+                            {noOfComment > 0 && noOfComment }{' '}
                             <span className="count-text">
-                              {noOfComment && 'Comments'}
+                              {noOfComment > 0 && 'Comments'}
                             </span>
                           </p>
 

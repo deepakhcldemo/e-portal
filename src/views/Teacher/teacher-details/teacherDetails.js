@@ -105,11 +105,12 @@ class TeacherDetails extends Component {
         getUserProfileFromDB(doc.data().user_id).onSnapshot(
           querySnapshot => {
             querySnapshot.forEach(profileData => {
-              tempArr['feedbackId'] = doc.id;
-              tempArr['profileData'] = profileData.data();
-              tempArr['feedback'] = doc.data();
-
+              tempArr["feedbackId"] = doc.id;
+              tempArr["profileData"] = profileData.data();
+              tempArr["feedback"] = doc.data();         
+          
               feedbackData.push(tempArr);
+              feedbackData = feedbackData.sort((a, b) => a.feedback.created_date.second < b.feedback.created_date.second);
               this.setState({
                 studentsReview: feedbackData
               });

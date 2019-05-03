@@ -16,14 +16,17 @@ class CommentItem extends Component {
 
   render() {
     const { commentDetails } = this.props;
-    const isLogedIn = localStorage.getItem('user');
+    const LogedInUser = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")): null;
+    const userId = LogedInUser.user.uid;
 
     const commentRows = commentDetails.map((commentDetail, index) => {
       
       const name = commentDetail.profileData.firstName + ' ' + commentDetail.profileData.lastName;
       const totalLike = commentDetail.feedback.like? commentDetail.feedback.like: 0;
-      const totalUnLike = commentDetail.feedback.unlike? commentDetail.feedback.unlike: 0;
+      const totalUnLike = commentDetail.feedback.dislike? commentDetail.feedback.dislike: 0;
       const feedbackby = commentDetail.feedback.feedbackby? commentDetail.feedback.feedbackby: '';
+      const userLiked = feedbackby ? (feedbackby.some(feedback => feedback.like === 1 && feedback.userId === userId) ? 1:0) : 0;
+      const userDisLiked = feedbackby ? (feedbackby.some(feedback => feedback.dislike === 1 && feedback.userId === userId) ? 1:0) : 0;
       
       return (
         <div className="comment-thread-element" key={index}>
@@ -49,8 +52,9 @@ class CommentItem extends Component {
                     feedbackId={commentDetail.feedbackId} 
                     totalLike={totalLike} 
                     totalUnLike={totalUnLike} 
+                    userLike={userLiked} 
+                    userDislike={userDisLiked} 
                     feedbackby={feedbackby} />  
-              {/* <CommentLikeUnlike feedbackId={commentDetails.feedbackId}/> */}
             </div>
 
             <p>{commentDetail.feedback.comment}</p>
