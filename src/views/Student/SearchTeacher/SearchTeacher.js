@@ -62,12 +62,16 @@ class SearchTeacher extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getSerachParameter(nextProps, 'defalutSubjectSelected');
+    this.setState({
+      filtredTeacherRecord: nextProps.TeacherList,
+      maintainFilterRecord : nextProps.TeacherList
+    });
   }
 
   handleChange = selectedOption => {
     this.setState({
-      searchParameter: selectedOption
+      searchParameter: selectedOption, 
+      searchValue : ''
     });
   };
 
@@ -78,11 +82,12 @@ class SearchTeacher extends Component {
   };
 
   getSerachParameter = (searchParameter, defalutSubjectSelected) => {
-    // console.log('searchParameter', searchParameter);
-    if (defalutSubjectSelected !== 'defalutSubjectSelected') {
+    this.props.setSpinnerStatus(true)
+    console.log(this.state);
+    if (this.state.searchValue !== '') {
       const lowerCase = this.state.searchValue.toLowerCase();
       const tempArray = [];
-      this.props.TeacherList.forEach(teacher => {
+     this.state.maintainFilterRecord.forEach(teacher => {
         this.state.searchParameter.forEach(searchParameter => {
           if (
             searchParameter === 'Name' &&
@@ -137,13 +142,15 @@ class SearchTeacher extends Component {
       this.setState({
         filtredTeacherRecord: tempArray
       });
-    } else {
-      // console.log('searchParameter.TeacherList', searchParameter.TeacherList);
+    } 
+    else{
       this.setState({
-        filtredTeacherRecord: searchParameter.TeacherList
+        filtredTeacherRecord: this.state.maintainFilterRecord
       });
+      
     }
-
+   
+    this.props.setSpinnerStatus(false)
     //this.props.getTeachersBasedOnCateogy(this.state.selectedSubject);
   };
 
@@ -162,10 +169,6 @@ class SearchTeacher extends Component {
 
   render() {
     const { getTeacherZipWise } = this.props;
-
-    // if (getTeacherZipWise.zip_codes && getTeacherZipWise.zip_codes.length > 0) {
-    //   console.log('--getTeachersBasedOnZipcode--', getTeacherZipWise.zip_codes);
-    // }
 
     this.state.filtredTeacherRecord.map((teacher, index) => {
       return (
