@@ -235,6 +235,9 @@ class Curriculum extends Component {
                             disabled={!this.state.validate}
                             hidden
                             accept="video/*"
+                            filename={file => 
+                              `${Math.random().toString(36).substring(2)}${(new Date()).getTime().toString(36)}_${file.name}`
+                            }
                             storageRef={firebase
                               .storage()
                               .ref(`curriculum/${userDetails.userId}`)}
@@ -287,7 +290,7 @@ class Curriculum extends Component {
                     >
                       Save
                     </button>
-                    {this.props.children}
+                    {!this.state.isUploading && this.props.children}
                   </div>
                 </div>
               </form>

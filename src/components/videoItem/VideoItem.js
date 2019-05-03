@@ -31,29 +31,27 @@ class VideoItem extends Component {
           <div className="card">
             <div className="">
               <div className="vd-wrapper col-xs-12">
-                <div onClick={this.handleClick} className="thumb-wrapper">
-                  {videoDetails.thumb ? (
-                    <React.Fragment>
-                      <img src={videoDetails.thumb} alt={videoDetails.title} />
-                      <i className="far fa-play-circle" />
-                    </React.Fragment>
-                  ) : (
-                    <React.Fragment>
-                      <video
-                        controls
-                        src={videoDetails.src}
-                        alt={videoDetails.title}
-                      />
-                      <i className="far fa-play-circle" />
-                    </React.Fragment>
-                  )}
+                <div
+                  onClick={this.handleClick}
+                  className="thumb-wrapper"
+                >
+                {videoDetails.thumb? (
+                  <React.Fragment>
+                    <img src={videoDetails.thumb} alt={videoDetails.title} />
+                    <i className="far fa-play-circle"></i>
+                  </React.Fragment>
+                )
+                : 
+                <React.Fragment>
+                    <video controls src={videoDetails.src} alt={videoDetails.title} />
+                    <i className="far fa-play-circle"></i>
+                  </React.Fragment>
+                } 
+
+                
                 </div>
                 <div className="vd-content user-details--height detail--text">
-                  <h6 className="video-title">
-                    {videoDetails.title
-                      ? videoDetails.title
-                      : videoDetails.notificationDesc}
-                  </h6>
+                  <h6 className="video-title">{videoDetails.title ? videoDetails.title : videoDetails.notificationDesc}</h6>
                   <p>{videoDetails.createdDate}</p>
                   {!isNotVisibleVideoMeta && (
                     <>

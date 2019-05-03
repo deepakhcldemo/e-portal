@@ -66,10 +66,10 @@ class VideoPopup extends Component {
                           editing={false}
                         />
                       </span>
-                      <span>
+                      {/* <span>
                       <small>Views</small>
                         <div>{videoDetails.views}</div>
-                      </span>
+                      </span> */}
                       </>
                     )}
                 </div>

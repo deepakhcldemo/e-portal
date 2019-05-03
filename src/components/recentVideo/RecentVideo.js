@@ -12,13 +12,13 @@ import GLOBAL_VARIABLES from "../../config/config";
 class RecentVideo extends Component {
   createChildren = records => {
     return records.map((carouselRecord, index) => {
-      console.log(carouselRecord)
       carouselRecord.date = carouselRecord.created
         ? moment(carouselRecord.created.toDate()).fromNow()
         : "";
       carouselRecord.thumb = carouselRecord.thumb
         ? carouselRecord.thumb
         : GLOBAL_VARIABLES.VIDEO_PLACEHOLDER;
+
       return (
         <div key={index} className="vd-wrapper col-xs-12">
           <VideoItem

@@ -8,7 +8,7 @@ const getDbRef = collectionName => {
 
 export const saveNotification = notificationDetails => {
   const db = dbFactory.create("firebase");
-  getDbRef("notifications").doc(notificationDetails.id).set({...notificationDetails, 'createdDate': db.firestore.FieldValue.serverTimestamp()}, { merge: true })
+  getDbRef("notifications").doc(notificationDetails.id).set({...notificationDetails, 'created': db.firestore.FieldValue.serverTimestamp()}, { merge: true })
 };
 export const getNotificationFromDB = dispatch => {
   const db = dbFactory.create("firebase");

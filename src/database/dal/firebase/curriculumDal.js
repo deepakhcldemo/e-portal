@@ -17,9 +17,9 @@ export const saveFileMetaDataFromDB = (dispatch, fileName, user, doc, fields, ty
         userId: user.userId,
         views: 0,
         rating: 0,
+        fileName: fileName,
         src:'',    
-        fileName: (type === 'video' ) ? actualFileName[0] : '',
-        title: '', //,
+        title: (type === 'video' ) ? actualFileName[0] : '',
         desc: '',
         tags: '',
         videoMetadata: [],
@@ -86,8 +86,8 @@ export const getBannerFromDB = () => {
 
 export const getCurriculumFromDB = (uid) => {   
     return (uid) ? 
-        getDbRef("curriculum").where('userId', '==', uid) :  
-        getDbRef("curriculum")
+    getDbRef("curriculum").orderBy("created", "desc").where('userId', '==', uid) :  
+    getDbRef("curriculum").orderBy("created", "desc")
 }
 export const getReviewContentFromDB = (uid, status) => {
     return getDbRef("notifications").where('tid', '==', uid).where('tStatus' , '==', status)
