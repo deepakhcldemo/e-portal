@@ -43,7 +43,7 @@ class SearchTeacher extends Component {
 
       querySnapshot.forEach(doc => {
         if (doc.exists) {
-          self.props.setSpinnerStatus(false);
+          
           const subjects = [...doc.data().subjects];
           this.setState({ categoryList: subjects });
           if (self.props.selectedSubjectFromHome) {
@@ -57,6 +57,7 @@ class SearchTeacher extends Component {
             this.props.getTeachersBasedOnCateogy(subjects['0']);
           }
         }
+        self.props.setSpinnerStatus(false);
       });
     });
   }
@@ -69,6 +70,7 @@ class SearchTeacher extends Component {
   }
 
   handleChange = selectedOption => {
+    
     this.setState({
       searchParameter: selectedOption, 
       searchValue : ''
