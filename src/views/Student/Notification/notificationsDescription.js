@@ -10,7 +10,9 @@ import {
 import {
   getNotification,
   getTeachers,
-  getStudents
+  getStudents,
+  setKeyForNotificationPage,
+
 } from "../../Teacher/Notification/notificationAction";
 
 import UpdateDataModal from "../../../shared/components/calendar-modal/updateDataModal";
@@ -115,7 +117,8 @@ class notificationsDescription extends Component {
   };
 
   handleBack = () => {
-    this.props.history.push("/notification");
+    this.props.setKeyForNotificationPage('chatNotificationDetails');
+    this.props.history.goBack();
   };
 
   getMessageText(status) {
@@ -273,7 +276,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getNotification: uid => dispatch(getNotification(uid)),
     getTeachers: uid => dispatch(getTeachers(uid)),
-    getStudents: uid => dispatch(getStudents(uid))
+    getStudents: uid => dispatch(getStudents(uid)),
+    setKeyForNotificationPage: NotificationDetails =>
+      dispatch(setKeyForNotificationPage(NotificationDetails)),
   };
 };
 export default connect(

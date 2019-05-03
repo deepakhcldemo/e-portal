@@ -161,6 +161,7 @@ class Video extends Component {
                                   title="Upload Video"
                                 >
                                   <i className="fas fa-plus" />
+                                  Add Video
                                   <span className="home-header-text-link-status">
                                     &nbsp;Add Video
                                   </span>

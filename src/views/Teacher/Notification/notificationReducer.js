@@ -1,5 +1,6 @@
 const initialState = {
-    notificationDetails: {}
+    notificationDetails: {},
+    keyForNotification: ''
 };
 const notificationReducer = (state = initialState, action) => {
 
@@ -38,6 +39,12 @@ const notificationReducer = (state = initialState, action) => {
             return {
                 ...state,
                 studentDetails: action.Students
+            };
+
+        case 'GO_BACK_TO_NOTIFICATION':
+            return {
+                ...state,
+                keyForNotification: action.payload
             };
 
         default:

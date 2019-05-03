@@ -88,7 +88,8 @@ class ModalPopUp extends Component {
     this.setState({
       progress: 100,
       isUploading: false,
-      videoName: fileName
+      videoName: fileName,
+      validationMessage: ''
     });
   };
 
@@ -133,30 +134,32 @@ class ModalPopUp extends Component {
       tAccepted,
       tRejected
     };
-    getVideoUrl(this.state.videoName, notificationDetails.loggedInUserId).then(
-      url => {
-        let sVideo = "",
-          tVideo = "";
-        loggedInUSerDetails.role === "Teacher"
-          ? (tVideo = url)
-          : (sVideo = url);
-        notificationDetails.tvideo = tVideo;
-        //notificationDetails.status = false;
-        notificationDetails.sVideo = sVideo;
-        notificationDetails.comments = [];
-        if (url !== "" && notificationDetails.notificationDesc !== "") {
-          this.setState({
-            validationMessage: ""
-          });
+    if (this.state.videoName !== '' && this.state.notificationDescription !== '') {
+      this.setState({
+        validationMessage: ''
+      })
+      getVideoUrl(this.state.videoName, notificationDetails.loggedInUserId).then(
+        url => {
+          let sVideo = "",
+            tVideo = "";
+          loggedInUSerDetails.role === "Teacher"
+            ? (tVideo = url)
+            : (sVideo = url);
+          notificationDetails.tvideo = tVideo;
+          //notificationDetails.status = false;
+          notificationDetails.sVideo = sVideo;
+          notificationDetails.comments = [];
           saveNotification(notificationDetails);
           this.onCloseModal();
-        } else {
-          this.setState({
-            validationMessage: "Description or Video can not be empty"
-          });
+          console.log(this.state);
         }
-      }
-    );
+      );
+    }
+    else {
+      this.setState({
+        validationMessage: 'Notification Description or video can not be empty'
+      })
+    }
   };
   render() {
     const studentDetails = localStorage.getItem("userProfile")
@@ -169,71 +172,76 @@ class ModalPopUp extends Component {
     return (
       <div>
         <Modal open={openModal} onClose={this.onCloseModal} center>
-          
-            <div>
-              <div className="header">
-                <h3>New Request for Review</h3>
-              </div>
-              <div className="body">
-                <form>
-                  <div className="form-group">
-                    <div className="teacher-student">
-                      <div className="btn btn-sm btn-info">
-                        Student: {this.state.studentName}
-                      </div>
-                      {/* <div className ="student-teacher-notifying"><b><i className="fa fa-angle-right">Notifying to </i></b></div> */}
-                      <div className="btn btn-sm btn-info teacher">
-                        Teacher: {this.state.teacherName}
-                      </div>
+
+          <div>
+            <div className="header">
+              <h3>New Request for Review</h3>
+            </div>
+            <div className="body">
+              <form>
+                <div className="form-group">
+                  <div className="teacher-student">
+                    <div className="btn btn-sm btn-info small-btn">
+                      <span className ="hide-teacher-student">Student :</span>  {this.state.studentName}
                     </div>
-                    <div>
-                      <textarea
-                        rows="4"
-                        cols="50"
-                        className="form-control"
-                        placeholder="Please add details here"
-                        onChange={this.notoficationDescription}
-                      />{" "}
-                      <div className="progressbar-spacing">
-                        {this.state.isUploading && (
-                          <>
-                            <br />
-                            <Progress
-                              bgColor="#232838"
-                              progress={this.state.progress}
-                            />
-                            <br />
-                          </>
-                        )}
-                      </div>
-                      <br />
-                      <FileUploader
-                        accept="video/*"
-                        className="upload-video"
-                        storageRef={firebase
-                          .storage()
-                          .ref(`notification/${studentDetails.userId}`)}
-                        onUploadStart={this.handleUploadStart}
-                        onUploadError={this.handleUploadError}
-                        onUploadSuccess={this.handleVideoUploadSuccess}
-                        onProgress={this.handleProgress}
-                      />
+                    {/* <div className ="student-teacher-notifying"><b><i className="fa fa-angle-right">Notifying to </i></b></div> */}
+                    <div className="btn btn-sm btn-info teacher small-btn">
+                    <span className ="hide-teacher-student"> Teacher :</span> {this.state.teacherName}
                     </div>
                   </div>
-                  <p className="help-block">{this.state.validationMessage}</p>
+                  <div>
+                  <span class="red-star">*</span>
+                    <textarea
+                      rows="4"
+                      cols="50"
+                      className="form-control"
+                      placeholder="Please add details here"
+                      onChange={this.notoficationDescription}
+                    />{" "}
+                    
+                    <div className="progressbar-spacing">
+                      {this.state.isUploading && (
+                        <>
+                          <br />
+                          <Progress
+                            bgColor="#232838"
+                            progress={this.state.progress}
+                          />
+                          <br />
+                        </>
+                      )}
+                    </div>
+                    <span class="red-star">*</span>
+                    <br />
+                    
+                    <FileUploader
+                      accept="video/*"
+                      className="upload-video"
+                      storageRef={firebase
+                        .storage()
+                        .ref(`notification/${studentDetails.userId}`)}
+                      onUploadStart={this.handleUploadStart}
+                      onUploadError={this.handleUploadError}
+                      onUploadSuccess={this.handleVideoUploadSuccess}
+                      onProgress={this.handleProgress}
+                    />
+                    
+                  </div>
+                </div>
+                <p className="help-block">{this.state.validationMessage}</p>
 
-                  <button
-                    type="button"
-                    disabled={this.state.isUploading}
-                    className="btn btn-dark submit"
-                    onClick={this.createNotification}
-                  >
-                    New Request
+                <button
+                  type="button"
+                  disabled={this.state.isUploading}
+                  className="btn btn-dark submit"
+                  onClick={this.createNotification}
+                >
+                  New Request
                   </button>
-                </form>
-              </div>
+              </form>
             </div>
-         
+          </div>
+
         </Modal>
       </div>
     );

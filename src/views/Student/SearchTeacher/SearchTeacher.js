@@ -1,19 +1,19 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 //import GLOBAL_VARIABLES from '../../config/config';
-import HeaderHome from "../../../components/layout/header/HeaderHome";
+import HeaderHome from '../../../components/layout/header/HeaderHome';
 import {
   getTeachersBasedOnCateogy,
   zipRequestDispatch
-} from "./searchTeacherAction";
+} from './searchTeacherAction';
 import * as actionTypes from '../../../spinnerStore/actions';
 // import Navigation from '../Navigation/Navigation';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 // import Select from 'react-select';
-import { getAllCategory } from "../../../database/dal/firebase/categoryDal";
+import { getAllCategory } from '../../../database/dal/firebase/categoryDal';
 
-import Multiselect from "multiselect-dropdown-react";
-import "./SearchTeacher.css";
-import ListContainer from "../../../components/listContainer/ListContainer";
+import Multiselect from 'multiselect-dropdown-react';
+import './SearchTeacher.css';
+import ListContainer from '../../../components/listContainer/ListContainer';
 
 class SearchTeacher extends Component {
   constructor(props) {
@@ -21,13 +21,13 @@ class SearchTeacher extends Component {
     this.state = {
       selectedOption: null,
       searchParameter: [],
-      placeHolderValue: "",
-      searchValue: "",
+      placeHolderValue: '',
+      searchValue: '',
       filtredTeacherRecord: [],
-      showValidationMessage: "",
-      noRecordMessage: "Search for your teacher here",
+      showValidationMessage: '',
+      noRecordMessage: 'Search for your teacher here',
       categoryList: [],
-      selectedSubject: ""
+      selectedSubject: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.getSerachParameter = this.getSerachParameter.bind(this);
@@ -37,14 +37,13 @@ class SearchTeacher extends Component {
 
   componentDidMount() {
     let self = this;
-    this.props.setSpinnerStatus(true)
+    this.props.setSpinnerStatus(true);
     getAllCategory().onSnapshot(querySnapshot => {
-      
       const self = this;
-      
+
       querySnapshot.forEach(doc => {
         if (doc.exists) {
-          self.props.setSpinnerStatus(false)
+          
           const subjects = [...doc.data().subjects];
           this.setState({ categoryList: subjects });
           if (self.props.selectedSubjectFromHome) {
@@ -55,21 +54,26 @@ class SearchTeacher extends Component {
               selectedSubject: self.props.selectedSubjectFromHome
             });
           } else {
-            this.props.getTeachersBasedOnCateogy(subjects["0"]);
+            this.props.getTeachersBasedOnCateogy(subjects['0']);
           }
-          
         }
+        self.props.setSpinnerStatus(false);
       });
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getSerachParameter(nextProps, "defalutSubjectSelected");
+    this.setState({
+      filtredTeacherRecord: nextProps.TeacherList,
+      maintainFilterRecord : nextProps.TeacherList
+    });
   }
 
   handleChange = selectedOption => {
+    
     this.setState({
-      searchParameter: selectedOption
+      searchParameter: selectedOption, 
+      searchValue : ''
     });
   };
 
@@ -80,14 +84,15 @@ class SearchTeacher extends Component {
   };
 
   getSerachParameter = (searchParameter, defalutSubjectSelected) => {
-    // console.log('searchParameter', searchParameter);
-    if (defalutSubjectSelected !== "defalutSubjectSelected") {
+    this.props.setSpinnerStatus(true)
+    console.log(this.state);
+    if (this.state.searchValue !== '') {
       const lowerCase = this.state.searchValue.toLowerCase();
       const tempArray = [];
-      this.props.TeacherList.forEach(teacher => {
+     this.state.maintainFilterRecord.forEach(teacher => {
         this.state.searchParameter.forEach(searchParameter => {
           if (
-            searchParameter === "Name" &&
+            searchParameter === 'Name' &&
             teacher.subject === this.state.selectedSubject
           ) {
             const teacherFirsnameLower = teacher.firstName.toLowerCase();
@@ -101,7 +106,7 @@ class SearchTeacher extends Component {
           }
 
           if (
-            searchParameter === "Location" &&
+            searchParameter === 'Location' &&
             teacher.subject === this.state.selectedSubject
           ) {
             const teacherCityName = teacher.city.toLowerCase();
@@ -116,7 +121,7 @@ class SearchTeacher extends Component {
             }
           }
           if (
-            searchParameter === "currency" &&
+            searchParameter === 'currency' &&
             teacher.subject === this.state.selectedSubject
           ) {
             if (teacher.currency) {
@@ -127,9 +132,7 @@ class SearchTeacher extends Component {
             }
           }
 
-          if (
-            searchParameter === "rating"
-          ) {
+          if (searchParameter === 'rating') {
             if (teacher.rating) {
               if (teacher.rating === +lowerCase) {
                 tempArray.push(teacher);
@@ -141,13 +144,15 @@ class SearchTeacher extends Component {
       this.setState({
         filtredTeacherRecord: tempArray
       });
-    } else {
-      // console.log('searchParameter.TeacherList', searchParameter.TeacherList);
+    } 
+    else{
       this.setState({
-        filtredTeacherRecord: searchParameter.TeacherList
+        filtredTeacherRecord: this.state.maintainFilterRecord
       });
+      
     }
-
+   
+    this.props.setSpinnerStatus(false)
     //this.props.getTeachersBasedOnCateogy(this.state.selectedSubject);
   };
 
@@ -166,10 +171,6 @@ class SearchTeacher extends Component {
 
   render() {
     const { getTeacherZipWise } = this.props;
-
-    // if (getTeacherZipWise.zip_codes && getTeacherZipWise.zip_codes.length > 0) {
-    //   console.log('--getTeachersBasedOnZipcode--', getTeacherZipWise.zip_codes);
-    // }
 
     this.state.filtredTeacherRecord.map((teacher, index) => {
       return (
@@ -203,20 +204,20 @@ class SearchTeacher extends Component {
     });
     const searctTeacherData = [
       {
-        name: "Name",
-        value: "Name"
+        name: 'Name',
+        value: 'Name'
       },
       {
-        name: "Location",
-        value: "Location"
+        name: 'Location',
+        value: 'Location'
       },
       {
-        name: "Rating",
-        value: "rating"
+        name: 'Rating',
+        value: 'rating'
       },
       {
-        name: "Nearby location",
-        value: "nearByLocation"
+        name: 'Nearby location',
+        value: 'nearByLocation'
       }
     ];
     // console.log(this.state.filtredTeacherRecord,'this.state.filtredTeacherRecord in search teacher');
@@ -257,7 +258,7 @@ class SearchTeacher extends Component {
                     className="form-control"
                     value={this.state.searchValue}
                     onChange={value => this.setSaerchValue(value)}
-                    placeholder={"Search for.." + this.state.placeHolderValue}
+                    placeholder={'Search for..' + this.state.placeHolderValue}
                     name="srch-term"
                     id="srch-term"
                   />
@@ -319,7 +320,7 @@ const mapDispatchToProps = dispatch => {
   return {
     getTeachersBasedOnCateogy: selectedSubject =>
       dispatch(getTeachersBasedOnCateogy(selectedSubject)),
-    getTeachersBasedOnZipcode: zipcode => dispatch(zipRequestDispatch(zipcode)), 
+    getTeachersBasedOnZipcode: zipcode => dispatch(zipRequestDispatch(zipcode)),
     setSpinnerStatus: value => {
       dispatch({ type: actionTypes.SPINNER_STATUS, payload: value });
     }
