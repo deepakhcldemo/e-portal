@@ -4,7 +4,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
 import HeaderHome from "../../components/layout/header/HeaderHome";
-import Navbar from "../../shared/components/Navbar";
+// import Navbar from "../../shared/components/Navbar";
 import Filter from "../../shared/components/Filter";
 
 import VideoList from "./VideoList";
@@ -15,7 +15,7 @@ import { getCurriculumFromDB } from "../../database/dal/firebase/curriculumDal";
 import { getNotificationsFromDB } from "../../database/dal/firebase/studentDal";
 
 import { VIDEO_TABS } from "./../../constant/Constant";
-import { link } from "fs";
+// import { link } from "fs";
 import "./video.scss";
 // import notifications from "../Student/Notification/notifications";
 

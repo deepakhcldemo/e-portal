@@ -9,16 +9,17 @@ const getDbRef = collectionName => {
 };
 
 export const saveFileMetaDataFromDB = (dispatch, fileName, user, doc, fields, type) => {
-    /* let actualFileName;
+    let actualFileName;
     if(type === 'video') {
         actualFileName = fileName.split(/\.(?=[^\.]+$)/);
-    } */
+    }
     const metaData = {
         userId: user.userId,
         views: 0,
         rating: 0,
         src:'',    
-        title: '', //(type === 'video' ) ? actualFileName[0] : '',
+        fileName: (type === 'video' ) ? actualFileName[0] : '',
+        title: '', //,
         desc: '',
         tags: '',
         videoMetadata: [],
@@ -84,7 +85,9 @@ export const getBannerFromDB = () => {
 }
 
 export const getCurriculumFromDB = (uid) => {   
-    return (uid) ? getDbRef("curriculum").where('userId', '==', uid) :  getDbRef("curriculum")
+    return (uid) ? 
+        getDbRef("curriculum").where('userId', '==', uid) :  
+        getDbRef("curriculum")
 }
 export const getReviewContentFromDB = (uid, status) => {
     return getDbRef("notifications").where('tid', '==', uid).where('tStatus' , '==', status)

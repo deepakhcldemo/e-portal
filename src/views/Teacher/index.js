@@ -54,8 +54,10 @@ class Teacher extends Component {
     ).onSnapshot(querySnapshot => {
       let content = [];
       querySnapshot.forEach(doc => {
+        console.log(doc.data())
         content.push(Object.assign({ id: doc.id }, doc.data()));
       });
+      console.log(content);
       if (content.length > 0) {
         this.setState({
           pendingContent: content.filter(item => !item.tstatus && item.sstatus),
