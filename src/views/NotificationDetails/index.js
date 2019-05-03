@@ -43,13 +43,13 @@ class NotificationDetails extends Component {
     this.props.setSpinnerStatus(true)
     const notificationId = this.props.match.params.id;
     this.props.setIDForNotification(notificationId);
-    
+
   }
 
-  componentWillReceiveProps(nextProps){
-    
-    if(nextProps.notificationDetails){
-        this.props.setSpinnerStatus(false);
+  componentWillReceiveProps(nextProps) {
+
+    if (nextProps.notificationDetails) {
+      this.props.setSpinnerStatus(false);
     }
   }
   goBackTONotification = () => {
@@ -91,8 +91,8 @@ class NotificationDetails extends Component {
     this.goBackTONotification();
   };
   componentWillMount = () => {
-    
-    
+
+
     const UserProfile = JSON.parse(localStorage.getItem('userProfile'));
     this.setState({
       notificationsDetails: this.props.notificationDetails,
@@ -116,7 +116,7 @@ class NotificationDetails extends Component {
   render() {
     let badgeText = '';
     let classNameBadge = '';
-    
+
     if (
       this.props.notificationDetails &&
       this.props.notificationDetails.sstatus &&
@@ -175,38 +175,38 @@ class NotificationDetails extends Component {
                 <div className="row">
                   <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding heading--padding">
                     {this.props.notificationDetails &&
-                    this.props.notificationDetails.Svideo !== '' ? (
-                      <span className="bold"> Video Uploaded by Student </span>
-                    ) : null}
+                      this.props.notificationDetails.Svideo !== '' ? (
+                        <span className="bold"> Video Uploaded by Student </span>
+                      ) : null}
                   </div>
                   <div className="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-without--padding teacher-video">
                     {this.props.notificationDetails &&
-                    this.props.notificationDetails ? (
-                      <video
-                        controls
-                        src={this.props.notificationDetails.sVideo}
-                        className="video-style"
-                      />
-                    ) : null}
-                  </div>
-                  {this.props.notificationDetails &&
-                  this.props.notificationDetails.tvideo !== '' ? (
-                    <>
-                      <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding heading--padding">
-                        <span className="bold">
-                          {' '}
-                          Video Uploaded by Teacher{' '}
-                        </span>
-                      </div>
-                      <div className="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-without--padding teacher-video">
+                      this.props.notificationDetails ? (
                         <video
                           controls
-                          src={this.props.notificationDetails.tvideo}
+                          src={this.props.notificationDetails.sVideo}
                           className="video-style"
-                        />{' '}
-                      </div>
-                    </>
-                  ) : null}
+                        />
+                      ) : null}
+                  </div>
+                  {this.props.notificationDetails &&
+                    this.props.notificationDetails.tvideo !== '' ? (
+                      <>
+                        <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-without--padding heading--padding">
+                          <span className="bold">
+                            {' '}
+                            Video Uploaded by Teacher{' '}
+                          </span>
+                        </div>
+                        <div className="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 col-without--padding teacher-video">
+                          <video
+                            controls
+                            src={this.props.notificationDetails.tvideo}
+                            className="video-style"
+                          />{' '}
+                        </div>
+                      </>
+                    ) : null}
                 </div>
 
                 <div className={'row ' + this.state.applyClass}>
@@ -221,7 +221,7 @@ class NotificationDetails extends Component {
                           .storage()
                           .ref(
                             `notification/${
-                              this.props.notificationDetails.loggedInUserId
+                            this.props.notificationDetails.loggedInUserId
                             }`
                           )}
                         onUploadStart={this.handleUploadStart}
@@ -244,33 +244,33 @@ class NotificationDetails extends Component {
                 <div className="row">
                   <div className="col-12">
                     {this.state.userDetails.role === 'Teacher' &&
-                    (!(
-                      this.props.notificationDetails &&
-                      this.props.notificationDetails.tRejected
-                    ) &&
-                      !(
+                      (!(
                         this.props.notificationDetails &&
-                        this.props.notificationDetails.tAccepted
-                      )) ? (
-                      <div className="pull-right">
-                        <button
-                          disabled={this.state.isUploading}
-                          className="btn btn-success"
-                          onClick={this.acceptNotification}
-                        >
-                          Accept
+                        this.props.notificationDetails.tRejected
+                      ) &&
+                        !(
+                          this.props.notificationDetails &&
+                          this.props.notificationDetails.tAccepted
+                        )) ? (
+                        <div className="pull-right">
+                          <button
+                            disabled={this.state.isUploading}
+                            className="btn btn-success"
+                            onClick={this.acceptNotification}
+                          >
+                            Accept
                         </button>
-                        <button
-                          disabled={this.state.isUploading}
-                          className="btn btn-danger"
-                          onClick={this.rejectNotification}
-                        >
-                          Reject
+                          <button
+                            disabled={this.state.isUploading}
+                            className="btn btn-danger"
+                            onClick={this.rejectNotification}
+                          >
+                            Reject
                         </button>
-                      </div>
-                    ) : (
-                      ''
-                    )}
+                        </div>
+                      ) : (
+                        ''
+                      )}
 
                     {/* {this.state.notificationsDetails.tRejected ? (
                 <p className="notification-rejected">
@@ -281,19 +281,19 @@ class NotificationDetails extends Component {
               )} */}
 
                     {this.props.notificationDetails &&
-                    this.props.notificationDetails.tAccepted &&
-                    this.state.userDetails.role !== 'Teacher' ? (
-                      <div>
-                        <button
-                          disabled={true}
-                          className="btn btn-success pull-right"
-                        >
-                          Pay Now
+                      this.props.notificationDetails.tAccepted &&
+                      this.state.userDetails.role !== 'Teacher' ? (
+                        <div>
+                          <button
+                            disabled={true}
+                            className="btn btn-success pull-right"
+                          >
+                            Pay Now
                         </button>
-                      </div>
-                    ) : (
-                      ''
-                    )}
+                        </div>
+                      ) : (
+                        ''
+                      )}
                   </div>
                 </div>
               </div>

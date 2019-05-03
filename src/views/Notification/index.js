@@ -47,14 +47,30 @@ class Notification extends Component {
   componentDidMount = () => {
     const { userDetails } = this.state;
     console.log(
-      "this.props.getNotificationMessage",
-      this.props.getNotificationMessage
+      "this.props.getTeacherNotification",
+      this.props.getTeacherNotification
     );
     if (this.props.getNotificationMessage === "NotificationDetails") {
       this.setState({
         key: "notification"
       });
     }
+
+    if (this.props.getStudnetNotification === "chatNotificationDetails") {
+      console.log("Sachin Test => getStudnetNotification ", this.props.getStudnetNotification)
+      this.setState({
+        key: "chatNotification"
+      });
+    }
+
+    if (this.props.getTeacherNotification === "chatNotificationDetails") {
+      console.log("Sachin Test getTeacherNotification => ", this.props.getTeacherNotification)
+      this.setState({
+        key: "chatNotification"
+      });
+    }
+
+
     getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(
       querySnapshot => {
         let notificationsList = [];
@@ -72,8 +88,8 @@ class Notification extends Component {
       notificationDetails.sstatus && notificationDetails.tstatus
         ? "alert alert-success"
         : notificationDetails.status && !notificationDetails.tstatus
-        ? "alert alert-warning"
-        : "alert alert-danger";
+          ? "alert alert-warning"
+          : "alert alert-danger";
     const userWiseStatus =
       userDetails.role === "Teacher"
         ? `Notification from  ${notificationDetails.sname}`
@@ -202,8 +218,8 @@ class Notification extends Component {
                     {notificationsList.length == 0 ? (
                       <p className="no-Record">No Record</p>
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                   </div>
                 </div>
               </Tab>
@@ -217,7 +233,9 @@ class Notification extends Component {
 const mapStateToProps = state => {
   console.log("state", state);
   return {
-    getNotificationMessage: state.notificationAcceptREducer.keyForNotification
+    getNotificationMessage: state.notificationAcceptREducer.keyForNotification,
+    getStudnetNotification: state.studentReducer.keyForNotification,
+    getTeacherNotification: state.notificationReducer.keyForNotification,
   };
 };
 const mapDispatchToProps = dispatch => {

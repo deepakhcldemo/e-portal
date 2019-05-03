@@ -19,7 +19,7 @@ class Notifications extends Component {
         //this.props.getStudents("DrFophiJl9PsAZhrhFzd11opaPH2");
     }
     render() {
-        console.log("render Notification details", this.props.notificationDetails);
+        //console.log("render Notification details", this.props.notificationDetails);
         const teacherName = "Sachin Tyagi";
         // const { notificationDetails } = this.props.notificationDetails;
 

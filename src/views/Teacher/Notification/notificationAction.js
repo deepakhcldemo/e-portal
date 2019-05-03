@@ -34,3 +34,9 @@ export const getStudents = (uid) => {
         getStudentFromDB(dispatch, uid);
     }
 }
+
+
+export const setKeyForNotificationPage = (notificationDetails) => {
+    return { type: "GO_BACK_TO_NOTIFICATION", payload: notificationDetails };
+}
+

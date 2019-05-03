@@ -36,3 +36,8 @@ export const getNotification = () => {
     getNotificationFromDB(dispatch);
   };
 };
+
+
+export const setKeyForNotificationPage = (notificationDetails) => {
+  return { type: "GO_BACK_TO_NOTIFICATION", payload: notificationDetails };
+}

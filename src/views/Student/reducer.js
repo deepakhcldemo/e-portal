@@ -2,7 +2,8 @@ const initialState = {
   studentModalState: false,
   teacherDetails: {},
   notificationData: {},
-  notificationDetailsBasedOnStudent: []
+  notificationDetailsBasedOnStudent: [],
+  keyForNotification: ''
 };
 const studentReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -28,6 +29,12 @@ const studentReducer = (state = initialState, action) => {
       return {
         ...state,
         notificationData: action.notificationsBasedOnStudent
+      };
+
+    case 'GO_BACK_TO_NOTIFICATION':
+      return {
+        ...state,
+        keyForNotification: action.payload
       };
 
     default:
