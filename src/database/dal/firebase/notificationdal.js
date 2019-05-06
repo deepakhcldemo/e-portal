@@ -1,14 +1,22 @@
 import dbFactory from "../../dbFactory";
-
+import { toastr } from "react-redux-toastr";
 const getDbRef = collectionName => {
   const db = dbFactory.create("firebase");
-  const ref = db.firestore().collection(collectionName)
+  const ref = db.firestore().collection(collectionName);
   return ref;
 };
 
 export const saveNotification = notificationDetails => {
   const db = dbFactory.create("firebase");
-  getDbRef("notifications").doc(notificationDetails.id).set({...notificationDetails, 'created': db.firestore.FieldValue.serverTimestamp()}, { merge: true })
+  getDbRef("notifications")
+    .doc(notificationDetails.id)
+    .set(
+      {
+        ...notificationDetails,
+        created: db.firestore.FieldValue.serverTimestamp()
+      },
+      { merge: true }
+    );
 };
 export const getNotificationFromDB = dispatch => {
   const db = dbFactory.create("firebase");
@@ -16,12 +24,11 @@ export const getNotificationFromDB = dispatch => {
   db.firestore()
     .collection("notifications")
     .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
         if (doc.exit) {
           data.push(doc.data());
         }
-
       });
       dispatch({ type: "GET_NOTIFICATIONS", notifications: data });
     })
@@ -37,8 +44,8 @@ export const getNotificationForStudentBasedFromDB = (dispatch, id) => {
     .collection("notifications")
     .where("loggedInUserId", "==", id)
     .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
         if (doc.exists) {
           data.push(doc.data());
         }
@@ -81,7 +88,6 @@ export const saveNotificationAcceptedFromDB = (
   dispatch,
   acceptedNotificationsDetails
 ) => {
-
   getDbRef("notifications")
     .doc(acceptedNotificationsDetails.id)
     .set(acceptedNotificationsDetails)
@@ -108,8 +114,8 @@ export const setIDForNotificationFromDB = (dispatch, id) => {
     .collection("notifications")
     .where("id", "==", id)
     .get()
-    .then(function (querySnapshot) {
-      querySnapshot.forEach(function (doc) {
+    .then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
         data.push(doc.data());
         console.log("data in notification", data);
       });
@@ -120,5 +126,15 @@ export const setIDForNotificationFromDB = (dispatch, id) => {
     })
     .catch(err => {
       dispatch({ type: "ERROR", err });
+    });
+};
+export const saveNotificationDetails = notificationDetails => {
+  const db = dbFactory.create("firebase");
+  db.firestore()
+    .collection("notifications")
+    .doc(notificationDetails.id)
+    .set(notificationDetails)
+    .then(() => {
+      toastr.success(" Request created successfully.");
     });
 };

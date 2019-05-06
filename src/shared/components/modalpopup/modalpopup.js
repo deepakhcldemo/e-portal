@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
   saveNotification,
+  saveNotificationDetails,
   getVideoUrl /* , getNotificationFromDB */
 } from "../../../database/dal/firebase/notificationdal";
 // import ReactDOM from 'react-dom';
@@ -11,6 +12,7 @@ import Modal from "react-responsive-modal";
 import { connect } from "react-redux";
 import { closeModalPopUp } from "./modalAction";
 import Progress from "./progress";
+
 import "./modalpopup.css";
 class ModalPopUp extends Component {
   constructor(props) {
@@ -46,11 +48,10 @@ class ModalPopUp extends Component {
     }
   }
 
-
   randomString(length) {
-    var text = '';
+    var text = "";
     var possible =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     for (var i = 0; i < length; i++) {
       text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
@@ -89,7 +90,7 @@ class ModalPopUp extends Component {
       progress: 100,
       isUploading: false,
       videoName: fileName,
-      validationMessage: ''
+      validationMessage: ""
     });
   };
 
@@ -134,31 +135,37 @@ class ModalPopUp extends Component {
       tAccepted,
       tRejected
     };
-    if (this.state.videoName !== '' && this.state.notificationDescription !== '') {
+    if (
+      this.state.videoName !== "" &&
+      this.state.notificationDescription !== ""
+    ) {
       this.setState({
-        validationMessage: ''
-      })
-      getVideoUrl(this.state.videoName, notificationDetails.loggedInUserId).then(
-        url => {
-          let sVideo = "",
-            tVideo = "";
-          loggedInUSerDetails.role === "Teacher"
-            ? (tVideo = url)
-            : (sVideo = url);
-          notificationDetails.tvideo = tVideo;
-          //notificationDetails.status = false;
-          notificationDetails.sVideo = sVideo;
-          notificationDetails.comments = [];
-          saveNotification(notificationDetails);
-          this.onCloseModal();
-          console.log(this.state);
-        }
-      );
-    }
-    else {
+        validationMessage: ""
+      });
+      getVideoUrl(
+        this.state.videoName,
+        notificationDetails.loggedInUserId
+      ).then(url => {
+        let sVideo = "",
+          tVideo = "";
+        loggedInUSerDetails.role === "Teacher"
+          ? (tVideo = url)
+          : (sVideo = url);
+        notificationDetails.tvideo = tVideo;
+        //notificationDetails.status = false;
+        notificationDetails.sVideo = sVideo;
+        notificationDetails.comments = [];
+        saveNotification(notificationDetails);
+        saveNotificationDetails({
+          ...notificationDetails
+        });
+        this.onCloseModal();
+        console.log(this.state);
+      });
+    } else {
       this.setState({
-        validationMessage: 'Notification Description or video can not be empty'
-      })
+        validationMessage: "Notification Description or video can not be empty"
+      });
     }
   };
   render() {
@@ -172,7 +179,6 @@ class ModalPopUp extends Component {
     return (
       <div>
         <Modal open={openModal} onClose={this.onCloseModal} center>
-
           <div>
             <div className="header">
               <h3>New Request for Review</h3>
@@ -182,15 +188,17 @@ class ModalPopUp extends Component {
                 <div className="form-group">
                   <div className="teacher-student">
                     <div className="btn btn-sm btn-info small-btn">
-                      <span className ="hide-teacher-student">Student :</span>  {this.state.studentName}
+                      <span className="hide-teacher-student">Student :</span>{" "}
+                      {this.state.studentName}
                     </div>
                     {/* <div className ="student-teacher-notifying"><b><i className="fa fa-angle-right">Notifying to </i></b></div> */}
                     <div className="btn btn-sm btn-info teacher small-btn">
-                    <span className ="hide-teacher-student"> Teacher :</span> {this.state.teacherName}
+                      <span className="hide-teacher-student"> Teacher :</span>{" "}
+                      {this.state.teacherName}
                     </div>
                   </div>
                   <div>
-                  <span class="red-star">*</span>
+                    <span class="red-star">*</span>
                     <textarea
                       rows="4"
                       cols="50"
@@ -198,7 +206,6 @@ class ModalPopUp extends Component {
                       placeholder="Please add details here"
                       onChange={this.notoficationDescription}
                     />{" "}
-                    
                     <div className="progressbar-spacing">
                       {this.state.isUploading && (
                         <>
@@ -213,7 +220,6 @@ class ModalPopUp extends Component {
                     </div>
                     <span class="red-star">*</span>
                     <br />
-                    
                     <FileUploader
                       accept="video/*"
                       className="upload-video"
@@ -225,7 +231,6 @@ class ModalPopUp extends Component {
                       onUploadSuccess={this.handleVideoUploadSuccess}
                       onProgress={this.handleProgress}
                     />
-                    
                   </div>
                 </div>
                 <p className="help-block">{this.state.validationMessage}</p>
@@ -235,13 +240,14 @@ class ModalPopUp extends Component {
                   disabled={this.state.isUploading}
                   className="btn btn-dark submit"
                   onClick={this.createNotification}
+
+                  // toastr.success('Comment saved successfully.');
                 >
                   New Request
-                  </button>
+                </button>
               </form>
             </div>
           </div>
-
         </Modal>
       </div>
     );
