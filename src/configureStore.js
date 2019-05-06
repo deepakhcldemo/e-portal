@@ -6,6 +6,7 @@ import thunk from "redux-thunk";
 // import logger from 'redux-logger';
 import { createBrowserHistory } from "history";
 import { routerMiddleware } from "react-router-redux";
+
 import eventReducer from "./views/Events/eventReducer";
 import pdfViewerReducer from "./components/pdfViewer/reducer";
 import loginReducer from "./views/Login/reducer";
@@ -19,6 +20,7 @@ import studentReducer from "./views/Student/reducer";
 import homeReducer from "./views/Home/reducer";
 import teacherDetailsReducer from "./views/Teacher/teacher-details/teacher-details.reducer";
 import searchTeacherReducer from "./views/Student/SearchTeacher/searchTeacherReducer";
+import BlogDetailsREducer from './views/TeacherBlogList/reducer';
 import videoReducer from "./views/Video/reducer";
 import notificationReducer from "./views/Teacher/Notification/notificationReducer";
 import notifDetils from "./views/Notification/reducer";
@@ -50,7 +52,8 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   teacherDetailsReducer: teacherDetailsReducer,
   categoryItem: categoryReducerForSubject,
   notificationAcceptREducer: notificationAcceptREducer,
-  authStatus: authenticationReducer
+  authStatus: authenticationReducer, 
+  blogList : BlogDetailsREducer
 });
 
 const history = createBrowserHistory();

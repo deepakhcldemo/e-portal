@@ -26,7 +26,7 @@ import Student from './views/Student/index';
 import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription';
 
 import Notification from './views/Notification';
-
+import BlogList from './views/TeacherBlogList/index';
 import NotificationDetails from './views/NotificationDetails';
 import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
 import {
@@ -51,8 +51,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       AuthGuard.isAuthenticated === true ? (
         <Component {...props} />
       ) : (
-        <Redirect to="/home" />
-      )
+          <Redirect to="/home" />
+        )
     }
   />
 );
@@ -97,15 +97,15 @@ class App extends Component {
     getBannerFromDB().then(bannerDoc => {
       if (bannerDoc.empty) {
         const bannerData = [
-          {banner_image: "business-banner-1600x300.jpg", page: "home"}, 
-          {banner_image: "student_banner.jpg", page: "home"},
-          {banner_image: "business-banner-1600x300.jpg", page: "student"},
-          {banner_image: "student_banner.jpg", page: "student"},
-          {banner_image: "teacher_banner.jpg", page: "teacher"}
-          ];
-          bannerData.map(data=>{
-            createBanner(data);
-          });          
+          { banner_image: "business-banner-1600x300.jpg", page: "home" },
+          { banner_image: "student_banner.jpg", page: "home" },
+          { banner_image: "business-banner-1600x300.jpg", page: "student" },
+          { banner_image: "student_banner.jpg", page: "student" },
+          { banner_image: "teacher_banner.jpg", page: "teacher" }
+        ];
+        bannerData.map(data => {
+          createBanner(data);
+        });
       }
     });
   };
@@ -167,6 +167,11 @@ class App extends Component {
           <PrivateRoute
             path="/student/notificationsDescription/:sid"
             component={StudentNotificationsDescription}
+          />
+
+          <PrivateRoute
+            path="/bloglist"
+            component={BlogList}
           />
           {/* <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
           <Route path="/student/notificationsDetails" component={StudentNotificationsDetails} />
