@@ -210,8 +210,8 @@ class CalendarModal extends Component {
                     <Datetime
                       value={this.state.datetime}
                       onChange={this.handleChange1}
-                      inputProps={{ placeholder: 'Please choose date and time', name: 'datetime', id: 'datetime', className: 'form-control' }}
-                      readOnly={true}
+                      inputProps={{ placeholder: 'Please choose date and time', name: 'datetime', id: 'datetime', className: 'form-control', readOnly: true }}
+
                     />
                     <div className="c-error">{this.state.errors.datetime}</div>
                     {/* <Input

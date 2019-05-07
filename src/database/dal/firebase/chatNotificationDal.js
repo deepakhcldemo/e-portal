@@ -10,7 +10,7 @@ const getDbRef = collectionName => {
 
 
 export const getTeacherNotificationFromDB = (dispatch, uid) => {
-    console.log("getTeacherNotificationFromDB")
+    console.log("getTeacherNotificationFromDB", uid)
     const notifications = [];
     const db = dbFactory.create('firebase');
     db.firestore().collection('chatNotifications').where("tId", "==", uid).get()
