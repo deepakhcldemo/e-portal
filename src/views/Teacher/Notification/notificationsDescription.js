@@ -224,7 +224,7 @@ class notificationsDescription extends Component {
                         <strong>Date & Timing: </strong>
                       </span>
                       <span className="label label-warning">
-                        {notificationData.scheduleDate}
+                        {new Date(notificationData.scheduleDate).toUTCString()}
                       </span>
                       &nbsp;
                       <p className="text-left">

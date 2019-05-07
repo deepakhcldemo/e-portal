@@ -177,10 +177,10 @@ class notificationsDescription extends Component {
                   <button
                     onClick={this.handleBack}
                     type="button"
-                    className="btn btn-dark fa fa-arrow-circle-left"
+                    className="btn btn-light back-btn"
                     data-dismiss="modal"
                   >
-
+                    <i class="fa fa-arrow-left" />
                   </button> &nbsp;
                   More About Teacher {studentDataFromDB.firstName} {studentDataFromDB.lastName} Request
 
@@ -206,7 +206,7 @@ class notificationsDescription extends Component {
                   <strong>Date & Timing: </strong>
                 </span>
                 <span className="label label-warning">
-                  {notificationData.scheduleDate}
+                  {new Date(notificationData.scheduleDate).toUTCString()}
                 </span>
                 &nbsp;
                 <p className="text-left">

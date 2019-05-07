@@ -17,13 +17,13 @@ class CalendarModal extends Component {
     errors: {}
   };
   componentDidMount() {
+
     const loggedInUSer = JSON.parse(localStorage.getItem('user'));
     console.log(loggedInUSer);
   }
 
   schema = {
-    datetime: Joi.string()
-      .required()
+    datetime: Joi.allow('').allow(null)
       .label('Date Time'),
     duration: Joi.string()
       .required()
@@ -32,6 +32,7 @@ class CalendarModal extends Component {
       .required()
       .label('Message')
   };
+
   validate = () => {
     const options = { abortEarly: false };
     const { error } = Joi.validate(this.state.data, this.schema, options);
@@ -59,18 +60,53 @@ class CalendarModal extends Component {
     return text;
   }
 
+
+  validateCalendar = () => {
+    const errors = {};
+    const dateField = "datetime";
+    const { datetime } = { ...this.state.data };
+
+
+    if (!datetime) {
+      delete errors[dateField];
+      errors[dateField] = "Date and Time can not be blank.";
+    } else {
+      if (datetime < Date.now()) {
+        delete errors[dateField];
+        errors[dateField] = "Selected date should be of future date.";
+      }
+    }
+    return errors;
+  }
+
   handleSubmit = e => {
+
     const randomString = this.randomString(20);
     e.preventDefault();
 
-    const errors = this.validate();
+    const validateErrors = this.validate();
+    const calendarError = this.validateCalendar();
+
+    const errors = { ...validateErrors, ...calendarError }
+
     this.setState({ errors: errors || {} });
-    if (errors) return;
+    if (Object.keys(errors).length !== 0) {
+      return
+    }
+    //if (errors) return;
 
     const { data } = this.state;
 
+    //console.log(new Date(data.datetime).toUTCString())
+    //const scheduledDate = new Date(data.datetime).toUTCString();
+    //const myDate = new Date(1000 * data.datetime);
+
+    //console.log(myDate.toUTCString());
     const createdAt = new Date();
     const loggedInUSer = JSON.parse(localStorage.getItem('user'));
+    console.log("loggedInUSer => ", loggedInUSer);
+    console.log("this.props.teacherData.userId => ", this.props.teacherData.userId)
+    console.log("randomString", randomString)
     if (loggedInUSer) {
       const chatNotificationDetails = {
         nId: randomString,
@@ -106,18 +142,33 @@ class CalendarModal extends Component {
   };
 
   handleChange = ({ currentTarget: input }) => {
-    const errors = { ...this.state.errors };
-    const errorMessage = this.validateProperty(input);
+
+    if (input) {
+      const errors = { ...this.state.errors };
+      const errorMessage = this.validateProperty(input);
+      if (errorMessage) errors[input.name] = errorMessage;
+      else delete errors[input.name];
+
+      const data = { ...this.state.data };
+      data[input.name] = input.value;
+
+      this.setState({ data, errors });
+    }
+
+  };
 
 
 
-    if (errorMessage) errors[input.name] = errorMessage;
-    else delete errors[input.name];
+  handleChange1 = (obj) => {
 
+    const dateField = "datetime";
     const data = { ...this.state.data };
-    data[input.name] = input.value;
+    //data[dateField] = new Date(obj).toISOString();
+    console.log(obj._d);
+    data[dateField] = Date.parse(obj._d);
 
-    this.setState({ data, errors });
+    this.setState({ data });
+
 
   };
 
@@ -156,21 +207,21 @@ class CalendarModal extends Component {
                 </div>
                 <div className="row">
                   <div className="col-md-6">
-                    {/* <Datetime
+                    <Datetime
                       value={this.state.datetime}
-                      onChange={this.handleChange}
-                      inputProps={{ placeholder: 'Please choose date and time', name: 'datetime', id: 'datetime' }}
-
+                      onChange={this.handleChange1}
+                      inputProps={{ placeholder: 'Please choose date and time', name: 'datetime', id: 'datetime', className: 'form-control' }}
+                      readOnly={true}
                     />
-                    <div className="c-error">{this.state.errors.datetime}</div> */}
-                    <Input
+                    <div className="c-error">{this.state.errors.datetime}</div>
+                    {/* <Input
                       value={this.state.datetime}
                       onChangeHandle={this.handleChange}
                       name="datetime"
                       className="form-control"
                       errorMessage={this.state.errors.datetime}
                       placeHolder="04/20/2019 12:00 AM"
-                    />
+                    /> */}
                   </div>
                   <div className="col-md-6">
                     <SelectCustom
