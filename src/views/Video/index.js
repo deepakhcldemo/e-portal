@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
+import { toastr } from "react-redux-toastr";
+
 import HeaderHome from "../../components/layout/header/HeaderHome";
 // import Navbar from "../../shared/components/Navbar";
 import Filter from "../../shared/components/Filter";
@@ -11,7 +13,7 @@ import VideoList from "./VideoList";
 import Curriculum from "./../Curriculum";
 
 import { getAllCategory } from "../../database/dal/firebase/categoryDal";
-import { getCurriculumFromDB } from "../../database/dal/firebase/curriculumDal";
+import { getCurriculumFromDB, deleteContentWithDocFromDB } from "../../database/dal/firebase/curriculumDal";
 import { getNotificationsFromDB } from "../../database/dal/firebase/studentDal";
 
 import { VIDEO_TABS } from "./../../constant/Constant";
@@ -26,8 +28,11 @@ class Video extends Component {
     userDetails: "",
     tabs: [],
     upload: false,
+    delete: false,
     tabKey: "pendingreview"
   };
+
+  map = new Map();
 
   componentWillMount = () => {
     this.setState({
@@ -56,6 +61,9 @@ class Video extends Component {
     }
   };
 
+  handleClick = () => {
+    this.setState({delete: !this.state.delete})
+  }
   getCurriculum = () => {
     const { userDetails } = this.state;
     getCurriculumFromDB(userDetails.userId).onSnapshot(querySnapshot => {
@@ -84,6 +92,7 @@ class Video extends Component {
             } else if (tabKey === "rejected") {
               return list.sstatus === false;
             }
+            return list;
           });
         }
         this.setState({ content });
@@ -115,10 +124,31 @@ class Video extends Component {
     });
   };
 
+  handleCheckbox = (checked, videoDetails,userId) => {
+    if(this.map.has(videoDetails.id) && !checked) {
+      this.map.delete(videoDetails.id)
+    }else{
+      this.map.set(videoDetails.id, {videoDetails, userId});
+    }
+  }
+
   handleKey = async key => {
+    await this.setState({filter :''});
     await this.setState({ tabKey: key });
     this.getContent();
   };
+
+  handleDelete = (type = 'one') => {
+    if(type === 'all'){
+
+    }else{
+      if(this.map.size === 0) {
+        toastr.warning('', 'Please Checked At Least One Video');
+        return false;
+      }
+      deleteContentWithDocFromDB(this.map);
+    }
+  }
 
   render = () => {
     const {
@@ -130,7 +160,6 @@ class Video extends Component {
       userDetails,
       category
     } = this.state;
-
     return (
       <>
         <div className="container-fluid">
@@ -150,21 +179,53 @@ class Video extends Component {
                         <Tab key={ind} eventKey={tab.id} title={tab.name}>
                           <VideoList
                             heading={tab.name}
+                            isDelete={this.state.delete}
                             videoDetails={filter ? filter : content}
+                            handleCheckbox={this.handleCheckbox}
                           >
                             {tabKey === "myvideo" &&
                               userDetails.role === "Teacher" && (
+                                <>
                                 <button
                                   style={{ color: "#fff" }}
                                   onClick={this.handleUpload}
                                   className="btn"
                                   title="Upload Video"
                                 >
-                                  <i className="fas fa-plus" />
+                                  <i className="fa fa-plus" />
                                   <span className="home-header-text-link-status">
                                     &nbsp;Add Video
                                   </span>
                                 </button>
+                                {content.length > 0 && (
+                                  <button
+                                    style={{ color: "#fff" }}
+                                    onClick={this.handleClick}
+                                    className="btn"
+                                    title={(!this.state.delete) ? "Delete Video" : "Cancel"}
+                                  >
+                                    <i className={(!this.state.delete) ? 'fa fa-trash' : 'fa fa-close'} />
+                                    <span className="home-header-text-link-status">
+                                      &nbsp;{(!this.state.delete) ? 'Delete Video' : 'Cancel' }
+                                    </span>
+                                  </button>
+                                )}
+                                {this.state.delete && (
+                                <>
+                                  <button
+                                    style={{ color: "#fff" }}
+                                    onClick={() => this.handleDelete()}
+                                    className="btn"
+                                    title="Delete"
+                                  >
+                                    <i className="fa fa-trash" />
+                                    <span className="home-header-text-link-status">
+                                      &nbsp;Delete
+                                    </span>
+                                  </button>                                   
+                                </>
+                                )}
+                              </>
                               )}
                           </VideoList>
                         </Tab>

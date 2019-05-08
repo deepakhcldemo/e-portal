@@ -30,9 +30,21 @@ class Curriculum extends Component {
     }
   };
 
+  handleFileChange = (ev, type) => {
+    const { target: { files } } = ev;
+    if(files[0].type.split('/')[0] !== type){
+      ev.target.value = '';      
+      toastr.warning('', "Please Select Only "+ type.charAt(0)+type.slice(1) + ' files');
+      return false;
+    }
+    return true;
+  }
+
   handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
 
-  handleProgress = progress => this.setState({ progress });
+
+  handleProgress = progress => {
+    this.setState({ progress }); }
 
   handleUploadError = error => {
     this.props.handleError(error);
@@ -235,13 +247,15 @@ class Curriculum extends Component {
                             disabled={!this.state.validate}
                             hidden
                             accept="video/*"
-                            filename={file => 
+                            randomizeFilename="true"
+                            /* filename={file => 
                               `${Math.random().toString(36).substring(2)}${(new Date()).getTime().toString(36)}_${file.name}`
-                            }
+                            } */
                             storageRef={firebase
                               .storage()
                               .ref(`curriculum/${userDetails.userId}`)}
-                            onUploadStart={this.handleUploadStart}
+/*                             onChange={(event) => this.handleFileChange(event, 'video')}
+ */                            onUploadStart={(file, uploadTask) => this.handleUploadStart(file,uploadTask)}
                             onUploadError={this.handleUploadError}
                             onUploadSuccess={this.handleVideoUploadSuccess}
                             onProgress={this.handleProgress}
@@ -264,13 +278,15 @@ class Curriculum extends Component {
                             <FileUploader
                               hidden
                               accept="image/*"
-                              filename={file =>
-                                "thumb_" + file.name.split(".")[1]
-                              }
+                              randomizeFilename="true"
+                              /* filename={file => 
+                                `${Math.random().toString(36).substring(2)}${(new Date()).getTime().toString(36)}_${file.name}`
+                              } */
                               storageRef={firebase
                                 .storage()
                                 .ref(`curriculum/${userDetails.userId}`)}
-                              onUploadStart={this.handleUploadStart}
+/*                               onChange={(event) => this.handleFileChange(event, 'image')}
+ */                              onUploadStart={this.handleUploadStart}
                               onUploadError={this.handleUploadError}
                               onUploadSuccess={this.handleThumbUploadSuccess}
                               onProgress={this.handleProgress}

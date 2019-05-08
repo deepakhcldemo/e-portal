@@ -20,6 +20,10 @@ class VideoList extends Component {
     });
   };
 
+  handleCheckbox = (event, videoDetail, userId) => {
+    this.props.handleCheckbox(event.target.checked,videoDetail, userId)
+  }
+  
   componentWillMount = () => {
     this.setState({
       userDetails: JSON.parse(localStorage.getItem("userProfile"))
@@ -27,7 +31,7 @@ class VideoList extends Component {
   };
 
   render = () => {
-    const { heading, videoDetails } = this.props;
+    const { heading, videoDetails, isDelete } = this.props;
     const { modalOpen, userDetails, videoData } = this.state;
     return (
       <div className="card video-container--background video-container">
@@ -45,6 +49,7 @@ class VideoList extends Component {
                   : GLOBAL_VARIABLES.VIDEO_PLACEHOLDER;
                 return (
                   <li className="card" key={index}>
+                    {(isDelete &&  videoDetail.fileName) && <input onClick={(event) => this.handleCheckbox(event, videoDetail, userDetails.userId)} type="checkbox" />}
                     <a onClick={() => this.handleClick(videoDetail)} href="#1">
                       <img
                         src={videoDetail.thumb}
@@ -57,7 +62,7 @@ class VideoList extends Component {
                           ? videoDetail.title
                           : videoDetail.notificationDesc}
                       </h2>
-                      <i className="fas fa-play-circle" />
+                      <i className="fa fa-play-circle" />
                       <h6>{videoDetail.date}</h6>
                     </a>
                     <h5>

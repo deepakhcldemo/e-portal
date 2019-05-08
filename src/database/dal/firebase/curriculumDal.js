@@ -1,4 +1,5 @@
 import dbFactory from '../../dbFactory'
+import { toastr } from "react-redux-toastr";
 
 const db = dbFactory.create('firebase');
 
@@ -24,6 +25,7 @@ export const saveFileMetaDataFromDB = (dispatch, fileName, user, doc, fields, ty
         tags: '',
         videoMetadata: [],
         thumb: '',
+        thumbFileName: '',
         status: true,
         category: '',
         isPending: (user.role === 'Teacher') ? false : true,
@@ -49,6 +51,7 @@ export const saveFileMetaDataFromDB = (dispatch, fileName, user, doc, fields, ty
                 });
             } else if(type === 'thumb') {
                 db.firestore().collection('curriculum').doc(doc).update({
+                    thumbFileName : fileName,
                     thumb: url
                 }).then(function(){
                 })
@@ -95,6 +98,30 @@ export const getReviewContentFromDB = (uid, status) => {
 export const getNotificationFromDB = () => {
     const db = dbFactory.create('firebase');
     return db.firestore().collection("notifications").get();       
+}
+
+export const deleteContentWithDocFromDB = (map) => {
+    let ref = db.storage();
+    map.forEach(value => {
+        let fileNameWithPath = `curriculum/${value.userId}/${value.videoDetails.fileName}`
+        let createVideoRef = ref.ref().child(fileNameWithPath);
+        createVideoRef.delete().then(function(){
+            if(value.videoDetails.thumbFileName){
+                fileNameWithPath = `curriculum/${value.userId}/${value.videoDetails.thumbFileName}`
+                let createThumbRef = ref.ref().child(fileNameWithPath)
+                createThumbRef.delete().then(function(){
+                }).catch(err => {
+                    toastr.warning('', err.message);
+                })
+            }
+            db.firestore().collection('curriculum').doc(value.videoDetails.id).delete().then(function() {                
+            }).catch(err => {
+                toastr.warning('', err.message);
+            });
+        }).catch(err => {
+            toastr.warning('', err.message);
+        })
+    })
 }
 // export const getNotificationFromDB = (dispatch) => {
 //     let data = [];
