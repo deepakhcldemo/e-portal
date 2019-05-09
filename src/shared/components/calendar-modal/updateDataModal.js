@@ -263,6 +263,7 @@ class CalendarModal extends Component {
                   className="btn btn-success"
                   value="Cancel"
                 />
+
               </div>
             </div>
           </form>
