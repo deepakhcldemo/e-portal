@@ -26,7 +26,7 @@ import Student from './views/Student/index';
 import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription';
 
 import Notification from './views/Notification';
-import BlogList from './views/Blog/TeacherBlogList/index';
+import BlogList from './views/Blog/list';
 import NotificationDetails from './views/NotificationDetails';
 import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
 import {
@@ -169,7 +169,7 @@ class App extends Component {
             component={StudentNotificationsDescription}
           />
 
-          <PrivateRoute path="/bloglist" component={BlogList} />
+          <PrivateRoute path="/blog/list" component={BlogList} />
           {/* <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
           <Route path="/student/notificationsDetails" component={StudentNotificationsDetails} />
           

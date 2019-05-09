@@ -6,13 +6,13 @@ import Button from 'react-bootstrap/Button'
 
 import Pagination from "react-js-pagination"
 
-import { getBlogListFromDBOrCount } from './../../database/dal/firebase/TeacherBlog'
+import { getBlogListFromDBOrCount } from './../../../database/dal/firebase/TeacherBlog'
 // Color Constant
-import {COLOR} from './../../constant/Constant'
+import {COLOR} from './../../../constant/Constant'
 
-import './style.css'
+import './list.scss'
 
-import HeaderHome from '../../components/layout/header/HeaderHome'
+import HeaderHome from '../../../components/layout/header/HeaderHome'
 
 const blogList = [{
     title: 'one',
