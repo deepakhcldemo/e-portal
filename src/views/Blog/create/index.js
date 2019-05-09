@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as actionTypes from '../../../spinnerStore/actions';
 import './style.css';
-import {getImageUrl, SaveBlog} from '../../../database/dal/firebase/TeacherBlog';
+import { getImageUrl, SaveBlog } from '../../../database/dal/firebase/TeacherBlog';
 import Modal from 'react-responsive-modal';
 import { openModal, closeModal } from './action'
 import HeaderHome from '../../../components/layout/header/HeaderHome';
@@ -26,7 +26,7 @@ class BlogList extends Component {
             blogImage: '',
             userDetails: '',
             validationMessage: '',
-            imageName : ''
+            imageName: ''
         };
         this.openModalForBlog = this.openModalForBlog.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -34,8 +34,8 @@ class BlogList extends Component {
         this.setBlogDescription = this.setBlogDescription.bind(this);
         this.saveAsDraft = this.saveAsDraft.bind(this);
         this.finalSave = this.finalSave.bind(this);
-        
-         
+
+
     }
     setBlogTitle(event) {
         const setTitle = event.target.value;
@@ -56,12 +56,12 @@ class BlogList extends Component {
     randomString(length) {
         var text = "";
         var possible =
-          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         for (var i = 0; i < length; i++) {
-          text += possible.charAt(Math.floor(Math.random() * possible.length));
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
         return text;
-      }
+    }
 
     componentDidMount() {
         this.props.getBlogsList();
@@ -69,7 +69,7 @@ class BlogList extends Component {
         console.log(userDetails);
         this.setState({
             userDetails: userDetails,
-            validationMessage : ''
+            validationMessage: ''
         })
     }
     openModalForBlog() {
@@ -82,88 +82,90 @@ class BlogList extends Component {
 
     handleImageSuccess = fileName => {
         this.setState({
-          imageName: fileName,
-          
-        });
-      };
+            imageName: fileName,
 
-    saveAsDraft () {
-        if(this.state.blogTitle === '' || this.state.blogDescription === " " || this.state.imageName === ""){
+        });
+    };
+
+    saveAsDraft() {
+        if (this.state.blogTitle === '' || this.state.blogDescription === " ") {
             this.setState({
-                validationMessage : 'Blog Title or Blog Description can not be empty'
+                validationMessage: 'Blog Title or Blog Description can not be empty'
             })
             return
         }
         this.setState({
-            validationMessage : ' '
+            validationMessage: ' '
         })
         const id = this.randomString(20);
         const blogObj = {};
-        getImageUrl(this.state.imageName,
-            this.state.userDetails.userId).then((url) => {
-                blogObj.id = id;
-                blogObj.teacherId = this.state.userDetails.userId
-                blogObj.uploadedImage = url;
-                blogObj.blogDescription = this.state.blogDescription;
-                blogObj.blogTitle = this.state.blogTitle;
-                blogObj.aStatus = false;
-                blogObj.tStatus = 'Draft';
-                SaveBlog(blogObj);
-            })  
 
+        blogObj.id = id;
+        blogObj.teacherId = this.state.userDetails.userId
+        blogObj.uploadedImage = '';
+        blogObj.blogDescription = this.state.blogDescription;
+        blogObj.blogTitle = this.state.blogTitle;
+        blogObj.aStatus = false;
+        blogObj.tStatus = 'Draft';
+        blogObj.tImage = this.state.userDetails.profileImage;
+        blogObj.Trating = this.state.userDetails.rating;
+        SaveBlog(blogObj);
+
+        this.props.closeModal()
     }
 
 
-    finalSave () {
-        if(this.state.blogTitle === '' || this.state.blogDescription === " " || this.state.imageName === ""){
+    finalSave() {
+        if (this.state.blogTitle === '' || this.state.blogDescription === " ") {
             this.setState({
-                validationMessage : 'Blog Title or Blog Description can not be empty'
+                validationMessage: 'Blog Title or Blog Description can not be empty'
             })
             return
         }
         this.setState({
-            validationMessage : ' '
+            validationMessage: ' '
         })
         const id = this.randomString(20);
         const blogObj = {};
-        getImageUrl(this.state.imageName,
-            this.state.userDetails.userId).then((url) => {
-                blogObj.id = id;
-                blogObj.teacherId = this.state.userDetails.userId
-                blogObj.uploadedImage = url;
-                blogObj.blogDescription = this.state.blogDescription;
-                blogObj.blogTitle = this.state.blogTitle;
-                blogObj.aStatus = false;
-                blogObj.tStatus = 'Submitted';
-                SaveBlog(blogObj);
-            })  
 
+        blogObj.id = id;
+        blogObj.teacherId = this.state.userDetails.userId
+        blogObj.uploadedImage = '';
+        blogObj.blogDescription = this.state.blogDescription;
+        blogObj.blogTitle = this.state.blogTitle;
+        blogObj.aStatus = false;
+        blogObj.tStatus = 'Submitted';
+        blogObj.tImage = this.state.userDetails.profileImage;
+        blogObj.Trating = this.state.userDetails.rating;
+        SaveBlog(blogObj);
+
+        this.props.closeModal()
     }
     render() {
         const { modalState } = this.props
 
         return (
             <>
-            <button className="btn btn-primary pull-right" onClick={this.openModalForBlog}><i className="fa fa-plus"></i>Create Article</button>
-            <Modal open={modalState} onClose={this.props.closeModal} center>
-                <h2>Create Blog</h2>
-                <span className="red-star">*</span>
-                <input type="text"
-                    className="form-control"
-                    placeholder="Blog Title"
-                    onChange={this.setBlogTitle}
-                />
+                <button className="btn btn-primary pull-right" onClick={this.openModalForBlog}><i className="fa fa-plus"></i>Create Article</button>
+                <Modal open={modalState} onClose={this.props.closeModal} center>
+                    <h2>Create Blog</h2>
+                    <span className="red-star">*</span>
+                    <input type="text"
+                        className="form-control"
+                        placeholder="Blog Title"
+                        onChange={this.setBlogTitle}
+                    />
 
-                <span className="red-star">*</span>
-                <textarea
-                    rows="4"
-                    cols="50"
-                    className="form-control"
-                    placeholder="Blog Description"
-                    onChange={this.setBlogDescription}
-                />
-                <div className="col-lg-12 rm-padding">
-                    <div className="mr-top">
+                    <span className="red-star">*</span>
+                    <textarea
+                        rows="4"
+                        cols="50"
+                        className="form-control"
+                        placeholder="Blog Description"
+                        onChange={this.setBlogDescription}
+                    />
+                    <div className="col-lg-12 rm-padding">
+                        {/* <div className="mr-top">
                         <FileUploader
                             accept="video/*"
                             className="upload-video"
@@ -175,18 +177,18 @@ class BlogList extends Component {
                             onUploadSuccess={this.handleImageSuccess}
                             onProgress={this.handleProgress}
                         />
+                    </div> */}
                     </div>
-                </div>
-                <div className="col-lg-12">
-                    <p className="red-star">{this.state.validationMessage}</p>
+                    <div className="col-lg-12">
+                        <p className="red-star">{this.state.validationMessage}</p>
 
-                </div>
-                <div className="col-lg-12">
-                    <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.finalSave }>Submit</button>
-                    <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.saveAsDraft} >Save As Draft</button>
+                    </div>
+                    <div className="col-lg-12">
+                        <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.finalSave}>Submit</button>
+                        <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.saveAsDraft} >Save As Draft</button>
 
-                </div>
-            </Modal>
+                    </div>
+                </Modal>
             </>
         );
     }

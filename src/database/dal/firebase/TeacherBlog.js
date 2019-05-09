@@ -14,6 +14,10 @@ export const getBlogListFromDBOrCount = (startAt, itemsPerPage, count = false) =
     return query;
 }
 
+export const getBlogByIdFromDB = (id) => {
+    return getDbRef("blogs").doc(id).get();
+}
+
 export const deleteBlogFromDB = (id) => {
     getDbRef('blogs').doc(id).delete().then(function() {                
     }).catch(err => {

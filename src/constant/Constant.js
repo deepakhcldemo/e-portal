@@ -52,7 +52,7 @@ export const TEACHER_DASHBOARD_LINKS = [
   {
     name: 'Blog-List',
     link: '/blog/list',
-    icon: 'fa fa-bell',
+    icon: 'fa fa-newspaper-o',
     title: 'Blog List',
     style: {
       marginLeft: '5px'
