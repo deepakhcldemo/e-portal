@@ -33,6 +33,8 @@ class BlogList extends Component {
         this.setBlogTitle = this.setBlogTitle.bind(this);
         this.setBlogDescription = this.setBlogDescription.bind(this);
         this.saveAsDraft = this.saveAsDraft.bind(this);
+        this.finalSave = this.finalSave.bind(this);
+        
          
     }
     setBlogTitle(event) {
@@ -51,12 +53,23 @@ class BlogList extends Component {
     }
 
 
+    randomString(length) {
+        var text = "";
+        var possible =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (var i = 0; i < length; i++) {
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+      }
+
     componentDidMount() {
         this.props.getBlogsList();
         const userDetails = JSON.parse(localStorage.getItem('userProfile'))
         console.log(userDetails);
         this.setState({
-            userDetails: userDetails
+            userDetails: userDetails,
+            validationMessage : ''
         })
     }
     openModalForBlog() {
@@ -67,8 +80,6 @@ class BlogList extends Component {
         this.props.closeModal()
     }
 
-    handleImageSuccess
-
     handleImageSuccess = fileName => {
         this.setState({
           imageName: fileName,
@@ -77,15 +88,53 @@ class BlogList extends Component {
       };
 
     saveAsDraft () {
+        if(this.state.blogTitle === '' || this.state.blogDescription === " " || this.state.imageName === ""){
+            this.setState({
+                validationMessage : 'Blog Title or Blog Description can not be empty'
+            })
+            return
+        }
+        this.setState({
+            validationMessage : ' '
+        })
+        const id = this.randomString(20);
         const blogObj = {};
         getImageUrl(this.state.imageName,
             this.state.userDetails.userId).then((url) => {
-                blogObj.id = this.state.userDetails.userId
+                blogObj.id = id;
+                blogObj.teacherId = this.state.userDetails.userId
                 blogObj.uploadedImage = url;
                 blogObj.blogDescription = this.state.blogDescription;
                 blogObj.blogTitle = this.state.blogTitle;
                 blogObj.aStatus = false;
                 blogObj.tStatus = 'Draft';
+                SaveBlog(blogObj);
+            })  
+
+    }
+
+
+    finalSave () {
+        if(this.state.blogTitle === '' || this.state.blogDescription === " " || this.state.imageName === ""){
+            this.setState({
+                validationMessage : 'Blog Title or Blog Description can not be empty'
+            })
+            return
+        }
+        this.setState({
+            validationMessage : ' '
+        })
+        const id = this.randomString(20);
+        const blogObj = {};
+        getImageUrl(this.state.imageName,
+            this.state.userDetails.userId).then((url) => {
+                blogObj.id = id;
+                blogObj.teacherId = this.state.userDetails.userId
+                blogObj.uploadedImage = url;
+                blogObj.blogDescription = this.state.blogDescription;
+                blogObj.blogTitle = this.state.blogTitle;
+                blogObj.aStatus = false;
+                blogObj.tStatus = 'Submitted';
                 SaveBlog(blogObj);
             })  
 
@@ -139,8 +188,12 @@ class BlogList extends Component {
                             </div>
                         </div>
                         <div className="col-lg-12">
-                            <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.submitBlog}>Submit</button>
-                            <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.saveAsDraft} onclick >Save As Draft</button>
+                            <p className="red-star">{this.state.validationMessage}</p>
+
+                        </div>
+                        <div className="col-lg-12">
+                            <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.finalSave }>Submit</button>
+                            <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.saveAsDraft} >Save As Draft</button>
 
                         </div>
                     </Modal>
