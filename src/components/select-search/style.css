@@ -11,7 +11,7 @@
     border: solid 0.5px grey;
 }
 
-.hc .menu {
+.hc .item-container {
     display: none;
     background: #FFF;
     overflow: auto;
@@ -21,12 +21,13 @@
     z-index: 10;
     min-height: 100px;
     margin: auto;
+    box-shadow: 2px 2px 4px #999;
 }
 
 .hc .item {
     background-color: #FFF;
     height: auto;
-    border-bottom: 1px solid #CCC;
+    box-shadow: 2px 2px 4px #999;
     margin: 0 .1rem;
     padding: .7rem;
     color: #000;
