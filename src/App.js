@@ -170,7 +170,7 @@ class App extends Component {
           />
 
           <PrivateRoute path="/blog/list" component={BList} />
-          <PrivateRoute path="/blog/view/:id" component={BlogDetails} />
+          <Route path="/blog/view/:id" component={BlogDetails} />
           {/* <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
           <Route path="/student/notificationsDetails" component={StudentNotificationsDetails} />
           
