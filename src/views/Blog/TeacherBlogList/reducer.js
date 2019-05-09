@@ -1,5 +1,6 @@
 const initialState = {
-    BlogList: []
+    BlogList: [],
+    openModal: false,
 }
 const BlogDetailsREducer = (state = initialState, action) => {
     switch (action.type) {
@@ -8,6 +9,16 @@ const BlogDetailsREducer = (state = initialState, action) => {
                 ...state,
                 BlogList: action.BlogsListData
             };
+        case 'CLOSE':
+            return {
+                ...state,
+                openModal: !state.openModal
+            }
+        case 'OPEN':
+            return {
+                ...state,
+                openModal: !state.openModal
+            }
 
         default:
             return state

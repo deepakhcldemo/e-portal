@@ -49,7 +49,7 @@ class Student extends Component {
   render() {
     const pendingReviev = [];
     const reviewDone = [];
-    
+
     const { bannerRows, carouselTop10Items } = this.state;
     const { teacherCarouselRows, notifications } = this.props;
     console.log('notifications', notifications);
@@ -102,7 +102,7 @@ class Student extends Component {
           carousellistNewlyItems={pendingReviev}
           title="Video Reviewed"
         />
-        {/* <Navbar links={STUDENT_DASHBOARD_LINKS} /> */} 
+        {/* <Navbar links={STUDENT_DASHBOARD_LINKS} /> */}
       </div>
     );
   }
