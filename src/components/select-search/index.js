@@ -18,6 +18,8 @@ class SelectSearch extends Component {
   dropdownOpen = event => {
     this.popupPosition();
     this.closeDropdown(event);
+    this.DOMElement._searchContainer.style.display = "block";
+    this.DOMElement._textContainer.style.display = "none";
     this.DOMElement._items.style.display = "block";
     this.DOMElement._searchInput.focus();
     window.onresize = event => {
@@ -115,6 +117,18 @@ class SelectSearch extends Component {
     this.setSearchOptionState(nextProps);
   };
   closeDropdown = event => {
+    var k,
+      textContainers = document.getElementsByClassName("textContainer");
+    for (k = 0; k < textContainers.length; k++) {
+      var textContainer = textContainers[k];
+      textContainer.style.display = "block";
+    }
+    var j,
+      searchContainers = document.getElementsByClassName("searchContainer");
+    for (j = 0; j < searchContainers.length; j++) {
+      var searchContainer = searchContainers[j];
+      searchContainer.style.display = "none";
+    }
     var i,
       dropdowns = document.getElementsByClassName("item-container");
     for (i = 0; i < dropdowns.length; i++) {
@@ -176,15 +190,27 @@ class SelectSearch extends Component {
             {this.state.selectedValue}
           </div>
           &nbsp;
-          <div
-            id={this.props.name + "_clearSearch"}
-            className="clearSearch"
-            onClick={event => {
-              this.clearSearch(event);
-            }}
-          >
-            X
-          </div>
+          {this.state.selectedValue !== "" && (
+            <div
+              id={this.props.name + "_clearSearch"}
+              className="clearSearch"
+              onClick={event => {
+                this.clearSearch(event);
+              }}
+            >
+              X
+            </div>
+          )}
+          {this.state.selectedValue === "" && (
+            <button
+              id={this.props.name + "_dropdown-btn"}
+              aria-haspopup="true"
+              aria-expanded="true"
+              type="button"
+              className="btn-font dropdown-toggle dropdown-btn"
+              onClick={event => this.dropdownOpen(event)}
+            />
+          )}
         </div>
         <div
           className="searchContainer"
