@@ -5,7 +5,8 @@ import Modal from 'react-responsive-modal';
 import { openModal, closeModal } from './action'
 import HeaderHome from '../../../components/layout/header/HeaderHome';
 import { connect } from 'react-redux';
-
+import FileUploader from "react-firebase-file-uploader";
+import firebase from "firebase";
 import {
     getBlogsList
 } from './action';
@@ -19,17 +20,32 @@ class BlogList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            notificationsDetails: [],
-            userDetails: {},
-            applyClass: 'display-upload',
-            isUploading: false,
-            videoName: '',
+            blogTitle : '',
+            blogDescription : '',
+            blogImage : '',
             validationMessage: ''
         };
         this.openModalForBlog = this.openModalForBlog.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.setBlogTitle = this.setBlogTitle.bind(this);
+        this.setBlogDescription = this.setBlogDescription.bind(this);
+    }
+    setBlogTitle (event) {
+        const setTitle = event.target.value;
+        this.setState({
+            blogTitle : setTitle
+        })
     }
 
+
+    setBlogDescription (event) {
+        const setDescription  = event.target.value;
+        this.setState({
+            blogDescription : setDescription
+        })
+    }
+
+    
     componentDidMount() {
         this.props.getBlogsList();
     }
@@ -41,7 +57,7 @@ class BlogList extends Component {
         this.props.closeModal()
     }
     render() {
-        const {  modalState } = this.props
+        const { modalState } = this.props
         return (
             <div className="container-fluid">
                 <div className="row">
@@ -56,8 +72,42 @@ class BlogList extends Component {
                         <button onClick={this.openModalForBlog}>Create Article</button>
                     </div>
                     <Modal open={modalState} onClose={this.props.closeModal} center>
-                        <div>Create Modal</div>
-                        <button className="btn btn-outline-primary btn-sm space" onClick={this.closeModal}>Cancel</button>
+                        <h2>Create Blog</h2>
+                        <span className="red-star">*</span>
+                        <input type="text"
+                            className="form-control"
+                            placeholder="Blog Title"
+                            onChange = {this.setBlogTitle}
+                        />
+
+                        <span className="red-star">*</span>
+                        <textarea
+                            rows="4"
+                            cols="50"
+                            className="form-control"
+                            placeholder="Blog Description"
+                            onChange = {this.setBlogDescription}
+                        />
+                        <div className="col-lg-12 rm-padding">
+                            <div className ="mr-top">
+                                <FileUploader
+                                    accept="video/*"
+                                    className="upload-video"
+                                    storageRef={firebase
+                                        .storage()
+                                        .ref(`blogs/id`)}
+                                    onUploadStart={this.handleUploadStart}
+                                    onUploadError={this.handleUploadError}
+                                    onUploadSuccess={this.handleVideoUploadSuccess}
+                                    onProgress={this.handleProgress}
+                                />
+                            </div>
+                        </div>
+                        <div className="col-lg-12">
+                        <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.closeModal}>Submit</button>
+                        <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.closeModal}>Save As Draft</button>
+                        
+                        </div>
                     </Modal>
                 </div>
             </div>

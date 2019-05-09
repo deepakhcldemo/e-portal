@@ -1,3 +1,11 @@
 .create-article{
     margin-top: 68px
 }
+
+.mr-top{
+    margin-top: 20px;
+}
+
+.rm-padding{
+    padding : 0px !important;
+}
