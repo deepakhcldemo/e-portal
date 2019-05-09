@@ -120,6 +120,7 @@ class CalendarModal extends Component {
         tId: this.props.teacherData.userId,
         tStatus: true,
         status: -1,
+        deleted: false,
         reqForReSchedule: false,
         // reschedule: false,
         comment: [
