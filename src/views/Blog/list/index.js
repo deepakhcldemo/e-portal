@@ -44,19 +44,11 @@ class BList extends Component {
     }
 
     handleClick = (blog, type) => {
-<<<<<<< HEAD
         (type === 'view') ? this.viewBlog(blog) : this.deleteBlog(blog)
     }
 
     viewBlog = (blog) => {
 
-=======
-        (type === 'edit') ? this.viewBlog(blog) : this.deleteBlog(blog)
-    }
-
-    viewBlog = (blog) => {
-        
->>>>>>> 63e579cfc8b9dc9e5ee4e3da4bd609492ffbf739
     }
 
     deleteBlog = (blog) => {
