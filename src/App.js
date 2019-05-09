@@ -26,7 +26,7 @@ import Student from './views/Student/index';
 import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription';
 
 import Notification from './views/Notification';
-import BlogList from './views/TeacherBlogList/index';
+import BlogList from './views/Blog/TeacherBlogList/index';
 import NotificationDetails from './views/NotificationDetails';
 import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
 import {

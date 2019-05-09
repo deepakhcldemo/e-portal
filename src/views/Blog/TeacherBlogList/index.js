@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import * as actionTypes from '../../spinnerStore/actions';
-import Navbar from './../../shared/components/Navbar';
-import HeaderHome from '../../components/layout/header/HeaderHome';
+import * as actionTypes from '../../../spinnerStore/actions';
+
+import HeaderHome from '../../../components/layout/header/HeaderHome';
 import { connect } from 'react-redux';
 
 import {
@@ -10,7 +10,7 @@ import {
 import {
     TEACHER_DASHBOARD_LINKS,
     STUDENT_DASHBOARD_LINKS
-} from './../../constant/Constant';
+} from './../../../constant/Constant';
 //import './notificationDetails.css';
 
 class BlogList extends Component {
