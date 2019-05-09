@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as actionTypes from '../../../spinnerStore/actions';
 import './style.css';
-import {getImageUrl} from '../../../database/dal/firebase/TeacherBlog';
+import {getImageUrl, SaveBlog} from '../../../database/dal/firebase/TeacherBlog';
 import Modal from 'react-responsive-modal';
 import { openModal, closeModal } from './action'
 import HeaderHome from '../../../components/layout/header/HeaderHome';
@@ -77,10 +77,18 @@ class BlogList extends Component {
       };
 
     saveAsDraft () {
+        const blogObj = {};
         getImageUrl(this.state.imageName,
-            this.state.userDetails.userId).then((data) => {
-                console.log('data',data)
+            this.state.userDetails.userId).then((url) => {
+                blogObj.id = this.state.userDetails.userId
+                blogObj.uploadedImage = url;
+                blogObj.blogDescription = this.state.blogDescription;
+                blogObj.blogTitle = this.state.blogTitle;
+                blogObj.aStatus = false;
+                blogObj.tStatus = 'Draft';
+                SaveBlog(blogObj);
             })  
+
     }
     render() {
         const { modalState } = this.props

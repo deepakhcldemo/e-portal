@@ -1,5 +1,5 @@
 import dbFactory from '../../dbFactory';
-
+import { toastr } from "react-redux-toastr";
 const getDbRef = collectionName => {
     const db = dbFactory.create("firebase");
     const ref = db.firestore().collection(collectionName);
@@ -35,6 +35,18 @@ export const getImageUrl = (name ,id) => {
       .ref("blogs/" + id)
       .child(name)
       .getDownloadURL();
+  };
+
+
+  export const SaveBlog = blogDetails => {
+    const db = dbFactory.create("firebase");
+    db.firestore()
+      .collection("Blogs")
+      .doc(blogDetails.id)
+      .set(blogDetails)
+      .then(() => {
+        toastr.success(" Request created successfully.");
+      });
   };
   
 
