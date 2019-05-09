@@ -151,9 +151,9 @@ class BlogList extends Component {
                     />
                 </div>
                 <div className="row create-article">
-                    <div className="col-lg-12 pull-left">
+                    <div className="col-lg-12">
 
-                        <button onClick={this.openModalForBlog}>Create Article</button>
+                        <button className="btn btn-primary pull-right" onClick={this.openModalForBlog}><i class="fa fa-plus"></i>Create Article</button>
                     </div>
                     <Modal open={modalState} onClose={this.props.closeModal} center>
                         <h2>Create Blog</h2>
