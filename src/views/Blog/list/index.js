@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 
-import Pagination from "react-js-pagination"
+// import Pagination from "react-js-pagination"
 
 import { getBlogListFromDBOrCount } from './../../../database/dal/firebase/TeacherBlog'
 // Color Constant
