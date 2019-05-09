@@ -44,6 +44,8 @@ import AboutUs from './views/AboutUs';
 import TeacherDetails from './views/Teacher/teacher-details/teacherDetails';
 import Footer from './components/layout/footer/Footer';
 import * as actionTypesAuth from './authguard/actions';
+import BlogDetails from './views/Blogs/BlogDetails';
+
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
@@ -141,6 +143,7 @@ class App extends Component {
             path="/home/teacher/:id"
             render={props => <TeacherDetails {...props} />}
           />
+          <Route exact path="/blog" component={BlogDetails} />
           <Route exact path="/contactus" component={ContactUs} />
           <Route exact path="/aboutus" component={AboutUs} />
           <Route exact path="/resetPassword" component={PasswordReset} />

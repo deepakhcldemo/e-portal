@@ -399,7 +399,7 @@ class TeacherDetails extends Component {
             {/* <img src={profileImgs} className="bnr-img1"/> */}
             <img
               alt=""
-              src="../../../../public/Assets/hdpi/detail-banner.jpg"
+              src="../../../../Assets/hdpi/detail-banner.jpg"
               className="bnr-img"
             />
           </div>
