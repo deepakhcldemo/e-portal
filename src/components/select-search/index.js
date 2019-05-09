@@ -87,7 +87,6 @@ class SelectSearch extends Component {
         "translate3d(2px," + popopStartPosition + "px, 0px)";
       var boxShadow = (this.DOMElement._items.style["boxShadow"] =
         "2px 2px 4px #999");
-      debugger;
       var arrBoxShadow = boxShadow.split(" ");
       if (arrBoxShadow && arrBoxShadow.length == 4) {
         this.DOMElement._items.style["boxShadow"] =
