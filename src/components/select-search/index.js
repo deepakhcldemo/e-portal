@@ -101,21 +101,7 @@ class SelectSearch extends Component {
       }
     }
   };
-  componentWillReceiveProps = nextProps => {
-    this.DOMElement._items = document.getElementById(nextProps.name + "_items");
-    this.DOMElement._searchContainer = document.getElementById(
-      nextProps.name + "_searchContainer"
-    );
-    this.DOMElement._searchInput = document.getElementById(
-      nextProps.name + "_searchInput"
-    );
-    this.DOMElement._textContainer = document.getElementById(
-      nextProps.name + "_textContainer"
-    );
-    this.DOMElement._dropdownSearch = document.getElementById(
-      nextProps.name + "_dropdownSearch"
-    );
-    this.setState({ selectedValue: nextProps.properties.selectedValue });
+  setSearchOptionState = nextProps => {
     if (nextProps.properties.selectedValue !== "") {
       this.DOMElement._searchContainer.style.display = "none";
       this.DOMElement._textContainer.style.display = "block";
@@ -123,6 +109,10 @@ class SelectSearch extends Component {
       this.DOMElement._searchContainer.style.display = "block";
       this.DOMElement._textContainer.style.display = "none";
     }
+  };
+  componentWillReceiveProps = nextProps => {
+    this.setState({ selectedValue: nextProps.properties.selectedValue });
+    this.setSearchOptionState(nextProps);
   };
   closeDropdown = event => {
     var i,
@@ -138,6 +128,22 @@ class SelectSearch extends Component {
     }
   };
   componentDidMount = () => {
+    this.DOMElement._items = document.getElementById(
+      this.props.name + "_items"
+    );
+    this.DOMElement._searchContainer = document.getElementById(
+      this.props.name + "_searchContainer"
+    );
+    this.DOMElement._searchInput = document.getElementById(
+      this.props.name + "_searchInput"
+    );
+    this.DOMElement._textContainer = document.getElementById(
+      this.props.name + "_textContainer"
+    );
+    this.DOMElement._dropdownSearch = document.getElementById(
+      this.props.name + "_dropdownSearch"
+    );
+    this.setSearchOptionState(this.props);
     this.popupPosition();
 
     window.onclick = event => {
