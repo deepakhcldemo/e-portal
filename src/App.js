@@ -41,7 +41,7 @@ import AboutUs from './views/AboutUs';
 import TeacherDetails from './views/Teacher/teacher-details/teacherDetails';
 import Footer from './components/layout/footer/Footer';
 import * as actionTypesAuth from './authguard/actions';
-import BlogDetails from './views/Blogs/BlogDetails';
+import BlogDetails from './views/Blog/BlogDetails';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
