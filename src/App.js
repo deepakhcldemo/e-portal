@@ -140,7 +140,7 @@ class App extends Component {
             path="/home/teacher/:id"
             render={props => <TeacherDetails {...props} />}
           />
-          <Route exact path="/blog" component={BlogDetails} />
+          {/* <Route exact path="/blog" component={BlogDetails} /> */}
           <Route exact path="/contactus" component={ContactUs} />
           <Route exact path="/aboutus" component={AboutUs} />
           <Route exact path="/resetPassword" component={PasswordReset} />
@@ -170,6 +170,7 @@ class App extends Component {
           />
 
           <PrivateRoute path="/blog/list" component={BList} />
+          <PrivateRoute path="/blog/view/:id" component={BlogDetails} />
           {/* <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
           <Route path="/student/notificationsDetails" component={StudentNotificationsDetails} />
           

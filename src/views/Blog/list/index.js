@@ -3,7 +3,11 @@ import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
+
 import BlogList from './../create'
+
+import {Redirect} from "react-router-dom";
+
 // import Pagination from "react-js-pagination"
 
 import { getBlogListFromDBOrCount, deleteBlogFromDB } from './../../../database/dal/firebase/TeacherBlog'
@@ -43,16 +47,16 @@ class BList extends Component {
         this.state = null;
     }
 
-    handleClick = (blog, type) => {
-        (type === 'view') ? this.viewBlog(blog) : this.deleteBlog(blog)
+    handleClick = (id, type) => {
+        (type === 'view') ? this.viewBlog(id) : this.deleteBlog(id)
     }
 
-    viewBlog = (blog) => {
-
+    viewBlog = (viewId) => {
+        this.setState({viewId});
     }
 
-    deleteBlog = (blog) => {
-        deleteBlogFromDB(blog.id);
+    deleteBlog = (id) => {
+        deleteBlogFromDB(id);
     }
 
     handlePageChange = (pageNumber) => {
@@ -81,8 +85,8 @@ class BList extends Component {
     }
 
     render = () => {
-        const { blogs, userDetails/*  activePage, itemsPerPage, totalItemCount */ } = this.state;
-        return (
+        const { blogs, userDetails, viewId/*  activePage, itemsPerPage, totalItemCount */ } = this.state;
+        return (            
             <div className="container-fluid">
                 <HeaderHome headeTitle="Blog List" />
                 <Row className="content-container main-wrapper">
@@ -102,8 +106,8 @@ class BList extends Component {
                                                     <Card.Text>{blog.blogDescription}</Card.Text>
                                                     {(userDetails && userDetails.userId === blog.teacherId) && (
                                                         <>
-                                                        <Button variant="outline-info" onClick={() => this.handleClick(blog,'view')}><i className="fa fa-eye" /></Button>
-                                                        <Button variant="outline-danger" onClick={() => this.handleClick(blog,'delete')}><i className="fa fa-trash" /></Button>
+                                                        <Button variant="outline-info" onClick={() => this.handleClick(blog.id,'view')}><i className="fa fa-eye" /></Button>
+                                                        <Button variant="outline-danger" onClick={() => this.handleClick(blog.id,'delete')}><i className="fa fa-trash" /></Button>
                                                         </>
                                                     )}
                                                 </Card.Body>
@@ -125,6 +129,7 @@ class BList extends Component {
                             </Card.Footer>
                         </Card>
                     </Col>
+                    {viewId && ( <Redirect to={"/blog/view/" + viewId}/>)}
                 </Row>
             </div>
         );
