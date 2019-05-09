@@ -20,7 +20,7 @@ class Blog extends Component {
           <Link
             className="nav-link"
             style={{ padding: "0px" }}
-            to={`/blog/${carouselRecord.feedback.id}`}
+            to={`/blog/view/${carouselRecord.feedback.id}`}
             title={carouselRecord.name}
           >
             <BlogItem blogDetails={carouselRecord} />

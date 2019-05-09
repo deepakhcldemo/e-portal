@@ -80,6 +80,9 @@ class BlogDetails extends Component {
 
   render() {
     const blogId = this.props.match.params.id;
+    
+    console.log('--blogComment--', this.state.blogComment);
+
     // const isLogedIn = localStorage.getItem('user');
     const { isFocus, blogDetail } = this.state;   
     console.log('blogDetail', blogDetail);

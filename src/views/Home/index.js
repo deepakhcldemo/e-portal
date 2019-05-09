@@ -177,7 +177,7 @@ class Home extends Component {
       blogList
     } = this.state;
 
-    console.log('--blogList--', blogList);
+    // console.log('--blogList--', blogList);
     return (
       <React.Fragment>
         <div className="container-fluid">
