@@ -9,8 +9,7 @@ const getDbRef = collectionName => {
 export const getBlogListFromDBOrCount = (startAt, itemsPerPage, count = false) => {
     let query = getDbRef("blogs").orderBy("created", "desc");
     if(!count)
-    //query = query.startAt(startAt).limit(itemsPerPage);
-    console.log(query)
+    query = query.startAt(startAt).limit(itemsPerPage);
     return query;
 }
 
