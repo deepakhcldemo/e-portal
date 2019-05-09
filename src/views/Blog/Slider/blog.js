@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
 import Slider from "react-slick";
-import blogItem from "./blogItem";
+import BlogItem from "./blogItem";
+import { Link } from "react-router-dom";
 
 class Blog extends Component {
   constructor(props) {
@@ -16,7 +17,14 @@ class Blog extends Component {
     const blogList = records.map((carouselRecord, index) => {
       return (
         <div key={index} className="vd-wrapper">
-          <blogItem blogDetails={carouselRecord} />
+          <Link
+            className="nav-link"
+            style={{ padding: "0px" }}
+            to={`/blog/${carouselRecord.feedback.id}`}
+            title={carouselRecord.name}
+          >
+            <BlogItem blogDetails={carouselRecord} />
+          </Link>
         </div>
       );
     });

@@ -35,5 +35,5 @@ export const getUserProfileFromDB = (userId) => {
 };
 
 export const getBlogFromDB = ()=>{
-  return getDbRef("Blogs");
+  return getDbRef("blogs");
 }

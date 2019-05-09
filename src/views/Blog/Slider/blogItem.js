@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './blogItem.css';
 
 
-class blogItem extends Component {
+class BlogItem extends Component {
   render() {
     const { blogDetails } = this.props;
     const name = blogDetails.profileData.firstName + ' ' + blogDetails.profileData.lastName;
@@ -20,14 +20,15 @@ class blogItem extends Component {
 
             <div className="vd-content comment-box--style">
               <h6 className="student-title--align">
-              {name.trim()}
+              {/* {name.trim()} */}
+              {blogDetails.feedback.blogTitle}
               </h6>
 
               <p
                 className="block-with-text"
-                title={blogDetails.feedback.comment}
+                title={blogDetails.feedback.blogDescription}
               >
-                {blogDetails.feedback.comment}
+                {blogDetails.feedback.blogDescription}
               </p>
             </div>
           </div>
@@ -37,4 +38,4 @@ class blogItem extends Component {
   }
 }
 
-export default blogItem;
+export default BlogItem;

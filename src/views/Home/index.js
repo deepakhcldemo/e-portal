@@ -140,13 +140,14 @@ class Home extends Component {
       }
       querySnapshot.forEach(doc => {
         const teacherId = doc.data().teacherId;
+        
         if (teacherId) {
           getUserProfileFromDB(doc.data().teacherId).onSnapshot(
             querySnapshot => {
               querySnapshot.forEach(profileData => {
                 tempArr['profileData'] = profileData.data();
-                tempArr['blog'] = doc.data();
-
+                tempArr['feedback'] = doc.data();
+                
                 blogData.push(tempArr);
                 this.setState({
                   blogList: blogData
@@ -176,7 +177,7 @@ class Home extends Component {
       blogList
     } = this.state;
 
-    console.log('--studentsReview--', blogList);
+    console.log('--blogList--', blogList);
     return (
       <React.Fragment>
         <div className="container-fluid">

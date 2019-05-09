@@ -24,12 +24,19 @@ class Comment extends Component {
 
     if (this.state.message.trim()) {
       const loggedInUSer = JSON.parse(localStorage.getItem('user'));
+
+      let feedbacktoId = '';
+      if(this.props.source === 'Blog'){
+        feedbacktoId = this.props.blogId;
+      } else {
+        feedbacktoId = this.props.teacherId;
+      }
       if (loggedInUSer) {
         const commentDetails = {
           created_date: new Date(),
           comment: this.state.message,
           user_id: loggedInUSer.user.uid,
-          feedback_to: this.props.teacherId,
+          feedback_to: feedbacktoId,
           like: 0,
           dislike: 0
         };
