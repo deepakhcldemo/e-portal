@@ -14,14 +14,6 @@ import './list.scss'
 
 import HeaderHome from '../../../components/layout/header/HeaderHome'
 
-const blogList = [{
-    title: 'one',
-    desc: 'one is one'
-},{
-    title: 'two',
-    desc: 'simple card two'
-}]
-
 class BlogList extends Component {
 
     state = {
@@ -45,8 +37,16 @@ class BlogList extends Component {
         this.state = null;
     }
 
-    handleClick = (blogList, type) => {
-        console.log(blogList,type)
+    handleClick = (blog, type) => {
+        (type === 'edit') ? this.viewOrEditBlog(blog) : this.deleteBlog(blog)
+    }
+
+    viewOrEditBlog = (blog) => {
+
+    }
+
+    deleteBlog = (blog) => {
+
     }
 
     handlePageChange = (pageNumber) => {
@@ -57,7 +57,7 @@ class BlogList extends Component {
         const { currentPage, itemsPerPage } = this.state;
         const startAt = currentPage * itemsPerPage - itemsPerPage;
 
-        getBlogListFromDBOrCount(startAt,itemsPerPage).onSnapshot(querySnapshot => {
+        getBlogListFromDBOrCount(startAt,itemsPerPage,true).onSnapshot(querySnapshot => {
             let blogs = [];
             querySnapshot.forEach(doc => {
               blogs.push(Object.assign({ id: doc.id }, doc.data()));
@@ -75,7 +75,7 @@ class BlogList extends Component {
     }
 
     render = () => {
-        const { blogs, activePage, itemsPerPage, totalItemCount } = this.state;
+        const { blogs,/*  activePage, itemsPerPage, totalItemCount */ } = this.state;
         return (
             <div className="container-fluid">
                 <HeaderHome headeTitle="Blog List" />
@@ -91,7 +91,7 @@ class BlogList extends Component {
                                                 <Card.Body>
                                                     <Card.Title>{blog.blogTitle}</Card.Title>
                                                     <Card.Text>{blog.blogDescription}</Card.Text>
-                                                    <Button variant="outline-info" onClick={() => this.handleClick(blog,'edit')}><i className="fa fa-pencil" /></Button>
+                                                    <Button variant="outline-info" onClick={() => this.handleClick(blog,'view')}><i className="fa fa-pencil" /></Button>
                                                     <Button variant="outline-danger" onClick={() => this.handleClick(blog,'delete')}><i className="fa fa-trash" /></Button>
                                                 </Card.Body>
                                             </Card>
@@ -101,14 +101,14 @@ class BlogList extends Component {
                                 {blogs.length === 0 && <h6>No Blogs</h6>}
                             </Card.Body>
                             <Card.Footer>
-                            <Pagination
+                            {/* <Pagination
                                 className="pagination"
                                 activePage={activePage}
                                 itemsCountPerPage={itemsPerPage}
                                 totalItemsCount={totalItemCount}
                                 pageRangeDisplayed={itemsPerPage}
                                 onChange={this.handlePageChange}
-                            />
+                            /> */}
                             </Card.Footer>
                         </Card>
                     </Col>
