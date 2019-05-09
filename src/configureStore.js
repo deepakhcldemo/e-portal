@@ -20,7 +20,7 @@ import studentReducer from "./views/Student/reducer";
 import homeReducer from "./views/Home/reducer";
 import teacherDetailsReducer from "./views/Teacher/teacher-details/teacher-details.reducer";
 import searchTeacherReducer from "./views/Student/SearchTeacher/searchTeacherReducer";
-import BlogDetailsREducer from './views/TeacherBlogList/reducer';
+import BlogDetailsREducer from './views/Blog/TeacherBlogList/reducer';
 import videoReducer from "./views/Video/reducer";
 import notificationReducer from "./views/Teacher/Notification/notificationReducer";
 import notifDetils from "./views/Notification/reducer";

@@ -4,6 +4,8 @@ import './CommentItem.css';
 class CommentItem extends Component {
   render() {
     const { commentDetails } = this.props;
+    const name = commentDetails.profileData.firstName + ' ' + commentDetails.profileData.lastName;
+    
     return (
       <div className="card">
         <div className="">
@@ -16,9 +18,7 @@ class CommentItem extends Component {
 
             <div className="vd-content comment-box--style">
               <h6 className="student-title--align">
-                {commentDetails.profileData.firstName +
-                  ' ' +
-                  commentDetails.profileData.lastName}
+                {name.trim()}
               </h6>
 
               <p

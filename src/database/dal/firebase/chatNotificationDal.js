@@ -13,7 +13,7 @@ export const getTeacherNotificationFromDB = (dispatch, uid) => {
     console.log("getTeacherNotificationFromDB", uid)
     const notifications = [];
     const db = dbFactory.create('firebase');
-    db.firestore().collection('chatNotifications').where("tId", "==", uid).get()
+    db.firestore().collection('chatNotifications').where("tId", "==", uid).where("deleted", "==", false).get()
         .then((querySnapshot) => {
             querySnapshot.docs.forEach(doc => {
                 notifications.push(doc.data())
@@ -29,7 +29,7 @@ export const getNotificationFromDB = (dispatch, uid) => {
     console.log("getNotificationFromDB")
     const notifications = [];
     const db = dbFactory.create('firebase');
-    db.firestore().collection('chatNotifications').where("nId", "==", uid).get()
+    db.firestore().collection('chatNotifications').where("nId", "==", uid).where("deleted", "==", false).get()
         .then((querySnapshot) => {
             querySnapshot.docs.forEach(doc => {
                 notifications.push(doc.data())
@@ -45,7 +45,7 @@ export const getTeacherFromStudentIdFromDB = (dispatch, uid) => {
     console.log("getNotificationFromDB")
     const notifications = [];
     const db = dbFactory.create('firebase');
-    db.firestore().collection('chatNotifications').where("sId", "==", uid).get()
+    db.firestore().collection('chatNotifications').where("sId", "==", uid).where("deleted", "==", false).get()
         .then((querySnapshot) => {
             querySnapshot.docs.forEach(doc => {
                 notifications.push(doc.data())
@@ -61,7 +61,7 @@ export const getTeachertNotificationFromDB = (dispatch, uid) => {
     console.log("getStudentNotificationFromDB")
     const notifications = [];
     const db = dbFactory.create('firebase');
-    db.firestore().collection('chatNotifications').where("tId", "==", uid).get()
+    db.firestore().collection('chatNotifications').where("tId", "==", uid).where("deleted", "==", false).get()
         .then((querySnapshot) => {
             querySnapshot.docs.forEach(doc => {
                 notifications.push(doc.data())
@@ -109,18 +109,21 @@ export const getStudentFromDB = (dispatch, uid) => {
 export const getTeacherNotificationData = userId => {
     return getDbRef('chatNotifications')
         .where('tId', '==', userId)
+        .where("deleted", "==", false)
         .get();
 };
 
 export const getNotificationData = userId => {
     return getDbRef('chatNotifications')
         .where('sId', '==', userId)
+        .where("deleted", "==", false)
         .get();
 };
 
 export const getNotificationDataFromNid = userId => {
     return getDbRef('chatNotifications')
         .where('nId', '==', userId)
+        .where("deleted", "==", false)
         .get();
 };
 

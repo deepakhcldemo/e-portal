@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import Like from "../../shared/components/like/Like";
 import Dislike from "../../shared/components/dislike/Dislike";
-import {
-  getCommentRating,
-  saveLike
-} from "../../database/dal/firebase/commentDal";
+import { saveLike } from "../../database/dal/firebase/commentDal";
 
 class CommentLikeUnlike extends Component {
-
   constructor(props) {
       super(props);
       this.state = {
@@ -21,59 +17,41 @@ class CommentLikeUnlike extends Component {
   }
 
   componentDidMount(){
-      // this.props.setSpinnerStatus(true);
       const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")): null;
       this.user = user;
   }
     
   /* Like Dislike */
   handleLikeDislike= (commentId, currentButton, feedbackby) => {
-      if (this.user) {
-          const userId = this.user.user.uid;         
+    if (this.user) {
+        const userId = this.user.user.uid;         
 
-          if (currentButton) {
-              
-            // this.getFeedbackByData(commentId, (properties) => {
-                  
-            //   const getFeedback = properties.feedbackby;
-            //   const getPrevFeedback = getFeedback ? getFeedback.filter(
-            //       function(feedback) {                      
-            //           return feedback.userId !== userId;
-            //       }
-            //   ) : '';
-            //   this.setState({
-            //     feedbackby : getPrevFeedback
-            //   })
-            // });
-            
-            const getPrevFeedback = feedbackby ? feedbackby.filter(
-                function(feedback) {                      
-                    return feedback.userId !== userId;
-                }
-            ) : '';     
-            
-            const userRating = this.setUserRating(userId, getPrevFeedback, currentButton);
-              saveLike(commentId, userRating).then(success=>{
-              }, error=> error.message);
-          }
-      };        
-    }
-
-  // getFeedbackByData(commentId, callback) {
-  //     getCommentRating(commentId).onSnapshot(querySnapshot => {
-        
-  //       let feedbackByData;
-  //       if(querySnapshot.exists){
-  //         feedbackByData = querySnapshot.data().feedbackby;
-  //       } else {
-  //         feedbackByData = '';
-  //       }
-
-  //       callback({
-  //         feedbackby: feedbackByData
-  //     }) ;                    
-  //   });
-  // }
+        if (currentButton) {            
+          // this.getFeedbackByData(commentId, (properties) => {
+                
+          //   const getFeedback = properties.feedbackby;
+          //   const getPrevFeedback = getFeedback ? getFeedback.filter(
+          //       function(feedback) {                      
+          //           return feedback.userId !== userId;
+          //       }
+          //   ) : '';
+          //   this.setState({
+          //     feedbackby : getPrevFeedback
+          //   })
+          // });
+          
+          const getPrevFeedback = feedbackby ? feedbackby.filter(
+              function(feedback) {                      
+                  return feedback.userId !== userId;
+              }
+          ) : '';     
+          
+          const userRating = this.setUserRating(userId, getPrevFeedback, currentButton);
+            saveLike(commentId, userRating).then(success=>{
+            }, error=> error.message);
+        }
+    };        
+  }
 
   setUserRating = (userId, getPrevFeedback, userLikeDislike) => {
                 
@@ -100,7 +78,6 @@ class CommentLikeUnlike extends Component {
 
     let userRating = '';
     if(getPrevFeedback){
-      // console.log('--getPrevFeedback-', getPrevFeedback);
       getPrevFeedback.push({
         'like': like,
         'dislike':disLike,
@@ -144,9 +121,6 @@ class CommentLikeUnlike extends Component {
       return 0;
     }
   }
-  
-
-   
 
   render() {
     const { feedbackId, totalLike, totalUnLike, userLike, userDislike, feedbackby } = this.props;

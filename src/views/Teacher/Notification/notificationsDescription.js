@@ -88,7 +88,7 @@ class notificationsDescription extends Component {
           {
             by: loggedInUSer.user.uid,
             date: createdAt,
-            details: "Hey, I have rejected chat offer. I am during this week."
+            details: "Hey, Teacher have rejected chat offer."
           }
         ]
       };
@@ -125,6 +125,24 @@ class notificationsDescription extends Component {
   handleBack = () => {
     this.props.setKeyForNotificationPage('chatNotificationDetails');
     this.props.history.goBack();
+  };
+
+  handleDelete = id => {
+    console.log("handleDelete", id);
+    const updatedAt = new Date();
+    const createdAt = new Date();
+    const loggedInUSer = JSON.parse(localStorage.getItem("user"));
+    if (loggedInUSer) {
+      const acceptedNotificationDetails = {
+        nId: id,
+        updatedAt,
+        status: 0,
+        deleted: true
+      };
+      udpateChatNotificationDetails({
+        ...acceptedNotificationDetails
+      });
+    }
   };
 
   getMessageText(status) {
@@ -286,6 +304,19 @@ class notificationsDescription extends Component {
                             Discuss on Time
                         </button>
                         ) : null}
+
+                      {/* {notificationData.paymentStatus === false &&
+                        notificationData.status === -1 && notificationData.deleted === false ? (
+                          <button
+                            onClick={() => this.handleDelete(notificationData.nId)}
+                            type="button"
+                            className="btn btn-danger"
+                            data-dismiss="modal"
+                          >
+                            Delete
+                        </button>
+                        ) : null} */}
+
                     </div>
 
                     <div>

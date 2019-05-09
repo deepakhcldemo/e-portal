@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import AuthGuard from './authguard/AuthGuard';
-// import { withRouter } from 'react-router';
+
 import { Spinner } from 'react-bootstrap';
 
 import GLOBAL_VARIABLES from './config/config';
@@ -26,7 +26,7 @@ import Student from './views/Student/index';
 import StudentNotificationsDescription from './views/Student/Notification/notificationsDescription';
 
 import Notification from './views/Notification';
-import BlogList from './views/TeacherBlogList/index';
+import BlogList from './views/Blog/TeacherBlogList/index';
 import NotificationDetails from './views/NotificationDetails';
 import SearchTeacher from './views/Student/SearchTeacher/SearchTeacher';
 import {
@@ -35,15 +35,14 @@ import {
   createBanner,
   getBannerFromDB
 } from './database/dal/firebase/dbInitDal';
-// import {
-//   getBannerFromDB
-// } from './database/dal/firebase/homeDal';
 
 import ContactUs from './views/ContactUs';
 import AboutUs from './views/AboutUs';
 import TeacherDetails from './views/Teacher/teacher-details/teacherDetails';
 import Footer from './components/layout/footer/Footer';
 import * as actionTypesAuth from './authguard/actions';
+import BlogDetails from './views/Blog/BlogDetails';
+
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
@@ -51,8 +50,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       AuthGuard.isAuthenticated === true ? (
         <Component {...props} />
       ) : (
-          <Redirect to="/home" />
-        )
+        <Redirect to="/home" />
+      )
     }
   />
 );
@@ -97,11 +96,11 @@ class App extends Component {
     getBannerFromDB().then(bannerDoc => {
       if (bannerDoc.empty) {
         const bannerData = [
-          { banner_image: "business-banner-1600x300.jpg", page: "home" },
-          { banner_image: "student_banner.jpg", page: "home" },
-          { banner_image: "business-banner-1600x300.jpg", page: "student" },
-          { banner_image: "student_banner.jpg", page: "student" },
-          { banner_image: "teacher_banner.jpg", page: "teacher" }
+          { banner_image: 'business-banner-1600x300.jpg', page: 'home' },
+          { banner_image: 'student_banner.jpg', page: 'home' },
+          { banner_image: 'business-banner-1600x300.jpg', page: 'student' },
+          { banner_image: 'student_banner.jpg', page: 'student' },
+          { banner_image: 'teacher_banner.jpg', page: 'teacher' }
         ];
         bannerData.map(data => {
           createBanner(data);
@@ -141,6 +140,7 @@ class App extends Component {
             path="/home/teacher/:id"
             render={props => <TeacherDetails {...props} />}
           />
+          <Route exact path="/blog" component={BlogDetails} />
           <Route exact path="/contactus" component={ContactUs} />
           <Route exact path="/aboutus" component={AboutUs} />
           <Route exact path="/resetPassword" component={PasswordReset} />
@@ -169,10 +169,7 @@ class App extends Component {
             component={StudentNotificationsDescription}
           />
 
-          <PrivateRoute
-            path="/bloglist"
-            component={BlogList}
-          />
+          <PrivateRoute path="/bloglist" component={BlogList} />
           {/* <Route path="/teacher/notificationsDetails" component={NotificationsDetails} />
           <Route path="/student/notificationsDetails" component={StudentNotificationsDetails} />
           

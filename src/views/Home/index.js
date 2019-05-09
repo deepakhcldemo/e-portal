@@ -7,13 +7,15 @@ import {
   getCurriculumFromDB,
   getTeacherFromDB,
   getFeedbackFromDB,
-  getUserProfileFromDB
+  getUserProfileFromDB,
+  getBlogFromDB
 } from './../../database/dal/firebase/homeDal';
 import TopTutor from '../../components/topTutor/TopTutor';
 import * as actionTypes from '../../spinnerStore/actions';
 import RecentVideo from '../../components/recentVideo/RecentVideo';
 import StudentFeedback from '../../components/studentFeedback/StudentFeedback';
 import Banner from '../../components/banner/Banner';
+import Blog from '../Blog/Slider/blog';
 import GLOBAL_VARIABLES from '../../config/config';
 
 class Home extends Component {
@@ -24,7 +26,8 @@ class Home extends Component {
       bannerRows: [],
       carouselTop10Items: [],
       carousellistNewlyItems: [],
-      studentsReview: []
+      studentsReview: [],
+      blogList: []
     };
   }
 
@@ -127,6 +130,41 @@ class Home extends Component {
         }
       });
     });
+
+    getBlogFromDB().onSnapshot(querySnapshot => {
+      let tempArr = {};
+      let blogData = [];
+      if (querySnapshot.empty) {
+        this.props.setSpinnerStatus(false);
+        return;
+      }
+      querySnapshot.forEach(doc => {
+        const teacherId = doc.data().teacherId;
+        if (teacherId) {
+          getUserProfileFromDB(doc.data().teacherId).onSnapshot(
+            querySnapshot => {
+              querySnapshot.forEach(profileData => {
+                tempArr['profileData'] = profileData.data();
+                tempArr['blog'] = doc.data();
+
+                blogData.push(tempArr);
+                this.setState({
+                  blogList: blogData
+                });
+                tempArr = {};
+              });
+              this.props.setSpinnerStatus(false);
+            },
+            error => {
+              this.props.setSpinnerStatus(false);
+            }
+          );
+        } else {
+          this.props.setSpinnerStatus(false);
+        }
+      });
+    });
+
   };
 
   render() {
@@ -134,10 +172,11 @@ class Home extends Component {
       bannerRows,
       carouselTop10Items,
       carousellistNewlyItems,
-      studentsReview
+      studentsReview,
+      blogList
     } = this.state;
 
-    // console.log('--bannerData--', bannerRows, '-----', window.navigator.onLine);
+    console.log('--studentsReview--', blogList);
     return (
       <React.Fragment>
         <div className="container-fluid">
@@ -165,6 +204,13 @@ class Home extends Component {
               <StudentFeedback
                 studentsReview={studentsReview}
                 headeTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW}
+              />
+            )}
+
+            {blogList.length > 0 && (
+              <Blog
+              blogList={blogList}
+                headeTitle={GLOBAL_VARIABLES.RECENT_BLOG}
               />
             )}
 

@@ -33,3 +33,7 @@ export const getUserProfileFromDB = (userId) => {
     return getDbRef('userProfiles');
   }
 };
+
+export const getBlogFromDB = ()=>{
+  return getDbRef("Blogs");
+}

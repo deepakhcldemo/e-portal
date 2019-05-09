@@ -88,7 +88,7 @@ class notificationsDescription extends Component {
             by: loggedInUSer.user.uid,
             date: createdAt,
             details:
-              "Hey, I have rejected chat offer. I am out during this week."
+              "Hey, Student have rejected chat offer."
           }
         ]
       };
@@ -109,6 +109,25 @@ class notificationsDescription extends Component {
         updatedAt,
         status: 1,
         paymentStatus: true
+      };
+      udpateChatNotificationDetails({
+        ...acceptedNotificationDetails
+      });
+    }
+  };
+
+
+  handleDelete = id => {
+    console.log("handleDelete", id);
+    const updatedAt = new Date();
+    const createdAt = new Date();
+    const loggedInUSer = JSON.parse(localStorage.getItem("user"));
+    if (loggedInUSer) {
+      const acceptedNotificationDetails = {
+        nId: id,
+        updatedAt,
+        status: 0,
+        deleted: true
       };
       udpateChatNotificationDetails({
         ...acceptedNotificationDetails
@@ -180,7 +199,7 @@ class notificationsDescription extends Component {
                     className="btn btn-light back-btn"
                     data-dismiss="modal"
                   >
-                    <i class="fa fa-arrow-left" />
+                    <i className="fa fa-arrow-left" />
                   </button> &nbsp;
                   More About Teacher {studentDataFromDB.firstName} {studentDataFromDB.lastName} Request
 
@@ -254,6 +273,20 @@ class notificationsDescription extends Component {
                       Pay
                   </button>
                   ) : null}
+
+                {notificationData.paymentStatus === false &&
+                  notificationData.status === -1 && notificationData.deleted === false ? (
+                    <button
+                      onClick={() => this.handleDelete(notificationData.nId)}
+                      type="button"
+                      className="btn btn-danger"
+                      data-dismiss="modal"
+                    >
+                      Delete
+                        </button>
+                  ) : null}
+
+
               </div>
             </div>
           ) : (
