@@ -51,7 +51,7 @@ export const TEACHER_DASHBOARD_LINKS = [
   },
   {
     name: 'Blog-List',
-    link: '/bloglist',
+    link: '/blog/list',
     icon: 'fa fa-bell',
     title: 'Blog List',
     style: {

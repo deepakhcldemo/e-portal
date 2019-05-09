@@ -143,65 +143,51 @@ class BlogList extends Component {
         const { modalState } = this.props
 
         return (
-            <div className="container-fluid">
-                <div className="row">
-                    <HeaderHome
-                        headeTitle="Blog List"
-                        dashboardLinks={TEACHER_DASHBOARD_LINKS}
-                    />
-                </div>
-                <div className="row create-article">
-                    <div className="col-lg-12">
+            <>
+            <button className="btn btn-primary pull-right" onClick={this.openModalForBlog}><i className="fa fa-plus"></i>Create Article</button>
+            <Modal open={modalState} onClose={this.props.closeModal} center>
+                <h2>Create Blog</h2>
+                <span className="red-star">*</span>
+                <input type="text"
+                    className="form-control"
+                    placeholder="Blog Title"
+                    onChange={this.setBlogTitle}
+                />
 
-                        <button className="btn btn-primary pull-right" onClick={this.openModalForBlog}><i class="fa fa-plus"></i>Create Article</button>
+                <span className="red-star">*</span>
+                <textarea
+                    rows="4"
+                    cols="50"
+                    className="form-control"
+                    placeholder="Blog Description"
+                    onChange={this.setBlogDescription}
+                />
+                <div className="col-lg-12 rm-padding">
+                    <div className="mr-top">
+                        <FileUploader
+                            accept="video/*"
+                            className="upload-video"
+                            storageRef={firebase
+                                .storage()
+                                .ref(`blogs/${this.state.userDetails.userId}`)}
+                            onUploadStart={this.handleUploadStart}
+                            onUploadError={this.handleUploadError}
+                            onUploadSuccess={this.handleImageSuccess}
+                            onProgress={this.handleProgress}
+                        />
                     </div>
-                    <Modal open={modalState} onClose={this.props.closeModal} center>
-                        <h2>Create Blog</h2>
-                        <span className="red-star">*</span>
-                        <input type="text"
-                            className="form-control"
-                            placeholder="Blog Title"
-                            onChange={this.setBlogTitle}
-                        />
-
-                        <span className="red-star">*</span>
-                        <textarea
-                            rows="4"
-                            cols="50"
-                            className="form-control"
-                            placeholder="Blog Description"
-                            onChange={this.setBlogDescription}
-                        />
-                        <div className="col-lg-12 rm-padding">
-                            <div className="mr-top">
-                                <FileUploader
-                                    accept="video/*"
-                                    className="upload-video"
-                                    storageRef={firebase
-                                        .storage()
-                                        .ref(`blogs/${this.state.userDetails.userId}`)}
-                                    onUploadStart={this.handleUploadStart}
-                                    onUploadError={this.handleUploadError}
-                                    onUploadSuccess={this.handleImageSuccess}
-                                    onProgress={this.handleProgress}
-                                />
-                            </div>
-                        </div>
-                        <div className="col-lg-12">
-                            <p className="red-star">{this.state.validationMessage}</p>
-
-                        </div>
-                        <div className="col-lg-12">
-                            <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.finalSave }>Submit</button>
-                            <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.saveAsDraft} >Save As Draft</button>
-
-                        </div>
-                    </Modal>
                 </div>
-            </div>
+                <div className="col-lg-12">
+                    <p className="red-star">{this.state.validationMessage}</p>
 
+                </div>
+                <div className="col-lg-12">
+                    <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.finalSave }>Submit</button>
+                    <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.saveAsDraft} >Save As Draft</button>
 
-
+                </div>
+            </Modal>
+            </>
         );
     }
 }
