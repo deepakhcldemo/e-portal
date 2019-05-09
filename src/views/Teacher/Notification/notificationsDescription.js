@@ -88,7 +88,7 @@ class notificationsDescription extends Component {
           {
             by: loggedInUSer.user.uid,
             date: createdAt,
-            details: "Hey, I have rejected chat offer. I am during this week."
+            details: "Hey, Teacher have rejected chat offer."
           }
         ]
       };
