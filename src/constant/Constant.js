@@ -48,6 +48,15 @@ export const TEACHER_DASHBOARD_LINKS = [
     style: {
       marginLeft: '5px'
     }
+    ,
+  {
+    name: 'Blog List',
+    link: '/bloglist',
+    icon: 'fa fa-bell',
+    title: 'Blog List',
+    style: {
+      marginLeft: '5px'
+    }
   }
 ];
 
