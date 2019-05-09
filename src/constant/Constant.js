@@ -120,4 +120,5 @@ export const VIDEO_TABS = {
     }
   ]
 };
+export const COLOR = ['primary','secondary','success','danger','warning','info','dark','light']
 export default ElearningConst;

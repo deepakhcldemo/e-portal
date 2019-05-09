@@ -1,65 +1,124 @@
-import React, { Component } from 'react';
-import * as actionTypes from '../../spinnerStore/actions';
-import Navbar from './../../shared/components/Navbar';
-import HeaderHome from '../../components/layout/header/HeaderHome';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import Card from 'react-bootstrap/Card'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button'
 
-import {
-    getBlogsList
-} from './action';
-import {
-    TEACHER_DASHBOARD_LINKS,
-    STUDENT_DASHBOARD_LINKS
-} from './../../constant/Constant';
-//import './notificationDetails.css';
+import Pagination from "react-js-pagination"
+
+import { getBlogListFromDBOrCount } from './../../database/dal/firebase/TeacherBlog'
+// Color Constant
+import {COLOR} from './../../constant/Constant'
+
+import './style.css'
+
+import HeaderHome from '../../components/layout/header/HeaderHome'
+
+const blogList = [{
+    title: 'one',
+    desc: 'one is one'
+},{
+    title: 'two',
+    desc: 'simple card two'
+}]
 
 class BlogList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            notificationsDetails: [],
-            userDetails: {},
-            applyClass: 'display-upload',
-            isUploading: false,
-            videoName: '',
-            validationMessage: ''
-        };
 
+    state = {
+        blogs: [],
+        currentPage: 1,
+        itemsPerPage: 3,
+        totalItemCount: 1,
+        activePage: 15
     }
 
-    componentDidMount() {
-        this.props.getBlogsList();
+    componentDidMount = async () => {
+        await this.getBlogList();
     }
-    render() {
+
+    componentDidUpdate = (prevProps, prevState) => {
+        const isDifferentPage = this.state.currentPage !== prevState.currentPage
+        if (isDifferentPage) this.getBlogList()
+    }
+
+    componentWillUnmount = () => {
+        this.state = null;
+    }
+
+    handleClick = (blogList, type) => {
+        console.log(blogList,type)
+    }
+
+    handlePageChange = (pageNumber) => {
+        this.setState({ activePage: pageNumber });
+    }
+    
+    getBlogList = () => {
+        const { currentPage, itemsPerPage } = this.state;
+        const startAt = currentPage * itemsPerPage - itemsPerPage;
+
+        getBlogListFromDBOrCount(startAt,itemsPerPage).onSnapshot(querySnapshot => {
+            let blogs = [];
+            querySnapshot.forEach(doc => {
+              blogs.push(Object.assign({ id: doc.id }, doc.data()));
+            });
+            this.setState({ blogs });
+        });
+
+        getBlogListFromDBOrCount('','',true).onSnapshot(querySnapshot => {
+            let totalItemCount = 0;
+            querySnapshot.forEach(() => {
+                totalItemCount++;
+            });
+            this.setState({ totalItemCount });
+        });        
+    }
+
+    render = () => {
+        const { blogs, activePage, itemsPerPage, totalItemCount } = this.state;
         return (
             <div className="container-fluid">
-                <HeaderHome
-                    headeTitle="Blog List"
-                    dashboardLinks={TEACHER_DASHBOARD_LINKS}
-                />
+                <HeaderHome headeTitle="Blog List" />
+                <Row className="content-container main-wrapper">
+                    <Col sm={12}>
+                        <Card>
+                            <Card.Header>All Blogs List</Card.Header>
+                            <Card.Body>
+                                {blogs && blogs.map((blog,index) => {
+                                    return (
+                                        <Col sm={12} key={index}>
+                                            <Card border={COLOR[Math.floor(Math.random() * COLOR.length)]}>
+                                                <Card.Body>
+                                                    <Card.Title>{blog.blogTitle}</Card.Title>
+                                                    <Card.Text>{blog.blogDescription}</Card.Text>
+                                                    <Button variant="outline-info" onClick={() => this.handleClick(blog,'edit')}><i className="fa fa-pencil" /></Button>
+                                                    <Button variant="outline-danger" onClick={() => this.handleClick(blog,'delete')}><i className="fa fa-trash" /></Button>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    )
+                                })}
+                                {blogs.length === 0 && <h6>No Blogs</h6>}
+                            </Card.Body>
+                            <Card.Footer>
+                            <Pagination
+                                className="pagination"
+                                activePage={activePage}
+                                itemsCountPerPage={itemsPerPage}
+                                totalItemsCount={totalItemCount}
+                                pageRangeDisplayed={itemsPerPage}
+                                onChange={this.handlePageChange}
+                            />
+                            </Card.Footer>
+                        </Card>
+                    </Col>
+                </Row>
             </div>
-
-
         );
     }
 }
-const mapStateToProps = state => {
-    return {
-        notificationDetails:
-            state.notificationAcceptREducer.notificationDetailsByID[0]
-    };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    getBlogsList: () => dispatch(getBlogsList()),
-    }
-};
 
- export default 
-    connect(
-        mapStateToProps,
-        mapDispatchToProps
-    )(BlogList)
+export default BlogList
 
 
 

@@ -6,7 +6,13 @@ const getDbRef = collectionName => {
     return ref;
   };
 
-
+export const getBlogListFromDBOrCount = (startAt, itemsPerPage, count = false) => {
+    let query = getDbRef("blogs").orderBy("created", "desc");
+    if(!count)
+    //query = query.startAt(startAt).limit(itemsPerPage);
+    console.log(query)
+    return query;
+}
 
 export const getBlogsFromDB = (dispatch) => {
     let data = [];
