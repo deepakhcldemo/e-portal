@@ -1,18 +1,25 @@
-import React, { Component } from 'react';
-import './style.css';
+import React, { Component } from "react";
+import "./style.css";
 class SelectSearch extends Component {
   state = {
     options: this.props.properties.options,
     selectedValue: this.props.properties.selectedValue,
     name: this.props.name,
-    searchValue: ''
+    searchValue: ""
   };
   timer = null;
+  DOMElement = {
+    _items: null,
+    _searchContainer: null,
+    _searchInput: null,
+    _textContainer: null,
+    _dropdownSearch: null
+  };
   dropdownOpen = event => {
     this.popupPosition();
     this.closeDropdown(event);
-    document.getElementById(this.props.name + '_items').style.display = 'block';
-    document.getElementById(this.props.name + '_searchInput').focus();
+    this.DOMElement._items.style.display = "block";
+    this.DOMElement._searchInput.focus();
     window.onresize = event => {
       this.popupPosition(event);
     };
@@ -22,32 +29,25 @@ class SelectSearch extends Component {
   };
   dropdownItemSelect = selectedValue => {
     this.setState({ selectedValue: selectedValue });
-    document.getElementById(
-      this.props.name + '_searchContainer'
-    ).style.display = 'none';
-    document.getElementById(this.props.name + '_textContainer').style.display =
-      'block';
+    this.DOMElement._searchContainer.style.display = "none";
+    this.DOMElement._textContainer.style.display = "block";
     this.props.onOptionSelect(selectedValue);
   };
   clearSearch = e => {
-    this.setState({ selectedValue: '' });
+    this.setState({ selectedValue: "" });
     this.setState({ options: this.props.properties.options });
-    document.getElementById(
-      this.props.name + '_searchContainer'
-    ).style.display = 'block';
-    document.getElementById(this.props.name + '_searchContainer').focus();
-    document.getElementById(this.props.name + '_textContainer').style.display =
-      'none';
-    document.getElementById(this.props.name + '_searchInput').value = '';
-    document.getElementById(this.props.name + '_items').style.display = 'block';
-    this.props.onOptionSelect('');
+    this.DOMElement._searchContainer.style.display = "block";
+    this.DOMElement._searchContainer.focus();
+    this.DOMElement._textContainer.style.display = "none";
+    this.DOMElement._searchInput.value = "";
+    this.DOMElement._items.style.display = "block";
+    this.props.onOptionSelect("");
     e.persist();
   };
 
   filterOption = event => {
-    let title = '';
-    let searchValue = document.getElementById(this.props.name + '_searchInput')
-      .value;
+    let title = "";
+    let searchValue = this.DOMElement._searchInput.value;
     clearTimeout(this.timer);
     if (this.props.properties.options.length > 0) {
       let filterList = this.props.properties.options.filter(item => {
@@ -63,9 +63,11 @@ class SelectSearch extends Component {
     event.persist();
   };
   popupPosition = event => {
-    var mainContainer = document.getElementsByTagName('body')[0];
+    var mainContainer = this.props.mainContainer
+      ? this.props.mainContainer
+      : document.getElementsByTagName("body")[0];
     var mainContainerHeight = mainContainer.clientHeight;
-    var element = document.getElementById(this.props.name + '_dropdownSearch');
+    var element = this.DOMElement._dropdownSearch;
     if (element) {
       var elementTopPosition = element.getBoundingClientRect().y;
       var midHeight = mainContainerHeight / 2;
@@ -75,52 +77,63 @@ class SelectSearch extends Component {
           ? midHeight - 45
           : optionsContainerHeight;
       var popopStartPosition =
-        midHeight > elementTopPosition ? 0 : '-' + popupContainerHeight;
-      document.getElementById(this.props.name + '_items').style.height =
-        popupContainerHeight + 'px';
-      var popopTopPosition = midHeight > elementTopPosition ? '100%' : '0px';
-      document.getElementById(
-        this.props.name + '_items'
-      ).style.top = popopTopPosition;
+        midHeight > elementTopPosition ? 0 : "-" + popupContainerHeight;
+      this.DOMElement._items.style.height = popupContainerHeight + "px";
+      var popopTopPosition = midHeight > elementTopPosition ? "100%" : "0px";
+      this.DOMElement._items.style.top = popopTopPosition;
       //document.getElementById(this.props.name + "_items").style.top =
       //popopStartPosition + "px";
-      document.getElementById(this.props.name + '_items').style.transform =
-        'translate3d(2px,' + popopStartPosition + 'px, 0px)';
+      this.DOMElement._items.style.transform =
+        "translate3d(2px," + popopStartPosition + "px, 0px)";
+      var boxShadow = (this.DOMElement._items.style["boxShadow"] =
+        "2px 2px 4px #999");
+      var arrBoxShadow = boxShadow.split(" ");
+      if (arrBoxShadow && arrBoxShadow.length == 4) {
+        this.DOMElement._items.style["boxShadow"] =
+          arrBoxShadow[0] +
+          " " +
+          (midHeight > elementTopPosition ? "" : "-") +
+          arrBoxShadow[1] +
+          " " +
+          arrBoxShadow[2] +
+          " " +
+          arrBoxShadow[3];
+      }
     }
   };
   componentWillReceiveProps = nextProps => {
+    this.DOMElement._items = document.getElementById(nextProps.name + "_items");
+    this.DOMElement._searchContainer = document.getElementById(
+      nextProps.name + "_searchContainer"
+    );
+    this.DOMElement._searchInput = document.getElementById(
+      nextProps.name + "_searchInput"
+    );
+    this.DOMElement._textContainer = document.getElementById(
+      nextProps.name + "_textContainer"
+    );
+    this.DOMElement._dropdownSearch = document.getElementById(
+      nextProps.name + "_dropdownSearch"
+    );
     this.setState({ selectedValue: nextProps.properties.selectedValue });
-    if (nextProps.properties.selectedValue !== '') {
-      document.getElementById(
-        nextProps.name + '_searchContainer'
-      ).style.display = 'none';
-      document.getElementById(nextProps.name + '_textContainer').style.display =
-        'block';
+    if (nextProps.properties.selectedValue !== "") {
+      this.DOMElement._searchContainer.style.display = "none";
+      this.DOMElement._textContainer.style.display = "block";
     } else {
-      document.getElementById(
-        nextProps.name + '_searchContainer'
-      ).style.display = 'block';
-      document.getElementById(nextProps.name + '_textContainer').style.display =
-        'none';
+      this.DOMElement._searchContainer.style.display = "block";
+      this.DOMElement._textContainer.style.display = "none";
     }
   };
   closeDropdown = event => {
-    var dropdowns = document.getElementsByClassName('menu');
-    // if (
-    //   dropdowns &&
-    //   dropdowns.style.display === "block" &&
-    //     !event.target.matches(".searchInput")
-    // ) {
-    //   dropdowns.style.display = "none";
-    // }
-    var i;
+    var i,
+      dropdowns = document.getElementsByClassName("item-container");
     for (i = 0; i < dropdowns.length; i++) {
       var openDropdown = dropdowns[i];
       if (
-        openDropdown.style.display === 'block' &&
-        !event.target.matches('.searchInput')
+        openDropdown.style.display === "block" &&
+        !event.target.matches(".searchInput")
       ) {
-        openDropdown.style.display = 'none';
+        openDropdown.style.display = "none";
       }
     }
   };
@@ -129,12 +142,12 @@ class SelectSearch extends Component {
 
     window.onclick = event => {
       if (
-        !event.target.matches('.dropdown') &&
-        !event.target.matches('.textContainer') &&
-        !event.target.matches('.searchInput') &&
-        !event.target.matches('.clearSearch') &&
-        !event.target.matches('.dropdown-btn') &&
-        !event.target.matches('.selectedItemText')
+        !event.target.matches(".dropdown") &&
+        !event.target.matches(".textContainer") &&
+        !event.target.matches(".searchInput") &&
+        !event.target.matches(".clearSearch") &&
+        !event.target.matches(".dropdown-btn") &&
+        !event.target.matches(".selectedItemText")
       ) {
         this.closeDropdown(event);
       }
@@ -143,22 +156,22 @@ class SelectSearch extends Component {
   render() {
     return (
       <div
-        id={this.props.name + '_dropdownSearch'}
+        id={this.props.name + "_dropdownSearch"}
         className="hc dropdown"
         tabIndex="0"
         onClick={event => this.dropdownOpen(event)}
         // onKeyUp={this.filterOption}
       >
-        <div className="textContainer" id={this.props.name + '_textContainer'}>
+        <div className="textContainer" id={this.props.name + "_textContainer"}>
           <div
             className="selectedItemText"
-            id={this.props.name + '_selectedItemText'}
+            id={this.props.name + "_selectedItemText"}
           >
             {this.state.selectedValue}
           </div>
           &nbsp;
           <div
-            id={this.props.name + '_clearSearch'}
+            id={this.props.name + "_clearSearch"}
             className="clearSearch"
             onClick={event => {
               this.clearSearch(event);
@@ -169,17 +182,17 @@ class SelectSearch extends Component {
         </div>
         <div
           className="searchContainer"
-          id={this.props.name + '_searchContainer'}
+          id={this.props.name + "_searchContainer"}
         >
           <input
             type="text"
-            id={this.props.name + '_searchInput'}
+            id={this.props.name + "_searchInput"}
             className="searchInput"
             onChange={this.filterOption}
             autoComplete="off"
           />
           <button
-            id={this.props.name + '_dropdown-btn'}
+            id={this.props.name + "_dropdown-btn"}
             aria-haspopup="true"
             aria-expanded="true"
             type="button"
@@ -188,10 +201,10 @@ class SelectSearch extends Component {
           />
         </div>
         <div
-          id={this.props.name + '_items'}
-          className="menu"
+          id={this.props.name + "_items"}
+          className="item-container"
           tabIndex="-1"
-          style={{ display: 'block !important' }}
+          style={{ display: "block !important" }}
         >
           {this.state.options.map((item, key) => (
             <div
