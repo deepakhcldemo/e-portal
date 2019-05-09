@@ -305,7 +305,7 @@ class notificationsDescription extends Component {
                         </button>
                         ) : null}
 
-                      {notificationData.paymentStatus === false &&
+                      {/* {notificationData.paymentStatus === false &&
                         notificationData.status === -1 && notificationData.deleted === false ? (
                           <button
                             onClick={() => this.handleDelete(notificationData.nId)}
@@ -315,7 +315,7 @@ class notificationsDescription extends Component {
                           >
                             Delete
                         </button>
-                        ) : null}
+                        ) : null} */}
 
                     </div>
 
