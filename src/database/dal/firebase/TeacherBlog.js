@@ -1,5 +1,6 @@
 import dbFactory from '../../dbFactory';
 import { toastr } from "react-redux-toastr";
+
 const getDbRef = collectionName => {
     const db = dbFactory.create("firebase");
     const ref = db.firestore().collection(collectionName);
@@ -11,6 +12,13 @@ export const getBlogListFromDBOrCount = (startAt, itemsPerPage, count = false) =
     if(!count)
     query = query.startAt(startAt).limit(itemsPerPage);
     return query;
+}
+
+export const deleteBlogFromDB = (id) => {
+    getDbRef('blogs').doc(id).delete().then(function() {                
+    }).catch(err => {
+        toastr.warning('', err.message);
+    });
 }
 
 export const getBlogsFromDB = (dispatch) => {

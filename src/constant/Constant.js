@@ -51,7 +51,7 @@ export const TEACHER_DASHBOARD_LINKS = [
   },
   {
     name: 'Blog-List',
-    link: '/bloglist',
+    link: '/blog/list',
     icon: 'fa fa-bell',
     title: 'Blog List',
     style: {
@@ -93,6 +93,15 @@ export const STUDENT_DASHBOARD_LINKS = [
     link: '/videos',
     icon: 'fa fa-play',
     title: 'Videos',
+    style: {
+      marginLeft: '5px'
+    }
+  },
+  {
+    name: 'Blog-List',
+    link: '/blog/list',
+    icon: 'fa fa-bell',
+    title: 'Blog List',
     style: {
       marginLeft: '5px'
     }

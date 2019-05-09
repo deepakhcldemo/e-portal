@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button'
 
 // import Pagination from "react-js-pagination"
 
-import { getBlogListFromDBOrCount } from './../../../database/dal/firebase/TeacherBlog'
+import { getBlogListFromDBOrCount, deleteBlogFromDB } from './../../../database/dal/firebase/TeacherBlog'
 // Color Constant
 import {COLOR} from './../../../constant/Constant'
 
@@ -24,6 +24,12 @@ class BlogList extends Component {
         activePage: 15
     }
 
+    UNSAFE_componentWillMount = () => {
+        this.setState({
+          userDetails: JSON.parse(localStorage.getItem("userProfile"))
+        });
+    };
+
     componentDidMount = async () => {
         await this.getBlogList();
     }
@@ -38,15 +44,15 @@ class BlogList extends Component {
     }
 
     handleClick = (blog, type) => {
-        (type === 'edit') ? this.viewOrEditBlog(blog) : this.deleteBlog(blog)
+        (type === 'view') ? this.viewBlog(blog) : this.deleteBlog(blog)
     }
 
-    viewOrEditBlog = (blog) => {
+    viewBlog = (blog) => {
 
     }
 
     deleteBlog = (blog) => {
-
+        deleteBlogFromDB(blog.id);
     }
 
     handlePageChange = (pageNumber) => {
@@ -75,7 +81,7 @@ class BlogList extends Component {
     }
 
     render = () => {
-        const { blogs,/*  activePage, itemsPerPage, totalItemCount */ } = this.state;
+        const { blogs, userDetails/*  activePage, itemsPerPage, totalItemCount */ } = this.state;
         return (
             <div className="container-fluid">
                 <HeaderHome headeTitle="Blog List" />
@@ -91,8 +97,12 @@ class BlogList extends Component {
                                                 <Card.Body>
                                                     <Card.Title>{blog.blogTitle}</Card.Title>
                                                     <Card.Text>{blog.blogDescription}</Card.Text>
-                                                    <Button variant="outline-info" onClick={() => this.handleClick(blog,'view')}><i className="fa fa-pencil" /></Button>
-                                                    <Button variant="outline-danger" onClick={() => this.handleClick(blog,'delete')}><i className="fa fa-trash" /></Button>
+                                                    {(userDetails && userDetails.userId === blog.teacherId) && (
+                                                        <>
+                                                        <Button variant="outline-info" onClick={() => this.handleClick(blog,'view')}><i className="fa fa-eye" /></Button>
+                                                        <Button variant="outline-danger" onClick={() => this.handleClick(blog,'delete')}><i className="fa fa-trash" /></Button>
+                                                        </>
+                                                    )}
                                                 </Card.Body>
                                             </Card>
                                         </Col>
