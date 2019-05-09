@@ -4,9 +4,30 @@ import RatingComponent from 'react-star-rating-component';
 import '../Teacher/teacher-details/teacherDetails.scss';
 import './BlogDetails.scss';
 import HeaderHome from '../../components/layout/header/HeaderHome';
+import Comment from '../../components/comment/Comment';
 
 class BlogDetails extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedInUser: {},
+      blogComment: [],
+      isFocus: false
+    };
+  }
+
   render() {
+    const { isFocus } = this.state;
+    
+    const teacherId = this.props.match.params.id;
+    const user = localStorage.getItem('user')
+      ? JSON.parse(localStorage.getItem('user'))
+      : null;
+    this.user = user;
+
+    const isLogedIn = localStorage.getItem('user');
+    const loggedInUser = JSON.parse(localStorage.getItem('userProfile'));
+
     return (
       <div className="details-wrapper blog-details">
         <HeaderHome />
@@ -41,6 +62,14 @@ class BlogDetails extends Component {
             </div>
           </div>
         </div>
+
+        <Comment
+            teacherId={this.state.teacherId}
+            loggedInUser={loggedInUser}
+            commentRows={this.state.blogComment}
+            isFocus={isFocus}
+            updateTotalComments={this.updateTotalComments}
+        />
       </div>
     )
   }

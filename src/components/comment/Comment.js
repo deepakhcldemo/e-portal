@@ -114,15 +114,7 @@ class Comment extends Component {
                       </form>
                     </div>
                   )}
-                  {/* <div className="comments-hdr-section">
-                    <div className="no-thumb">&nbsp;</div>
-                    <div className="comments-count">
-                      <span className="count">{noOfComment} </span>
-                      <span className="count-text">
-                        {noOfComment && "Comments"}
-                      </span>
-                    </div>
-                  </div> */}
+                 
                 </div>
               </div>
             </div>
