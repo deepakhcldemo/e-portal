@@ -57,19 +57,24 @@ class Notification extends Component {
     }
 
     if (this.props.getStudnetNotification === "chatNotificationDetails") {
-      console.log("Sachin Test => getStudnetNotification ", this.props.getStudnetNotification)
+      console.log(
+        "Sachin Test => getStudnetNotification ",
+        this.props.getStudnetNotification
+      );
       this.setState({
         key: "chatNotification"
       });
     }
 
     if (this.props.getTeacherNotification === "chatNotificationDetails") {
-      console.log("Sachin Test getTeacherNotification => ", this.props.getTeacherNotification)
+      console.log(
+        "Sachin Test getTeacherNotification => ",
+        this.props.getTeacherNotification
+      );
       this.setState({
         key: "chatNotification"
       });
     }
-
 
     getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(
       querySnapshot => {
@@ -88,8 +93,8 @@ class Notification extends Component {
       notificationDetails.sstatus && notificationDetails.tstatus
         ? "alert alert-success"
         : notificationDetails.status && !notificationDetails.tstatus
-          ? "alert alert-warning"
-          : "alert alert-danger";
+        ? "alert alert-warning"
+        : "alert alert-danger";
     const userWiseStatus =
       userDetails.role === "Teacher"
         ? `Notification from  ${notificationDetails.sname}`
@@ -104,10 +109,14 @@ class Notification extends Component {
 
   deleteNotification = (notification, parameter) => {
     if (parameter === "deleteNotification") {
-      if (notification.tRejected || notification.tAccepted) {
+      if (
+        notification.tRejected ||
+        notification.tAccepted ||
+        (notification.sstatus == true && notification.tstatus == false)
+      ) {
         this.props.deleteNotificationDetails(notification);
       } else {
-        toastr.info("Request can not be deleted as its is in pending state");
+        toastr.info("Request can not be deleted");
       }
     } else {
       this.goToNotificationDetails(notification);
@@ -218,8 +227,8 @@ class Notification extends Component {
                     {notificationsList.length == 0 ? (
                       <p className="no-Record">No Record</p>
                     ) : (
-                        ""
-                      )}
+                      ""
+                    )}
                   </div>
                 </div>
               </Tab>
@@ -235,7 +244,7 @@ const mapStateToProps = state => {
   return {
     getNotificationMessage: state.notificationAcceptREducer.keyForNotification,
     getStudnetNotification: state.studentReducer.keyForNotification,
-    getTeacherNotification: state.notificationReducer.keyForNotification,
+    getTeacherNotification: state.notificationReducer.keyForNotification
   };
 };
 const mapDispatchToProps = dispatch => {
