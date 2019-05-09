@@ -28,6 +28,18 @@ export const getBlogsFromDB = (dispatch) => {
 
 
 
+export const getImageUrl = (name ,id) => {
+    const db = dbFactory.create("firebase");
+    return db
+      .storage()
+      .ref("blogs/" + id)
+      .child(name)
+      .getDownloadURL();
+  };
+  
+
+
+
 
 
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as actionTypes from '../../../spinnerStore/actions';
 import './style.css';
+import {getImageUrl} from '../../../database/dal/firebase/TeacherBlog';
 import Modal from 'react-responsive-modal';
 import { openModal, closeModal } from './action'
 import HeaderHome from '../../../components/layout/header/HeaderHome';
@@ -20,34 +21,43 @@ class BlogList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            blogTitle : '',
-            blogDescription : '',
-            blogImage : '',
-            validationMessage: ''
+            blogTitle: '',
+            blogDescription: '',
+            blogImage: '',
+            userDetails: '',
+            validationMessage: '',
+            imageName : ''
         };
         this.openModalForBlog = this.openModalForBlog.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.setBlogTitle = this.setBlogTitle.bind(this);
         this.setBlogDescription = this.setBlogDescription.bind(this);
+        this.saveAsDraft = this.saveAsDraft.bind(this);
+         
     }
-    setBlogTitle (event) {
+    setBlogTitle(event) {
         const setTitle = event.target.value;
         this.setState({
-            blogTitle : setTitle
+            blogTitle: setTitle
         })
     }
 
 
-    setBlogDescription (event) {
-        const setDescription  = event.target.value;
+    setBlogDescription(event) {
+        const setDescription = event.target.value;
         this.setState({
-            blogDescription : setDescription
+            blogDescription: setDescription
         })
     }
 
-    
+
     componentDidMount() {
         this.props.getBlogsList();
+        const userDetails = JSON.parse(localStorage.getItem('userProfile'))
+        console.log(userDetails);
+        this.setState({
+            userDetails: userDetails
+        })
     }
     openModalForBlog() {
         this.props.openModal()
@@ -56,8 +66,25 @@ class BlogList extends Component {
     closeModal() {
         this.props.closeModal()
     }
+
+    handleImageSuccess
+
+    handleImageSuccess = fileName => {
+        this.setState({
+          imageName: fileName,
+          
+        });
+      };
+
+    saveAsDraft () {
+        getImageUrl(this.state.imageName,
+            this.state.userDetails.userId).then((data) => {
+                console.log('data',data)
+            })  
+    }
     render() {
         const { modalState } = this.props
+
         return (
             <div className="container-fluid">
                 <div className="row">
@@ -77,7 +104,7 @@ class BlogList extends Component {
                         <input type="text"
                             className="form-control"
                             placeholder="Blog Title"
-                            onChange = {this.setBlogTitle}
+                            onChange={this.setBlogTitle}
                         />
 
                         <span className="red-star">*</span>
@@ -86,27 +113,27 @@ class BlogList extends Component {
                             cols="50"
                             className="form-control"
                             placeholder="Blog Description"
-                            onChange = {this.setBlogDescription}
+                            onChange={this.setBlogDescription}
                         />
                         <div className="col-lg-12 rm-padding">
-                            <div className ="mr-top">
+                            <div className="mr-top">
                                 <FileUploader
                                     accept="video/*"
                                     className="upload-video"
                                     storageRef={firebase
                                         .storage()
-                                        .ref(`blogs/id`)}
+                                        .ref(`blogs/${this.state.userDetails.userId}`)}
                                     onUploadStart={this.handleUploadStart}
                                     onUploadError={this.handleUploadError}
-                                    onUploadSuccess={this.handleVideoUploadSuccess}
+                                    onUploadSuccess={this.handleImageSuccess}
                                     onProgress={this.handleProgress}
                                 />
                             </div>
                         </div>
                         <div className="col-lg-12">
-                        <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.closeModal}>Submit</button>
-                        <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.closeModal}>Save As Draft</button>
-                        
+                            <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.submitBlog}>Submit</button>
+                            <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.saveAsDraft} onclick >Save As Draft</button>
+
                         </div>
                     </Modal>
                 </div>
