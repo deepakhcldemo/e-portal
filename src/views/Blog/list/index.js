@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-
+import BlogList from './../create'
 // import Pagination from "react-js-pagination"
 
 import { getBlogListFromDBOrCount, deleteBlogFromDB } from './../../../database/dal/firebase/TeacherBlog'
@@ -14,7 +14,7 @@ import './list.scss'
 
 import HeaderHome from '../../../components/layout/header/HeaderHome'
 
-class BlogList extends Component {
+class BList extends Component {
 
     state = {
         blogs: [],
@@ -44,11 +44,19 @@ class BlogList extends Component {
     }
 
     handleClick = (blog, type) => {
+<<<<<<< HEAD
         (type === 'view') ? this.viewBlog(blog) : this.deleteBlog(blog)
     }
 
     viewBlog = (blog) => {
 
+=======
+        (type === 'edit') ? this.viewBlog(blog) : this.deleteBlog(blog)
+    }
+
+    viewBlog = (blog) => {
+        
+>>>>>>> 63e579cfc8b9dc9e5ee4e3da4bd609492ffbf739
     }
 
     deleteBlog = (blog) => {
@@ -86,6 +94,9 @@ class BlogList extends Component {
             <div className="container-fluid">
                 <HeaderHome headeTitle="Blog List" />
                 <Row className="content-container main-wrapper">
+                    <Col sm={12}>
+                        <BlogList />
+                    </Col>
                     <Col sm={12}>
                         <Card>
                             <Card.Header>All Blogs List</Card.Header>
@@ -128,7 +139,7 @@ class BlogList extends Component {
     }
 }
 
-export default BlogList
+export default BList
 
 
 

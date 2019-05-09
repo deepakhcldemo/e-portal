@@ -93,8 +93,8 @@ class Notification extends Component {
       notificationDetails.sstatus && notificationDetails.tstatus
         ? "alert alert-success"
         : notificationDetails.status && !notificationDetails.tstatus
-        ? "alert alert-warning"
-        : "alert alert-danger";
+          ? "alert alert-warning"
+          : "alert alert-danger";
     const userWiseStatus =
       userDetails.role === "Teacher"
         ? `Notification from  ${notificationDetails.sname}`
@@ -109,15 +109,16 @@ class Notification extends Component {
 
   deleteNotification = (notification, parameter) => {
     if (parameter === "deleteNotification") {
-      if (
-        notification.tRejected ||
-        notification.tAccepted ||
-        (notification.sstatus == true && notification.tstatus == false)
-      ) {
-        this.props.deleteNotificationDetails(notification);
-      } else {
-        toastr.info("Request can not be deleted");
-      }
+      // if (
+      //   notification.tRejected ||
+      //   notification.tAccepted ||
+      //   (notification.sstatus == true && notification.tstatus == false)
+      // ) {
+      //   this.props.deleteNotificationDetails(notification);
+      // } else {
+      //   toastr.info("Request can not be deleted");
+      // }
+      this.props.deleteNotificationDetails(notification);
     } else {
       this.goToNotificationDetails(notification);
     }
@@ -190,12 +191,15 @@ class Notification extends Component {
                               )}
                             >
                               <div className="container">
+
+
                                 <div className="delete-notification delete-notification-icon ">
                                   <i
                                     className="fa fa-trash delete-icon"
                                     aria-hidden="true"
                                     title="Delete"
                                     onClick={() =>
+
                                       this.deleteNotification(
                                         notification,
                                         "deleteNotification"
@@ -227,8 +231,8 @@ class Notification extends Component {
                     {notificationsList.length == 0 ? (
                       <p className="no-Record">No Record</p>
                     ) : (
-                      ""
-                    )}
+                        ""
+                      )}
                   </div>
                 </div>
               </Tab>
@@ -241,6 +245,7 @@ class Notification extends Component {
 }
 const mapStateToProps = state => {
   console.log("state", state);
+
   return {
     getNotificationMessage: state.notificationAcceptREducer.keyForNotification,
     getStudnetNotification: state.studentReducer.keyForNotification,
