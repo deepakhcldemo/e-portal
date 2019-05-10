@@ -8,6 +8,7 @@ import HeaderHome from '../../../components/layout/header/HeaderHome';
 import { connect } from 'react-redux';
 import FileUploader from "react-firebase-file-uploader";
 import firebase from "firebase";
+import Progress from "../../../../src/views/Curriculum/progress";
 import {
     getBlogsList
 } from './action';
@@ -26,7 +27,9 @@ class BlogList extends Component {
             blogImage: '',
             userDetails: '',
             validationMessage: '',
-            imageName: ''
+            imageName: '',
+            isUploading: false,
+            progress: 0
         };
         this.openModalForBlog = this.openModalForBlog.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -72,6 +75,12 @@ class BlogList extends Component {
             validationMessage: ''
         })
     }
+    handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
+
+    handleProgress = progress => this.setState({ progress });
+
+
+
     openModalForBlog() {
         this.props.openModal()
     }
@@ -83,7 +92,9 @@ class BlogList extends Component {
     handleImageSuccess = fileName => {
         this.setState({
             imageName: fileName,
-
+            progress: 100,
+            isUploading: false,
+            validationMessage: ""
         });
     };
 
@@ -143,7 +154,7 @@ class BlogList extends Component {
     }
     render() {
         const { modalState } = this.props
-
+        console.log(this.state.progress)
         return (
             <>
                 <button className="btn btn-primary pull-right" onClick={this.openModalForBlog}><i className="fa fa-plus"></i>Create Article</button>
@@ -165,19 +176,32 @@ class BlogList extends Component {
                         onChange={this.setBlogDescription}
                     />
                     <div className="col-lg-12 rm-padding">
-                        {/* <div className="mr-top">
-                        <FileUploader
-                            accept="video/*"
-                            className="upload-video"
-                            storageRef={firebase
-                                .storage()
-                                .ref(`blogs/${this.state.userDetails.userId}`)}
-                            onUploadStart={this.handleUploadStart}
-                            onUploadError={this.handleUploadError}
-                            onUploadSuccess={this.handleImageSuccess}
-                            onProgress={this.handleProgress}
-                        />
-                    </div> */}
+                        <div className="mr-top">
+                            <div className="progressbar-spacing">
+                                {this.state.isUploading && (
+                                    <>
+                                        <br />
+                                        <Progress
+                                            bgColor="#232838"
+                                            progress={this.state.progress}
+                                        />
+                                        <br />
+                                    </>
+                                )}
+                            </div>
+                            <FileUploader
+                                accept="image/*"
+                                className="upload-image"
+                                storageRef={firebase
+                                    .storage()
+                                    .ref(`blogs/${this.state.userDetails.userId}`)}
+                                onUploadStart={this.handleUploadStart}
+                                onUploadError={this.handleUploadError}
+                                onUploadSuccess={this.handleImageSuccess}
+                                onProgress={this.handleProgress}
+                            />
+
+                        </div>
                     </div>
                     <div className="col-lg-12">
                         <p className="red-star">{this.state.validationMessage}</p>
