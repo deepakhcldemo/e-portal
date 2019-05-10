@@ -19,7 +19,7 @@ export const getTeacherFromDB = () => {
 };
 
 export const getFeedbackFromDB = (teacherID) => {
-  if(teacherID){
+  if (teacherID) {
     return getDbRef("feedback").where("feedback_to", "==", teacherID);
   } else {
     return getDbRef("feedback");
@@ -27,13 +27,13 @@ export const getFeedbackFromDB = (teacherID) => {
 };
 
 export const getUserProfileFromDB = (userId) => {
-  if(userId){
-    return getDbRef('userProfiles').where('userId', '==', userId);
+  if (userId) {
+    return getDbRef('userProfiles').orderBy('created_date', 'desc').where('userId', '==', userId);
   } else {
-    return getDbRef('userProfiles');
+    return getDbRef('userProfiles').orderBy('created_date', 'desc');
   }
 };
 
-export const getBlogFromDB = ()=>{
+export const getBlogFromDB = () => {
   return getDbRef("blogs");
 }

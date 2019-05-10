@@ -107,8 +107,8 @@ class TeacherDetails extends Component {
             querySnapshot.forEach(profileData => {
               tempArr["feedbackId"] = doc.id;
               tempArr["profileData"] = profileData.data();
-              tempArr["feedback"] = doc.data();         
-          
+              tempArr["feedback"] = doc.data();
+
               feedbackData.push(tempArr);
               feedbackData = feedbackData.sort((a, b) => a.feedback.created_date.second < b.feedback.created_date.second);
               this.setState({
@@ -120,6 +120,7 @@ class TeacherDetails extends Component {
           },
           error => {
             this.props.setSpinnerStatus(false);
+
             toastr.error(error.message);
           }
         );
@@ -488,25 +489,25 @@ class TeacherDetails extends Component {
                     <div>
                       {loggedInUser
                         ? loggedInUser.role === 'Student' && (
-                            <button
-                              className="btn btn-outline-primary"
-                              onClick={() =>
-                                this.wrapperFunction(this.state.teacherDetails)
-                              }
-                            >
-                              Request For Chat
+                          <button
+                            className="btn btn-outline-primary"
+                            onClick={() =>
+                              this.wrapperFunction(this.state.teacherDetails)
+                            }
+                          >
+                            Request For Chat
                             </button>
-                          )
+                        )
                         : null}
                       {loggedInUser
                         ? loggedInUser.role === 'Student' && (
-                            <button
-                              className="btn btn-outline-primary"
-                              onClick={this.openModalForRequest}
-                            >
-                              Request For Review
+                          <button
+                            className="btn btn-outline-primary"
+                            onClick={this.openModalForRequest}
+                          >
+                            Request For Review
                             </button>
-                          )
+                        )
                         : null}
 
                       {/* {loggedInUser.role === 'Student' ? (
