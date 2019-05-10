@@ -101,21 +101,22 @@ class TeacherDetails extends Component {
     getFeedbackFromDB(teacherId).onSnapshot(querySnapshot => {
       let tempArr = {};
       let feedbackData = [];
+
       querySnapshot.forEach(doc => {
         getUserProfileFromDB(doc.data().user_id).onSnapshot(
           querySnapshot => {
             querySnapshot.forEach(profileData => {
-              tempArr["feedbackId"] = doc.id;
-              tempArr["profileData"] = profileData.data();
-              tempArr["feedback"] = doc.data();
+              tempArr['feedbackId'] = doc.id;
+              tempArr['profileData'] = profileData.data();
+              tempArr['feedback'] = doc.data();
 
               feedbackData.push(tempArr);
-              feedbackData = feedbackData.sort((a, b) => a.feedback.created_date.second < b.feedback.created_date.second);
               this.setState({
                 studentsReview: feedbackData
               });
               tempArr = {};
             });
+
             this.props.setSpinnerStatus(false);
           },
           error => {
@@ -489,25 +490,25 @@ class TeacherDetails extends Component {
                     <div>
                       {loggedInUser
                         ? loggedInUser.role === 'Student' && (
-                          <button
-                            className="btn btn-outline-primary"
-                            onClick={() =>
-                              this.wrapperFunction(this.state.teacherDetails)
-                            }
-                          >
-                            Request For Chat
+                            <button
+                              className="btn btn-outline-primary"
+                              onClick={() =>
+                                this.wrapperFunction(this.state.teacherDetails)
+                              }
+                            >
+                              Request For Chat
                             </button>
-                        )
+                          )
                         : null}
                       {loggedInUser
                         ? loggedInUser.role === 'Student' && (
-                          <button
-                            className="btn btn-outline-primary"
-                            onClick={this.openModalForRequest}
-                          >
-                            Request For Review
+                            <button
+                              className="btn btn-outline-primary"
+                              onClick={this.openModalForRequest}
+                            >
+                              Request For Review
                             </button>
-                        )
+                          )
                         : null}
 
                       {/* {loggedInUser.role === 'Student' ? (

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import HeaderHome from '../../components/layout/header/HeaderHome';
-// import axios from 'axios';
+
 import './styles.css';
 import { toastr } from 'react-redux-toastr';
 import { connect } from 'react-redux';
