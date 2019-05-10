@@ -9,6 +9,11 @@ import { connect } from 'react-redux';
 import FileUploader from "react-firebase-file-uploader";
 import firebase from "firebase";
 import Progress from "../../../../src/views/Curriculum/progress";
+
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import renderHTML from 'react-render-html';
+
 import {
     getBlogsList
 } from './action';
@@ -49,7 +54,8 @@ class BlogList extends Component {
 
 
     setBlogDescription(event) {
-        const setDescription = event.target.value;
+        const setDescription = event;
+        console.log(setDescription);
         this.setState({
             blogDescription: setDescription
         })
@@ -168,16 +174,13 @@ class BlogList extends Component {
                     />
 
                     <span className="red-star">*</span>
-                    <textarea
-                        rows="4"
-                        cols="50"
-                        className="form-control"
+                    <ReactQuill
                         placeholder="Blog Description"
                         onChange={this.setBlogDescription}
                     />
                     <div className="col-lg-12 rm-padding">
                         <div className="mr-top">
-                            <div className="progressbar-spacing">
+                            {/* <div className="progressbar-spacing">
                                 {this.state.isUploading && (
                                     <>
                                         <br />
@@ -188,8 +191,8 @@ class BlogList extends Component {
                                         <br />
                                     </>
                                 )}
-                            </div>
-                            <FileUploader
+                            </div> */}
+                            {/* <FileUploader
                                 accept="image/*"
                                 className="upload-image"
                                 storageRef={firebase
@@ -199,7 +202,7 @@ class BlogList extends Component {
                                 onUploadError={this.handleUploadError}
                                 onUploadSuccess={this.handleImageSuccess}
                                 onProgress={this.handleProgress}
-                            />
+                            /> */}
 
                         </div>
                     </div>
@@ -221,6 +224,9 @@ class BlogList extends Component {
         );
     }
 }
+
+
+
 const mapStateToProps = state => {
     return {
         notificationDetails:

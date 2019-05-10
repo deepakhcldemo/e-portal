@@ -58,6 +58,7 @@
     "react-star-rating-component": "^1.4.1",
     "react-swipeable": "^5.1.0",
     "react-transition-group": "^2.8.0",
+    "react-trumbowyg": "^1.1.0",
     "reactstrap": "^8.0.0",
     "redux": "^4.0.1",
     "redux-firestore": "^0.7.2",
