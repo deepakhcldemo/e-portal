@@ -4,8 +4,8 @@
   border-radius: 50%;
 }
 .help-block {
-  font-size: 17px !important;
-   color: #FF0000 !important;
+  font-size: 14px !important;
+  color: #ff0000 !important;
 }
 
 .already-notified {
@@ -128,14 +128,13 @@ form {
   transition: width 0.6s ease;
 }
 
-.red-star
-{
-    color: #FF0000;
-    position: relative;
-    top: 8px;
+.red-star {
+  color: #ff0000;
+  position: relative;
+  top: 8px;
 }
 @media only screen and (max-width: 600px) {
   .hide-teacher-student {
-   display: none;
-}
+    display: none;
+  }
 }
