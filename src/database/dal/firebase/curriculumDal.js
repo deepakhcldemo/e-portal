@@ -100,6 +100,9 @@ export const getNotificationFromDB = () => {
     return db.firestore().collection("notifications").get();       
 }
 
+export const updateRatingOnCurriculumFromDB = (id,videoMetadata,rating) => {
+    getDbRef("curriculum").doc(id).update({videoMetadata,rating})
+}
 export const deleteContentWithDocFromDB = (map) => {
     let ref = db.storage();
     map.forEach(value => {
