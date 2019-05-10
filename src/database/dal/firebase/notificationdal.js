@@ -108,6 +108,7 @@ export const getVideoUrl = (name, id) => {
 };
 
 export const setIDForNotificationFromDB = (dispatch, id) => {
+  debugger
   const db = dbFactory.create("firebase");
   let data = [];
   db.firestore()
@@ -130,6 +131,8 @@ export const setIDForNotificationFromDB = (dispatch, id) => {
 };
 export const saveNotificationDetails = notificationDetails => {
   const db = dbFactory.create("firebase");
+  notificationDetails.created = db.firestore.FieldValue.serverTimestamp()
+  
   db.firestore()
     .collection("notifications")
     .doc(notificationDetails.id)

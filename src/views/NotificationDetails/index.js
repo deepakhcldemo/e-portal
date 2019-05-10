@@ -308,6 +308,7 @@ class NotificationDetails extends Component {
   }
 }
 const mapStateToProps = state => {
+  console.log('state in notification details', state);
   return {
     notificationDetails:
       state.notificationAcceptREducer.notificationDetailsByID[0]

@@ -44,12 +44,13 @@ export const getNotificationFromDB = (dispatch) => {
 }
 
 export const getNotificationsFromDB = (id, role) => {
-    let query = getDbRef("notifications").orderBy('created','desc')
+    let query = getDbRef("notifications")
     if(role === 'Teacher'){
         query = query.where('tId' , '==', id)
     }else{
          query = query.where('sId', '==', id)
     }
+    query = query.orderBy("created", "desc")
     return query;
 };
 
