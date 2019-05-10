@@ -55,7 +55,6 @@ class BlogList extends Component {
 
     setBlogDescription(event) {
         const setDescription = event;
-        console.log(setDescription);
         this.setState({
             blogDescription: setDescription
         })
@@ -75,7 +74,6 @@ class BlogList extends Component {
     componentDidMount() {
         this.props.getBlogsList();
         const userDetails = JSON.parse(localStorage.getItem('userProfile'))
-        console.log(userDetails);
         this.setState({
             userDetails: userDetails,
             validationMessage: ''
@@ -160,7 +158,6 @@ class BlogList extends Component {
     }
     render() {
         const { modalState } = this.props
-        console.log(this.state.progress)
         return (
             <>
                 <button className="btn btn-primary pull-right" onClick={this.openModalForBlog}><i className="fa fa-plus"></i>Create Article</button>
@@ -180,30 +177,6 @@ class BlogList extends Component {
                     />
                     <div className="col-lg-12 rm-padding">
                         <div className="mr-top">
-                            {/* <div className="progressbar-spacing">
-                                {this.state.isUploading && (
-                                    <>
-                                        <br />
-                                        <Progress
-                                            bgColor="#232838"
-                                            progress={this.state.progress}
-                                        />
-                                        <br />
-                                    </>
-                                )}
-                            </div> */}
-                            {/* <FileUploader
-                                accept="image/*"
-                                className="upload-image"
-                                storageRef={firebase
-                                    .storage()
-                                    .ref(`blogs/${this.state.userDetails.userId}`)}
-                                onUploadStart={this.handleUploadStart}
-                                onUploadError={this.handleUploadError}
-                                onUploadSuccess={this.handleImageSuccess}
-                                onProgress={this.handleProgress}
-                            /> */}
-
                         </div>
                     </div>
                     <div className="col-lg-12">

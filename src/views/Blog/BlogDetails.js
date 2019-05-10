@@ -123,13 +123,6 @@ class BlogDetails extends Component {
           <div className="container">
             <div className="row">
               <div className="col-sm-12">
-                {/* <div className="img-details-wrapper">
-                 <img
-                  alt=""
-                  src={blogDetail.uploadedImage}
-                  className="bnr-img"
-                /> 
-                </div> */}
                 <h2>{blogDetail.blogTitle}</h2>
                 {blogDetail.blogDescription ? renderHTML(blogDetail.blogDescription) : null}
               </div>
