@@ -11,7 +11,8 @@ import {
   getUserProfileFromDB
 } from '../../database/dal/firebase/homeDal';
 import * as actionTypes from '../../spinnerStore/actions';
-import { getBlogByIdFromDB } from './../../database/dal/firebase/TeacherBlog'
+import { getBlogByIdFromDB } from './../../database/dal/firebase/TeacherBlog';
+import renderHTML from 'react-render-html';
 
 class BlogDetails extends Component {
   
@@ -122,15 +123,8 @@ class BlogDetails extends Component {
           <div className="container">
             <div className="row">
               <div className="col-sm-12">
-                {/* <div className="img-details-wrapper">
-                 <img
-                  alt=""
-                  src={blogDetail.uploadedImage}
-                  className="bnr-img"
-                /> 
-                </div> */}
                 <h2>{blogDetail.blogTitle}</h2>
-                <p>{blogDetail.blogDescription}</p>
+                {blogDetail.blogDescription ? renderHTML(blogDetail.blogDescription) : null}
               </div>
             </div>
           </div>

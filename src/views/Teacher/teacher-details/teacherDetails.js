@@ -101,25 +101,27 @@ class TeacherDetails extends Component {
     getFeedbackFromDB(teacherId).onSnapshot(querySnapshot => {
       let tempArr = {};
       let feedbackData = [];
+
       querySnapshot.forEach(doc => {
         getUserProfileFromDB(doc.data().user_id).onSnapshot(
           querySnapshot => {
             querySnapshot.forEach(profileData => {
-              tempArr["feedbackId"] = doc.id;
-              tempArr["profileData"] = profileData.data();
-              tempArr["feedback"] = doc.data();         
-          
+              tempArr['feedbackId'] = doc.id;
+              tempArr['profileData'] = profileData.data();
+              tempArr['feedback'] = doc.data();
+
               feedbackData.push(tempArr);
-              feedbackData = feedbackData.sort((a, b) => a.feedback.created_date.second < b.feedback.created_date.second);
               this.setState({
                 studentsReview: feedbackData
               });
               tempArr = {};
             });
+
             this.props.setSpinnerStatus(false);
           },
           error => {
             this.props.setSpinnerStatus(false);
+
             toastr.error(error.message);
           }
         );

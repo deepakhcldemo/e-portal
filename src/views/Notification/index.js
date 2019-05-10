@@ -45,7 +45,6 @@ class Notification extends Component {
   };
 
   componentDidMount = () => {
-    debugger
     const { userDetails } = this.state;
     console.log(
       "this.props.getTeacherNotification",
@@ -80,12 +79,10 @@ class Notification extends Component {
     getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(
       
       querySnapshot => {
-        debugger
         let notificationsList = [];
         querySnapshot.forEach(doc => {
           notificationsList.push(Object.assign({ id: doc.id }, doc.data()));
         });
-        debugger
         this.setState({ notificationsList });
       }
     );

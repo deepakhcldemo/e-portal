@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'
 import BlogList from './../create'
 
 import {Redirect} from "react-router-dom";
+import renderHTML from 'react-render-html';
 
 // import Pagination from "react-js-pagination"
 
@@ -103,7 +104,7 @@ class BList extends Component {
                                             <Card border={COLOR[Math.floor(Math.random() * COLOR.length)]}>
                                                 <Card.Body>
                                                     <Card.Title>{blog.blogTitle}</Card.Title>
-                                                    <Card.Text>{blog.blogDescription}</Card.Text>
+                                                    <Card.Text>{renderHTML(blog.blogDescription)}</Card.Text>
                                                     {(userDetails && userDetails.userId === blog.teacherId) && (
                                                         <>
                                                         <Button variant="outline-info" onClick={() => this.handleClick(blog.id,'view')}><i className="fa fa-eye" /></Button>

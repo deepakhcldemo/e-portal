@@ -12,4 +12,13 @@
 .progressbar-spacing {
     height: 45px !important;
   }
+
+.quill  {
+    background: #ffffff;
+    color: #000000;
+}
+
+.ql-editor{
+    min-height: 150px;
+}
   
