@@ -208,8 +208,12 @@ class BlogList extends Component {
 
                     </div>
                     <div className="col-lg-12">
-                        <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.finalSave}>Submit</button>
-                        <button className="btn btn-outline-primary btn-sm space pull-right" onClick={this.saveAsDraft} >Save As Draft</button>
+                        <button className="btn btn-outline-primary btn-sm space pull-right"
+                            disabled={this.state.isUploading}
+                            onClick={this.finalSave}>Submit</button>
+                        <button className="btn btn-outline-primary btn-sm space pull-right"
+                            disabled={this.state.isUploading}
+                            onClick={this.saveAsDraft} >Save As Draft</button>
 
                     </div>
                 </Modal>
