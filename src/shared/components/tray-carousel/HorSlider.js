@@ -5,14 +5,17 @@ import classnames from 'classnames';
 import StarRatingComponent from 'react-star-rating-component';
 
 import SliderItem from "./SliderItem";
+// import arrowsForwardIcon from '../../../../Assets/hdpi/arrowsForwardIcon.png';
 const { calc, css, physics, pointer, transform, tween, value } = window.popmotion;
 const { applyOffset, clamp, nonlinearSpring, pipe } = transform;
 
 export default class HorSlider extends Component {
     state = {
         minXOffset: 0,
-        maxXOffset: 0
+        maxXOffset: 0,
+        controls: []
     }
+    controlsCount= 0;
     componentDidMount() {
         const self = this;
 
@@ -23,27 +26,31 @@ export default class HorSlider extends Component {
             return right - left;
         }
         function angleIsVertical(angle) {
-        const isUp = (
-            angle <= -90 + 45 &&
-            angle >= -90 - 45
-        );
-        const isDown = (
-            angle <= 90 + 45 &&
-            angle >= 90 - 45
-        );
+            const isUp = (
+                angle <= -90 + 45 &&
+                angle >= -90 - 45
+            );
+            const isDown = (
+                angle <= 90 + 45 &&
+                angle >= 90 - 45
+            );
 
-        return (isUp || isDown);
+            return (isUp || isDown);
         }
-
+        const controls = [];
         function carousel(container) {
         // Select DOM
             if (container) {
+                self.controlsCount++;
+
                 const slider = container.querySelector('.horizontal-slider');
                 const items = slider.querySelectorAll('.slider-item');
                 const nextButton = container.querySelector('.next');
                 const prevButton = container.querySelector('.prev');
                 const progressBar = container.querySelector('.progress-bar');
-            
+                
+                // self.setState({contains: })
+                
             
             
             function checkNavButtonStatus(x) {
@@ -71,17 +78,17 @@ export default class HorSlider extends Component {
                 sliderVisibleWidth = slider.offsetWidth;
                 minXOffset = - (totalItemsWidth - sliderVisibleWidth);
                 window.onresize = function(event) {
-                    // if (totalItemsWidth < window.outerWidth) {
-                    //     minXOffset = 0;
-                    //     maxXOffset = 0;
-                    // }
+                    if (totalItemsWidth < window.outerWidth) {
+                        minXOffset = 0;
+                        maxXOffset = 0;
+                    }
                 };
                 if (totalItemsWidth < window.outerWidth) {
-                    // minXOffset = 0;
-                    // maxXOffset = 0;
+                    minXOffset = 0;
+                    maxXOffset = 0;
                 }
-                // self.setState({minXOffset, maxXOffset})
-                console.log('totalItemsWidth', totalItemsWidth)
+                self.setState({minXOffset, maxXOffset})
+                // console.log('totalItemsWidth', totalItemsWidth)
                 clampXOffset = clamp(minXOffset, maxXOffset);
                 
                 
@@ -263,16 +270,22 @@ export default class HorSlider extends Component {
 
             container.addEventListener('touchstart', startTouchScroll);
             container.addEventListener('wheel', onWheel);
-            nextButton.addEventListener('click', gotoNext);
-            prevButton.addEventListener('click', gotoPrev);
+            if(nextButton && prevButton) {
+                nextButton.addEventListener('click', gotoNext);
+                prevButton.addEventListener('click', gotoPrev);
+            }
+            
             slider.addEventListener('focus', onFocus, true);
             window.addEventListener('resize', measureCarousel);
             
             return () => {
                 container.removeEventListener('touchstart', startTouchScroll);
                 container.removeEventListener('wheel', onWheel);
-                nextButton.removeEventListener('click', gotoNext);
-                prevButton.removeEventListener('click', gotoPrev);
+                if(nextButton && prevButton) {
+                    nextButton.removeEventListener('click', gotoNext);
+                    prevButton.removeEventListener('click', gotoPrev);
+                }
+                
                 slider.removeEventListener('focus', onFocus);
                 window.removeEventListener('resize', measureCarousel);
             };
@@ -312,7 +325,7 @@ export default class HorSlider extends Component {
         const { minXOffset, maxXOffset } = this.state;
         // console.log('this.props children', children)
       return (
-        <div>
+        <div className="items-wrapper">
           { headerTitle && (
               <h4 className="mt-30 pad_top5">{headerTitle}</h4>
           )}
@@ -325,7 +338,7 @@ export default class HorSlider extends Component {
               {/* <li className="slider-item"><a href="#" className="link-thumb"></a></li>
               <li className="slider-item"><a href="#" className="link-thumb"></a></li> */}
             </ul>
-            {/* {(minXOffset && maxXOffset) && (
+            {/* {(minXOffset > 0 && maxXOffset > 0) && (
                 <div className="controls">
                     <button className="prev disabled">Prev</button>
                     <div className="progress-bar"></div>
@@ -333,10 +346,10 @@ export default class HorSlider extends Component {
                 </div>
             )} */}
 
-            <div className={classnames('controls')} >
-                <button className="prev disabled">Prev</button>
+            <div className={classnames('controls', {btnHide: (!minXOffset && !maxXOffset)})} >
+                <button className="prev disabled"><img src="../Assets/hdpi/arrowsBackwardIcon.png"></img></button>
                 <div className="progress-bar"></div>
-                <button className="next">Next</button>
+                <button className="next"><img src="../Assets/hdpi/arrowsForwardIcon.png"></img></button>
             </div>
             
           </div>

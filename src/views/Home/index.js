@@ -186,7 +186,6 @@ class Home extends Component {
                 tempArr = {};
               });
               if (totalSnapshot === this.blogCount) {
-                console.log('blog obj--', blogData)
                 this.setState({
                   blogList: blogData
                 });
@@ -229,7 +228,7 @@ class Home extends Component {
                   carouselTop10Items={carouselTop10Items}
                   headeTitle={GLOBAL_VARIABLES.TOP10_TUTOR}
                 /> */}
-                <div className="col-sm-12">
+                <div className="col-sm-12 mobile-view">
                   <HorSlider headerTitle={GLOBAL_VARIABLES.TOP10_TUTOR} carouselItems={carouselTop10Items} container="cotainer-slider-1">
                     {(carouselRecord) => (
                       <ProfileItem carouselRecord={carouselRecord} linkTo={`/home/teacher/${carouselRecord.userId}`}/>
@@ -245,7 +244,7 @@ class Home extends Component {
                   carousellistNewlyItems={carousellistNewlyItems}
                   headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
                 /> */}
-                <div className="col-sm-12">
+                <div className="col-sm-12 mobile-view">
                   <HorSlider headerTitle={GLOBAL_VARIABLES.TOP10_TUTOR} carouselItems={carousellistNewlyItems} container="cotainer-slider-2">
                     {(carouselRecord) => (
                       <VideoItem carouselRecord={carouselRecord} linkTo="javascript:avoid(0);" />
@@ -261,7 +260,7 @@ class Home extends Component {
                   studentsReview={studentsReview}
                   headeTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW}
                 /> */}
-                <div className="col-sm-12">
+                <div className="col-sm-12 mobile-view">
                   <HorSlider headerTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW} carouselItems={studentsReview} container="cotainer-slider-3">
                     {(carouselRecord)=> (
                       <CommentItem carouselRecord={carouselRecord} linkTo="#"/>
@@ -277,7 +276,7 @@ class Home extends Component {
                   blogList={blogList}
                     headeTitle={GLOBAL_VARIABLES.RECENT_BLOG}
                   /> */}
-                <div className="col-sm-12">
+                <div className="col-sm-12 mobile-view">
                   <HorSlider headerTitle={GLOBAL_VARIABLES.RECENT_BLOG} carouselItems={blogList} container="cotainer-slider-4">
                     {(carouselRecord)=> (
                       <CommentItem carouselRecord={carouselRecord} linkTo={`/blog/view/${carouselRecord.feedback.id}`}/>

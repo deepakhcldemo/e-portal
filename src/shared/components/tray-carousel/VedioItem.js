@@ -3,6 +3,8 @@ import StarRatingComponent from 'react-star-rating-component';
 import { Link } from "react-router-dom";
 import VideoPopup from '../../../components/videopopup/VideoPopup';
 
+
+
 class VideoItem extends Component {
     state = {
         modalOpen: false,
@@ -14,9 +16,15 @@ class VideoItem extends Component {
         });
     };
     handleClick(e) {
+        if (typeof e === 'object') {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
         this.setState({
             modalOpen: !this.state.modalOpen
         });
+        return false;
     };
     render() {
         const { carouselRecord, linkTo } = this.props;
@@ -70,7 +78,7 @@ class VideoItem extends Component {
               <VideoPopup
                 userDetails={userDetails}
                 videoDetails={carouselRecord}
-                onVideoClose={(event)=> this.handleClick(event)}
+                onVideoClose={()=> this.handleClick()}
               />
             )}
         </React.Fragment>
