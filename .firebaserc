@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "e-project-80550"
+    "default": "e-project-80550",
+    "e-portal": "e-project-4e023"
   }
 }

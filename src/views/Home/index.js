@@ -288,7 +288,7 @@ class Home extends Component {
               
             )}
 
-            {/* <CategoryItem /> */}
+            <CategoryItem />
           </div>
         </div>
       </React.Fragment>
