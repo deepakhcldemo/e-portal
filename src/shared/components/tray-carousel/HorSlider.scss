@@ -16,27 +16,15 @@
 }
 
 .slider-item {
-  // flex: 0 0 185px;
-  // height: 210px;
-  // margin-left: 10px;
-  // border-radius: 3px;
-  // display: flex;
-  // flex-direction: column;
-  // background: #ffffff;
-  // padding: 10px;
-  // text-align: center;
-  // color: initial;
-  // $numBoxes: 20;
-  // $step: 360 / $numBoxes;
-
-  flex: 0 0 185px;
+  flex: 0 0 175px;
   height: 210px;
   margin-left: 10px;
-  border-radius: 5px;
+  border-radius: 3px;
   display: flex;
   flex-direction: column;
   background: #ffffff;
   position: relative;
+
   
   $numBoxes: 100;
   $step: 360 / $numBoxes;
@@ -63,6 +51,17 @@
     display: block;
     color: initial;
     height: 100%;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .link-thumb {
+    display: block;
+    color: #000;
+    color: initial;
+    height: 100%;
+    position: absolute;
+    width: 100%;
   }
   .title {
     text-overflow: ellipsis;
@@ -71,10 +70,24 @@
     font-weight: 600;
     margin-bottom: 0;
     min-height: 20px;
+    &.divider {
+      border-bottom: 1px solid #afafaf;
+      padding-bottom: 3px;
+      margin-bottom: 3px;
+    }
   }
   .content {
     font-size: 13px;
     margin-bottom: 5px;
+    &.block-with-text {
+      color: #676767;
+      &::before {
+        content: "";
+      }
+      &::after {
+        content: "...";
+      }
+    }
   }
 }
 
@@ -127,28 +140,23 @@
   transform: scaleX(0);
   transform-origin: 0% 50%;
 }
-.thumb-section {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  .video-wrapper, .img-wrapper {
-    .img-profile {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-  .video-wrapper {
-    overflow: hidden;
-    height: 55%;
-  }
-  .video-section {
-    padding: 10px;
+.video-wrapper, .img-wrapper {
+  .img-profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
+.video-wrapper {
+  overflow: hidden;
+  height: 55%;
+}
+.video-section {
+  padding: 10px;
+}
 .img-wrapper {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   background: #ffffff;
   overflow: hidden;

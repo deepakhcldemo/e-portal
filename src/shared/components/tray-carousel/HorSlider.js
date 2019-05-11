@@ -17,6 +17,7 @@ export default class HorSlider extends Component {
         const self = this;
 
         function getTotalItemsWidth(items) {
+            // console.log('items', items)
             const { left } = items[0].getBoundingClientRect();
             const { right } = items[items.length - 1].getBoundingClientRect();
             return right - left;
@@ -283,15 +284,22 @@ export default class HorSlider extends Component {
     }
     createChildren(records) {
         let carouselRows;
+        const { children } = this.props;
+        
         if (records) {
             if (records.length > 0) {
                 carouselRows = records.map((carouselRecord, index) => {
                     return (
                         <li key={index} className="slider-item">
-                            {this.props.children(carouselRecord)}
+                            { (typeof children === 'function') && (
+                               children(carouselRecord)
+                            )}
+                            { (typeof children === 'object') && (
+                                children
+                            )}
                         </li>
                     );
-                  });
+                });
               
             } 
         }
@@ -314,7 +322,8 @@ export default class HorSlider extends Component {
                 {this.createChildren(carouselItems)}
                 {/* {children('hello shakir 1')} */}
               
-              {/* <li className="slider-item"><a href="#"></a></li> */}
+              {/* <li className="slider-item"><a href="#" className="link-thumb"></a></li>
+              <li className="slider-item"><a href="#" className="link-thumb"></a></li> */}
             </ul>
             {/* {(minXOffset && maxXOffset) && (
                 <div className="controls">
@@ -324,7 +333,7 @@ export default class HorSlider extends Component {
                 </div>
             )} */}
 
-            <div className={classnames('controls', {btnHide: !maxXOffset&&!minXOffset})} >
+            <div className={classnames('controls')} >
                 <button className="prev disabled">Prev</button>
                 <div className="progress-bar"></div>
                 <button className="next">Next</button>

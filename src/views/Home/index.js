@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import HeaderHome from '../../components/layout/header/HeaderHome';
 import { connect } from 'react-redux';
+import { Link } from "react-router-dom";
+import StarRatingComponent from 'react-star-rating-component';
+import _ from 'lodash';
+
 import CategoryItem from '../CategoryItem';
 import {
   getBannerFromDB,
@@ -17,6 +21,14 @@ import StudentFeedback from '../../components/studentFeedback/StudentFeedback';
 import Banner from '../../components/banner/Banner';
 import Blog from '../Blog/Slider/blog';
 import GLOBAL_VARIABLES from '../../config/config';
+import HorSlider from '../../shared/components/tray-carousel/HorSlider';
+import { CarouselItem } from 'react-bootstrap';
+import ProfileItem from '../../shared/components/tray-carousel/ProfileItem';
+import CommentItem from '../../shared/components/tray-carousel/CommentItem';
+import { Promise, reject } from 'q';
+import { resolve } from 'url';
+import VideoItem from '../../shared/components/tray-carousel/VedioItem';
+
 
 class Home extends Component {
   constructor(props) {
@@ -29,7 +41,11 @@ class Home extends Component {
       studentsReview: [],
       blogList: []
     };
+    
   }
+  count = 0;
+  feedbackCount = -1;
+  blogCount = -1;
 
   componentWillUnmount() {
     this.setState({
@@ -100,35 +116,51 @@ class Home extends Component {
       // let profileData = [];
       let tempArr = {};
       let feedbackData = [];
+      let feedbackObjs = [];
       if (querySnapshot.empty) {
         this.props.setSpinnerStatus(false);
         return;
       }
-      querySnapshot.forEach(doc => {
+      let totalSnapshot = querySnapshot.docs.length - 1;
+      // console.log("querySnapshot.docs.length",querySnapshot.docs.length);
+      querySnapshot.forEach((doc, index )=> {
+        
         const user_id = doc.data().user_id;
+        feedbackObjs.push(doc.data());
         if (user_id) {
           getUserProfileFromDB(doc.data().user_id).onSnapshot(
             querySnapshot => {
-              querySnapshot.forEach(profileData => {
+              this.feedbackCount++;
+              querySnapshot.forEach((profileData, index) => {
                 tempArr['profileData'] = profileData.data();
                 tempArr['feedback'] = doc.data();
-
+                
                 feedbackData.push(tempArr);
+                
+                tempArr = {};
+              });
+
+              if (totalSnapshot === this.feedbackCount) {
                 this.setState({
                   studentsReview: feedbackData
                 });
-                tempArr = {};
-              });
+              }
+              
               this.props.setSpinnerStatus(false);
+              
             },
             error => {
               this.props.setSpinnerStatus(false);
             }
           );
-        } else {
+          
+        } 
+        else {
           this.props.setSpinnerStatus(false);
         }
+        
       });
+      
     });
 
     getBlogFromDB().onSnapshot(querySnapshot => {
@@ -138,22 +170,27 @@ class Home extends Component {
         this.props.setSpinnerStatus(false);
         return;
       }
+      let totalSnapshot = querySnapshot.docs.length - 1;
       querySnapshot.forEach(doc => {
         const teacherId = doc.data().teacherId;
         
         if (teacherId) {
           getUserProfileFromDB(doc.data().teacherId).onSnapshot(
             querySnapshot => {
+              this.blogCount++;
               querySnapshot.forEach(profileData => {
                 tempArr['profileData'] = profileData.data();
                 tempArr['feedback'] = doc.data();
                 
                 blogData.push(tempArr);
+                tempArr = {};
+              });
+              if (totalSnapshot === this.blogCount) {
+                console.log('blog obj--', blogData)
                 this.setState({
                   blogList: blogData
                 });
-                tempArr = {};
-              });
+              }
               this.props.setSpinnerStatus(false);
             },
             error => {
@@ -176,8 +213,7 @@ class Home extends Component {
       studentsReview,
       blogList
     } = this.state;
-
-    // console.log('--blogList--', blogList);
+    // console.log('student review', studentsReview)
     return (
       <React.Fragment>
         <div className="container-fluid">
@@ -188,34 +224,72 @@ class Home extends Component {
             )}
 
             {carouselTop10Items.length > 0 && (
-              <TopTutor
-                carouselTop10Items={carouselTop10Items}
-                headeTitle={GLOBAL_VARIABLES.TOP10_TUTOR}
-              />
+              <React.Fragment>
+                {/* <TopTutor
+                  carouselTop10Items={carouselTop10Items}
+                  headeTitle={GLOBAL_VARIABLES.TOP10_TUTOR}
+                /> */}
+                <div className="col-sm-12">
+                  <HorSlider headerTitle={GLOBAL_VARIABLES.TOP10_TUTOR} carouselItems={carouselTop10Items} container="cotainer-slider-1">
+                    {(carouselRecord) => (
+                      <ProfileItem carouselRecord={carouselRecord} linkTo={`/home/teacher/${carouselRecord.userId}`}/>
+                    )}
+                  </HorSlider>
+                </div>
+              </React.Fragment>
             )}
 
             {carousellistNewlyItems.length > 0 && (
-              <RecentVideo
-                carousellistNewlyItems={carousellistNewlyItems}
-                headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
-              />
+              <React.Fragment>
+                {/* <RecentVideo
+                  carousellistNewlyItems={carousellistNewlyItems}
+                  headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
+                /> */}
+                <div className="col-sm-12">
+                  <HorSlider headerTitle={GLOBAL_VARIABLES.TOP10_TUTOR} carouselItems={carousellistNewlyItems} container="cotainer-slider-2">
+                    {(carouselRecord) => (
+                      <VideoItem carouselRecord={carouselRecord} linkTo="javascript:avoid(0);" />
+                    )}
+                  </HorSlider>
+                </div>
+              </React.Fragment>
             )}
 
             {studentsReview.length > 0 && (
-              <StudentFeedback
-                studentsReview={studentsReview}
-                headeTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW}
-              />
+              <React.Fragment>
+                {/* <StudentFeedback
+                  studentsReview={studentsReview}
+                  headeTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW}
+                /> */}
+                <div className="col-sm-12">
+                  <HorSlider headerTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW} carouselItems={studentsReview} container="cotainer-slider-3">
+                    {(carouselRecord)=> (
+                      <CommentItem carouselRecord={carouselRecord} linkTo="#"/>
+                    )}
+                  </HorSlider>
+                </div>
+              </React.Fragment>
             )}
 
             {blogList.length > 0 && (
-              <Blog
-              blogList={blogList}
-                headeTitle={GLOBAL_VARIABLES.RECENT_BLOG}
-              />
+              <React.Fragment>
+                {/* <Blog
+                  blogList={blogList}
+                    headeTitle={GLOBAL_VARIABLES.RECENT_BLOG}
+                  /> */}
+                <div className="col-sm-12">
+                  <HorSlider headerTitle={GLOBAL_VARIABLES.RECENT_BLOG} carouselItems={blogList} container="cotainer-slider-4">
+                    {(carouselRecord)=> (
+                      <CommentItem carouselRecord={carouselRecord} linkTo={`/blog/view/${carouselRecord.feedback.id}`}/>
+                    )}
+                  </HorSlider>
+                </div>
+              </React.Fragment>
+              
+              
             )}
 
-            <CategoryItem />
+            {/* <CategoryItem /> */}
           </div>
         </div>
       </React.Fragment>
