@@ -46,10 +46,18 @@ class CategoryItem extends Component {
                 return (
                   <div
                     key={index}
-                    className="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-2 category-items--align"
+                    className="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-2"
                     onClick={() => this.navigateToSearchTeacher(listItem)}
                   >
-                    <div className="card-style">
+                    <div className="card-style category-box">
+                      <i className="fa fa-sign-language" />
+                      <span className="category--item-text">
+                        {listItem}
+                      </span>
+                    </div>
+
+
+                    {/* <div className="card-style">
                       <div className="category-style">
                         <div className="category--title">
                           <div className="category--icon">
@@ -60,7 +68,7 @@ class CategoryItem extends Component {
                           </span>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 );
               })}

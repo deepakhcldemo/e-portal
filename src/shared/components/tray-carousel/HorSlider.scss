@@ -146,6 +146,18 @@
   border-radius: 3px;
   margin: 5px 0;
 }
+.category-box {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  font-size: 18px;
+  .fa {
+    border-radius: 50%;
+    background: #fff;
+    padding: 10px;
+    color: #000;
+  }
+}
 
 .progress-bar {
   flex: 0 0 200px;
