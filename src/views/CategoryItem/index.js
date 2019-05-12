@@ -36,11 +36,11 @@ class CategoryItem extends Component {
   render() {
     const { categoryList } = this.state;
     return (
-      <div className="col-12 content-container--background categories-container-padding container-margin-20">
+      <div className="col-sm-12">
         <h4>Top Categories</h4>
 
         <div className="users-list">
-          <div className="row category-container">
+          <div className="row">
             {categoryList &&
               categoryList.map((listItem, index) => {
                 return (
