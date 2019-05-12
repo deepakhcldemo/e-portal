@@ -71,6 +71,24 @@ export const getImageUrl = (name ,id) => {
             }
       });
   };
+
+
+  export const updateBlog = blogDetails => {
+    const db = dbFactory.create("firebase");
+    blogDetails.created = db.firestore.FieldValue.serverTimestamp()
+    db.firestore()
+      .collection("blogs")
+      .doc(blogDetails.id)
+      .update(blogDetails)
+      .then(() => {
+        if(blogDetails.tStatus === "Draft"){
+        toastr.success("Blog has been Drafted successfully");
+        }
+        if(blogDetails.tStatus === "Submitted"){
+            toastr.success("Blog has been Updated successfully");
+            }
+      });
+  };
   
 
 

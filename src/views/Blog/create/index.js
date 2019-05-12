@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import * as actionTypes from '../../../spinnerStore/actions';
 import './style.css';
-import { getImageUrl, SaveBlog } from '../../../database/dal/firebase/TeacherBlog';
+import { updateBlog, SaveBlog } from '../../../database/dal/firebase/TeacherBlog';
 import Modal from 'react-responsive-modal';
 import { openModal, closeModal } from './action'
-import HeaderHome from '../../../components/layout/header/HeaderHome';
 import { connect } from 'react-redux';
-import FileUploader from "react-firebase-file-uploader";
-import firebase from "firebase";
-import Progress from "../../../../src/views/Curriculum/progress";
+import { withRouter } from 'react-router';
 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -17,11 +13,6 @@ import renderHTML from 'react-render-html';
 import {
     getBlogsList
 } from './action';
-import {
-    TEACHER_DASHBOARD_LINKS,
-    STUDENT_DASHBOARD_LINKS
-} from './../../../constant/Constant';
-//import './notificationDetails.css';
 
 class BlogList extends Component {
     constructor(props) {
@@ -34,7 +25,8 @@ class BlogList extends Component {
             validationMessage: '',
             imageName: '',
             isUploading: false,
-            progress: 0
+            progress: 0, 
+            updatingState : ''
         };
         this.openModalForBlog = this.openModalForBlog.bind(this);
         this.closeModal = this.closeModal.bind(this);
@@ -93,6 +85,15 @@ class BlogList extends Component {
         this.props.closeModal()
     }
 
+    componentWillReceiveProps (nextProps){
+        if(nextProps.blogDetails){
+        this.setState({
+            blogTitle: nextProps.blogDetails.blogTitle,
+            blogDescription : nextProps.blogDetails.blogDescription
+        })
+    }
+    }
+
     handleImageSuccess = fileName => {
         this.setState({
             imageName: fileName,
@@ -112,7 +113,13 @@ class BlogList extends Component {
         this.setState({
             validationMessage: ' '
         })
-        const id = this.randomString(20);
+        let id ='';
+        if(!this.props.detailPage){
+             id = this.randomString(20);
+        }
+        else{
+            id = this.props.blogDetails.id
+        }
         const blogObj = {};
 
         blogObj.id = id;
@@ -124,9 +131,19 @@ class BlogList extends Component {
         blogObj.tStatus = 'Draft';
         blogObj.tImage = this.state.userDetails.profileImage;
         blogObj.Trating = this.state.userDetails.rating;
-        SaveBlog(blogObj);
+        if(!this.props.detailPage){
+            SaveBlog(blogObj);
+        }
+        else{
+            updateBlog(blogObj);
+            
+        }
 
         this.props.closeModal()
+        if(this.props.detailPage){
+           
+            this.props.history.push('/blog/list')
+        }
     }
 
 
@@ -140,7 +157,14 @@ class BlogList extends Component {
         this.setState({
             validationMessage: ' '
         })
-        const id = this.randomString(20);
+        let id ='';
+        if(!this.props.detailPage){
+             id = this.randomString(20);
+        }
+        else{
+            id = this.props.blogDetails.id
+        }
+        
         const blogObj = {};
 
         blogObj.id = id;
@@ -152,12 +176,22 @@ class BlogList extends Component {
         blogObj.tStatus = 'Submitted';
         blogObj.tImage = this.state.userDetails.profileImage;
         blogObj.Trating = this.state.userDetails.rating;
-        SaveBlog(blogObj);
+        if(!this.props.detailPage){
+            SaveBlog(blogObj);
+        }
+        else{
+            updateBlog(blogObj)
+        }
+        if(this.props.detailPage){
+            
+            this.props.history.push('/blog/list')
+        }
 
         this.props.closeModal()
     }
     render() {
         const { modalState } = this.props
+
         return (
             <>
                 <button className="btn btn-primary pull-right" onClick={this.openModalForBlog}><i className="fa fa-plus"></i>Create Article</button>
@@ -167,6 +201,7 @@ class BlogList extends Component {
                     <input type="text"
                         className="form-control"
                         placeholder="Blog Title"
+                        value = {this.state.blogTitle}
                         onChange={this.setBlogTitle}
                     />
 
@@ -174,6 +209,7 @@ class BlogList extends Component {
                     <ReactQuill
                         placeholder="Blog Description"
                         onChange={this.setBlogDescription}
+                        value={this.state.blogDescription}
                     />
                     <div className="col-lg-12 rm-padding">
                         <div className="mr-top">
@@ -216,10 +252,10 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default
-    connect(
+withRouter(connect(
         mapStateToProps,
         mapDispatchToProps
-    )(BlogList)
+    )(BlogList));
 
 
 
