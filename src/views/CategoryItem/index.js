@@ -36,7 +36,7 @@ class CategoryItem extends Component {
   render() {
     const { categoryList } = this.state;
     return (
-      <div className="col-sm-12">
+      <div className="col-sm-12 category-wrapper">
         <h4>Top Categories</h4>
 
         <div className="users-list">
