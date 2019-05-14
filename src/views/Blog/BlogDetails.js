@@ -36,7 +36,6 @@ class BlogDetails extends Component {
     
     getBlogByIdFromDB(this.props.match.params.id).then((doc) => {
         this.setState({blogDetail: doc.data()});
-        console.log('sssss',this.state)
     }).catch(function() {
     });
   }
@@ -89,12 +88,7 @@ class BlogDetails extends Component {
 
   render() {
     const blogId = this.props.match.params.id;
-    
-    console.log('--blogComment--', this.state.blogComment);
-    
     const { isFocus, blogDetail } = this.state;   
-    console.log('blogDetail', blogDetail);
-    console.log(this.state) 
     const user = localStorage.getItem('user')
       ? JSON.parse(localStorage.getItem('user'))
       : null;

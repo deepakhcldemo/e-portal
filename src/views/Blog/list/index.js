@@ -104,7 +104,7 @@ class BList extends Component {
                                             <Card border={COLOR[Math.floor(Math.random() * COLOR.length)]}>
                                                 <Card.Body>
                                                     <Card.Title>{blog.blogTitle}</Card.Title>
-                                                    <Card.Text>{renderHTML(blog.blogDescription)}</Card.Text>
+                                                {renderHTML(blog.blogDescription)}
                                                     {(userDetails && userDetails.userId === blog.teacherId) && (
                                                         <>
                                                         <Button variant="outline-info" onClick={() => this.handleClick(blog.id,'view')}><i className="fa fa-eye" /></Button>
