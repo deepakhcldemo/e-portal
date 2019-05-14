@@ -18,8 +18,8 @@ class BlogList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            blogTitle: '',
-            blogDescription: '',
+            blogTitle: ' ',
+            blogDescription: ' ',
             blogImage: '',
             userDetails: '',
             validationMessage: '',
@@ -140,10 +140,10 @@ class BlogList extends Component {
         }
 
         this.props.closeModal()
-        if(this.props.detailPage){
+        // if(this.props.detailPage){
            
-            this.props.history.push('/blog/list')
-        }
+        //     this.props.history.push('/blog/list')
+        // }
     }
 
 
@@ -182,10 +182,10 @@ class BlogList extends Component {
         else{
             updateBlog(blogObj)
         }
-        if(this.props.detailPage){
+        // if(this.props.detailPage){
             
-            this.props.history.push('/blog/list')
-        }
+        //     this.props.history.push('/blog/list')
+        // }
 
         this.props.closeModal()
     }
@@ -201,8 +201,9 @@ class BlogList extends Component {
                     <input type="text"
                         className="form-control"
                         placeholder="Blog Title"
-                        value = {this.state.blogTitle}
+                        
                         onChange={this.setBlogTitle}
+                        value = {this.state.blogTitle}
                     />
 
                     <span className="red-star">*</span>
@@ -220,10 +221,10 @@ class BlogList extends Component {
 
                     </div>
                     <div className="col-lg-12">
-                        <button className="btn btn-outline-primary btn-sm space pull-right"
+                        <button className="btn btn btn-dark btn-sm space pull-right"
                             disabled={this.state.isUploading}
                             onClick={this.finalSave}>Submit</button>
-                        <button className="btn btn-outline-primary btn-sm space pull-right"
+                        <button className="btn btn btn-dark btn-sm space pull-right"
                             disabled={this.state.isUploading}
                             onClick={this.saveAsDraft} >Save As Draft</button>
 

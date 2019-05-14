@@ -25,20 +25,36 @@ class BlogDetails extends Component {
       isFocus: false,
       blogDetail : {}
     };
-    this.openModalForBlog = this.openModalForBlog.bind(this);
+    this.editBlog = this.editBlog.bind(this);
   }
 
-  openModalForBlog() {
+  editBlog() {
     this.props.openModal()
 }
 
-  componentDidMount=()=>{
-    
-    getBlogByIdFromDB(this.props.match.params.id).then((doc) => {
-        this.setState({blogDetail: doc.data()});
-    }).catch(function() {
-    });
+  componentWillReceiveProps(nextProps){
+    const blogId = this.props.match.params.id;
+    getBlogByIdFromDB(blogId).then((doc) => {
+      if (doc.exists) {
+          this.setState({
+            blogDetail : doc.data()
+          })
+      } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+      }
+  }).catch(function(error) {
+      console.log("Error getting document:", error);
+  });
   }
+
+  // componentDidMount=()=>{
+    
+  //   getBlogByIdFromDB(this.props.match.params.id).then((doc) => {
+  //       this.setState({blogDetail: doc.data()});
+  //   }).catch(function() {
+  //   });
+  // }
 
   componentDidMount = () =>{
     const blogId = this.props.match.params.id;
@@ -129,7 +145,7 @@ class BlogDetails extends Component {
                 {blogDetail.blogDescription ? renderHTML(blogDetail.blogDescription) : null}
               </div>
               <div className="col-sm-4 edit-blog-block">
-                <button className="btn btn-primary" onClick={this.openModalForBlog}> Edit Blog</button>
+                <button className="btn btn-primary" onClick={this.editBlog}><i className="far fa-edit"></i> Edit Blog</button>
               </div>
             </div>
           </div>
