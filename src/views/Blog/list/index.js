@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-
+import { withRouter } from 'react-router';
 import BlogList from './../create'
 
 import {Redirect} from "react-router-dom";
@@ -54,6 +54,14 @@ class BList extends Component {
 
     viewBlog = (viewId) => {
         this.setState({viewId});
+        //this.props.history.push({`/blog/view/${viewId}`, state :{id: }})
+        this.props.history.push({
+            pathname: `/blog/view/${viewId}`,
+            state: {
+              id: viewId
+              
+            }
+          })
     }
 
     deleteBlog = (id) => {
@@ -97,7 +105,7 @@ class BList extends Component {
                     <Col sm={12}>
                         <Card>
                             <Card.Header>All Blogs List</Card.Header>
-                            <Card.Body>
+                            <Card.Body className ="card-body-background">
                                 {blogs && blogs.map((blog,index) => {
                                     return (
                                         <Col sm={12} key={index}>
@@ -130,14 +138,14 @@ class BList extends Component {
                             </Card.Footer>
                         </Card>
                     </Col>
-                    {viewId && ( <Redirect to={"/blog/view/" + viewId}/>)}
+                    
                 </Row>
             </div>
         );
     }
 }
 
-export default BList
+export default withRouter(BList);
 
 
 
