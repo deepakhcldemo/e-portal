@@ -277,14 +277,13 @@ class Home extends Component {
                     headeTitle={GLOBAL_VARIABLES.RECENT_BLOG}
                   /> */}
                 <div className="col-sm-12 mobile-view">
-                  <HorSlider headerTitle={GLOBAL_VARIABLES.RECENT_BLOG} carouselItems={blogList} container="cotainer-slider-4">
+                  <HorSlider headerTitle={GLOBAL_VARIABLES.RECENT_BLOG} carouselItems={blogList} container="cotainer-slider-4" slidesToScroll={2}>
                     {(carouselRecord)=> (
                       <CommentItem carouselRecord={carouselRecord} linkTo={`/blog/view/${carouselRecord.feedback.id}`}/>
                     )}
                   </HorSlider>
                 </div>
               </React.Fragment>
-              
               
             )}
 
