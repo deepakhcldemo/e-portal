@@ -1,11 +1,11 @@
 {
   "indexes": [
     {
-      "collectionGroup": "notifications",
+      "collectionGroup": "curriculum",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "tId",
+          "fieldPath": "userId",
           "order": "ASCENDING"
         },
         {
@@ -15,11 +15,11 @@
       ]
     },
     {
-      "collectionGroup": "curriculum",
+      "collectionGroup": "notifications",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "userId",
+          "fieldPath": "tId",
           "order": "ASCENDING"
         },
         {
