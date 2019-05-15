@@ -26,7 +26,7 @@ class Comment extends Component {
       const loggedInUSer = JSON.parse(localStorage.getItem('user'));
 
       let feedbacktoId = '';
-      if(this.props.source === 'Blog'){
+      if (this.props.source === 'Blog') {
         feedbacktoId = this.props.blogId;
       } else {
         feedbacktoId = this.props.teacherId;
@@ -87,6 +87,7 @@ class Comment extends Component {
                       </div>
                       <form style={{ width: '100%' }}>
                         <div className="comments-input">
+                          <h2 className="comment-text">Comments:</h2>
                           <TextArea
                             value={this.state.message}
                             onChangeHandle={this.handleChange}
@@ -103,7 +104,7 @@ class Comment extends Component {
 
                         <div className="total-comments comment-btn d-flex justify-content-between">
                           <p className="count">
-                            {noOfComment > 0 && noOfComment }{' '}
+                            {noOfComment > 0 && noOfComment}{' '}
                             <span className="count-text">
                               {noOfComment > 0 && 'Comments'}
                             </span>
@@ -121,7 +122,7 @@ class Comment extends Component {
                       </form>
                     </div>
                   )}
-                 
+
                 </div>
               </div>
             </div>
