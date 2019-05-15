@@ -194,7 +194,7 @@ class BlogList extends Component {
 
         return (
             <>
-                <button className="btn btn-primary pull-right" onClick={this.openModalForBlog}><i className="fa fa-plus"></i>Create Article</button>
+                <button className="btn btn-dark pull-right" onClick={this.openModalForBlog}><i className="fa fa-plus"></i>Create Article</button>
                 <Modal open={modalState} onClose={this.props.closeModal} center>
                     <h2>Create Blog</h2>
                     <span className="red-star">*</span>
