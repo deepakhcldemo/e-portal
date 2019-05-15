@@ -96,6 +96,8 @@ class notificationsDescription extends Component {
         ...rejectedNotificationDetails
       });
     }
+
+    this.handleBack();
   };
 
   handleAccept = id => {
@@ -120,6 +122,7 @@ class notificationsDescription extends Component {
         ...acceptedNotificationDetails
       });
     }
+    this.handleBack();
   };
 
   handleBack = () => {
@@ -143,6 +146,7 @@ class notificationsDescription extends Component {
         ...acceptedNotificationDetails
       });
     }
+    this.handleBack();
   };
 
   getMessageText(status) {

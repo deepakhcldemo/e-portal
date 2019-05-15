@@ -96,6 +96,7 @@ class notificationsDescription extends Component {
         ...rejectedNotificationDetails
       });
     }
+    this.handleBack();
   };
 
   handlePay = id => {
@@ -114,6 +115,7 @@ class notificationsDescription extends Component {
         ...acceptedNotificationDetails
       });
     }
+    this.handleBack();
   };
 
 
@@ -133,6 +135,7 @@ class notificationsDescription extends Component {
         ...acceptedNotificationDetails
       });
     }
+    this.handleBack();
   };
 
   handleBack = () => {
