@@ -104,7 +104,7 @@ class BList extends Component {
                     </Col>
                     <Col sm={12}>
                         <Card>
-                            <Card.Header>All Blogs List</Card.Header>
+                            {/* <Card.Header>All Blogs List</Card.Header> */}
                             <Card.Body className ="card-body-background">
                                 {blogs && blogs.map((blog,index) => {
                                     return (
@@ -126,7 +126,7 @@ class BList extends Component {
                                 })}
                                 {blogs.length === 0 && <h6>No Blogs</h6>}
                             </Card.Body>
-                            <Card.Footer>
+                            {/* <Card.Footer> */}
                             {/* <Pagination
                                 className="pagination"
                                 activePage={activePage}
@@ -135,7 +135,7 @@ class BList extends Component {
                                 pageRangeDisplayed={itemsPerPage}
                                 onChange={this.handlePageChange}
                             /> */}
-                            </Card.Footer>
+                            {/* </Card.Footer> */}
                         </Card>
                     </Col>
                     
