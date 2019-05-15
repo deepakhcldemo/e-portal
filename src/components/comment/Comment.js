@@ -65,6 +65,7 @@ class Comment extends Component {
             <div className="container">
               <div className="row">
                 <div className="col-12">
+                  <h2 className="comment-text">Comments:</h2>
                   {loggedInUser && loggedInUser.userId !== teacherId && (
                     <div className="comment-thread-element">
                       <div className="author-thumbnail">
@@ -87,7 +88,7 @@ class Comment extends Component {
                       </div>
                       <form style={{ width: '100%' }}>
                         <div className="comments-input">
-                          <h2 className="comment-text">Comments:</h2>
+
                           <TextArea
                             value={this.state.message}
                             onChangeHandle={this.handleChange}
