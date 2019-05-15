@@ -5,10 +5,9 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import { withRouter } from 'react-router';
 import BlogList from './../create'
-
-import {Redirect} from "react-router-dom";
+import InfiniteScroll from 'react-infinite-scroll-component';
 import renderHTML from 'react-render-html';
-
+import FilterByDate from '../../../shared/components/filter-by-date';
 // import Pagination from "react-js-pagination"
 
 import { getBlogListFromDBOrCount, deleteBlogFromDB } from './../../../database/dal/firebase/TeacherBlog'
@@ -71,6 +70,12 @@ class BList extends Component {
     handlePageChange = (pageNumber) => {
         this.setState({ activePage: pageNumber });
     }
+
+    getDateParameter = () => {
+        this.setState({
+            blogs : this.state.blogs.reverse()
+        })
+    }
     
     getBlogList = () => {
         const { currentPage, itemsPerPage } = this.state;
@@ -99,7 +104,11 @@ class BList extends Component {
             <div className="container-fluid">
                 <HeaderHome headeTitle="Blog List" />
                 <Row className="content-container main-wrapper">
-                    <Col sm={12}>
+                    
+                    <Col sm={6}>
+                        <FilterByDate onChangeDate={this.getDateParameter}/>
+                    </Col>
+                    <Col sm={6}>
                         <BlogList />
                     </Col>
                     <Col sm={12}>
