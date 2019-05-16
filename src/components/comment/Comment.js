@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { toastr } from 'react-redux-toastr';
 import CommentItem from './CommentItem';
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 import TextArea from '../../shared/components/calendar-modal/helper/textArea';
+import FilterByDate from '../../shared/components/filter-by-date';
 import {
   saveCommentDetails,
   saveLike
@@ -11,6 +14,7 @@ import './CommentItem.css';
 class Comment extends Component {
   state = {
     message: '',
+    blogs: [],
     errors: {},
     isFocus: false
   };
@@ -19,6 +23,11 @@ class Comment extends Component {
     this.setState({ [input.name]: input.value });
   };
 
+  getDateParameter = () => {
+    this.setState({
+      blogs: this.state.blogs.reverse()
+    })
+  }
   handleSubmit = e => {
     e.preventDefault();
 
@@ -60,6 +69,11 @@ class Comment extends Component {
     const noOfComment = commentRows.length;
     return (
       <React.Fragment>
+        <Row className="content-container main-wrapper">
+          <Col sm={6}>
+            <FilterByDate onChangeDate={this.getDateParameter} />
+          </Col>
+        </Row>
         <div className="col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10 comments-section">
           <div className="text-field-section">
             <div className="container">

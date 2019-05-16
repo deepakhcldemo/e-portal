@@ -12,7 +12,7 @@ import FilterByDate from '../../../shared/components/filter-by-date';
 
 import { getBlogListFromDBOrCount, deleteBlogFromDB } from './../../../database/dal/firebase/TeacherBlog'
 // Color Constant
-import {COLOR} from './../../../constant/Constant'
+import { COLOR } from './../../../constant/Constant'
 
 import './list.scss'
 
@@ -30,7 +30,7 @@ class BList extends Component {
 
     UNSAFE_componentWillMount = () => {
         this.setState({
-          userDetails: JSON.parse(localStorage.getItem("userProfile"))
+            userDetails: JSON.parse(localStorage.getItem("userProfile"))
         });
     };
 
@@ -52,15 +52,15 @@ class BList extends Component {
     }
 
     viewBlog = (viewId) => {
-        this.setState({viewId});
+        this.setState({ viewId });
         //this.props.history.push({`/blog/view/${viewId}`, state :{id: }})
         this.props.history.push({
             pathname: `/blog/view/${viewId}`,
             state: {
-              id: viewId
-              
+                id: viewId
+
             }
-          })
+        })
     }
 
     deleteBlog = (id) => {
@@ -73,40 +73,39 @@ class BList extends Component {
 
     getDateParameter = () => {
         this.setState({
-            blogs : this.state.blogs.reverse()
+            blogs: this.state.blogs.reverse()
         })
     }
-    
+
     getBlogList = () => {
         const { currentPage, itemsPerPage } = this.state;
         const startAt = currentPage * itemsPerPage - itemsPerPage;
 
-        getBlogListFromDBOrCount(startAt,itemsPerPage,true).onSnapshot(querySnapshot => {
+        getBlogListFromDBOrCount(startAt, itemsPerPage, true).onSnapshot(querySnapshot => {
             let blogs = [];
             querySnapshot.forEach(doc => {
-              blogs.push(Object.assign({ id: doc.id }, doc.data()));
+                blogs.push(Object.assign({ id: doc.id }, doc.data()));
             });
             this.setState({ blogs });
         });
 
-        getBlogListFromDBOrCount('','',true).onSnapshot(querySnapshot => {
+        getBlogListFromDBOrCount('', '', true).onSnapshot(querySnapshot => {
             let totalItemCount = 0;
             querySnapshot.forEach(() => {
                 totalItemCount++;
             });
             this.setState({ totalItemCount });
-        });        
+        });
     }
 
     render = () => {
         const { blogs, userDetails, viewId/*  activePage, itemsPerPage, totalItemCount */ } = this.state;
-        return (            
+        return (
             <div className="container-fluid">
                 <HeaderHome headeTitle="Blog List" />
                 <Row className="content-container main-wrapper">
-                    
                     <Col sm={6}>
-                        <FilterByDate onChangeDate={this.getDateParameter}/>
+                        <FilterByDate onChangeDate={this.getDateParameter} />
                     </Col>
                     <Col sm={6}>
                         <BlogList />
@@ -114,18 +113,18 @@ class BList extends Component {
                     <Col sm={12}>
                         <Card>
                             {/* <Card.Header>All Blogs List</Card.Header> */}
-                            <Card.Body className ="card-body-background">
-                                {blogs && blogs.map((blog,index) => {
+                            <Card.Body className="card-body-background">
+                                {blogs && blogs.map((blog, index) => {
                                     return (
                                         <Col sm={12} key={index}>
                                             <Card border={COLOR[Math.floor(Math.random() * COLOR.length)]}>
                                                 <Card.Body>
                                                     <Card.Title>{blog.blogTitle}</Card.Title>
-                                                {renderHTML(blog.blogDescription)}
+                                                    {renderHTML(blog.blogDescription)}
                                                     {(userDetails && userDetails.userId === blog.teacherId) && (
                                                         <>
-                                                        <Button variant="outline-info" onClick={() => this.handleClick(blog.id,'view')}><i className="fa fa-eye" /></Button>
-                                                        <Button variant="outline-danger" onClick={() => this.handleClick(blog.id,'delete')}><i className="fa fa-trash" /></Button>
+                                                            <Button variant="outline-info" onClick={() => this.handleClick(blog.id, 'view')}><i className="fa fa-eye" /></Button>
+                                                            <Button variant="outline-danger" onClick={() => this.handleClick(blog.id, 'delete')}><i className="fa fa-trash" /></Button>
                                                         </>
                                                     )}
                                                 </Card.Body>
@@ -147,7 +146,7 @@ class BList extends Component {
                             {/* </Card.Footer> */}
                         </Card>
                     </Col>
-                    
+
                 </Row>
             </div>
         );
