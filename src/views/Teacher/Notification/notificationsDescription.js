@@ -179,6 +179,8 @@ class notificationsDescription extends Component {
 
   render() {
     const { notificationData, studentDataFromDB } = this.state;
+    console.log("notificationData 22: ", notificationData);
+    console.log("studentDataFromDB 22: ", studentDataFromDB)
 
     const { open } = this.state;
 
@@ -192,7 +194,7 @@ class notificationsDescription extends Component {
                 className="card-body card-without--padding"
                 style={{ background: " #333546" }}
               >
-                {notificationData !== null && studentDataFromDB !== null ? (
+                {notificationData != null && studentDataFromDB != null ? (
                   <div className="modal-content">
                     <div className="modal-header">
                       <button
@@ -246,7 +248,7 @@ class notificationsDescription extends Component {
                         <strong>Date & Timing: </strong>
                       </span>
                       <span className="label label-warning">
-                        {new Date(notificationData.scheduleDate).toUTCString()}
+                        {studentDataFromDB === "" ? <span>Lading...</span> : new Date(notificationData.scheduleDate).toUTCString()}
                       </span>
                       &nbsp;
                       <p className="text-left">
