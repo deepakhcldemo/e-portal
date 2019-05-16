@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import HeaderHome from '../../components/layout/header/HeaderHome';
 import { connect } from 'react-redux';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import StarRatingComponent from 'react-star-rating-component';
 import _ from 'lodash';
 
@@ -29,7 +29,6 @@ import { Promise, reject } from 'q';
 import { resolve } from 'url';
 import VideoItem from '../../shared/components/tray-carousel/VedioItem';
 
-
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +40,6 @@ class Home extends Component {
       studentsReview: [],
       blogList: []
     };
-    
   }
   count = 0;
   feedbackCount = -1;
@@ -123,8 +121,7 @@ class Home extends Component {
       }
       let totalSnapshot = querySnapshot.docs.length - 1;
       // console.log("querySnapshot.docs.length",querySnapshot.docs.length);
-      querySnapshot.forEach((doc, index )=> {
-        
+      querySnapshot.forEach((doc, index) => {
         const user_id = doc.data().user_id;
         feedbackObjs.push(doc.data());
         if (user_id) {
@@ -134,9 +131,9 @@ class Home extends Component {
               querySnapshot.forEach((profileData, index) => {
                 tempArr['profileData'] = profileData.data();
                 tempArr['feedback'] = doc.data();
-                
+
                 feedbackData.push(tempArr);
-                
+
                 tempArr = {};
               });
 
@@ -145,22 +142,17 @@ class Home extends Component {
                   studentsReview: feedbackData
                 });
               }
-              
+
               this.props.setSpinnerStatus(false);
-              
             },
             error => {
               this.props.setSpinnerStatus(false);
             }
           );
-          
-        } 
-        else {
+        } else {
           this.props.setSpinnerStatus(false);
         }
-        
       });
-      
     });
 
     getBlogFromDB().onSnapshot(querySnapshot => {
@@ -173,7 +165,7 @@ class Home extends Component {
       let totalSnapshot = querySnapshot.docs.length - 1;
       querySnapshot.forEach(doc => {
         const teacherId = doc.data().teacherId;
-        
+
         if (teacherId) {
           getUserProfileFromDB(doc.data().teacherId).onSnapshot(
             querySnapshot => {
@@ -181,7 +173,7 @@ class Home extends Component {
               querySnapshot.forEach(profileData => {
                 tempArr['profileData'] = profileData.data();
                 tempArr['feedback'] = doc.data();
-                
+
                 blogData.push(tempArr);
                 tempArr = {};
               });
@@ -201,7 +193,6 @@ class Home extends Component {
         }
       });
     });
-
   };
 
   render() {
@@ -229,9 +220,16 @@ class Home extends Component {
                   headeTitle={GLOBAL_VARIABLES.TOP10_TUTOR}
                 /> */}
                 <div className="col-sm-12 mobile-view">
-                  <HorSlider headerTitle={GLOBAL_VARIABLES.TOP10_TUTOR} carouselItems={carouselTop10Items} container="cotainer-slider-1">
-                    {(carouselRecord) => (
-                      <ProfileItem carouselRecord={carouselRecord} linkTo={`/home/teacher/${carouselRecord.userId}`}/>
+                  <HorSlider
+                    headerTitle={GLOBAL_VARIABLES.TOP10_TUTOR}
+                    carouselItems={carouselTop10Items}
+                    container="cotainer-slider-1"
+                  >
+                    {carouselRecord => (
+                      <ProfileItem
+                        carouselRecord={carouselRecord}
+                        linkTo={`/home/teacher/${carouselRecord.userId}`}
+                      />
                     )}
                   </HorSlider>
                 </div>
@@ -245,9 +243,16 @@ class Home extends Component {
                   headeTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
                 /> */}
                 <div className="col-sm-12 mobile-view">
-                  <HorSlider headerTitle={GLOBAL_VARIABLES.TOP10_TUTOR} carouselItems={carousellistNewlyItems} container="cotainer-slider-2">
-                    {(carouselRecord) => (
-                      <VideoItem carouselRecord={carouselRecord} linkTo="javascript:avoid(0);" />
+                  <HorSlider
+                    headerTitle={GLOBAL_VARIABLES.CATEGORYWISE_VIDEOS}
+                    carouselItems={carousellistNewlyItems}
+                    container="cotainer-slider-2"
+                  >
+                    {carouselRecord => (
+                      <VideoItem
+                        carouselRecord={carouselRecord}
+                        linkTo="javascript:avoid(0);"
+                      />
                     )}
                   </HorSlider>
                 </div>
@@ -261,9 +266,13 @@ class Home extends Component {
                   headeTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW}
                 /> */}
                 <div className="col-sm-12 mobile-view">
-                  <HorSlider headerTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW} carouselItems={studentsReview} container="cotainer-slider-3">
-                    {(carouselRecord)=> (
-                      <CommentItem carouselRecord={carouselRecord} linkTo="#"/>
+                  <HorSlider
+                    headerTitle={GLOBAL_VARIABLES.STUDENTS_REVIEW}
+                    carouselItems={studentsReview}
+                    container="cotainer-slider-3"
+                  >
+                    {carouselRecord => (
+                      <CommentItem carouselRecord={carouselRecord} linkTo="#" />
                     )}
                   </HorSlider>
                 </div>
@@ -277,14 +286,21 @@ class Home extends Component {
                     headeTitle={GLOBAL_VARIABLES.RECENT_BLOG}
                   /> */}
                 <div className="col-sm-12 mobile-view">
-                  <HorSlider headerTitle={GLOBAL_VARIABLES.RECENT_BLOG} carouselItems={blogList} container="cotainer-slider-4" slidesToScroll={2}>
-                    {(carouselRecord)=> (
-                      <CommentItem carouselRecord={carouselRecord} linkTo={`/blog/view/${carouselRecord.feedback.id}`}/>
+                  <HorSlider
+                    headerTitle={GLOBAL_VARIABLES.RECENT_BLOG}
+                    carouselItems={blogList}
+                    container="cotainer-slider-4"
+                    slidesToScroll={2}
+                  >
+                    {carouselRecord => (
+                      <CommentItem
+                        carouselRecord={carouselRecord}
+                        linkTo={`/blog/view/${carouselRecord.feedback.id}`}
+                      />
                     )}
                   </HorSlider>
                 </div>
               </React.Fragment>
-              
             )}
 
             <CategoryItem />
