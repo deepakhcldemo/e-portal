@@ -1,15 +1,15 @@
 {
   "indexes": [
     {
-      "collectionGroup": "notifications",
+      "collectionGroup": "feedback",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "tId",
+          "fieldPath": "feedback_to",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "created",
+          "fieldPath": "created_date",
           "order": "DESCENDING"
         }
       ]
@@ -20,6 +20,20 @@
       "fields": [
         {
           "fieldPath": "userId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "notifications",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "tId",
           "order": "ASCENDING"
         },
         {

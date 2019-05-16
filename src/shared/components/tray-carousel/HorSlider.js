@@ -3,6 +3,7 @@ import './HorSlider.scss';
 import { Link } from "react-router-dom";
 import classnames from 'classnames';
 import StarRatingComponent from 'react-star-rating-component';
+import PropTypes from 'prop-types';
 
 import SliderItem from "./SliderItem";
 // import arrowsForwardIcon from '../../../../Assets/hdpi/arrowsForwardIcon.png';
@@ -51,6 +52,9 @@ export default class HorSlider extends Component {
 
                 const slider = container.querySelector('.horizontal-slider');
                 const items = slider.querySelectorAll('.slider-item');
+                const item = slider.querySelector('.slider-item');
+                let itemWidth = item.offsetWidth;
+                
                 const nextButton = container.querySelector('.next');
                 const prevButton = container.querySelector('.prev');
                 const progressBar = container.querySelector('.progress-bar');
@@ -84,7 +88,6 @@ export default class HorSlider extends Component {
                     sliderVisibleWidth = slider.offsetWidth;
                     minXOffset = - (totalItemsWidth - sliderVisibleWidth);
                     window.onresize = function(event) {
-                        console.log('resssss')
                         if (totalItemsWidth < window.outerWidth) {
                             minXOffset = 0;
                             maxXOffset = 0;
@@ -93,10 +96,8 @@ export default class HorSlider extends Component {
                     if (totalItemsWidth < window.outerWidth) {
                         minXOffset = 0;
                         maxXOffset = 0;
-                        console.log('totalItemsWidth', totalItemsWidth, self.props.container)
                     }
-                    self.setState({minXOffset, maxXOffset})
-                    // console.log('totalItemsWidth', maxXOffset,minXOffset )
+                    self.setState({minXOffset, maxXOffset});
                     clampXOffset = clamp(minXOffset, maxXOffset);
                 }
             
@@ -228,12 +229,26 @@ export default class HorSlider extends Component {
                 function goto(delta, slw, currentCarousel) {
                     let currentX = 0;
                     let targetX = 0;
+                    
                     if (slw > 0 ) {
                         targetX = 0;
                     } else {
                         currentX = sliderX.get();
                         self.currentX = currentX;
                         targetX = currentX + (- sliderVisibleWidth * delta);
+                    }
+                    if (self.props.slidesToScroll) {
+                        console.log('delta--', delta)
+                        
+                        let slidesToScroll = (self.props.slidesToScroll + 1);
+                        currentX = sliderX.get();
+                        self.currentX = currentX;
+                        if (delta === 1) {
+                            targetX = currentX + (- item.offsetWidth * slidesToScroll);
+                        } else {
+                            targetX = currentX + ( item.offsetWidth * slidesToScroll);
+                        }
+                        // targetX = currentX + (- item.offsetWidth * slidesToScroll);
                     }
                     const clampedX = clampXOffset(targetX);
 
@@ -244,9 +259,9 @@ export default class HorSlider extends Component {
                     if (action) action.stop();
 
                     action = tween({
-                    from: currentX,
-                    to: targetX,
-                    onUpdate: sliderX
+                        from: currentX,
+                        to: targetX,
+                        onUpdate: sliderX
                     }).start();
                     
                     self.currentX = currentX;
@@ -289,9 +304,9 @@ export default class HorSlider extends Component {
                     const carouselLeft = container.getBoundingClientRect().left;
 
                     if (left < carouselLeft) {
-                    gotoPrev();
+                    gotoPrev(e);
                     } else if (right > carouselLeft + sliderVisibleWidth) {
-                    gotoNext();
+                    gotoNext(e);
                     }
                 }
 
@@ -355,7 +370,6 @@ export default class HorSlider extends Component {
             } 
         }
         
-        
         return carouselRows;
     };
     render() {
@@ -395,4 +409,9 @@ export default class HorSlider extends Component {
         </div>
       );
     }
-  }
+}
+HorSlider.propTypes = {
+    carouselItems: PropTypes.array.isRequired,
+    container: PropTypes.string.isRequired,
+    slidesToScroll: PropTypes.number
+};

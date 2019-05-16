@@ -18,6 +18,9 @@ import NotificationsDetails from "./../Student/Notification/notificationsDetails
 
 import { setNotificationDetails, deleteNotificationDetails } from "./action";
 import { TEACHER_DASHBOARD_LINKS } from "../../constant/Constant";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import FilterByDate from '../../shared/components/filter-by-date';
 import "./style.css";
 
 // import Modal from 'react-responsive-modal'
@@ -26,6 +29,7 @@ class Notification extends Component {
   state = {
     key: "chatNotification",
     open: false,
+
     userDetails: "",
     notificationsList: ""
   };
@@ -77,7 +81,7 @@ class Notification extends Component {
     }
 
     getNotificationsFromDB(userDetails.userId, userDetails.role).onSnapshot(
-      
+
       querySnapshot => {
         let notificationsList = [];
         querySnapshot.forEach(doc => {
@@ -89,7 +93,7 @@ class Notification extends Component {
   };
 
 
-  
+
 
 
   notificationStatus = (notificationDetails, type) => {
@@ -106,6 +110,15 @@ class Notification extends Component {
         : `Notification from  ${notificationDetails.tname}`;
     return type === "message" ? userWiseStatus : classStatus;
   };
+
+  getDateParameter = () => {
+
+    this.setState({
+      notificationsList: this.state.notificationsList.reverse()
+    })
+
+  }
+
 
   goToNotificationDetails = notification => {
     console.log(this.props);
@@ -172,7 +185,8 @@ class Notification extends Component {
               activeKey={this.state.key}
               onSelect={key => this.setState({ key })}
             >
-              <Tab eventKey="chatNotification" title="Chat Request">
+
+              <Tab eventKey="chatNotification" title="Chat ReChat Request">
                 <div className="card notification-container">
                   <div className="card-body notification-container">
                     {userDetails.role === "Teacher" && (
@@ -187,6 +201,11 @@ class Notification extends Component {
               <button>Initiate Chat</button>
                 <div className="card notification-container">
                   <div className="card-body notification-container">
+                    <div className="filterByDate main-wrapper">
+                      <Col sm={6}>
+                        <FilterByDate onChangeDate={this.getDateParameter} />
+                      </Col>
+                    </div>
                     {notificationsList &&
                       notificationsList.map((notification, ind) => {
                         return (

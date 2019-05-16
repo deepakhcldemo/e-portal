@@ -30,3 +30,9 @@
 .comments-section {
   margin: auto;
 }
+.comment-text{
+float:left;
+color:black;
+margin-bottom: 10px;
+margin-top: -25px;
+}

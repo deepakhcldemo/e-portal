@@ -96,6 +96,7 @@ class notificationsDescription extends Component {
         ...rejectedNotificationDetails
       });
     }
+    this.handleBack();
   };
 
   handlePay = id => {
@@ -114,6 +115,7 @@ class notificationsDescription extends Component {
         ...acceptedNotificationDetails
       });
     }
+    this.handleBack();
   };
 
 
@@ -133,6 +135,7 @@ class notificationsDescription extends Component {
         ...acceptedNotificationDetails
       });
     }
+    this.handleBack();
   };
 
   handleBack = () => {
@@ -225,7 +228,8 @@ class notificationsDescription extends Component {
                   <strong>Date & Timing: </strong>
                 </span>
                 <span className="label label-warning">
-                  {new Date(notificationData.scheduleDate).toUTCString()}
+                  {studentDataFromDB === "" ? <span>Lading...</span> : new Date(notificationData.scheduleDate).toUTCString()}
+
                 </span>
                 &nbsp;
                 <p className="text-left">

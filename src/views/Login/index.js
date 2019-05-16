@@ -406,7 +406,7 @@ class Login extends Component {
                       }}
                       onClick={e => this.loginWithGoogle(e)}
                     />
-                    <button
+                    {/* <button
                       className="btn social-login--size"
                       style={{
                         backgroundPosition: 'center center',
@@ -414,7 +414,7 @@ class Login extends Component {
                         backgroundRepeat: 'no-repeat'
                       }}
                       onClick={e => this.loginWithFacebook(e)}
-                    />
+                    /> */}
                     <button
                       className="btn social-login--size"
                       style={{
