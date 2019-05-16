@@ -7,6 +7,7 @@ import {
   getTeacherNotification
 } from "./notificationAction";
 import HeaderHome from "../../../components/layout/header/HeaderHome";
+import Chat from '../../../views/Chat/index';
 
 class NotificationsDetails extends Component {
   state = {
@@ -56,7 +57,10 @@ class NotificationsDetails extends Component {
 
                   Object.keys(notificationDetails).map(
                     (notificationDetail, index) => (
+                      
                       //console.log(notificationDetails[notificationDetail].charge)
+                      <>
+                      <Chat data={notificationDetails[notificationDetail]} />
                       <Link
                         key={index}
                         to={
@@ -107,6 +111,7 @@ class NotificationsDetails extends Component {
                         </div>
                         </div>
                       </Link>
+                      </>
                     )
                   )
                   : <div>No record found</div>}

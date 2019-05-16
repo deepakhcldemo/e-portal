@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../../../shared/components/Navbar";
 import { connect } from "react-redux";
+import Chat from '../../../views/Chat/index'
 import {
   getNotification,
   getTeachers,
@@ -216,13 +217,7 @@ class NotificationsDetails extends Component {
                         </Link>
                         {notificationDetails[notificationDetail].paymentStatus !=
                           false ? (
-                            <button
-                              type="button"
-                              className="btn btn-success"
-                              data-dismiss="modal"
-                            >
-                              Start Chat
-                      </button>
+                            <Chat data={notificationDetails[notificationDetail]} />
                           ) : (
                             <div />
                           )}
