@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import "./style.scss";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import FilterByDate from '../../../shared/components/filter-by-date';
 import {
   getTeachers,
   getStudents,
@@ -11,6 +15,7 @@ import HeaderHome from "../../../components/layout/header/HeaderHome";
 class NotificationsDetails extends Component {
   state = {
     // open: false
+    notificationDetails: ""
   };
 
   componentDidMount() {
@@ -19,6 +24,12 @@ class NotificationsDetails extends Component {
     this.props.getTeacherNotification(loggedInUSer.user.uid);
   }
 
+  getDateParameterInChat = () => {
+    this.setState({
+      notificationDetails: this.props.notificationDetails.reverse()
+    })
+
+  }
   onOpenModal = () => {
     this.setState({ open: true });
   };
@@ -45,6 +56,7 @@ class NotificationsDetails extends Component {
     const { notificationDetails } = this.props;
 
 
+
     return (
       <>
         <div className="container-fluid">
@@ -52,6 +64,11 @@ class NotificationsDetails extends Component {
           <div className="content-container tab--container">
             <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12 col-without--padding">
               <div className=" notification-card" style={{ color: "#FFF" }}>
+                <div className="filterByDateInChat main-wrapper">
+                  <Col sm={6}>
+                    <FilterByDate onChangeDate={this.getDateParameterInChat} />
+                  </Col>
+                </div>
                 {Object.keys(notificationDetails).length > 0 ?
 
                   Object.keys(notificationDetails).map(

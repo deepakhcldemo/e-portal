@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import NavBar from "../../../shared/components/Navbar";
 import { connect } from "react-redux";
+import FilterByDate from '../../../shared/components/filter-by-date';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import {
   getNotification,
   getTeachers,
@@ -9,6 +12,7 @@ import {
   getTeacherFromStudentIdFromDB,
   getStudentNotification
 } from "../../Teacher/Notification/notificationAction";
+import "./style.scss";
 import Notification from "./notifications";
 
 import { getUserProfile } from "../../../database/dal/firebase/chatNotificationDal";
@@ -88,7 +92,11 @@ class NotificationsDetails extends Component {
 
     console.log("teacher id", this.state);
   }
-
+  getDateParameterInChat = () => {
+    this.setState({
+      notificationDetails: this.state.notificationDetails.reverse()
+    })
+  }
   onOpenModal = () => {
     this.setState({ open: true });
   };
@@ -145,6 +153,11 @@ class NotificationsDetails extends Component {
         <div className="container-fluid">
           <div>
             <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12 col-without--padding">
+              <div className="filterByDate main-wrapper">
+                <Col sm={6}>
+                  <FilterByDate onChangeDate={this.getDateParameterInChat} />
+                </Col>
+              </div>
               {
                 Object.keys(notificationDetails).length > 0 ?
                   Object.keys(notificationDetails).map(
