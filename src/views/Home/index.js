@@ -25,6 +25,7 @@ import HorSlider from '../../shared/components/tray-carousel/HorSlider';
 import { CarouselItem } from 'react-bootstrap';
 import ProfileItem from '../../shared/components/tray-carousel/ProfileItem';
 import CommentItem from '../../shared/components/tray-carousel/CommentItem';
+import BlogItem from '../../components/blogItem/BlogItem';
 import { Promise, reject } from 'q';
 import { resolve } from 'url';
 import VideoItem from '../../shared/components/tray-carousel/VedioItem';
@@ -293,8 +294,8 @@ class Home extends Component {
                     slidesToScroll={2}
                   >
                     {carouselRecord => (
-                      <CommentItem
-                        carouselRecord={carouselRecord}
+                      <BlogItem
+                        blogDetails={carouselRecord}
                         linkTo={`/blog/view/${carouselRecord.feedback.id}`}
                       />
                     )}
