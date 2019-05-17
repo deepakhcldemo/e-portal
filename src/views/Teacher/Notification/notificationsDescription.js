@@ -15,6 +15,7 @@ import {
 import UpdateDataModal from "../../../shared/components/calendar-modal/updateDataModal";
 import StatusCircle from "../../../components/statusCircle/StatusCircle";
 import HeaderHome from "../../../components/layout/header/HeaderHome";
+import Chat from '../../../views/Chat/index';
 
 class notificationsDescription extends Component {
   state = {
@@ -194,6 +195,7 @@ class notificationsDescription extends Component {
                 className="card-body card-without--padding"
                 style={{ background: " #333546" }}
               >
+                <Chat data={notificationData} />
                 {notificationData != null && studentDataFromDB != null ? (
                   <div className="modal-content">
                     <div className="modal-header">

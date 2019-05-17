@@ -11,7 +11,6 @@ import {
   getTeacherNotification
 } from "./notificationAction";
 import HeaderHome from "../../../components/layout/header/HeaderHome";
-import Chat from '../../../views/Chat/index';
 
 class NotificationsDetails extends Component {
   state = {
@@ -74,60 +73,60 @@ class NotificationsDetails extends Component {
 
                   Object.keys(notificationDetails).map(
                     (notificationDetail, index) => (
-                      
+
                       //console.log(notificationDetails[notificationDetail].charge)
                       <>
-                      <Chat data={notificationDetails[notificationDetail]} />
-                      <Link
-                        key={index}
-                        to={
-                          `/teacher/notificationsDescription/` +
-                          notificationDetails[notificationDetail].nId
-                        }
-                        className="active"
-                      >
-                        <div
-                          className={this.getClassName(
-                            notificationDetails[notificationDetail].status
-                          )}
+                        {/* <Chat data={notificationDetails[notificationDetail]} /> */}
+                        <Link
+                          key={index}
+                          to={
+                            `/teacher/notificationsDescription/` +
+                            notificationDetails[notificationDetail].nId
+                          }
+                          className="active"
                         >
-                          <div style={{ float: "left" }}>
-                            <img
-                              alt="image"
-                              src="../Assets/hdpi/avatar.png"
-                              name="aboutme"
-                              width="70"
-                              height="50"
-                              border="0"
-                              className="img-circle"
-                            />
-                          </div>
                           <div
-                            className="container"
-                            onClick={this.onOpenModal}
-                            style={{ cursor: "pointer" }}
+                            className={this.getClassName(
+                              notificationDetails[notificationDetail].status
+                            )}
                           >
-                            <div className="alert-icon">
-                              <i className="material-icons">
-                                Student{" "}
-                                {notificationDetails[notificationDetail].sId}
-                              </i>
+                            <div style={{ float: "left" }}>
+                              <img
+                                alt="image"
+                                src="../Assets/hdpi/avatar.png"
+                                name="aboutme"
+                                width="70"
+                                height="50"
+                                border="0"
+                                className="img-circle"
+                              />
                             </div>
-                            <button
-                              type="button"
-                              className="close"
-                              data-dismiss="alert"
-                              aria-label="Close"
+                            <div
+                              className="container"
+                              onClick={this.onOpenModal}
+                              style={{ cursor: "pointer" }}
                             >
-                              <span aria-hidden="true">
-                                <i className="material-icons">clear</i>
-                              </span>
-                            </button>
-                            <b>Message:</b>{" "}
-                            {notificationDetails[notificationDetail].details}..
+                              <div className="alert-icon">
+                                <i className="material-icons">
+                                  Student{" "}
+                                  {notificationDetails[notificationDetail].sId}
+                                </i>
+                              </div>
+                              <button
+                                type="button"
+                                className="close"
+                                data-dismiss="alert"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true">
+                                  <i className="material-icons">clear</i>
+                                </span>
+                              </button>
+                              <b>Message:</b>{" "}
+                              {notificationDetails[notificationDetail].details}..
                         </div>
-                        </div>
-                      </Link>
+                          </div>
+                        </Link>
                       </>
                     )
                   )

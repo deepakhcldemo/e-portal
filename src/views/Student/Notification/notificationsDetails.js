@@ -14,7 +14,6 @@ import {
 } from "../../Teacher/Notification/notificationAction";
 import "./style.scss";
 import Notification from "./notifications";
-import Chat from '../../../views/Chat/index';
 
 import { getUserProfile } from "../../../database/dal/firebase/chatNotificationDal";
 
@@ -59,37 +58,6 @@ class NotificationsDetails extends Component {
     console.log("Logged in details", loggedInUSer);
 
     this.props.getStudentNotification(loggedInUSer.user.uid);
-    //if (this.props.notificationDetails != null) {
-    // console.log(" 100 componentDidMount Notification details Page", this.props.notificationDetails)
-    // }
-
-    // getNotificationData(loggedInUSer).then(querySnapshot => {
-    //     querySnapshot.forEach(doc => {
-    //         user = doc.data();
-    //         if (doc.exists) {
-    //             this.setState({
-    //                 notificationData: user
-    //             });
-
-    //             getUserProfile(user.tId).then(querySnapshot => {
-    //                 querySnapshot.forEach(doc => {
-    //                     data = doc.data();
-    //                     if (doc.exists) {
-
-    //                         this.setState({
-    //                             userData: data
-    //                         });
-    //                     }
-    //                 });
-    //             });
-
-    //         }
-    //     });
-    // });
-
-    //console.log("Notification data componentDidMount => ", this.props.notificationDetails)
-    //this.props.getTeachers("55dh2K881oSaWBFn8mZOGiSeTny2");
-    //this.props.getStudents("DrFophiJl9PsAZhrhFzd11opaPH2");
 
     console.log("teacher id", this.state);
   }

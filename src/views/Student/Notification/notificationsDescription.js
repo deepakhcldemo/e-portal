@@ -17,7 +17,8 @@ import {
 
 import UpdateDataModal from "../../../shared/components/calendar-modal/updateDataModal";
 import HeaderHome from "../../../components/layout/header/HeaderHome";
-import StatusCircle from "../../../components/statusCircle/StatusCircle"
+import StatusCircle from "../../../components/statusCircle/StatusCircle";
+import Chat from '../../../views/Chat/index';
 
 class notificationsDescription extends Component {
   state = {
@@ -193,7 +194,7 @@ class notificationsDescription extends Component {
                   data-dismiss="modal"
                   aria-hidden="true"
                 />
-
+                <Chat data={notificationData} />
                 <h4 className="modal-title" id="myModalLabel">
                   <span ></span>
                   <button
