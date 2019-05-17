@@ -197,14 +197,18 @@ class Notification extends Component {
                 </div>
               </Tab>
               <Tab eventKey="notification" title="Review Request">
-              
                 <div className="card notification-container">
                   <div className="card-body notification-container">
-                    <div className="filterByDate main-wrapper">
-                      <Col sm={6}>
-                        <FilterByDate onChangeDate={this.getDateParameter} />
-                      </Col>
-                    </div>
+
+                    {notificationsList.length > 0 ? (
+                      <div className="filterByDate main-wrapper">
+                        <Col sm={6}>
+                          <FilterByDate onChangeDate={this.getDateParameter} />
+                        </Col>
+                      </div>
+                    ) : (
+                        ""
+                      )}
                     {notificationsList &&
                       notificationsList.map((notification, ind) => {
                         return (
