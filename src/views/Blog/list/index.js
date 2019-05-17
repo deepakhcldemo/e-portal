@@ -136,7 +136,9 @@ class BList extends Component {
                             </Card.Title>
                             {/* {renderHTML(blog.blogDescription)} */}
                           </Card.Body>
-                          <Card.Footer style={{ textAlign: 'right' }}>
+                          <Card.Footer
+                            style={{ textAlign: 'right', padding: '5px' }}
+                          >
                             <Button
                               variant="outline-info"
                               onClick={() => this.handleClick(blog.id, 'view')}
