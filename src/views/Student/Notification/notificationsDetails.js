@@ -14,6 +14,7 @@ import {
 } from "../../Teacher/Notification/notificationAction";
 import "./style.scss";
 import Notification from "./notifications";
+import Chat from '../../../views/Chat/index';
 
 import { getUserProfile } from "../../../database/dal/firebase/chatNotificationDal";
 
@@ -229,7 +230,7 @@ class NotificationsDetails extends Component {
                         </Link>
                         {notificationDetails[notificationDetail].paymentStatus !=
                           false ? (
-                            {/* <Chat data={notificationDetails[notificationDetail]} /> */}
+                            {/* <Chat data={notificationDetails[notificationDetail]} /> */ }
                           ) : (
                             <div />
                           )}
