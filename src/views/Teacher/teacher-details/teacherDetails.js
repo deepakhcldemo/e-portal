@@ -83,7 +83,7 @@ class TeacherDetails extends Component {
     });
 
     /* Get curriculum videos */
-    const userId = user ? user.user.uid : '';
+    const userId = this.props.match.params.id ? this.props.match.params.id : '';
     getCurriculumFromDB(userId).onSnapshot(querySnapshot => {
       let currData = [];
       querySnapshot.forEach(doc => {
@@ -388,6 +388,7 @@ class TeacherDetails extends Component {
       isFocus,
       noOfComment
     } = this.state;
+    console.log(carousellistNewlyItems)
     const isLogedIn = localStorage.getItem('user');
     const loggedInUser = JSON.parse(localStorage.getItem('userProfile'));
 
@@ -490,25 +491,25 @@ class TeacherDetails extends Component {
                     <div>
                       {loggedInUser
                         ? loggedInUser.role === 'Student' && (
-                            <button
-                              className="btn btn-outline-primary"
-                              onClick={() =>
-                                this.wrapperFunction(this.state.teacherDetails)
-                              }
-                            >
-                              Request For Chat
+                          <button
+                            className="btn btn-outline-primary"
+                            onClick={() =>
+                              this.wrapperFunction(this.state.teacherDetails)
+                            }
+                          >
+                            Request For Chat
                             </button>
-                          )
+                        )
                         : null}
                       {loggedInUser
                         ? loggedInUser.role === 'Student' && (
-                            <button
-                              className="btn btn-outline-primary"
-                              onClick={this.openModalForRequest}
-                            >
-                              Request For Review
+                          <button
+                            className="btn btn-outline-primary"
+                            onClick={this.openModalForRequest}
+                          >
+                            Request For Review
                             </button>
-                          )
+                        )
                         : null}
 
                       {/* {loggedInUser.role === 'Student' ? (
