@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RatingComponent from 'react-star-rating-component';
-import { openModal } from './action'
+import { openModal } from './action';
 import { toastr } from 'react-redux-toastr';
 import '../Teacher/teacher-details/teacherDetails.scss';
 import './BlogDetails.scss';
@@ -29,25 +29,26 @@ class BlogDetails extends Component {
   }
 
   editBlog() {
-    this.props.openModal()
+    this.props.openModal();
   }
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.modalState) {
       const blogId = this.props.match.params.id;
-      getBlogByIdFromDB(blogId).then((doc) => {
-        if (doc.exists) {
-          this.setState({
-            blogDetail: doc.data()
-          })
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-        }
-      }).catch(function (error) {
-        console.log("Error getting document:", error);
-      });
-
+      getBlogByIdFromDB(blogId)
+        .then(doc => {
+          if (doc.exists) {
+            this.setState({
+              blogDetail: doc.data()
+            });
+          } else {
+            // doc.data() will be undefined in this case
+            console.log('No such document!');
+          }
+        })
+        .catch(function(error) {
+          console.log('Error getting document:', error);
+        });
     }
   }
 
@@ -62,18 +63,20 @@ class BlogDetails extends Component {
   componentDidMount = () => {
     const blogId = this.props.match.params.id;
     // For Comment Section
-    getBlogByIdFromDB(blogId).then((doc) => {
-      if (doc.exists) {
-        this.setState({
-          blogDetail: doc.data()
-        })
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    }).catch(function (error) {
-      console.log("Error getting document:", error);
-    });
+    getBlogByIdFromDB(blogId)
+      .then(doc => {
+        if (doc.exists) {
+          this.setState({
+            blogDetail: doc.data()
+          });
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!');
+        }
+      })
+      .catch(function(error) {
+        console.log('Error getting document:', error);
+      });
     if (blogId) {
       getFeedbackFromDB(blogId).onSnapshot(querySnapshot => {
         let tempArr = {};
@@ -82,12 +85,16 @@ class BlogDetails extends Component {
           getUserProfileFromDB(doc.data().user_id).onSnapshot(
             querySnapshot => {
               querySnapshot.forEach(profileData => {
-                tempArr["feedbackId"] = doc.id;
-                tempArr["profileData"] = profileData.data();
-                tempArr["feedback"] = doc.data();
+                tempArr['feedbackId'] = doc.id;
+                tempArr['profileData'] = profileData.data();
+                tempArr['feedback'] = doc.data();
 
                 feedbackData.push(tempArr);
-                feedbackData = feedbackData.sort((a, b) => a.feedback.created_date.second < b.feedback.created_date.second);
+                feedbackData = feedbackData.sort(
+                  (a, b) =>
+                    a.feedback.created_date.second <
+                    b.feedback.created_date.second
+                );
                 this.setState({
                   blogComment: feedbackData
                 });
@@ -103,7 +110,7 @@ class BlogDetails extends Component {
         });
       });
     }
-  }
+  };
 
   render() {
     const blogId = this.props.match.params.id;
@@ -116,22 +123,18 @@ class BlogDetails extends Component {
     const isLogedIn = localStorage.getItem('user');
     const loggedInUser = JSON.parse(localStorage.getItem('userProfile'));
     const teacherId = 'sWjf83MlPTav3HPgTrNismT5s4h1';
+    console.log('-----------------===========', blogDetail.teacherId);
     return (
       <div className="details-wrapper blog-details">
-        <BlogList blogDetails={blogDetail} detailPage={true}></BlogList>
+        <BlogList blogDetails={blogDetail} detailPage={true} />
         <HeaderHome />
         {blogDetail && (
           <>
             <div className="bnr-section">
-
               <span className="blog-text">Blog</span>
               <div className="blog-profile-img">
                 <div className="profile-img-section">
-                  <img
-                    alt=""
-                    src={blogDetail.tImage}
-                    className="bnr-img"
-                  />
+                  <img alt="" src={blogDetail.tImage} className="bnr-img" />
                 </div>
                 <RatingComponent
                   name="rate1"
@@ -145,11 +148,20 @@ class BlogDetails extends Component {
                 <div className="row">
                   <div className="col-sm-8">
                     <h2>{blogDetail.blogTitle}</h2>
-                    {blogDetail.blogDescription ? renderHTML(blogDetail.blogDescription) : null}
+                    {blogDetail.blogDescription
+                      ? renderHTML(blogDetail.blogDescription)
+                      : null}
                   </div>
-                  <div className="col-sm-4 edit-blog-block">
-                    <button className="btn btn-primary" onClick={this.editBlog}><i className="far fa-edit"></i> Edit Blog</button>
-                  </div>
+                  {blogDetail.teacherId === loggedInUser.userId && (
+                    <div className="col-sm-4 edit-blog-block">
+                      <button
+                        className="btn btn-primary"
+                        onClick={this.editBlog}
+                      >
+                        <i className="far fa-edit" /> Edit Blog
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -164,23 +176,28 @@ class BlogDetails extends Component {
           isFocus={isFocus}
         />
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
     modalState: state.category.openModal
-  }
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     setSpinnerStatus: value => {
-      dispatch({ type: actionTypes.SPINNER_STATUS, payload: value })
+      dispatch({ type: actionTypes.SPINNER_STATUS, payload: value });
     },
     openModal: () => dispatch(openModal())
-  }
-}
+  };
+};
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BlogDetails));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(BlogDetails)
+);

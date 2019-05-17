@@ -88,7 +88,6 @@ class Comment extends Component {
                       </div>
                       <form style={{ width: '100%' }}>
                         <div className="comments-input">
-
                           <TextArea
                             value={this.state.message}
                             onChangeHandle={this.handleChange}
@@ -123,7 +122,6 @@ class Comment extends Component {
                       </form>
                     </div>
                   )}
-
                 </div>
               </div>
             </div>

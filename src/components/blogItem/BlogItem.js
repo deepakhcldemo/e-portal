@@ -6,7 +6,7 @@ import renderHTML from 'react-render-html';
 class BlogItem extends Component {
   render() {
     const { blogDetails, linkTo } = this.props;
-    console.log('-----------------===========', blogDetails);
+
     const name =
       blogDetails.profileData.firstName +
       ' ' +

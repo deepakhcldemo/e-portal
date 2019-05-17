@@ -29,10 +29,11 @@
 
 .comments-section {
   margin: auto;
+  margin-top: 10px;
 }
-.comment-text{
-float:left;
-color:black;
-margin-bottom: 10px;
-margin-top: -25px;
+.comment-text {
+  float: left;
+  color: black;
+  margin-bottom: 10px;
+  margin-top: -25px;
 }
