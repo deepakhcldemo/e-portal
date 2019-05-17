@@ -23,7 +23,7 @@ class BlogItem extends Component {
           <div>
             <div className="vd-wrapper vd-wrapper--border col-xs-12">
               <div className="thumb-wrapper thumb-wrapper--style">
-                <div className="profile-pic-block">
+                <div className="profile-pic-block profile-pic--style">
                   <img src={blogDetails.profileData.profileImage} alt="" />
                 </div>
               </div>
@@ -38,6 +38,11 @@ class BlogItem extends Component {
               <div className="blog-section--style">
                 {blogDetails.feedback.blogTitle
                   ? renderHTML(blogDetails.feedback.blogTitle)
+                  : null}
+              </div>
+              <div className="block-with-text blog-description">
+                {blogDetails.feedback.blogDescription
+                  ? renderHTML(blogDetails.feedback.blogDescription)
                   : null}
               </div>
             </div>
