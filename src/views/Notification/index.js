@@ -198,7 +198,6 @@ class Notification extends Component {
               </Tab>
               <Tab eventKey="notification" title="Review Request">
               
-              <button>Initiate Chat</button>
                 <div className="card notification-container">
                   <div className="card-body notification-container">
                     <div className="filterByDate main-wrapper">
