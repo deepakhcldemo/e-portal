@@ -92,3 +92,7 @@ code {
         /* height: 200px; */
     }
 }
+
+.sc-launcher, .sc-chat-window { z-index: 9;}
+.sc-chat-window { bottom: 50px;}
+.sc-header--img { width: 60px;}

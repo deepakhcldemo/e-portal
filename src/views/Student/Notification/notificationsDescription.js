@@ -177,8 +177,10 @@ class notificationsDescription extends Component {
     const { notificationData, studentDataFromDB } = this.state;
 
     if (studentDataFromDB != null && notificationData != null) {
-      console.log("studentDataFromDB  => ", studentDataFromDB.firstName)
+      console.log("studentDataFromDB  => ", studentDataFromDB.firstName);
+
     }
+    const mergedData = { ...notificationData, ...studentDataFromDB };
 
     const { open } = this.state;
     return (
@@ -194,7 +196,8 @@ class notificationsDescription extends Component {
                   data-dismiss="modal"
                   aria-hidden="true"
                 />
-                <Chat data={notificationData} />
+                {notificationData.status === 1 && notificationData.paymentStatus === true ? <Chat data={notificationData} /> : ""}
+
                 <h4 className="modal-title" id="myModalLabel">
                   <span ></span>
                   <button

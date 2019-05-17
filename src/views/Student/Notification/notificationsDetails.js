@@ -14,6 +14,7 @@ import {
 } from "../../Teacher/Notification/notificationAction";
 import "./style.scss";
 import Notification from "./notifications";
+import Chat from '../../../views/Chat/index';
 
 import { getUserProfile } from "../../../database/dal/firebase/chatNotificationDal";
 
@@ -58,6 +59,37 @@ class NotificationsDetails extends Component {
     console.log("Logged in details", loggedInUSer);
 
     this.props.getStudentNotification(loggedInUSer.user.uid);
+    //if (this.props.notificationDetails != null) {
+    // console.log(" 100 componentDidMount Notification details Page", this.props.notificationDetails)
+    // }
+
+    // getNotificationData(loggedInUSer).then(querySnapshot => {
+    //     querySnapshot.forEach(doc => {
+    //         user = doc.data();
+    //         if (doc.exists) {
+    //             this.setState({
+    //                 notificationData: user
+    //             });
+
+    //             getUserProfile(user.tId).then(querySnapshot => {
+    //                 querySnapshot.forEach(doc => {
+    //                     data = doc.data();
+    //                     if (doc.exists) {
+
+    //                         this.setState({
+    //                             userData: data
+    //                         });
+    //                     }
+    //                 });
+    //             });
+
+    //         }
+    //     });
+    // });
+
+    //console.log("Notification data componentDidMount => ", this.props.notificationDetails)
+    //this.props.getTeachers("55dh2K881oSaWBFn8mZOGiSeTny2");
+    //this.props.getStudents("DrFophiJl9PsAZhrhFzd11opaPH2");
 
     console.log("teacher id", this.state);
   }
@@ -115,6 +147,9 @@ class NotificationsDetails extends Component {
 
     const { open } = this.state;
     const { notificationDetails } = this.props;
+    console.log("notificationDetails -> ", notificationDetails);
+    console.log("notificationDetails length-> ", Object.keys(notificationDetails).length);
+
 
 
     return (
@@ -122,24 +157,23 @@ class NotificationsDetails extends Component {
         <div className="container-fluid">
           <div>
             <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12 col-without--padding">
-              {notificationDetails.length > 0 ? (
-                <div className="filterByDate main-wrapper">
-                  <Col sm={6}>
-                    <FilterByDate onChangeDate={this.getDateParameterInChat} />
-                  </Col>
-                </div>
-              ) : (
-                  ""
-                )}
+              <div className="filterByDate main-wrapper">
+                <Col sm={6}>
+                  <FilterByDate onChangeDate={this.getDateParameterInChat} />
+                </Col>
+              </div>
               {
                 Object.keys(notificationDetails).length > 0 ?
                   Object.keys(notificationDetails).map(
                     (notificationDetail, index) => (
-                      <div
+
+                      < div
                         key={index}
-                        className={this.getClassName(
-                          notificationDetails[notificationDetail].status
-                        )}
+                        className={
+                          this.getClassName(
+                            notificationDetails[notificationDetail].status
+                          )
+                        }
                       >
                         <Link
                           to={
@@ -200,12 +234,7 @@ class NotificationsDetails extends Component {
                             </div>
                           </div>
                         </Link>
-                        {notificationDetails[notificationDetail].paymentStatus !=
-                          false ? (
-                            {/* <Chat data={notificationDetails[notificationDetail]} /> */ }
-                          ) : (
-                            <div />
-                          )}
+
                       </div>
                     )
                   ) : <div>No Record Found</div>}

@@ -55,8 +55,6 @@ class NotificationsDetails extends Component {
     const { open } = this.state;
     const { notificationDetails } = this.props;
 
-
-
     return (
       <>
         <div className="container-fluid">

@@ -6,12 +6,16 @@ import {
   saveIndividualChatToDB
 } from "./../../database/dal/firebase/chatDal";
 
+import { getUserProfile } from "./../../database/dal/firebase/registrationDal";
+
 class Chat extends Component {
   state = {
-    messageList: []
+    messageList: [],
+    recieverData: []
   };
 
   componentDidMount = async () => {
+    let user;
     const { data: { sId, tId } } = this.props;
     this.setState({
       userDetails: JSON.parse(localStorage.getItem("userProfile"))
@@ -23,6 +27,22 @@ class Chat extends Component {
         });
       }
     });
+
+    const id = this.state.userDetails.role === 'Teacher' ? sId : tId;
+
+    await getUserProfile(id).then(
+      querySnapshot => {
+        querySnapshot.forEach(doc => {
+          user = doc.data();
+          console.log("User Data information: ", user)
+          if (doc.exists) {
+            this.setState({
+              recieverData: user
+            });
+          }
+        });
+      }
+    );
   }
 
   onMessageWasSent = async message => {
@@ -40,14 +60,16 @@ class Chat extends Component {
 
   render() {
     const { data: { sId, tId } } = this.props;
-    const { userDetails } = this.state;
-    console.log(sId, tId)
+    const { userDetails, recieverData } = this.state;
+    //console.log("recieverData  ", recieverData);
+    const name = recieverData.firstName + " " + recieverData.lastName
+    //console.log(sId, tId)
     return (
       <div>
         <Launcher
           agentProfile={{
-            teamName: 'app sab ki chat',
-            imageUrl: ""
+            teamName: name,
+            imageUrl: recieverData.profileImage
           }}
           onMessageWasSent={this.onMessageWasSent}
           messageList={this.state.messageList}

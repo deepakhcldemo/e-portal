@@ -180,8 +180,6 @@ class notificationsDescription extends Component {
 
   render() {
     const { notificationData, studentDataFromDB } = this.state;
-    console.log("notificationData 22: ", notificationData);
-    console.log("studentDataFromDB 22: ", studentDataFromDB)
 
     const { open } = this.state;
 
@@ -195,7 +193,8 @@ class notificationsDescription extends Component {
                 className="card-body card-without--padding"
                 style={{ background: " #333546" }}
               >
-                <Chat data={notificationData} />
+                {notificationData.status === 1 && notificationData.paymentStatus === true ? <Chat data={notificationData} /> : ""}
+
                 {notificationData != null && studentDataFromDB != null ? (
                   <div className="modal-content">
                     <div className="modal-header">
@@ -212,7 +211,7 @@ class notificationsDescription extends Component {
                           className="btn btn-light back-btn"
                           data-dismiss="modal"
                         >
-                          <i class="fa fa-arrow-left" />
+                          <i className="fa fa-arrow-left" />
                         </button>
                         &nbsp; More About Student {studentDataFromDB.firstName}{" "}
                         {studentDataFromDB.lastName} Review
