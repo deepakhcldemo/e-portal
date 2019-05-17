@@ -122,11 +122,15 @@ class NotificationsDetails extends Component {
         <div className="container-fluid">
           <div>
             <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12 col-without--padding">
-              <div className="filterByDate main-wrapper">
-                <Col sm={6}>
-                  <FilterByDate onChangeDate={this.getDateParameterInChat} />
-                </Col>
-              </div>
+              {notificationDetails.length > 0 ? (
+                <div className="filterByDate main-wrapper">
+                  <Col sm={6}>
+                    <FilterByDate onChangeDate={this.getDateParameterInChat} />
+                  </Col>
+                </div>
+              ) : (
+                  ""
+                )}
               {
                 Object.keys(notificationDetails).length > 0 ?
                   Object.keys(notificationDetails).map(

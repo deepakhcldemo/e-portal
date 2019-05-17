@@ -64,11 +64,15 @@ class NotificationsDetails extends Component {
           <div className="content-container tab--container">
             <div className="col-12 col-md-12 col-xl-12 col-sm-12 col-lg-12 col-without--padding">
               <div className=" notification-card" style={{ color: "#FFF" }}>
-                <div className="filterByDateInChat main-wrapper">
-                  <Col sm={6}>
-                    <FilterByDate onChangeDate={this.getDateParameterInChat} />
-                  </Col>
-                </div>
+                {notificationDetails.length > 0 ? (
+                  <div className="filterByDateInChat main-wrapper">
+                    <Col sm={6}>
+                      <FilterByDate onChangeDate={this.getDateParameterInChat} />
+                    </Col>
+                  </div>
+                ) : (
+                    ""
+                  )}
                 {Object.keys(notificationDetails).length > 0 ?
 
                   Object.keys(notificationDetails).map(
