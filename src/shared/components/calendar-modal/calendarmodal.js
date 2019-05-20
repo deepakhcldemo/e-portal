@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-//import { connect } from "react-redux"
 import Modal from 'react-responsive-modal';
 import Datetime from 'react-datetime';
-// import Select from 'react-select';
 import Joi from 'joi-browser';
 import Input from './helper/input';
 import TextArea from './helper/textArea';
 import SelectCustom from "./helper/select";
-//import { getNotification } from './calendarAction';
+
 import { saveChatNotificationDetails } from '../../../database/dal/firebase/chatNotificationDal';
 import './calendar.css';
 
@@ -18,8 +16,10 @@ class CalendarModal extends Component {
   };
   componentDidMount() {
 
+
     const loggedInUSer = JSON.parse(localStorage.getItem('user'));
-    console.log(loggedInUSer);
+
+    console.log("loggedInUSer", loggedInUSer);
   }
 
   schema = {
@@ -93,24 +93,20 @@ class CalendarModal extends Component {
     if (Object.keys(errors).length !== 0) {
       return
     }
-    //if (errors) return;
-
     const { data } = this.state;
 
-    //console.log(new Date(data.datetime).toUTCString())
-    //const scheduledDate = new Date(data.datetime).toUTCString();
-    //const myDate = new Date(1000 * data.datetime);
-
-    //console.log(myDate.toUTCString());
     const createdAt = new Date();
     const loggedInUSer = JSON.parse(localStorage.getItem('user'));
+
     console.log("loggedInUSer => ", loggedInUSer);
     console.log("this.props.teacherData.userId => ", this.props.teacherData.userId)
+
     console.log("randomString", randomString)
+
     if (loggedInUSer) {
       const chatNotificationDetails = {
         nId: randomString,
-        charge: '3$',
+        charge: this.props.teacherData.charge + '$',
         createdAt,
         details: data.message,
         paymentStatus: false,
@@ -136,8 +132,7 @@ class CalendarModal extends Component {
       saveChatNotificationDetails({
         ...chatNotificationDetails
       });
-      //this.props.history.push('/dashboard');
-      //model close display message success or failure
+
     }
     this.props.closeCalendarModal();
   };
@@ -215,14 +210,7 @@ class CalendarModal extends Component {
 
                     />
                     <div className="c-error">{this.state.errors.datetime}</div>
-                    {/* <Input
-                      value={this.state.datetime}
-                      onChangeHandle={this.handleChange}
-                      name="datetime"
-                      className="form-control"
-                      errorMessage={this.state.errors.datetime}
-                      placeHolder="04/20/2019 12:00 AM"
-                    /> */}
+
                   </div>
                   <div className="col-md-6">
                     <SelectCustom
@@ -234,14 +222,6 @@ class CalendarModal extends Component {
                       placeHolder="Duration"></SelectCustom>
 
 
-                    {/* <Input
-                      value={this.state.duration}
-                      onChangeHandle={this.handleChange}
-                      name="duration"
-                      className="form-control"
-                      errorMessage={this.state.errors.duration}
-                      placeHolder="Duration"
-                    /> */}
                   </div>
                 </div>
                 <div className="row">

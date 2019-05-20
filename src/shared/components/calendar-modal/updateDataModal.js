@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import { connect } from "react-redux"
+
 import Modal from 'react-responsive-modal';
 import Datetime from 'react-datetime';
 import Select from 'react-select';
@@ -7,7 +7,7 @@ import Joi from 'joi-browser';
 import Input from './helper/input';
 import TextArea from './helper/textArea';
 import SelectCustom from './helper/select';
-//import { getNotification } from './calendarAction';
+
 
 import {
   saveChatNotificationDetails,
@@ -196,23 +196,7 @@ class CalendarModal extends Component {
 
                     />
                     <div className="c-error">{this.state.errors.datetime}</div>
-                    {/* <Datetime
-                      value={this.state.datetime}
-                      onChange={this.handleChange}
-                      inputProps={{
-                        placeholder: 'Please choose date and time',
-                        name: 'datetime'
-                      }}
-                    />
-                    <div className="c-error">{this.state.errors.datetime}</div> */}
-                    {/* <Input
-                      value={this.state.datetime}
-                      onChangeHandle={this.handleChange}
-                      name="datetime"
-                      className="form-control"
-                      errorMessage={this.state.errors.datetime}
-                      placeHolder="04/20/2019 12:00 AM"
-                    /> */}
+
                   </div>
 
                   <div className="col-md-6">
@@ -224,14 +208,7 @@ class CalendarModal extends Component {
                       errorMessage={this.state.errors.duration}
                       placeHolder="Duration"
                     />
-                    {/* <Input
-                      value={this.state.duration}
-                      onChangeHandle={this.handleChange}
-                      name="duration"
-                      className="form-control"
-                      errorMessage={this.state.errors.duration}
-                      placeHolder="Duration"
-                    /> */}
+
                   </div>
                 </div>
                 <div className="row">

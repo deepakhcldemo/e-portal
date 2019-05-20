@@ -51,47 +51,9 @@ class NotificationsDetails extends Component {
   };
 
   componentDidMount() {
-    let user;
-    let data;
     const loggedInUSer = JSON.parse(localStorage.getItem("user"));
-    //const loggedInUSer = "sGeyNegb2cZZcq7C76ndjaGUNSk1";
-    //loggedInUSer.user.id change this from hardcoding
-    console.log("Logged in details", loggedInUSer);
-
     this.props.getStudentNotification(loggedInUSer.user.uid);
-    //if (this.props.notificationDetails != null) {
-    // console.log(" 100 componentDidMount Notification details Page", this.props.notificationDetails)
-    // }
 
-    // getNotificationData(loggedInUSer).then(querySnapshot => {
-    //     querySnapshot.forEach(doc => {
-    //         user = doc.data();
-    //         if (doc.exists) {
-    //             this.setState({
-    //                 notificationData: user
-    //             });
-
-    //             getUserProfile(user.tId).then(querySnapshot => {
-    //                 querySnapshot.forEach(doc => {
-    //                     data = doc.data();
-    //                     if (doc.exists) {
-
-    //                         this.setState({
-    //                             userData: data
-    //                         });
-    //                     }
-    //                 });
-    //             });
-
-    //         }
-    //     });
-    // });
-
-    //console.log("Notification data componentDidMount => ", this.props.notificationDetails)
-    //this.props.getTeachers("55dh2K881oSaWBFn8mZOGiSeTny2");
-    //this.props.getStudents("DrFophiJl9PsAZhrhFzd11opaPH2");
-
-    console.log("teacher id", this.state);
   }
   getDateParameterInChat = () => {
     this.setState({
@@ -121,36 +83,13 @@ class NotificationsDetails extends Component {
   }
 
   render = () => {
-    console.log("Notification data  => ", this.props.notificationDetails);
-    // this.state.notificationData.comment ?
-    //     Object.keys(this.state.notificationData.comment).map(data => {
-    //         console.log(this.state.notificationData.comment[data].details)
-    //     }) : null;
-
-    //console.log("USER DATA", this.state.userData);
-
-    //console.log("Notification data => ", this.props.notificationDetails)
-    //console.log("Teacher data => ", this.props.teacherDetails);
 
     let teacherName;
-    // if (this.props.teacherDetails != null) {
-    //     this.props.teacherDetails.map(data => {
-    //         teacherName = data.firstName + " " + data.lastName;
-    //     })
-    // }
-    teacherName = "";
-    // if (this.state.userData) {
 
-    //     teacherName = this.state.userData.firstName + this.state.userData.lastName
-    // }
-    //console.log("Student data => ", this.props.studentDetails)
+    teacherName = "";
 
     const { open } = this.state;
     const { notificationDetails } = this.props;
-    console.log("notificationDetails -> ", notificationDetails);
-    console.log("notificationDetails length-> ", Object.keys(notificationDetails).length);
-
-
 
     return (
       <>

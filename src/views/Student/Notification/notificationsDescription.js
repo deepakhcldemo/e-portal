@@ -196,10 +196,8 @@ class notificationsDescription extends Component {
                   data-dismiss="modal"
                   aria-hidden="true"
                 />
-                {notificationData.status === 1 && notificationData.paymentStatus === true ? <Chat data={notificationData} /> : ""}
-
                 <h4 className="modal-title" id="myModalLabel">
-                  <span ></span>
+
                   <button
                     onClick={this.handleBack}
                     type="button"
@@ -208,9 +206,12 @@ class notificationsDescription extends Component {
                   >
                     <i className="fa fa-arrow-left" />
                   </button> &nbsp;
-                  More About Teacher {studentDataFromDB.firstName} {studentDataFromDB.lastName} Request
-
+                    More About Teacher {studentDataFromDB.firstName} {studentDataFromDB.lastName} Request
+                    <span ></span>
                 </h4>
+                {notificationData.status === 1 && notificationData.paymentStatus === true ? <Chat data={notificationData} /> : ""}
+
+
               </div>
               <div className="modal-body">
                 <center>

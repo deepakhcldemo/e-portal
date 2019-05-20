@@ -20,7 +20,7 @@ class NotificationsDetails extends Component {
 
   componentDidMount() {
     const loggedInUSer = JSON.parse(localStorage.getItem("user"));
-    //console.log("loggedInUSer deaatatat", loggedInUSer.user.uid)
+
     this.props.getTeacherNotification(loggedInUSer.user.uid);
   }
 
