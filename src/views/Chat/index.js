@@ -11,7 +11,8 @@ import { getUserProfile } from "./../../database/dal/firebase/registrationDal";
 class Chat extends Component {
   state = {
     messageList: [],
-    recieverData: []
+    recieverData: [],
+    isOpen: false
   };
 
   componentDidMount = async () => {
@@ -19,11 +20,14 @@ class Chat extends Component {
     const { data: { sId, tId } } = this.props;
     this.setState({
       userDetails: JSON.parse(localStorage.getItem("userProfile"))
+
+
     });
     await getChatFromDB(sId, tId).onSnapshot(doc => {
       if (doc.exists && doc.data().messageList.length > 0) {
         this.setState({
-          messageList: doc.data().messageList
+          messageList: doc.data().messageList,
+          isOpen: true
         });
       }
     });
@@ -43,6 +47,13 @@ class Chat extends Component {
         });
       }
     );
+  }
+
+  handleClick = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+    console.log(this.state);
   }
 
   onMessageWasSent = async message => {
@@ -67,6 +78,8 @@ class Chat extends Component {
     return (
       <div>
         <Launcher
+          handleClick={() => this.handleClick()}
+          isOpen={this.state.isOpen}
           agentProfile={{
             teamName: name,
             imageUrl: recieverData.profileImage
