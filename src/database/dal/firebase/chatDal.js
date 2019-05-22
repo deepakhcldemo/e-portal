@@ -5,11 +5,11 @@ const getDbRef = collectionName => {
   const ref = db.firestore().collection(collectionName);
   return ref;
 };
-export const getChatFromDB = (senderId,recieverId) => {
-    return getDbRef("chat").doc(`${senderId}${recieverId}`);
+export const getChatFromDB = (notificationId, senderId, recieverId) => {
+  return getDbRef("chat").doc(`${notificationId}${senderId}${recieverId}`);
 }
-export const saveIndividualChatToDB = (senderId, recieverId, chatData) => {
+export const saveIndividualChatToDB = (notificationId, senderId, recieverId, chatData) => {
   return getDbRef("chat")
-    .doc(senderId + recieverId)
-    .set({messageList: chatData});
+    .doc(notificationId + senderId + recieverId)
+    .set({ messageList: chatData });
 };

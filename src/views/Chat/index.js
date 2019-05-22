@@ -16,14 +16,15 @@ class Chat extends Component {
   };
 
   componentDidMount = async () => {
+    console.log("Custom Props : ", this.props)
     let user;
-    const { data: { sId, tId } } = this.props;
+    const { data: { nId, sId, tId } } = this.props;
     this.setState({
       userDetails: JSON.parse(localStorage.getItem("userProfile"))
 
 
     });
-    await getChatFromDB(sId, tId).onSnapshot(doc => {
+    await getChatFromDB(nId, sId, tId).onSnapshot(doc => {
       if (doc.exists && doc.data().messageList.length > 0) {
         this.setState({
           messageList: doc.data().messageList,
@@ -56,7 +57,7 @@ class Chat extends Component {
   }
 
   onMessageWasSent = async message => {
-    const { data: { sId, tId } } = this.props;
+    const { data: { nId, sId, tId } } = this.props;
     const {
       userDetails: { userId }
     } = this.state;
@@ -65,11 +66,11 @@ class Chat extends Component {
     await this.setState({
       messageList: [...this.state.messageList, message]
     });
-    saveIndividualChatToDB(sId, tId, this.state.messageList);
+    saveIndividualChatToDB(nId, sId, tId, this.state.messageList);
   };
 
   render() {
-    const { data: { sId, tId } } = this.props;
+    const { data: { nId, sId, tId } } = this.props;
     const { userDetails, recieverData } = this.state;
     //console.log("recieverData  ", recieverData);
     const name = recieverData.firstName + " " + recieverData.lastName
